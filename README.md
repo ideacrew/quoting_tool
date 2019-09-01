@@ -1,4 +1,4 @@
-# HRA Calculator
+# Quoting Tool
 
 
 ## Setup
