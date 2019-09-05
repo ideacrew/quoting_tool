@@ -89,7 +89,7 @@ You can start the Angular Live Development Server with:
 ng serve
 ```
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Now you can visit [`localhost:4200`](http://localhost:4200) from your browser.
 
 ## Helpful UI Resources
 
