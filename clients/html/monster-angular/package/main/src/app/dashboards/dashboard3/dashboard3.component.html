@@ -1,0 +1,366 @@
+<div class="row">
+    <div class="col-12">
+        <!-- You can find this in the dashboard-component -->
+        <app-pa></app-pa>
+    </div>
+</div>
+<!-- Row -->
+<div class="row">
+    <!-- Column -->
+    <div class="col-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-lg-4 border-right">
+                    <div class="card">
+                        <div class="card-body mailbox">
+                            <h4 class="card-title">Recent Messages</h4>
+                            <div class="message-center message-body" [perfectScrollbar]="config" style="height: 493px;">
+                                <app-recent-message></app-recent-message>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 b-l">
+                    <div class="card-body">
+                        <h4>Product Calculation</h4>
+                        <ul class="list-inline">
+                            <li class="p-l-0 list-inline-item">
+                                <h6 class="text-muted">
+                                    <i class="fa fa-circle m-r-5 text-success"></i>2016</h6>
+                            </li>
+                            <li class="list-inline-item">
+                                <h6 class="text-muted">
+                                    <i class="fa fa-circle m-r-5 text-info"></i>2017</h6>
+                            </li>
+                        </ul>
+                        <div class="row">
+                            <div class="col-12">
+                                <div style="height:370px;">
+                                    <canvas baseChart height="130" [datasets]="lineChartData" [labels]="lineChartLabels"
+                                        [options]="lineChartOptions" [colors]="lineChartColors"
+                                        [legend]="lineChartLegend" [chartType]="lineChartType">
+                                    </canvas>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 m-b-30 m-t-20 text-center">
+                                <h3 class="font-weight-normal">$54578</h3>
+                                <h6 class="text-muted">Total Revenue</h6>
+                            </div>
+                            <div class="col-lg-3 col-md-6 m-b-30 m-t-20 text-center">
+                                <h3 class="font-weight-normal">$43451</h3>
+                                <h6 class="text-muted">Online Revenue</h6>
+                            </div>
+                            <div class="col-lg-3 col-md-6 m-b-30 m-t-20 text-center">
+                                <h3 class="font-weight-normal">$44578</h3>
+                                <h6 class="text-muted">Product A</h6>
+                            </div>
+                            <div class="col-lg-3 col-md-6 m-b-30 m-t-20 text-center">
+                                <h3 class="font-weight-normal">$12578</h3>
+                                <h6 class="text-muted">Product B</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>
+<!-- Row -->
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Members Activity</h4>
+                <h6 class="card-subtitle">what members preformance / weekly status</h6>
+                <div class="table-responsive m-t-40">
+                    <table class="table table-hover v-middle">
+                        <thead>
+                            <tr>
+                                <th style="width: 60px;"> Member </th>
+                                <th> Name </th>
+                                <th> Earnings </th>
+                                <th> Posts </th>
+                                <th> Reviews </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img class="rounded-circle" src="assets/images/users/1.jpg" alt="user" width="50">
+                                </td>
+                                <td>
+                                    <a href="javascript:;">Govinda</a>
+                                </td>
+                                <td> $325 </td>
+                                <td> 45 </td>
+                                <td>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="far fa-star text-warning"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img class="rounded-circle" src="assets/images/users/2.jpg" alt="user" width="50">
+                                </td>
+                                <td>
+                                    <a href="javascript:;">Genelia</a>
+                                </td>
+                                <td> $225 </td>
+                                <td> 35 </td>
+                                <td>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="far fa-star text-warning"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img class="rounded-circle" src="assets/images/users/3.jpg" alt="user" width="50">
+                                </td>
+                                <td>
+                                    <a href="javascript:;">Hrithik</a>
+                                </td>
+                                <td> $185 </td>
+                                <td> 28 </td>
+                                <td>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="far fa-star text-warning"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img class="rounded-circle" src="assets/images/users/4.jpg" alt="user" width="50">
+                                </td>
+                                <td>
+                                    <a href="javascript:;">Salman</a>
+                                </td>
+                                <td> $125 </td>
+                                <td> 25 </td>
+                                <td>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="far fa-star text-warning"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img class="rounded-circle" src="assets/images/users/2.jpg" alt="user" width="50">
+                                </td>
+                                <td>
+                                    <a href="javascript:;">Genelia</a>
+                                </td>
+                                <td> $225 </td>
+                                <td> 35 </td>
+                                <td>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="far fa-star text-warning"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <app-cs></app-cs>
+    </div>
+</div>
+<!-- Row -->
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Today's Schedule</h4>
+                <h6 class="card-subtitle">check out your daily schedule</h6>
+                
+                <div class="steamline m-t-40">
+                    <div class="sl-item">
+                        <div class="sl-left bg-success">
+                            <i class="ti-user"></i>
+                        </div>
+                        <div class="sl-right">
+                            <div class="font-normal">Meeting today
+                                <span class="sl-date"> 5pm</span>
+                            </div>
+                            <div class="desc text-muted">you can write anything </div>
+                        </div>
+                    </div>
+                    <div class="sl-item">
+                        <div class="sl-left bg-info">
+                            <i class="fa fa-image"></i>
+                        </div>
+                        <div class="sl-right">
+                            <div class="font-normal">Send documents to Clark</div>
+                            <div class="desc text-muted">Lorem Ipsum is simply </div>
+                        </div>
+                    </div>
+                    <div class="sl-item">
+                        <div class="sl-left">
+                            <img class="rounded-circle" alt="user" src="assets/images/users/1.jpg"> </div>
+                        <div class="sl-right">
+                            <div>
+                                <a href="#" class="link">John Doe</a>
+                                <span class="sl-date ml-1">5 minutes ago</span>
+                            </div>
+                            <div class="desc text-muted">Call today with gohn doe </div>
+                        </div>
+                    </div>
+                    <div class="sl-item">
+                        <div class="sl-left">
+                            <img class="rounded-circle" alt="user" src="assets/images/users/2.jpg"> </div>
+                        <div class="sl-right">
+                            <div class="font-normal">Go to the Doctor
+                                <span class="sl-date">5 minutes ago</span>
+                            </div>
+                            <div class="desc text-muted">Contrary to popular belief</div>
+                        </div>
+                    </div>
+                    <div class="sl-item">
+                        <div class="sl-left">
+                            <img class="rounded-circle" alt="user" src="assets/images/users/3.jpg"> </div>
+                        <div class="sl-right">
+                            <div>
+                                <a href="#" class="link">Tiger Sroff</a>
+                                <span class="sl-date ml-1">5 minutes ago</span>
+                            </div>
+                            <div class="desc text-muted">Approve meeting with tiger
+                                <br>
+                                <a href="javascript:void(0)"
+                                    class="btn mt-4 mr-1 btn-rounded btn-outline-success">Apporve</a>
+                                <a href="javascript:void(0)" class="btn mt-4 btn-rounded btn-outline-danger">Refuse</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Sales Overview</h4>
+                <h6 class="card-subtitle">Check the monthly sales </h6>
+            </div>
+            <div class="card-body bg-light">
+                <div class="row">
+                    <div class="col-6">
+                        <h2 class="m-b-0">March 2017</h2>
+                        <h4 class="font-light m-t-0">Report for this month</h4>
+                    </div>
+                    <div class="col-6 align-self-center display-6 text-info text-right">$3,690</div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th>NAME</th>
+                            <th>STATUS</th>
+                            <th>DATE</th>
+                            <th>PRICE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center">1</td>
+                            <td class="txt-oflo">Elite admin</td>
+                            <td>
+                                <span class="label label-success label-rouded">SALE</span>
+                            </td>
+                            <td class="txt-oflo">April 18, 2017</td>
+                            <td>
+                                <span class="text-success">$24</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">2</td>
+                            <td class="txt-oflo">Real Homes WP Theme</td>
+                            <td>
+                                <span class="label label-info label-rouded">EXTENDED</span>
+                            </td>
+                            <td class="txt-oflo">April 19, 2017</td>
+                            <td>
+                                <span class="text-info">$1250</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">3</td>
+                            <td class="txt-oflo">Ample Admin</td>
+                            <td>
+                                <span class="label label-info label-rouded">EXTENDED</span>
+                            </td>
+                            <td class="txt-oflo">April 19, 2017</td>
+                            <td>
+                                <span class="text-info">$1250</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">4</td>
+                            <td class="txt-oflo">Medical Pro WP Theme</td>
+                            <td>
+                                <span class="label label-danger label-rouded">TAX</span>
+                            </td>
+                            <td class="txt-oflo">April 20, 2017</td>
+                            <td>
+                                <span class="text-danger">-$24</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">5</td>
+                            <td class="txt-oflo">Hosting press html</td>
+                            <td>
+                                <span class="label label-warning label-rouded">SALE</span>
+                            </td>
+                            <td class="txt-oflo">April 21, 2017</td>
+                            <td>
+                                <span class="text-success">$24</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">6</td>
+                            <td class="txt-oflo">Digital Agency PSD</td>
+                            <td>
+                                <span class="label label-success label-rouded">SALE</span>
+                            </td>
+                            <td class="txt-oflo">April 23, 2017</td>
+                            <td>
+                                <span class="text-danger">-$14</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>
+<!-- Row -->
+<app-social-slider></app-social-slider>
+<!-- Row -->
+<div class="row">
+    <div class="col-lg-6">
+        <app-te></app-te>
+    </div>
+    <div class="col-lg-6">
+        <app-feeds></app-feeds>
+    </div>
+</div>

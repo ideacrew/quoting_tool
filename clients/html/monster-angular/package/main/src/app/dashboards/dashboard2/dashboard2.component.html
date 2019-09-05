@@ -1,0 +1,135 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+    <div class="col-12">
+        <!-- You can find this in the dashboard-component -->
+        <app-project-counter></app-project-counter>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- chart and stats -->
+<!-- ============================================================== -->
+<div class="row">
+    <!-- chart component -->
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex flex-wrap m-b-30">
+                    <div>
+                        <h4 class="card-title">Monthly Earning</h4>
+                    </div>
+                    <div class="ml-auto">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <h6 class="text-muted text-success">
+                                    <i class="fa fa-circle font-10 m-r-10 "></i>Sales</h6>
+                            </li>
+                            <li class="list-inline-item">
+                                <h6 class="text-muted  text-info">
+                                    <i class="fa fa-circle font-10 m-r-10"></i>Earning (k)</h6>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="height:345px;">
+                    <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+                        [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"> </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- other chart component -->
+    <div class="col-lg-4">
+        <div class="card bg-info">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="m-r-20 align-self-center">
+                        <h1 class="text-white">
+                            <i class="ti-light-bulb"></i>
+                        </h1>
+                    </div>
+                    <div>
+                        <h3 class="card-title text-white">Sales Analytics</h3>
+                        <h6 class="card-subtitle text-white">March 2017</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 align-self-center">
+                        <h2 class="font-light text-white">
+                            <sup>
+                                <small>
+                                    <i class="ti-arrow-up"></i>
+                                </small>
+                            </sup>35487</h2>
+                    </div>
+                    <div class="col- ml-auto p-r-20">
+                        <canvas baseChart width="120px" height="120px" [data]="pieChartData" [labels]="pieChartLabels"
+                            [chartType]="pieChartType" [legend]="lineChartLegend"
+                            [colors]="[{backgroundColor: ['#fff', '#26dad2', '#ffb22b'], borderColor:['#009efb', '#009efb', '#009efb'] }]">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card bg-success">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="m-r-20 align-self-center">
+                        <h1 class="text-white">
+                            <i class="ti-pie-chart"></i>
+                        </h1>
+                    </div>
+                    <div>
+                        <h3 class="card-title text-white">Bandwidth usage</h3>
+                        <h6 class="card-subtitle text-white">March 2017</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 align-self-center">
+                        <h2 class="font-light text-white">50 GB</h2>
+                    </div>
+                    <div class="col- ml-auto p-r-20 align-self-center">
+                        <canvas baseChart width="120px" height="120px" [data]="doughnutChartData"
+                            [labels]="doughnutChartLabels" [chartType]="doughnutChartType" [legend]="lineChartLegend"
+                            [colors]="[{backgroundColor: ['#1976d2', '#fff', '#2b2b2b'], borderColor:['#55ce63', '#55ce63', '#55ce63']}]">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Report and Comments -->
+<!-- ============================================================== -->
+<!-- Row -->
+<div class="row">
+    <div class="col-lg-8">
+        <!-- You can find this in the dashboard-component -->
+        <app-project></app-project>
+    </div>
+    <div class="col-lg-4">
+        <!-- You can find this in the dashboard-component -->
+        <app-profile-box></app-profile-box>
+    </div>
+</div>
+<!-- Row -->
+<!-- ============================================================== -->
+<!-- Carousel widgets -->
+<!-- You can find this in the dashboard-component -->
+<!-- ============================================================== -->
+<app-widget></app-widget>
+<!-- ============================================================== -->
+<!-- Activity widgets -->
+<!-- You can find this in the dashboard-component -->
+<!-- ============================================================== -->
+<div class="row">
+    <!-- Column -->
+    <div class="col-lg-6 col-xlg-6">
+        <app-recent-comment></app-recent-comment>
+    </div>
+    <div class="col-lg-6 col-xlg-6">
+        <app-to-do></app-to-do>
+    </div>
+</div>

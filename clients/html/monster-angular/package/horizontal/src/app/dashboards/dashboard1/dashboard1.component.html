@@ -1,0 +1,260 @@
+<!-- Row -->
+<div class="row">
+    <div class="col-12">
+        <!-- You can find this in the dashboard-component -->
+        <app-income-counter></app-income-counter>
+    </div>
+</div>
+<!-- Row -->
+<!-- Row -->
+<div class="row">
+    <!-- Column -->
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex flex-wrap">
+                            <div>
+                                <h4>Revenue Statistics</h4>
+                                
+                            </div>
+                            <div class="ml-auto ">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <h6 class="text-muted">
+                                            <i class="fa fa-circle m-r-5 text-success"></i>Product A</h6>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <h6 class="text-muted">
+                                            <i class="fa fa-circle m-r-5 text-info"></i>Product B</h6>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div style="height:370px;">
+                            <canvas baseChart height="130" [datasets]="lineChartData" [labels]="lineChartLabels"
+                                [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend"
+                                [chartType]="lineChartType">
+                            </canvas>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 m-b-30 m-t-20 text-center">
+                        <h2 class=" font-weight-normal">$54578</h2>
+                        <h6 class="text-muted">Total Revenue</h6>
+                    </div>
+                    <div class="col-lg-3 col-md-6 m-b-30 m-t-20 text-center">
+                        <h2 class=" font-weight-normal">$43451</h2>
+                        <h6 class="text-muted">Online Revenue</h6>
+                    </div>
+                    <div class="col-lg-3 col-md-6 m-b-30 m-t-20 text-center">
+                        <h2 class=" font-weight-normal">$44578</h2>
+                        <h6 class="text-muted">Product A</h6>
+                    </div>
+                    <div class="col-lg-3 col-md-6 m-b-30 m-t-20 text-center">
+                        <h2 class=" font-weight-normal">$12578</h2>
+                        <h6 class="text-muted">Product B</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Row -->
+<!-- Row -->
+<div class="row">
+    <div class="col-lg-4 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Sales of the Month</h4>
+                <div class="piechart">
+                    <x-chartist class="" [data]="donuteChart1.data" [type]="donuteChart1.type"
+                        [options]="donuteChart1.options" [responsiveOptions]="donuteChart1.responsiveOptions"
+                        [events]="donuteChart1.events"> </x-chartist>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Sales Prediction</h4>
+                        <div class="d-flex flex-row">
+                            <div class="align-self-center">
+                                <span class="display-6 font-weight-normal">$3528</span>
+                                <h6 class="text-muted">(150-165 Sales)</h6>
+                            </div>
+                            <div class="ml-auto m-t-15">
+                                <canvas baseChart width="120px" height="120px" [data]="doughnutChartData"
+                                    [labels]="doughnutChartLabels" [chartType]="doughnutChartType"
+                                    [legend]="lineChartLegend"
+                                    [colors]="[{backgroundColor: ['#55ce63', '#009efb', '#90a4ae'], borderColor:['#fff', '#fff', '#fff']}]">
+                                </canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Sales Difference</h4>
+                        <div class="d-flex flex-row">
+                            <div class="align-self-center">
+                                <span class="display-6 font-weight-normal">$4316</span>
+                                <h6 class="text-muted">(150-165 Sales)</h6>
+                            </div>
+                            <div class="ml-auto m-t-15">
+                                <canvas baseChart width="120px" height="120px" [data]="pieChartData"
+                                    [labels]="pieChartLabels" [chartType]="pieChartType" [legend]="lineChartLegend"
+                                    [colors]="[{backgroundColor: ['#55ce63', '#009efb', '#90a4ae'], borderColor:['#fff', '#fff', '#fff'] }]">
+                                </canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-12">
+        <!-- You can find this in the dashboard-component -->
+        <app-profile-box></app-profile-box>
+    </div>
+</div>
+<!-- Row -->
+<!-- Row -->
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Projects of the Month</h4>
+                <div class="table-responsive m-t-40">
+                    <table class="table stylish-table v-middle no-wrap">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Assigned</th>
+                                <th>Name</th>
+                                <th>Priority</th>
+                                <th>Budget</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="width:50px;">
+                                    <button class="btn btn-circle btn-lg text-white btn-success">S</button>
+                                </td>
+                                <td>
+                                    <h6 class="mb-0 font-medium">Sunil Joshi</h6>
+                                    <small class="text-muted">Web Designer</small>
+                                </td>
+                                <td>Elite Admin</td>
+                                <td>
+                                    <span class="badge badge-light-success text-success">Low</span>
+                                </td>
+                                <td>$3.9K</td>
+                            </tr>
+                            <tr class="active">
+                                <td>
+                                    <span class="round">
+                                        <img src="assets/images/users/2.jpg" alt="user" width="50" />
+                                    </span>
+                                </td>
+                                <td>
+                                    <h6 class="mb-0 font-medium">Andrew</h6>
+                                    <small class="text-muted">Project Manager</small>
+                                </td>
+                                <td>Real Homes</td>
+                                <td>
+                                    <span class="badge badge-light-info text-info">Medium</span>
+                                </td>
+                                <td>$23.9K</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button class="btn btn-circle btn-lg btn-danger">B</button>
+                                </td>
+                                <td>
+                                    <h6 class="mb-0 font-medium">Bhavesh patel</h6>
+                                    <small class="text-muted">Developer</small>
+                                </td>
+                                <td>MedicalPro Theme</td>
+                                <td>
+                                    <span class="badge badge-light-danger text-danger">High</span>
+                                </td>
+                                <td>$12.9K</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button class="btn btn-circle btn-lg btn-info">N</button>
+                                </td>
+                                <td>
+                                    <h6 class="mb-0 font-medium">Nirav Joshi</h6>
+                                    <small class="text-muted">Frontend Eng</small>
+                                </td>
+                                <td>Elite Admin</td>
+                                <td>
+                                    <span class="badge badge-light-success text-success">Low</span>
+                                </td>
+                                <td>$10.9K</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button class="btn btn-circle btn-lg btn-warning">M</button>
+                                </td>
+                                <td>
+                                    <h6 class="mb-0 font-medium">Micheal Doe</h6>
+                                    <small class="text-muted">Content Writer</small>
+                                </td>
+                                <td>Helping Hands</td>
+                                <td>
+                                    <span class="badge badge-light-danger text-danger">High</span>
+                                </td>
+                                <td>$12.9K</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button class="btn btn-circle btn-lg btn-dark">P</button>
+                                </td>
+                                <td>
+                                    <h6 class="mb-0 font-medium">Johnathan</h6>
+                                    <small class="text-muted">Graphic</small>
+                                </td>
+                                <td>Digital Agency</td>
+                                <td>
+                                    <span class="badge badge-light-danger text-danger">High</span>
+                                </td>
+                                <td>$2.6K</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body mailbox">
+                <h4 class="card-title">Recent Messages</h4>
+                <div class="message-center message-body" [perfectScrollbar]="config" style="height: 600px;">
+                    <app-recent-message></app-recent-message>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Row -->
+<app-widget></app-widget>
+<!-- Row -->
+<div class="row">
+    <div class="col-lg-6">
+        <app-recent-comment></app-recent-comment>
+    </div>
+    <div class="col-lg-6">
+        <app-to-do></app-to-do>
+    </div>
+</div>
+<!-- Row -->

@@ -1,0 +1,12 @@
+<!-- Message -->
+<a href="javascript:void(0)" class="message-item" *ngFor="let mymessage of mymessages">
+    <span class="user-img">
+        <img src="{{mymessage.useravatar}}" alt="user" class="rounded-circle" width="60">
+        <span class="profile-status {{mymessage.status}} pull-right"></span>
+    </span>
+    <span class="mail-contnet">
+        <h5 class="message-title">{{mymessage.from}}</h5>
+        <span class="mail-desc">{{mymessage.subject}}</span>
+        <span class="time">{{mymessage.time}}</span>
+    </span>
+</a>
