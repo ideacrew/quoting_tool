@@ -45,6 +45,13 @@ services:
     ports:
       - '3002:3002'
 
+  angular:
+    <<: *backend
+    command: bash -c "cd clients/html && rm -rf node_modules && NG_CLI_ANALYTICS=false npm install -g @angular/cli && NG_CLI_ANALYTICS=false npm install  && ng serve --host 0.0.0.0 --port 4200"
+    ports:
+      - '4200:4200'
+
+
   rails:
     <<: *backend
     command: bash -c "rm -f tmp/pids/server.pid && bundle &&  bundle exec rails server -p 3000 -b '0.0.0.0'"
