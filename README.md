@@ -80,7 +80,7 @@ The frontend uses the Angular framework to handle user interactions and is built
 To get started do the following:
 
 ```
-cd clients/html && npm install
+cd clients/html && npm install -g @angular/cli && npm install
 ```
 
 You can start the Angular Live Development Server with:
