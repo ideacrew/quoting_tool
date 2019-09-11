@@ -10,6 +10,12 @@ In the directory where you have cloned the repo, run the following command to co
 $ docker-compose run runner ./bin/setup
 ```
 
+Next, build the docker containers for the service dependencies (this will take a while).  This will build a Rails container, Mongo container, Redis container, and Angular Container:
+
+```
+$ docker-compose build
+```
+
 Next, create docker containers for the service dependencies.  Note that the following two commands will both start a rails server running on localhost:3000.  The difference is the first command will run the server process in the terminal window (where log output may be observed) while the second command will daemonize the server in its own background process.  
 
 ```
