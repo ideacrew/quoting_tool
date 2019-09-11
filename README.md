@@ -85,6 +85,13 @@ The frontend uses the Angular framework to handle user interactions and is built
 
 You can visit [`localhost:4200`](http://localhost:4200) from your browser to see the UI.
 
+## Setup UI in a new project
+
+* Copy contents of clients to your new app.
+* In clients > html angular.json change references from 'quoting-tool' to 'your apps name' will be 8 total
+* In the In clients > html package.json change line 2 from 'quoting-tool' to 'your apps name'
+* Now run docker-compose build, then docker-compose up
+
 ## Helpful UI Resources
 
 [`Angular`](https://angular.io/)
