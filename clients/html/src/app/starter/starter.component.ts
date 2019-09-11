@@ -1,12 +1,31 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+// We use the below service to get all data from the Rails backend
+import { SampleService } from '../services/sample.service';
+
 @Component({
-  templateUrl: './starter.component.html'
+  templateUrl: './starter.component.html',
+  // We use the below provide the serive to the component
+  providers: [SampleService]
 })
-export class StarterComponent implements AfterViewInit {
-  subtitle: string;
-  constructor() {
-    this.subtitle = 'This is some text within a card block.';
+export class StarterComponent implements OnInit {
+  subtitle: Object;
+
+  constructor(private sampleService: SampleService) { }
+
+  ngOnInit() {
+    this.getWelcomeMessage();
   }
 
-  ngAfterViewInit() {}
+  // Calls on the sample service to get the message
+  getWelcomeMessage() {
+    this.sampleService.getMessage()
+    .subscribe(
+        message => {
+          this.subtitle = message;
+        },
+        err => console.log(err)
+      )
+  }
+
 }
