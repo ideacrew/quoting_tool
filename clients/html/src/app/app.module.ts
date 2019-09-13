@@ -25,6 +25,10 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { EmployerDetailsComponent } from './employer-details/employer-details.component';
+import { EmployerDetailsHealthComponent } from './employer-details/employer-details-health/employer-details-health.component';
+import { EmployerDetailsDentalComponent } from './employer-details/employer-details-dental/employer-details-dental.component';
+import { NavComponent } from './nav/nav.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -41,7 +45,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     BlankComponent,
     NavigationComponent,
     BreadcrumbComponent,
-    SidebarComponent
+    SidebarComponent,
+    EmployerDetailsComponent,
+    EmployerDetailsHealthComponent,
+    EmployerDetailsDentalComponent,
+    NavComponent
   ],
   imports: [
     CommonModule,

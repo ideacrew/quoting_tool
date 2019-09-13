@@ -1,0 +1,134 @@
+<div class="container-fluid">
+  <app-nav></app-nav>
+  <div class="row pl-3">
+    <form [formGroup]="quoteForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-2">
+          <div class="form-group">
+            <label for="formGroupExampleInput">Effective Date:</label>
+            <input type="text" class="form-control" formControlName="effectiveDate" required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2">
+          <div class="form-group">
+            <label for="formGroupExampleInput">Sic:</label>
+            <input type="text" class="form-control" formControlName="sic" required>
+          </div>
+        </div>
+        <div class="col-2">
+          <div class="form-group">
+            <label for="formGroupExampleInput">Zip:</label>
+            <input type="text" class="form-control" formControlName="zip" required>
+          </div>
+        </div>
+        <div class="col-2">
+          <div class="form-group">
+            <label for="formGroupExampleInput">County:</label>
+            <input type="text" class="form-control" formControlName="county" required>
+          </div>
+        </div>
+      </div>
+      <div class="row"><!-- Row for employees roster text  -->
+        <div class="col-9">
+          <h4>Employee Roster</h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Consectetur a erat nam at. Sit amet nulla facilisi morbi tempus iaculis urna id volutpat. Lorem dolor sed viverra ipsum nunc. Tincidunt tortor aliquam nulla facilisi. Accumsan sit amet nulla facilisi morbi tempus. In massa tempor nec feugiat nisl pretium fusce id velit. Vel risus commodo viverra maecenas accumsan lacus vel. Dui accumsan sit amet nulla facilisi morbi. Tortor id aliquet lectus proin nibh nisl condimentum id. Mi bibendum neque egestas congue quisque egestas diam in. Ante metus dictum at tempor commodo ullamcorper a. Et netus et malesuada fames ac turpis. Mattis nunc sed blandit libero volutpat sed cras ornare. Enim ut tellus elementum sagittis vitae. A erat nam at lectus urna duis. Lobortis elementum nibh tellus molestie nunc non blandit massa enim.</p>
+        </div>
+      </div><!-- End row for employees roster text  -->
+      <div class="row pl-2"><!-- Row for households  -->
+        <div formArrayName="employees"><!-- Start employee forms array -->
+          <div *ngFor="let employee of quoteForm.get('employees').controls; let i=index"><!-- starts employee fields -->
+            <fieldset class="household">
+              <legend><h5>Household {{i+1}} </h5></legend>
+              <div class="row" [formGroupName]="i"><!-- Starts employee form group -->
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" formControlName="firstName">
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" formControlName="lastName">
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="dob">DOB</label>
+                    <input type="text" class="form-control" formControlName="dob">
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="dob">Coverage Kind</label>
+                    <select type="text" class="form-control" formControlName="coverageKind">
+                      <option value="both">Both</option>
+                      <option value="healthOnly">Health Only</option>
+                      <option value="dentalOnly">Dental Only</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="pt-4">
+                  <i class="fas fa-trash fa-2x" *ngIf="i >= 1" (click)="deleteEmployee(i)"></i>
+                </div>
+                <div class="pl-2" formArrayName="dependents"><!-- starts depenendts array -->
+                  <div *ngFor="let denendent of employee.get('dependents').controls; let j=index">
+                    <fieldset class="dependent">
+                      <legend><h6>Dependent {{j+1}}</h6></legend>
+                      <div class="row"[formGroupName]="j"><!-- starts dependents row -->
+                        <div class="col-2">
+                          <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" class="form-control" formControlName="firstName">
+                          </div>
+                        </div>
+                        <div class="col-2">
+                          <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" class="form-control" formControlName="lastName">
+                          </div>
+                        </div>
+                        <div class="col-2">
+                          <div class="form-group">
+                            <label for="dob">DOB</label>
+                            <input type="text" class="form-control" formControlName="dob">
+                          </div>
+                        </div>
+                        <div class="col-2">
+                          <div class="form-group">
+                            <label for="dob">Relationship</label>
+                            <select type="text" class="form-control" formControlName="relationship">
+                              <option value="spouse">Spouse</option>
+                              <option value="child">Child</option>
+                              <option value="parent">Parent</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-2 pt-4">
+                          <i class="fas fa-trash fa-2x" (click)="deleteDependent(employee.controls.dependents, j)"></i>
+                        </div>
+                      </div><!-- ends dependents row -->
+                    </fieldset>
+                  </div>
+                </div><!-- ends depenendts array -->
+                <div class="col-8">
+                  <button type="button" class="btn btn-link float-right" (click)="addDependent(employee.controls.dependents)">+ Dependent</button>
+                </div>
+              </div><!-- Ends employee form group -->
+            </fieldset>
+          </div><!-- end employee fields -->
+        </div><!-- Ends employee forms array -->
+      </div><!-- End row for households  -->
+      <div class="row mt-3">
+        <div class="col-9">
+          <button class="float-left btn btn-primary">Upload Roster</button> <button (click)="addEmployee()" class="float-right btn btn-primary"><i class="fas fa-user-plus"></i> Add Employee</button>
+        </div>
+        <div class="col-9 mt-2">
+          <button class="float-right btn btn-primary">View Plans</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+fieldset.household {
+  padding-left: 15px;
+  border-radius: 10px;
+  border:1px solid #000;
+  width: 75vw;
+}
+
+fieldset.dependent {
+  width: 100%;
+}
+
+.fa-trash {
+  cursor: pointer;
+}
