@@ -39,6 +39,7 @@ group :development, :test do
   gem 'yard' #,                   '~> 0.9.12',  require: false
   gem 'climate_control' #
   gem 'factory_bot_rails',      '~> 4.11'
+  gem 'pry'
 end
 
 group :development do
