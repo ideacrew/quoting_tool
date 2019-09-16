@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ApiRequestService } from './../services/api-request.service';
+import { EmployerDetailsService } from './../services/employer-details.service';
 
 @Component({
   selector: 'app-employer-details',
   templateUrl: './employer-details.component.html',
   styleUrls: ['./employer-details.component.css'],
-  providers: [NgbModal]
+  providers: [NgbModal, EmployerDetailsService]
 })
 export class EmployerDetailsComponent implements OnInit {
   public quoteForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private modalService: NgbModal, private api: ApiRequestService) {
+  constructor(private fb: FormBuilder, private modalService: NgbModal, private employerDetailsService: EmployerDetailsService) {
     this.quoteForm = this.fb.group({
       effectiveDate: ['', Validators.required],
       sic: ['', Validators.required],
@@ -67,9 +67,11 @@ export class EmployerDetailsComponent implements OnInit {
     this.modalService.open(content);
   }
 
-  fileUploaded(fileInfo){
-    debugger
-    this.api.authedPost("/api/v1/employees/upload", {})
+  fileUploaded(fileInfo) {
+    this.employerDetailsService.postUpload(fileInfo)
+      .subscribe(
+        data => console.log(data)
+      );
     // this.file = fileInfo.files[0]
     // let fileReader = new FileReader();
     // fileReader.onload = (fileData) => {
