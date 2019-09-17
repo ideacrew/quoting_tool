@@ -36,6 +36,55 @@
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Consectetur a erat nam at. Sit amet nulla facilisi morbi tempus iaculis urna id volutpat. Lorem dolor sed viverra ipsum nunc. Tincidunt tortor aliquam nulla facilisi. Accumsan sit amet nulla facilisi morbi tempus. In massa tempor nec feugiat nisl pretium fusce id velit. Vel risus commodo viverra maecenas accumsan lacus vel. Dui accumsan sit amet nulla facilisi morbi. Tortor id aliquet lectus proin nibh nisl condimentum id. Mi bibendum neque egestas congue quisque egestas diam in. Ante metus dictum at tempor commodo ullamcorper a. Et netus et malesuada fames ac turpis. Mattis nunc sed blandit libero volutpat sed cras ornare. Enim ut tellus elementum sagittis vitae. A erat nam at lectus urna duis. Lobortis elementum nibh tellus molestie nunc non blandit massa enim.</p>
         </div>
       </div><!-- End row for employees roster text  -->
+
+      <div class="m-b-10">
+        <ngx-datatable
+          #censusDatatable
+          class="material bootstrap"
+          style="width:75%"
+          [rows]="[]"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [rowHeight]="'auto'"
+          [limit]="10">
+
+          <ngx-datatable-column
+              [width]="30"
+              [sortable]="true"
+              [canAutoResize]="false"
+              [draggable]="false"
+              [resizeable]="false">
+            </ngx-datatable-column>
+            <ngx-datatable-column name="firstName">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row['first_name']}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="lastName">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row['last_name']}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="dob">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row['dob']}}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="planSelection">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row['plan_selection']}}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="dependentsCount">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row['census_dependents'].length}}
+              </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+
       <div class="row pl-2"><!-- Row for households  -->
         <div formArrayName="employees"><!-- Start employee forms array -->
           <div *ngFor="let employee of quoteForm.get('employees').controls; let i=index"><!-- starts employee fields -->
@@ -141,7 +190,7 @@
       </ng-template>
       <div class="row mt-3">
         <div class="col-9">
-          <button class="float-left btn btn-primary" (click)="open(content)">Upload Roster</button> <button (click)="addEmployee()" class="float-right btn btn-primary"><i class="fas fa-user-plus"></i> Add Employee</button>
+          <button class="float-left btn btn-primary" (click)="open(content)">Upload Roster</button> <button (click)="addEmployee()" class="float-right btn btn-primary" *ngIf="!isUploaded"><i class="fas fa-user-plus"></i> Add Employee</button>
         </div>
         <div class="col-9 mt-2">
           <button class="float-right btn btn-primary">View Plans</button>
