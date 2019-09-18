@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployerDetailsService } from './../services/employer-details.service';
@@ -21,6 +21,7 @@ import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 })
 export class EmployerDetailsComponent implements OnInit {
   public quoteForm: FormGroup;
+  @ViewChild('censusDatatable', { static: false }) censusDatatable: any;
 
   model: NgbDateStruct;
   date: {month: number, day: number, year: number};
@@ -82,18 +83,15 @@ export class EmployerDetailsComponent implements OnInit {
   }
 
   fileUploaded(fileInfo) {
-    this.employerDetailsService.postUpload(fileInfo)
+    let input = new FormData();
+    input.append('file', fileInfo.files[0]);
+
+    this.employerDetailsService.postUpload(input)
       .subscribe(
-        data => console.log(data)
-      );
-    // this.file = fileInfo.files[0]
-    // let fileReader = new FileReader();
-    // fileReader.onload = (fileData) => {
-    //   // let data = fileData.target.result.split("\r\n")
-    //   // data.shift()
-    //   // data.forEach(ele => {
-    //   // })
-    // }
-    // fileReader.readAsText(this.file);
+        data => {
+          this.censusDatatable.rows = data['census_records'];
+          this.modalService.dismissAll();
+        }
+      );  
   }
 }

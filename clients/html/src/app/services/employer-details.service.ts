@@ -9,7 +9,7 @@ export class EmployerDetailsService {
   constructor(private api_request: ApiRequestService) { }
 
   postUpload(upload)  {
-    return this.api_request.authedPost('employees/upload', upload);
+    return this.api_request.authedPost('employees/upload.json', upload);
   }
 
 }
