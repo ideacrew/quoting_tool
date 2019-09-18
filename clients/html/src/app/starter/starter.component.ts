@@ -9,7 +9,7 @@ import { SampleService } from '../services/sample.service';
   providers: [SampleService]
 })
 export class StarterComponent implements OnInit {
-  subtitle: Object;
+  subtitle: any;
 
   constructor(private sampleService: SampleService) { }
 

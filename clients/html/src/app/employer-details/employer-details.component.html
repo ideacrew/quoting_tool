@@ -1,70 +1,70 @@
 <div class="container-fluid">
   <app-nav></app-nav>
-  <div class="row pl-3">
+  <div class="row pl-3 mt-4">
     <form [formGroup]="quoteForm">
       <div class="row">
         <div class="col-2">
           <div class="form-group">
-            <label for="formGroupExampleInput">Effective Date:</label>
-            <input type="text" class="form-control" formControlName="effectiveDate" required>
+            <label for="formGroupExampleInput">Effective Date: <span class="required-field">*</span></label>
+            <input type="text" class="form-control" formControlName="effectiveDate" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" required>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-2">
           <div class="form-group">
-            <label for="formGroupExampleInput">Sic:</label>
+            <label for="formGroupExampleInput">Sic: <span class="required-field">*</span></label>
             <input type="text" class="form-control" formControlName="sic" required>
           </div>
         </div>
         <div class="col-2">
           <div class="form-group">
-            <label for="formGroupExampleInput">Zip:</label>
+            <label for="formGroupExampleInput">Zip: <span class="required-field">*</span></label>
             <input type="text" class="form-control" formControlName="zip" required>
           </div>
         </div>
         <div class="col-2">
           <div class="form-group">
             <label for="formGroupExampleInput">County:</label>
-            <input type="text" class="form-control" formControlName="county" required>
+            <input type="text" class="form-control" formControlName="county">
           </div>
         </div>
       </div>
       <div class="row"><!-- Row for employees roster text  -->
         <div class="col-9">
-          <h4>Employee Roster</h4>
+          <h2 class="heading-text">Employee Roster</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Consectetur a erat nam at. Sit amet nulla facilisi morbi tempus iaculis urna id volutpat. Lorem dolor sed viverra ipsum nunc. Tincidunt tortor aliquam nulla facilisi. Accumsan sit amet nulla facilisi morbi tempus. In massa tempor nec feugiat nisl pretium fusce id velit. Vel risus commodo viverra maecenas accumsan lacus vel. Dui accumsan sit amet nulla facilisi morbi. Tortor id aliquet lectus proin nibh nisl condimentum id. Mi bibendum neque egestas congue quisque egestas diam in. Ante metus dictum at tempor commodo ullamcorper a. Et netus et malesuada fames ac turpis. Mattis nunc sed blandit libero volutpat sed cras ornare. Enim ut tellus elementum sagittis vitae. A erat nam at lectus urna duis. Lobortis elementum nibh tellus molestie nunc non blandit massa enim.</p>
         </div>
       </div><!-- End row for employees roster text  -->
       <div class="row pl-2"><!-- Row for households  -->
         <div formArrayName="employees"><!-- Start employee forms array -->
-          <div *ngFor="let employee of quoteForm.get('employees').controls; let i=index"><!-- starts employee fields -->
-            <fieldset class="household">
-              <legend><h5>Household {{i+1}} </h5></legend>
+          <div *ngFor="let employee of quoteForm.get('employees')?.controls; let i=index" [@fadeInOut]><!-- starts employee fields -->
+            <fieldset class="household mb-3">
+              <legend><h5 class="pt-2">Household {{i+1}} </h5></legend>
               <div class="row" [formGroupName]="i"><!-- Starts employee form group -->
-                <div class="col-2">
+                <div class="col-3">
                   <div class="form-group">
                     <label for="firstName">First Name</label>
-                    <input type="text" class="form-control" formControlName="firstName">
+                    <input type="text" class="form-control" formControlName="firstName" placeholder="First Name">
                   </div>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                   <div class="form-group">
                     <label for="lastName">Last Name</label>
-                    <input type="text" class="form-control" formControlName="lastName">
+                    <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name">
                   </div>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                   <div class="form-group">
-                    <label for="dob">DOB</label>
-                    <input type="text" class="form-control" formControlName="dob">
+                    <label for="dob">DOB <span class="required-field">*</span></label>
+                    <input type="text" class="form-control" formControlName="dob" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" required>
                   </div>
                 </div>
                 <div class="col-2">
                   <div class="form-group">
                     <label for="dob">Coverage Kind</label>
                     <select type="text" class="form-control" formControlName="coverageKind">
-                      <option value="both">Both</option>
+                      <option value="both" selected>Both</option>
                       <option value="healthOnly">Health Only</option>
                       <option value="dentalOnly">Dental Only</option>
                     </select>
@@ -74,26 +74,26 @@
                   <i class="fas fa-trash fa-2x" *ngIf="i >= 1" (click)="deleteEmployee(i)"></i>
                 </div>
                 <div class="pl-2" formArrayName="dependents"><!-- starts depenendts array -->
-                  <div *ngFor="let denendent of employee.get('dependents').controls; let j=index">
+                  <div *ngFor="let denendent of employee.get('dependents').controls; let j=index" [@fadeInOut]>
                     <fieldset class="dependent">
-                      <legend><h6>Dependent {{j+1}}</h6></legend>
+                      <legend><h6 class="sub-heading-text">Dependent {{j+1}}</h6></legend>
                       <div class="row"[formGroupName]="j"><!-- starts dependents row -->
-                        <div class="col-2">
+                        <div class="col-3">
                           <div class="form-group">
                             <label for="firstName">First Name</label>
-                            <input type="text" class="form-control" formControlName="firstName">
+                            <input type="text" class="form-control" formControlName="firstName" placeholder="First Name">
                           </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-3">
                           <div class="form-group">
                             <label for="lastName">Last Name</label>
-                            <input type="text" class="form-control" formControlName="lastName">
+                            <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name">
                           </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-3">
                           <div class="form-group">
-                            <label for="dob">DOB</label>
-                            <input type="text" class="form-control" formControlName="dob">
+                            <label for="dob">DOB <span class="required-field">*</span></label>
+                            <input type="text" class="form-control" formControlName="dob" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" required>
                           </div>
                         </div>
                         <div class="col-2">
@@ -106,15 +106,15 @@
                             </select>
                           </div>
                         </div>
-                        <div class="col-2 pt-4">
+                        <div class="col-1 pt-4">
                           <i class="fas fa-trash fa-2x" (click)="deleteDependent(employee.controls.dependents, j)"></i>
                         </div>
                       </div><!-- ends dependents row -->
                     </fieldset>
                   </div>
                 </div><!-- ends depenendts array -->
-                <div class="col-8">
-                  <button type="button" class="btn btn-link float-right" (click)="addDependent(employee.controls.dependents)">+ Dependent</button>
+                <div class="col-11">
+                  <button type="button" class="btn btn-link float-right" (click)="addDependent(employee.controls.dependents)"><i class="fas fa-users"></i> Add Dependent</button>
                 </div>
               </div><!-- Ends employee form group -->
             </fieldset>
@@ -123,7 +123,7 @@
       </div><!-- End row for households  -->
       <ng-template #content let-c="close" let-d="dismiss"><!-- Template for upload roster  -->
         <div class="modal-header">
-          <h4 class="modal-title" id="modal-basic-title">Upload</h4>
+          <h4 class="modal-title" id="modal-basic-title">Upload File</h4>
           <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -136,12 +136,12 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button (click)="fileUploaded(file)" type="button" class="btn btn-outline-dark"> Upload Employee Roster </button>
+          <button (click)="fileUploaded(file)" type="button" class="btn btn-primary"><i class="fas fa-upload"></i> Upload Employee Roster </button>
         </div>
       </ng-template>
       <div class="row mt-3">
         <div class="col-9">
-          <button class="float-left btn btn-primary" (click)="open(content)">Upload Roster</button> <button (click)="addEmployee()" class="float-right btn btn-primary"><i class="fas fa-user-plus"></i> Add Employee</button>
+          <button class="float-left btn btn-primary" (click)="open(content)"><i class="fas fa-upload"></i> Upload Roster</button> <button (click)="addEmployee()" class="float-right btn btn-primary"><i class="fas fa-user-plus"></i> Add Employee</button>
         </div>
         <div class="col-9 mt-2">
           <button class="float-right btn btn-primary">View Plans</button>
