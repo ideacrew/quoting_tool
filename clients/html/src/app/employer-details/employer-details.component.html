@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid mb-4">
   <app-nav></app-nav>
   <div class="row pl-3 mt-4">
     <form [formGroup]="quoteForm">
@@ -14,19 +14,53 @@
         <div class="col-2">
           <div class="form-group">
             <label for="formGroupExampleInput">Sic: <span class="required-field">*</span></label>
-            <input type="text" class="form-control" formControlName="sic" required>
+            <ng-autocomplete
+              formControlName="sic"
+              [data]="sics"
+              [searchKeyword]="sicKeyword"
+              [itemTemplate]="sicTemplate"
+              [notFoundTemplate]="sicNotFoundTemplate">
+            </ng-autocomplete>
+
+            <ng-template #sicTemplate let-item>
+            <a [innerHTML]="item.standardIndustryCodeFull"></a>
+            </ng-template>
+
+            <ng-template #sicNotFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+            </ng-template>
           </div>
         </div>
         <div class="col-2">
           <div class="form-group">
             <label for="formGroupExampleInput">Zip: <span class="required-field">*</span></label>
-            <input type="text" class="form-control" formControlName="zip" required>
+            <ng-autocomplete
+              formControlName="zip"
+              debounceTime=800
+              [data]="zipcodes"
+              [searchKeyword]="zipKeyword"
+              (selected)='selectEvent($event)'
+              (inputChanged)='zipChangeSearch($event)'
+              (inputFocused)='onFocused($event)'
+              [itemTemplate]="zipTemplate"
+              [notFoundTemplate]="zipNotFoundTemplate" required>
+            </ng-autocomplete>
+
+            <ng-template #zipTemplate let-zip>
+            <a [innerHTML]="zip.zipCode"></a>
+            </ng-template>
+
+            <ng-template #zipNotFoundTemplate let-zipNotFound>
+            <div [innerHTML]="zipNotFound"></div>
+            </ng-template>
           </div>
         </div>
         <div class="col-2">
           <div class="form-group">
             <label for="formGroupExampleInput">County:</label>
-            <input type="text" class="form-control" formControlName="county">
+            <select class="form-control" formControlName="county" id="countyField">
+              <option *ngFor="let county of counties" [ngValue]="county.county" [selected]="defaultSelect">{{county.county}}</option>
+            </select>
           </div>
         </div>
       </div>
@@ -149,9 +183,7 @@
                           <div class="form-group">
                             <label for="dob">Relationship</label>
                             <select type="text" class="form-control" formControlName="relationship">
-                              <option value="spouse">Spouse</option>
-                              <option value="child">Child</option>
-                              <option value="parent">Parent</option>
+                              <option *ngFor="let relation of relationOptions" value="relation.key">{{relation.value}}</option>
                             </select>
                           </div>
                         </div>
@@ -190,9 +222,12 @@
       </ng-template>
       <div class="row mt-3">
         <div class="col-9">
-          <button class="float-left btn btn-primary" (click)="open(content)"><i class="fas fa-upload"></i> Upload Roster</button> <button (click)="addEmployee()" class="float-right btn btn-primary"><i class="fas fa-user-plus"></i> Add Employee</button>
+          <button class="float-left btn btn-primary" (click)="open(content)"><i class="fas fa-upload"></i> Upload Employee Roster</button> <button (click)="addEmployee()" class="float-right btn btn-primary"><i class="fas fa-user-plus"></i> Add Employee</button>
         </div>
-        <div class="col-9 mt-2">
+        <div class="col-9 mt-2" *ngIf="quoteForm.valid">
+          <button class="float-right btn btn-primary">Create Roster</button>
+        </div>
+        <div class="col-9 mt-2" *ngIf="1 == 2">
           <button class="float-right btn btn-primary">View Plans</button>
         </div>
       </div>

@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -53,6 +54,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NavComponent
   ],
   imports: [
+    AutocompleteLibModule,
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
