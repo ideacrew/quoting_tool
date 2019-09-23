@@ -1,0 +1,57 @@
+.btn-link {
+  color: #005e81;
+}
+fieldset.household {
+  padding: 20px;
+  border-radius: 10px;
+  width: inherit;
+  background: #eaeaea;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+fieldset.household:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+fieldset.household > legend {
+  background: #005e81;
+  color: #fff;
+  padding: 0px 8px 3px 8px;
+  -webkit-border-radius: 5px 5px 0px 0px;
+  -moz-border-radius: 5px 5px 0px 0px;
+  font-weight: normal;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+fieldset.dependent {
+  width: inherit;
+}
+
+fieldset.dependent > legend {
+  color: #c56c24;
+}
+
+.fa-trash {
+  cursor: pointer;
+}
+
+.heading-text {
+  font-weight: 300;
+  color: #c56c24;
+}
+
+.modal-header {
+  color: #fff;
+  background: #005e81;
+}
+
+.required-field {
+  color: #f62d51;
+  font-weight: 600;
+}
+
+.sub-heading-text {
+  font-weight: 600;
+}

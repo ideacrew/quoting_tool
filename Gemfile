@@ -18,7 +18,10 @@ gem 'puma', '~> 3.11'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'rack-cors'
+
+# Use to dry up responses
+gem 'responders'
 
 # MongoDB NoSQL database ORM
 # gem 'mongoid',                  '~> 7.0'
@@ -27,6 +30,8 @@ gem 'mongoid',  git: 'https://github.com/mongodb/mongoid.git', branch: 'master'
 # Settings, validation and dependency injection
 gem 'resource_registry',  git:  'https://github.com/ideacrew/resource_registry.git', branch: 'master'
 gem 'fast_jsonapi'
+gem 'roo', '~> 2.1'
+gem 'virtus', '~> 1.0'
 
 
 group :development, :test do
@@ -36,6 +41,7 @@ group :development, :test do
   gem 'yard' #,                   '~> 0.9.12',  require: false
   gem 'climate_control' #
   gem 'factory_bot_rails',      '~> 4.11'
+  gem 'pry-byebug'
 end
 
 group :development do
