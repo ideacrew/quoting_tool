@@ -21,6 +21,7 @@ export class EmployerDetailsHealthComponent implements OnInit {
   public erEmployees: any;
   public costShownText: any;
   public tooltips = tooltips;
+  public isCollapsed: any;
 
   public planOptions = [
     {key: 'one_carrier', value: 'One Carrier'},
