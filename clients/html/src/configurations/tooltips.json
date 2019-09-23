@@ -1,0 +1,15 @@
+[
+  {
+    "health": [
+      {
+        "maximumMonthlyEmployerCost": "This is your most the plan will cost each month, based on 100% employer contribution to plan premiums and all employees from your roster enrolling in the plan. For One Carrier and One Level, employees may select a different plan than this one, which could change the monthly cost shown here.",
+        "maximumOutOfPocket": "This is the most you pay in one year for health care services. Once you have paid this amount, your plan pays for all of your covered services for the rest for the year.",
+        "annualDeductibleFamilyIndividual": "A deductible is the total cost you must pay in a plan year before your plan will pay for part or all of your services. There may be a deductible amount for each person enrolled in the plan, as well as a deductible amount for the whole family.",
+        "network": "A provider network is a group of doctors, hospitals and other providers that works with the health plan to give you care.",
+        "hsaEligible": "You may be able to set up an HSA if you are enrolled in an HSA eligible plan. An HSA is a way to set aside money before taxes, to use it for certain medical costs.",
+        "planPremiums": "This is the cost you pay each month to the Health Connector, whether or not you use health care services.",
+        "prescriptionDrugDeductible": "This is the total cost you must pay in a plan year towards your prescription medicines before your plan will pay for part or all of your prescriptions."
+      }
+    ]
+  }
+]

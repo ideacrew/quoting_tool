@@ -1,17 +1,17 @@
-<div class="container-fluid mb-4">
-  <app-nav></app-nav>
+<div class="container mb-4">
+  <app-nav [validForm]="quoteForm.valid"></app-nav>
   <div class="row pl-3 mt-4">
     <form [formGroup]="quoteForm">
       <div class="row">
-        <div class="col-2">
+        <div class="col-3">
           <div class="form-group">
             <label for="formGroupExampleInput">Effective Date: <span class="required-field">*</span></label>
-            <input type="text" class="form-control" formControlName="effectiveDate" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" required>
+            <input type="date" class="form-control" formControlName="effectiveDate" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" required>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-2">
+        <div class="col-3">
           <div class="form-group">
             <label for="formGroupExampleInput">Sic: <span class="required-field">*</span></label>
             <ng-autocomplete
@@ -31,7 +31,7 @@
             </ng-template>
           </div>
         </div>
-        <div class="col-2">
+        <div class="col-3">
           <div class="form-group">
             <label for="formGroupExampleInput">Zip: <span class="required-field">*</span></label>
             <ng-autocomplete
@@ -55,7 +55,7 @@
             </ng-template>
           </div>
         </div>
-        <div class="col-2">
+        <div class="col-3">
           <div class="form-group">
             <label for="formGroupExampleInput">County:</label>
             <select class="form-control" formControlName="county" id="countyField">
@@ -65,63 +65,58 @@
         </div>
       </div>
       <div class="row"><!-- Row for employees roster text  -->
-        <div class="col-9">
+        <div class="col-md-9">
           <h2 class="heading-text">Employee Roster</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Consectetur a erat nam at. Sit amet nulla facilisi morbi tempus iaculis urna id volutpat. Lorem dolor sed viverra ipsum nunc. Tincidunt tortor aliquam nulla facilisi. Accumsan sit amet nulla facilisi morbi tempus. In massa tempor nec feugiat nisl pretium fusce id velit. Vel risus commodo viverra maecenas accumsan lacus vel. Dui accumsan sit amet nulla facilisi morbi. Tortor id aliquet lectus proin nibh nisl condimentum id. Mi bibendum neque egestas congue quisque egestas diam in. Ante metus dictum at tempor commodo ullamcorper a. Et netus et malesuada fames ac turpis. Mattis nunc sed blandit libero volutpat sed cras ornare. Enim ut tellus elementum sagittis vitae. A erat nam at lectus urna duis. Lobortis elementum nibh tellus molestie nunc non blandit massa enim.</p>
+          <p>Select '<strong>Add New Employee</strong>' to manually enter information about employees. Or, choose '<strong>Upload Employee Roster</strong>' to upload the employee roster template. To use this option, you will need to download the template first, then upload the completed version.  For each employee you add, you will need their:<br />- Name<br />- Date of Birth<br />- Dependent Name(s), if any<br />- Dependent Relationship(s)<br />- Dependent Date of Birth(s)</p>
         </div>
       </div><!-- End row for employees roster text  -->
 
-      <div class="m-b-10">
+      <div class="m-b-10" *ngIf="showEmployeeRoster">
         <ngx-datatable
           #censusDatatable
-          class="material bootstrap"
-          style="width:75%"
-          [rows]="[]"
+          class="material striped"
+          [rows]="rows"
           [headerHeight]="50"
           [footerHeight]="50"
           [rowHeight]="'auto'"
-          [limit]="10">
+          [limit]="5">
 
-          <ngx-datatable-column
-              [width]="30"
-              [sortable]="true"
-              [canAutoResize]="false"
-              [draggable]="false"
-              [resizeable]="false">
-            </ngx-datatable-column>
-            <ngx-datatable-column name="firstName">
+            <ngx-datatable-column name="First Name">
               <ng-template let-row="row" ngx-datatable-cell-template>
-                {{row['first_name']}}
+                {{row['firstName']}}
               </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column name="lastName">
+            <ngx-datatable-column name="Last Name">
               <ng-template let-row="row" ngx-datatable-cell-template>
-                {{row['last_name']}}
+                {{row['lastName']}}
               </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column name="dob">
+            <ngx-datatable-column name="DOB">
               <ng-template let-row="row" ngx-datatable-cell-template>
-                {{row['dob']}}
+                {{row['dob'] | date}}
               </ng-template>
             </ngx-datatable-column>
+            <ngx-datatable-column name="Plan Selection">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row['coverageKind']}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Dependents Count">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row['dependents'].length}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="" width="250">
+              <ng-template let-row="row" ngx-datatable-cell-template>
 
-            <ngx-datatable-column name="planSelection">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                {{row['plan_selection']}}
-              </ng-template>
-            </ngx-datatable-column>
-
-            <ngx-datatable-column name="dependentsCount">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                {{row['census_dependents'].length}}
               </ng-template>
             </ngx-datatable-column>
         </ngx-datatable>
       </div>
 
-      <div class="row pl-2"><!-- Row for households  -->
+      <div class="row pl-2" *ngIf="showHouseholds"><!-- Row for households  -->
         <div formArrayName="employees"><!-- Start employee forms array -->
-          <div *ngFor="let employee of quoteForm.get('employees')?.controls; let i=index" [@fadeInOut]><!-- starts employee fields -->
+          <div *ngFor="let employee of quoteForm.get('employees')?.controls; let i=index" [attr.employee-index]="i" id="employee-hh-card" [@fadeInOut]><!-- starts employee fields -->
             <fieldset class="household mb-3">
               <legend><h5 class="pt-2">Household {{i+1}} </h5></legend>
               <div class="row" [formGroupName]="i"><!-- Starts employee form group -->
@@ -140,7 +135,7 @@
                 <div class="col-3">
                   <div class="form-group">
                     <label for="dob">DOB <span class="required-field">*</span></label>
-                    <input type="text" class="form-control" formControlName="dob" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" required>
+                    <input type="date" class="form-control" formControlName="dob" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" required>
                   </div>
                 </div>
                 <div class="col-2">
@@ -154,10 +149,10 @@
                   </div>
                 </div>
                 <div class="pt-4">
-                  <i class="fas fa-trash fa-2x" *ngIf="i >= 1" (click)="deleteEmployee(i)"></i>
+                  <i class="fas fa-trash fa-2x" (click)="deleteEmployee(i)"></i>
                 </div>
                 <div class="pl-2" formArrayName="dependents"><!-- starts depenendts array -->
-                  <div *ngFor="let denendent of employee.get('dependents').controls; let j=index" [@fadeInOut]>
+                  <div *ngFor="let dependent of employee.get('dependents').controls; let j=index" [@fadeInOut]>
                     <fieldset class="dependent">
                       <legend><h6 class="sub-heading-text">Dependent {{j+1}}</h6></legend>
                       <div class="row"[formGroupName]="j"><!-- starts dependents row -->
@@ -176,14 +171,14 @@
                         <div class="col-3">
                           <div class="form-group">
                             <label for="dob">DOB <span class="required-field">*</span></label>
-                            <input type="text" class="form-control" formControlName="dob" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" required>
+                            <input type="date" class="form-control" formControlName="dob" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" required>
                           </div>
                         </div>
                         <div class="col-2">
                           <div class="form-group">
                             <label for="dob">Relationship</label>
                             <select type="text" class="form-control" formControlName="relationship">
-                              <option *ngFor="let relation of relationOptions" value="relation.key">{{relation.value}}</option>
+                              <option *ngFor="let relation of relationOptions" [value]="relation.key">{{relation.value}}</option>
                             </select>
                           </div>
                         </div>
@@ -212,7 +207,7 @@
         <div class="modal-body">
           <div class="card">
             <div class="card-body">
-              <input type="file" #file >
+              <input type="file" #file>
             </div>
           </div>
         </div>
@@ -221,14 +216,15 @@
         </div>
       </ng-template>
       <div class="row mt-3">
-        <div class="col-9">
-          <button class="float-left btn btn-primary" (click)="open(content)"><i class="fas fa-upload"></i> Upload Employee Roster</button> <button (click)="addEmployee()" class="float-right btn btn-primary"><i class="fas fa-user-plus"></i> Add Employee</button>
+        <div class="col-12">
+          <button class="float-left btn btn-primary" (click)="open(content)"><i class="fas fa-upload"></i> Upload Employee Roster</button> <button (click)="addEmployee()" class="float-right btn btn-primary"><i class="fas fa-user-plus"></i> Add New Employee</button>
+          <button class="btn btn-danger" *ngIf="showEmployeeRoster" (click)="removeRoster()"><i class="fas fa-trash-alt"></i> Clear Roster</button>
         </div>
-        <div class="col-9 mt-2" *ngIf="quoteForm.valid">
-          <button class="float-right btn btn-primary">Create Roster</button>
+        <div class="col-12 mt-2" *ngIf="!showEmployeeRoster">
+          <button class="float-right btn btn-primary" (click)="createRoster()" [disabled]="!quoteForm.value.employees.length > 0 || !quoteForm.valid">Create Roster</button>
         </div>
-        <div class="col-9 mt-2" *ngIf="1 == 2">
-          <button class="float-right btn btn-primary">View Plans</button>
+        <div class="col-12 mt-2" *ngIf="showEmployeeRoster">
+          <a class="float-right btn btn-success" routerLink="/employer-details/health"><i class="fas fa-check"></i> View Plans</a>
         </div>
       </div>
     </form>

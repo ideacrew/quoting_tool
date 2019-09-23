@@ -2,349 +2,349 @@
  {
    "industryGroupLabel": "Cash Grains",
    "standardIndustryCodeFull": "0111: Wheat",
-   "standardIndustryCodeCode": "111",
+   "standardIndustryCodeCode": "0111",
    "standardIndustryCodeLabel": "Wheat"
  },
  {
    "industryGroupLabel": "Cash Grains",
    "standardIndustryCodeFull": "0112: Rice",
-   "standardIndustryCodeCode": "112",
+   "standardIndustryCodeCode": "0112",
    "standardIndustryCodeLabel": "Rice"
  },
  {
    "industryGroupLabel": "Cash Grains",
    "standardIndustryCodeFull": "0115: Corn",
-   "standardIndustryCodeCode": "115",
+   "standardIndustryCodeCode": "0115",
    "standardIndustryCodeLabel": "Corn"
  },
  {
    "industryGroupLabel": "Cash Grains",
    "standardIndustryCodeFull": "0116: Soybeans",
-   "standardIndustryCodeCode": "116",
+   "standardIndustryCodeCode": "0116",
    "standardIndustryCodeLabel": "Soybeans"
  },
  {
    "industryGroupLabel": "Cash Grains",
    "standardIndustryCodeFull": "0119: Cash Grains, Not Elsewhere Classified",
-   "standardIndustryCodeCode": "119",
+   "standardIndustryCodeCode": "0119",
    "standardIndustryCodeLabel": "Cash Grains, Not Elsewhere Classified"
  },
  {
    "industryGroupLabel": "Field Crops, Except Cash Grains",
    "standardIndustryCodeFull": "0131: Cotton",
-   "standardIndustryCodeCode": "131",
+   "standardIndustryCodeCode": "0131",
    "standardIndustryCodeLabel": "Cotton"
  },
  {
    "industryGroupLabel": "Field Crops, Except Cash Grains",
    "standardIndustryCodeFull": "0132: Tobacco",
-   "standardIndustryCodeCode": "132",
+   "standardIndustryCodeCode": "0132",
    "standardIndustryCodeLabel": "Tobacco"
  },
  {
    "industryGroupLabel": "Field Crops, Except Cash Grains",
    "standardIndustryCodeFull": "0133: Sugarcane and Sugar Beets",
-   "standardIndustryCodeCode": "133",
+   "standardIndustryCodeCode": "0133",
    "standardIndustryCodeLabel": "Sugarcane and Sugar Beets"
  },
  {
    "industryGroupLabel": "Field Crops, Except Cash Grains",
    "standardIndustryCodeFull": "0134: Irish Potatoes",
-   "standardIndustryCodeCode": "134",
+   "standardIndustryCodeCode": "0134",
    "standardIndustryCodeLabel": "Irish Potatoes"
  },
  {
    "industryGroupLabel": "Field Crops, Except Cash Grains",
    "standardIndustryCodeFull": "0139: Field Crops, Except Cash Grains, Not Elsewhere Classified",
-   "standardIndustryCodeCode": "139",
+   "standardIndustryCodeCode": "0139",
    "standardIndustryCodeLabel": "Field Crops, Except Cash Grains, Not Elsewhere Classified"
  },
  {
    "industryGroupLabel": "Vegetables And Melons",
    "standardIndustryCodeFull": "0161: Vegetables and Melons",
-   "standardIndustryCodeCode": "161",
+   "standardIndustryCodeCode": "0161",
    "standardIndustryCodeLabel": "Vegetables and Melons"
  },
  {
    "industryGroupLabel": "Fruits And Tree Nuts",
    "standardIndustryCodeFull": "0171: Berry Crops",
-   "standardIndustryCodeCode": "171",
+   "standardIndustryCodeCode": "0171",
    "standardIndustryCodeLabel": "Berry Crops"
  },
  {
    "industryGroupLabel": "Fruits And Tree Nuts",
    "standardIndustryCodeFull": "0172: Grapes",
-   "standardIndustryCodeCode": "172",
+   "standardIndustryCodeCode": "0172",
    "standardIndustryCodeLabel": "Grapes"
  },
  {
    "industryGroupLabel": "Fruits And Tree Nuts",
    "standardIndustryCodeFull": "0173: Tree Nuts",
-   "standardIndustryCodeCode": "173",
+   "standardIndustryCodeCode": "0173",
    "standardIndustryCodeLabel": "Tree Nuts"
  },
  {
    "industryGroupLabel": "Fruits And Tree Nuts",
    "standardIndustryCodeFull": "0174: Citrus Fruits",
-   "standardIndustryCodeCode": "174",
+   "standardIndustryCodeCode": "0174",
    "standardIndustryCodeLabel": "Citrus Fruits"
  },
  {
    "industryGroupLabel": "Fruits And Tree Nuts",
    "standardIndustryCodeFull": "0175: Deciduous Tree Fruits",
-   "standardIndustryCodeCode": "175",
+   "standardIndustryCodeCode": "0175",
    "standardIndustryCodeLabel": "Deciduous Tree Fruits"
  },
  {
    "industryGroupLabel": "Fruits And Tree Nuts",
    "standardIndustryCodeFull": "0179: Fruits and Tree Nuts, Not Elsewhere Classified",
-   "standardIndustryCodeCode": "179",
+   "standardIndustryCodeCode": "0179",
    "standardIndustryCodeLabel": "Fruits and Tree Nuts, Not Elsewhere Classified"
  },
  {
    "industryGroupLabel": "Horticultural Specialties",
    "standardIndustryCodeFull": "0181: Ornamental Floriculture and Nursery Products",
-   "standardIndustryCodeCode": "181",
+   "standardIndustryCodeCode": "0181",
    "standardIndustryCodeLabel": "Ornamental Floriculture and Nursery Products"
  },
  {
    "industryGroupLabel": "Horticultural Specialties",
    "standardIndustryCodeFull": "0182: Food Crops Grown Under Cover",
-   "standardIndustryCodeCode": "182",
+   "standardIndustryCodeCode": "0182",
    "standardIndustryCodeLabel": "Food Crops Grown Under Cover"
  },
  {
    "industryGroupLabel": "General Farms, Primarily Crop",
    "standardIndustryCodeFull": "0191: General Farms, Primarily Crop",
-   "standardIndustryCodeCode": "191",
+   "standardIndustryCodeCode": "0191",
    "standardIndustryCodeLabel": "General Farms, Primarily Crop"
  },
  {
    "industryGroupLabel": "Livestock, Except Dairy And Poultry",
    "standardIndustryCodeFull": "0211: Beef Cattle Feedlots",
-   "standardIndustryCodeCode": "211",
+   "standardIndustryCodeCode": "0211",
    "standardIndustryCodeLabel": "Beef Cattle Feedlots"
  },
  {
    "industryGroupLabel": "Livestock, Except Dairy And Poultry",
    "standardIndustryCodeFull": "0212: Beef Cattle, Except Feedlots",
-   "standardIndustryCodeCode": "212",
+   "standardIndustryCodeCode": "0212",
    "standardIndustryCodeLabel": "Beef Cattle, Except Feedlots"
  },
  {
    "industryGroupLabel": "Livestock, Except Dairy And Poultry",
    "standardIndustryCodeFull": "0213: Hogs",
-   "standardIndustryCodeCode": "213",
+   "standardIndustryCodeCode": "0213",
    "standardIndustryCodeLabel": "Hogs"
  },
  {
    "industryGroupLabel": "Livestock, Except Dairy And Poultry",
    "standardIndustryCodeFull": "0214: Sheep and Goats",
-   "standardIndustryCodeCode": "214",
+   "standardIndustryCodeCode": "0214",
    "standardIndustryCodeLabel": "Sheep and Goats"
  },
  {
    "industryGroupLabel": "Livestock, Except Dairy And Poultry",
    "standardIndustryCodeFull": "0219: General Livestock, Except Dairy and Poultry",
-   "standardIndustryCodeCode": "219",
+   "standardIndustryCodeCode": "0219",
    "standardIndustryCodeLabel": "General Livestock, Except Dairy and Poultry"
  },
  {
    "industryGroupLabel": "Dairy Farms",
    "standardIndustryCodeFull": "0241: Dairy Farms",
-   "standardIndustryCodeCode": "241",
+   "standardIndustryCodeCode": "0241",
    "standardIndustryCodeLabel": "Dairy Farms"
  },
  {
    "industryGroupLabel": "Poultry And Eggs",
    "standardIndustryCodeFull": "0251: Broiler, Fryer, and Roaster Chickens",
-   "standardIndustryCodeCode": "251",
+   "standardIndustryCodeCode": "0251",
    "standardIndustryCodeLabel": "Broiler, Fryer, and Roaster Chickens"
  },
  {
    "industryGroupLabel": "Poultry And Eggs",
    "standardIndustryCodeFull": "0252: Chicken Eggs",
-   "standardIndustryCodeCode": "252",
+   "standardIndustryCodeCode": "0252",
    "standardIndustryCodeLabel": "Chicken Eggs"
  },
  {
    "industryGroupLabel": "Poultry And Eggs",
    "standardIndustryCodeFull": "0253: Turkeys and Turkey Eggs",
-   "standardIndustryCodeCode": "253",
+   "standardIndustryCodeCode": "0253",
    "standardIndustryCodeLabel": "Turkeys and Turkey Eggs"
  },
  {
    "industryGroupLabel": "Poultry And Eggs",
    "standardIndustryCodeFull": "0254: Poultry Hatcheries",
-   "standardIndustryCodeCode": "254",
+   "standardIndustryCodeCode": "0254",
    "standardIndustryCodeLabel": "Poultry Hatcheries"
  },
  {
    "industryGroupLabel": "Poultry And Eggs",
    "standardIndustryCodeFull": "0259: Poultry and Eggs, Not Elsewhere Classified",
-   "standardIndustryCodeCode": "259",
+   "standardIndustryCodeCode": "0259",
    "standardIndustryCodeLabel": "Poultry and Eggs, Not Elsewhere Classified"
  },
  {
    "industryGroupLabel": "Animal Specialties",
    "standardIndustryCodeFull": "0271: Fur-Bearing Animals and Rabbits",
-   "standardIndustryCodeCode": "271",
+   "standardIndustryCodeCode": "0271",
    "standardIndustryCodeLabel": "Fur-Bearing Animals and Rabbits"
  },
  {
    "industryGroupLabel": "Animal Specialties",
    "standardIndustryCodeFull": "0272: Horses and Other Equines",
-   "standardIndustryCodeCode": "272",
+   "standardIndustryCodeCode": "0272",
    "standardIndustryCodeLabel": "Horses and Other Equines"
  },
  {
    "industryGroupLabel": "Animal Specialties",
    "standardIndustryCodeFull": "0273: Animal Aquaculture",
-   "standardIndustryCodeCode": "273",
+   "standardIndustryCodeCode": "0273",
    "standardIndustryCodeLabel": "Animal Aquaculture"
  },
  {
    "industryGroupLabel": "Animal Specialties",
    "standardIndustryCodeFull": "0279: Animal Specialties, Not Elsewhere Classified",
-   "standardIndustryCodeCode": "279",
+   "standardIndustryCodeCode": "0279",
    "standardIndustryCodeLabel": "Animal Specialties, Not Elsewhere Classified"
  },
  {
    "industryGroupLabel": "General Farms, Primarily Livestock And Animal",
    "standardIndustryCodeFull": "0291: General Farms, Primarily Livestock and Animal Specialties",
-   "standardIndustryCodeCode": "291",
+   "standardIndustryCodeCode": "0291",
    "standardIndustryCodeLabel": "General Farms, Primarily Livestock and Animal Specialties"
  },
  {
    "industryGroupLabel": "Soil Preparation Services",
    "standardIndustryCodeFull": "0711: Soil Preparation Services",
-   "standardIndustryCodeCode": "711",
+   "standardIndustryCodeCode": "0711",
    "standardIndustryCodeLabel": "Soil Preparation Services"
  },
  {
    "industryGroupLabel": "Crop Services",
    "standardIndustryCodeFull": "0721: Crop Planting, Cultivating, and Protecting",
-   "standardIndustryCodeCode": "721",
+   "standardIndustryCodeCode": "0721",
    "standardIndustryCodeLabel": "Crop Planting, Cultivating, and Protecting"
  },
  {
    "industryGroupLabel": "Crop Services",
    "standardIndustryCodeFull": "0722: Crop Harvesting, Primarily by Machine",
-   "standardIndustryCodeCode": "722",
+   "standardIndustryCodeCode": "0722",
    "standardIndustryCodeLabel": "Crop Harvesting, Primarily by Machine"
  },
  {
    "industryGroupLabel": "Crop Services",
    "standardIndustryCodeFull": "0723: Crop Preparation Services for Market, Except Cotton Ginning",
-   "standardIndustryCodeCode": "723",
+   "standardIndustryCodeCode": "0723",
    "standardIndustryCodeLabel": "Crop Preparation Services for Market, Except Cotton Ginning"
  },
  {
    "industryGroupLabel": "Crop Services",
    "standardIndustryCodeFull": "0724: Cotton Ginning",
-   "standardIndustryCodeCode": "724",
+   "standardIndustryCodeCode": "0724",
    "standardIndustryCodeLabel": "Cotton Ginning"
  },
  {
    "industryGroupLabel": "Veterinary Services",
    "standardIndustryCodeFull": "0741: Veterinary Services for Livestock",
-   "standardIndustryCodeCode": "741",
+   "standardIndustryCodeCode": "0741",
    "standardIndustryCodeLabel": "Veterinary Services for Livestock"
  },
  {
    "industryGroupLabel": "Veterinary Services",
    "standardIndustryCodeFull": "0742: Veterinary Services for Animal Specialties",
-   "standardIndustryCodeCode": "742",
+   "standardIndustryCodeCode": "0742",
    "standardIndustryCodeLabel": "Veterinary Services for Animal Specialties"
  },
  {
    "industryGroupLabel": "Animal Services, Except Veterinary",
    "standardIndustryCodeFull": "0751: Livestock Services, Except Veterinary",
-   "standardIndustryCodeCode": "751",
+   "standardIndustryCodeCode": "0751",
    "standardIndustryCodeLabel": "Livestock Services, Except Veterinary"
  },
  {
    "industryGroupLabel": "Animal Services, Except Veterinary",
    "standardIndustryCodeFull": "0752: Animal Specialty Services, Except Veterinary",
-   "standardIndustryCodeCode": "752",
+   "standardIndustryCodeCode": "0752",
    "standardIndustryCodeLabel": "Animal Specialty Services, Except Veterinary"
  },
  {
    "industryGroupLabel": "Farm Labor And Management Services",
    "standardIndustryCodeFull": "0761: Farm Labor Contractors and Crew Leaders",
-   "standardIndustryCodeCode": "761",
+   "standardIndustryCodeCode": "0761",
    "standardIndustryCodeLabel": "Farm Labor Contractors and Crew Leaders"
  },
  {
    "industryGroupLabel": "Farm Labor And Management Services",
    "standardIndustryCodeFull": "0762: Farm Management Services",
-   "standardIndustryCodeCode": "762",
+   "standardIndustryCodeCode": "0762",
    "standardIndustryCodeLabel": "Farm Management Services"
  },
  {
    "industryGroupLabel": "Landscape And Horticultural Services",
    "standardIndustryCodeFull": "0781: Landscape Counseling and Planning",
-   "standardIndustryCodeCode": "781",
+   "standardIndustryCodeCode": "0781",
    "standardIndustryCodeLabel": "Landscape Counseling and Planning"
  },
  {
    "industryGroupLabel": "Landscape And Horticultural Services",
    "standardIndustryCodeFull": "0782: Lawn and Garden Services",
-   "standardIndustryCodeCode": "782",
+   "standardIndustryCodeCode": "0782",
    "standardIndustryCodeLabel": "Lawn and Garden Services"
  },
  {
    "industryGroupLabel": "Landscape And Horticultural Services",
    "standardIndustryCodeFull": "0783: Ornamental Shrub and Tree Services",
-   "standardIndustryCodeCode": "783",
+   "standardIndustryCodeCode": "0783",
    "standardIndustryCodeLabel": "Ornamental Shrub and Tree Services"
  },
  {
    "industryGroupLabel": "Timber Tracts",
    "standardIndustryCodeFull": "0811: Timber Tracts",
-   "standardIndustryCodeCode": "811",
+   "standardIndustryCodeCode": "0811",
    "standardIndustryCodeLabel": "Timber Tracts"
  },
  {
    "industryGroupLabel": "Forest Nurseries And Gathering Of Forest",
    "standardIndustryCodeFull": "0831: Forest Nurseries and Gathering of Forest Products",
-   "standardIndustryCodeCode": "831",
+   "standardIndustryCodeCode": "0831",
    "standardIndustryCodeLabel": "Forest Nurseries and Gathering of Forest Products"
  },
  {
    "industryGroupLabel": "Forestry Services",
    "standardIndustryCodeFull": "0851: Forestry Services",
-   "standardIndustryCodeCode": "851",
+   "standardIndustryCodeCode": "0851",
    "standardIndustryCodeLabel": "Forestry Services"
  },
  {
    "industryGroupLabel": "Commercial Fishing",
    "standardIndustryCodeFull": "0912: Finfish",
-   "standardIndustryCodeCode": "912",
+   "standardIndustryCodeCode": "0912",
    "standardIndustryCodeLabel": "Finfish"
  },
  {
    "industryGroupLabel": "Commercial Fishing",
    "standardIndustryCodeFull": "0913: Shellfish",
-   "standardIndustryCodeCode": "913",
+   "standardIndustryCodeCode": "0913",
    "standardIndustryCodeLabel": "Shellfish"
  },
  {
    "industryGroupLabel": "Commercial Fishing",
    "standardIndustryCodeFull": "0919: Miscellaneous Marine Products",
-   "standardIndustryCodeCode": "919",
+   "standardIndustryCodeCode": "0919",
    "standardIndustryCodeLabel": "Miscellaneous Marine Products"
  },
  {
    "industryGroupLabel": "Fish Hatcheries And Preserves",
    "standardIndustryCodeFull": "0921: Fish Hatcheries and Preserves",
-   "standardIndustryCodeCode": "921",
+   "standardIndustryCodeCode": "0921",
    "standardIndustryCodeLabel": "Fish Hatcheries and Preserves"
  },
  {
    "industryGroupLabel": "Hunting And Trapping, And Game Propagation",
    "standardIndustryCodeFull": "0971: Hunting and Trapping, and Game Propagation",
-   "standardIndustryCodeCode": "971",
+   "standardIndustryCodeCode": "0971",
    "standardIndustryCodeLabel": "Hunting and Trapping, and Game Propagation"
  },
  {

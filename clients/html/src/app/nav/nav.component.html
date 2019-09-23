@@ -1,14 +1,8 @@
 <div class="row">
   <div class="col-12">
     <ul class="nav">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/employer-details">Employer Details</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/employer-details/health">Health</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/employer-details/dental">Dental</a>
+      <li class="nav-item" *ngFor="let link of navLinks">
+        <a class="nav-link" [ngClass]="{'disabled': isFormValid(link.name)}" [routerLink]="link.path">{{link.name}}</a>
       </li>
     </ul>
   </div>

@@ -9,7 +9,34 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+a:active {
+  color: #c56c24;
+}
+
 .btn-primary {
   background-color: #005e81;
   border-color: #005e81;
+}
+
+.btn-primary:hover {
+  background-color: #c56c24;
+  border-color: #c56c24;
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+  background-color: #005e81;
+  border-color: #005e81;
+}
+
+.btn-success {
+  color: #fff;
+}
+
+.ngx-datatable .datatable-header {
+  background-color: #005e81;
+}
+
+.ngx-datatable.material .datatable-header .datatable-header-cell {
+  color: #fff;
+  font-size: 14px;
 }
