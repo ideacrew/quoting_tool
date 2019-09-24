@@ -32,6 +32,7 @@ import { EmployerDetailsComponent } from './employer-details/employer-details.co
 import { EmployerDetailsHealthComponent } from './employer-details/employer-details-health/employer-details-health.component';
 import { EmployerDetailsDentalComponent } from './employer-details/employer-details-dental/employer-details-dental.component';
 import { NavComponent } from './nav/nav.component';
+import { PlanFilterComponent } from './plan-filter/plan-filter.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -52,7 +53,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     EmployerDetailsComponent,
     EmployerDetailsHealthComponent,
     EmployerDetailsDentalComponent,
-    NavComponent
+    NavComponent,
+    PlanFilterComponent
   ],
   imports: [
     AutocompleteLibModule,

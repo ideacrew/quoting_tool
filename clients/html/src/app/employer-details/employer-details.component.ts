@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployerDetailsService } from './../services/employer-details.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { NgbDateStruct, NgbCalendar, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import zipcodes from '../../configurations/zipcode.json';
-import sics from '../../configurations/sic.json';
+import zipcodes from '../../settings/zipcode.json';
+import sics from '../../settings/sic.json';
 
 @Component({
   selector: 'app-employer-details',
@@ -227,10 +227,11 @@ export class EmployerDetailsComponent implements OnInit {
     this.ngOnInit();
   }
 
-  removeRoster() {
+  resetForm() {
     // Removes the roster from localStorage
     localStorage.removeItem('employerDetails');
     this.showEmployeeRoster = false;
+    this.quoteForm.reset();
   }
 
   loadEmployeesFromStorage() {
