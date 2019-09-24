@@ -19,10 +19,12 @@ export class NavComponent implements OnInit {
   ngOnInit() { }
 
   isFormValid(name) {
-    if (name === 'Health' && !this.validForm) {
-      return true;
-    } else if (name === 'Dental') {
-      return true;
+    if (name === 'Health') {
+      return !this.validForm;
+    }
+
+    if (name === 'Dental') {
+      return !this.validForm;
     }
   }
 
