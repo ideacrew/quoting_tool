@@ -1,5 +1,5 @@
 <div class="container mb-4">
-  <app-nav [validForm]="quoteForm.valid"></app-nav>
+  <app-nav [validForm]="showEmployeeRoster"></app-nav>
   <div class="row pl-3 mt-4">
     <form [formGroup]="quoteForm">
       <div class="row">
@@ -218,7 +218,7 @@
       <div class="row mt-3">
         <div class="col-12">
           <button class="float-left btn btn-primary" (click)="open(content)"><i class="fas fa-upload"></i> Upload Employee Roster</button> <button (click)="addEmployee()" class="float-right btn btn-primary"><i class="fas fa-user-plus"></i> Add New Employee</button>
-          <button class="btn btn-danger" *ngIf="showEmployeeRoster" (click)="removeRoster()"><i class="fas fa-trash-alt"></i> Clear Roster</button>
+          <button class="btn btn-danger" *ngIf="showEmployeeRoster" (click)="resetForm()"><i class="fas fa-redo"></i> Reset Form</button>
         </div>
         <div class="col-12 mt-2" *ngIf="!showEmployeeRoster">
           <button class="float-right btn btn-primary" (click)="createRoster()" [disabled]="!quoteForm.value.employees.length > 0 || !quoteForm.valid">Create Roster</button>
