@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployerDetailsService } from './../services/employer-details.service';
@@ -24,7 +24,7 @@ import sics from '../../settings/sic.json';
 export class EmployerDetailsComponent implements OnInit {
   rows = [];
   model: NgbDateStruct;
-  date: {month: number, day: number, year: number};
+  date: {months: number, day: number, year: number};
   sicKeyword = 'standardIndustryCodeCode';
   zipKeyword = 'zipCode';
   sics = sics;
@@ -33,12 +33,16 @@ export class EmployerDetailsComponent implements OnInit {
   uploadData: any;
   employee: any;
   employeeIndex: any;
+  employerDetails: any;
   public counties: any;
   public quoteForm: FormGroup;
   public showEmployeeRoster = false;
   public showHouseholds = true;
   public employeeRoster: any;
   public employees: any;
+  public effectiveDateOptions: any;
+  public months: any;
+  public todaysDate = new Date();
 
   relationOptions = [
     {key: 'spouse', value: 'Spouse'},
@@ -46,6 +50,8 @@ export class EmployerDetailsComponent implements OnInit {
     {key: 'child', value: 'Child'},
     {key: 'disabled child', value: 'Disabled Child'},
   ];
+
+  @ViewChild('file', {static: false}) file: ElementRef;
 
   constructor(private fb: FormBuilder, private modalService: NgbModal, private employerDetailsService: EmployerDetailsService,
     private calendar: NgbCalendar, private config: NgbDatepickerConfig) {
@@ -58,7 +64,23 @@ export class EmployerDetailsComponent implements OnInit {
       employees: this.fb.array([])
     });
 
+    this.months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+
     const year = new Date().getFullYear();
+    const month = new Date().getMonth();
 
     config.minDate = {year: year - 110, month: 1, day: 1};
     config.maxDate = {year: year + 1, month: 12, day: 31};
@@ -68,11 +90,40 @@ export class EmployerDetailsComponent implements OnInit {
     this.employeeRoster = localStorage.getItem('employerDetails');
     if (this.employeeRoster) {
       this.showEmployeeRoster = true;
-      const details = JSON.parse(this.employeeRoster);
-      this.quoteForm.get('effectiveDate').setValue(new Date(Date.parse(details.effectiveDate)));
-      this.quoteForm.get('sic').setValue(details.sic.standardIndustryCodeCode);
-      this.quoteForm.get('zip').setValue(details.zip.zipCode);
+      this.employerDetails = JSON.parse(this.employeeRoster);
+      this.quoteForm.get('effectiveDate').setValue(new Date(Date.parse(this.employerDetails.effectiveDate)));
+      this.quoteForm.get('sic').setValue(this.employerDetails.sic.standardIndustryCodeCode);
+      this.quoteForm.get('zip').setValue(this.employerDetails.zip.zipCode);
       this.loadEmployeesFromStorage();
+    }
+    // Sets effective Date options
+    if (this.todaysDate.getMonth() + 1 > 11) {
+      // Add next year date if next month is January
+      this.effectiveDateOptions = [
+        { month: -1, value: 'SELECT START ON', disabled: true},
+        { month: this.todaysDate.getMonth(), value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}` },
+        { month: 0, value: `${this.months[0]} ${this.todaysDate.getFullYear() + 1}` },
+      ];
+    } else {
+      this.effectiveDateOptions = [
+        { month: -1, value: 'SELECT START ON', disabled: true},
+        { month: this.todaysDate.getMonth(), value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}` },
+        { month: this.todaysDate.getMonth() + 1, value: `${this.months[this.todaysDate.getMonth() + 1]} ${this.todaysDate.getFullYear()}`}
+      ];
+    }
+  }
+
+  isSelected(date) {
+    if (this.employerDetails && date.value === this.employerDetails.effectiveDate) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  checkFilePresence(file) {
+    if (file.files.length) {
+      document.getElementById('file-upload-btn').removeAttribute('disabled');
     }
   }
 
