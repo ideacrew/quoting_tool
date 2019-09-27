@@ -24,14 +24,14 @@
         <div class="card-body">
           <div class="row">
             <div class="col-3">
-              <p class="heading-label">Metal Level <i class="far fa-question-circle ml-2"></i></p>
+              <p class="heading-label">Metal Level <i class="far fa-question-circle ml-2" placement="right" ngbTooltip="{{tooltips[0].health[0].metalLevel}}"></i></p>
               <div class="custom-control custom-checkbox mr-sm-2 m-b-15" *ngFor="let metalLevel of metalLevelOptions; let i = index">
                 <input type="checkbox" class="custom-control-input checkbox-input" id="checkbox-metal-{{i}}" [value]="metalLevel" (click)="selectedFilter(metalLevel, $event, 'metalLevel')" [checked]="clearAll">
                 <label class="custom-control-label" for="checkbox-metal-{{i}}">{{metalLevel}}</label>
               </div>
             </div>
             <div class="col-3">
-              <p class="heading-label">Plan Type <i class="far fa-question-circle ml-2"></i></p>
+              <p class="heading-label">Plan Type <i class="far fa-question-circle ml-2" placement="right" ngbTooltip="{{tooltips[0].health[0].planType}}"></i></p>
               <div class="custom-control custom-checkbox mr-sm-2 m-b-15" *ngFor="let product of products; let i = index">
                 <input type="checkbox" class="custom-control-input checkbox-input" id="checkbox-plan-{{i}}" [value]="product" (click)="selectedFilter(product, $event, 'productType')" [checked]="clearAll">
                 <label class="custom-control-label" for="checkbox-plan-{{i}}">{{product}}</label>
