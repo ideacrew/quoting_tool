@@ -26,14 +26,14 @@
             <div class="col-3">
               <p class="heading-label">Metal Level <i class="far fa-question-circle ml-2"></i></p>
               <div class="custom-control custom-checkbox mr-sm-2 m-b-15" *ngFor="let metalLevel of metalLevelOptions; let i = index">
-                <input type="checkbox" class="custom-control-input" id="checkbox-metal-{{i}}" [value]="metalLevel">
+                <input type="checkbox" class="custom-control-input checkbox-input" id="checkbox-metal-{{i}}" [value]="metalLevel" (click)="selectedFilter(metalLevel, $event, 'metalLevel')" [checked]="clearAll">
                 <label class="custom-control-label" for="checkbox-metal-{{i}}">{{metalLevel}}</label>
               </div>
             </div>
             <div class="col-3">
               <p class="heading-label">Plan Type <i class="far fa-question-circle ml-2"></i></p>
               <div class="custom-control custom-checkbox mr-sm-2 m-b-15" *ngFor="let product of products; let i = index">
-                <input type="checkbox" class="custom-control-input" id="checkbox-plan-{{i}}" [value]="product">
+                <input type="checkbox" class="custom-control-input checkbox-input" id="checkbox-plan-{{i}}" [value]="product" (click)="selectedFilter(product, $event, 'productType')" [checked]="clearAll">
                 <label class="custom-control-label" for="checkbox-plan-{{i}}">{{product}}</label>
               </div>
             </div>
@@ -69,7 +69,7 @@
           <div class="row">
             <div class="col-3" *ngFor="let carrier of carriers; let i = index">
               <div class="custom-control custom-checkbox mr-sm-2 m-b-15">
-                <input type="checkbox" class="custom-control-input" id="checkbox-carrier-{{i}}" [value]="carrier">
+                <input type="checkbox" class="custom-control-input checkbox-input" id="checkbox-carrier-{{i}}" [value]="carrier" (click)="selectedFilter(carrier, $event, 'insuranceCompany')" [checked]="clearAll">
                 <label class="custom-control-label" for="checkbox-carrier-{{i}}">{{carrier}}</label>
               </div>
             </div>
@@ -81,10 +81,10 @@
                   <p>Maximum Monthly <br />Employer Cost</p>
                 </div>
                 <div class="col-3 mr-2">
-                  <button class="btn btn-rounded btn-warning">Reset</button>
+                  <button class="btn btn-rounded btn-warning" (click)="resetAll()">Reset</button>
                 </div>
                 <div class="col-2">
-                  <button class="btn btn-rounded btn-success">Apply</button>
+                  <button class="btn btn-rounded btn-success" (click)="isCollapsed = !isCollapsed; displayResults()">Apply</button>
                 </div>
               </div>
             </div>

@@ -42,6 +42,12 @@ fieldset.dependent > legend {
   color: #c56c24;
 }
 
+::-webkit-inner-spin-button,
+::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
 .modal-header {
   color: #fff;
   background: #005e81;
