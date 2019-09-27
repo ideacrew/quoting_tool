@@ -26,6 +26,11 @@ export class PlanFilterComponent implements OnInit {
   public effectiveDate: any;
   public erEmployees: any;
   public costShownText: any;
+  public clearAll: boolean;
+  selectedMetalLevels = [];
+  selectedProductTypes = [];
+  selectedInsuranceCompanies = [];
+  filterCarriersResults = [];
 
   public planOptions = [
     {key: 'one_carrier', value: 'One Carrier'},
@@ -42,6 +47,7 @@ export class PlanFilterComponent implements OnInit {
       if (plan['Metal Level']) {
         return plan['Metal Level'];
       } else {
+        // Dental uses Coverage level as a key instead of Metal level
         return plan['Coverage Level'];
       }
     })
@@ -67,6 +73,82 @@ export class PlanFilterComponent implements OnInit {
     } else {
       this.costShownText = `${this.erEmployees.length} person`;
     }
+  }
+
+  selectedFilter(value, event, type) {
+    switch (type) {
+      case 'metalLevel' :
+        if (event.target.checked) {
+          this.selectedMetalLevels.push(value);
+        } else {
+          const index = this.selectedMetalLevels.indexOf(value);
+          this.selectedMetalLevels.splice(index, 1);
+        }
+        break;
+      case 'productType' :
+        if (event.target.checked) {
+          this.selectedProductTypes.push(value);
+        } else {
+          const index = this.selectedProductTypes.indexOf(value);
+          this.selectedProductTypes.splice(index, 1);
+        }
+        break;
+      case 'insuranceCompany' :
+        if (event.target.checked) {
+          this.selectedInsuranceCompanies.push(value);
+        } else {
+          const index = this.selectedInsuranceCompanies.indexOf(value);
+          this.selectedInsuranceCompanies.splice(index, 1);
+        }
+        break;
+    }
+    this.filterCarriers();
+  }
+
+  filterCarriers() {
+    const tempArray = [];
+    this.carrierPlans.map(plan => {
+      if (this.selectedMetalLevels) {
+        this.selectedMetalLevels.filter(metalLevel => {
+          if (plan['Metal Level']) {
+            if (metalLevel === plan['Metal Level']) {
+              tempArray.push(plan);
+            }
+          } else {
+            // Dental uses Coverage level as a key instead of Metal level
+            if (metalLevel === plan['Coverage Level']) {
+              tempArray.push(plan);
+            }
+          }
+        });
+      }
+
+      if (this.selectedProductTypes) {
+        this.selectedProductTypes.filter(product => {
+          if (product === plan['Product']) {
+            tempArray.push(plan);
+          }
+        });
+      }
+
+      if (this.selectedInsuranceCompanies) {
+        this.selectedInsuranceCompanies.filter(carrier => {
+          if (carrier === plan['Carrier']) {
+            tempArray.push(plan);
+          }
+        });
+      }
+    });
+    this.filterCarriersResults = tempArray;
+  }
+
+  displayResults() {
+    this.filteredCarriers = this.filterCarriersResults;
+  }
+
+  resetAll() {
+    this.clearAll = false;
+    this.filteredCarriers = this.carrierPlans;
   }
 
 }
