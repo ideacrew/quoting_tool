@@ -39,6 +39,7 @@ export class PlanFilterComponent implements OnInit {
   ];
 
   @Input() carrierPlans: any;
+  @Input() planType: any;
 
   constructor() { }
 
