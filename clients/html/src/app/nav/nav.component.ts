@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class NavComponent implements OnInit {
   @Input() validForm: string;
+  @Input() myPath: string;
 
   navLinks = [
     { path: '/employer-details', name: 'Employer Details' },
@@ -16,7 +17,7 @@ export class NavComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   isFormValid(name) {
     if (name === 'Health') {
@@ -25,6 +26,14 @@ export class NavComponent implements OnInit {
 
     if (name === 'Dental') {
       return !this.validForm;
+    }
+  }
+
+  isLinkActive(link) {
+    if (link === this.myPath) {
+      return true;
+    } else {
+      return false;
     }
   }
 
