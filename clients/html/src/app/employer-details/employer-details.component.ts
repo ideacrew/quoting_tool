@@ -292,6 +292,12 @@ export class EmployerDetailsComponent implements OnInit {
     this.rows = roster.employees;
   }
 
+  removeEmployeeFromRoster(rowIndex) {
+    this.rows.splice(rowIndex, 1)
+    this.employerDetails.employees.splice(rowIndex, 1)
+    localStorage.setItem('employerDetails', JSON.stringify(this.employerDetails));
+  }
+
   formatDOB(value) {
     // Formats dob to valid format for datepicker
     return new Date(parseInt(value[2]), parseInt(value[0]), parseInt(value[1]));

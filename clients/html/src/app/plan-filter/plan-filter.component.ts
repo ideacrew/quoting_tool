@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import tooltips from '../../settings/tooltips.json';
+import tableHeaders from '../../settings/tableHeaders.json';
 
 @Component({
   selector: 'app-plan-filter',
@@ -27,22 +28,42 @@ export class PlanFilterComponent implements OnInit {
   public erEmployees: any;
   public costShownText: any;
   public clearAll: boolean;
+  public filterLength: number;
+  public tableHeaders = tableHeaders;
   selectedMetalLevels = [];
   selectedProductTypes = [];
   selectedInsuranceCompanies = [];
   filterCarriersResults = [];
 
   public planOptions = [
-    {key: 'one_carrier', value: 'One Carrier'},
-    {key: 'one_level', value: 'One Level'},
-    {key: 'one_plan', value: 'One Plan'}
+    {key: 'one_carrier', value: 'One Carrier', view: 'health'},
+    {key: 'one_level', value: 'One Level', view: 'health'},
+    {key: 'one_plan', value: 'One Plan', view: 'health'},
+    {key: 'one_plan', value: 'One Plan', view: 'dental'},
   ];
 
   @Input() carrierPlans: any;
+  @Input() planType: any;
 
   constructor() { }
 
   ngOnInit() {
+    const erDetails = localStorage.getItem('employerDetails');
+    this.employerDetails = JSON.parse(erDetails);
+    this.filterLength = 0;
+
+    if (this.employerDetails) {
+      this.erEmployees = this.employerDetails.employees;
+
+      if (this.erEmployees.length > 1) {
+        this.costShownText = `${this.erEmployees.length} people`;
+      } else {
+        this.costShownText = `${this.erEmployees.length} person`;
+      }
+    }
+  }
+
+  loadData() {
     this.metalLevelOptions = this.carrierPlans.map(plan => {
       if (plan['Metal Level']) {
         return plan['Metal Level'];
@@ -63,16 +84,7 @@ export class PlanFilterComponent implements OnInit {
         unique.includes(item) ? unique : [...unique, item], []);
 
     this.filteredCarriers = this.carrierPlans;
-
-    const erDetails = localStorage.getItem('employerDetails');
-    this.employerDetails = JSON.parse(erDetails);
-    this.erEmployees = this.employerDetails.employees;
-
-    if (this.erEmployees.length > 1) {
-      this.costShownText = `${this.erEmployees.length} people`;
-    } else {
-      this.costShownText = `${this.erEmployees.length} person`;
-    }
+    this.filterLength = this.filteredCarriers.length;
   }
 
   selectedFilter(value, event, type) {
@@ -144,11 +156,17 @@ export class PlanFilterComponent implements OnInit {
 
   displayResults() {
     this.filteredCarriers = this.filterCarriersResults;
+    this.filterLength = this.filterCarriersResults.length;
   }
 
   resetAll() {
     this.clearAll = false;
     this.filteredCarriers = this.carrierPlans;
+    this.filterLength = this.carrierPlans.length;
+  }
+
+  getToolTip(type) {
+    return this.tooltips[0][this.planType][0][type];
   }
 
 }

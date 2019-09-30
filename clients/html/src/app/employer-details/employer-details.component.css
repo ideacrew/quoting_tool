@@ -1,6 +1,7 @@
 .btn-link {
   color: #005e81;
 }
+
 fieldset.household {
   padding: 20px;
   border-radius: 10px;
@@ -35,6 +36,10 @@ fieldset.dependent > legend {
 
 .fa-trash {
   cursor: pointer;
+}
+
+.form-button-group {
+  margin-bottom: 30px;
 }
 
 .heading-text {

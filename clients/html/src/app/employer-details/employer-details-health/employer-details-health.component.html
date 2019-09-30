@@ -1,5 +1,5 @@
 <div class="container">
-  <app-nav [validForm]="true"></app-nav>
+  <app-nav [validForm]="true" myPath="Health"></app-nav>
   <div class="row">
     <div class="col-12 mt-2">
       <p>Select a benefit model to view the plans available to you. <span class="plan-tooltip" placement="bottom" ngbTooltip="Employer chooses a single health plan and all employees will enroll in that same plan.">One Plan</span> allows you to offer one plan from one health plan to your employees. <span class="plan-tooltip" placement="bottom" ngbTooltip="Employer chooses an insurance company (carrier). Employees can choose any plan from that carrier at the Platinum, Gold, or Silver level.">One Carrier</span> allows you to offer a range of plans from a single health insurance company (carrier). <span class="plan-tooltip" placement="bottom" ngbTooltip="Employer chooses a Gold or Silver metal level. Employees can choose a plan from any insurance company (carrier) at the level.">One
@@ -9,8 +9,8 @@
         <a href="https://www.mahealthconnector.org/business/employers/employee-choice" target="_blank">Employee Choice</a>
     </div>
   </div>
-  <app-plan-filter [carrierPlans]="carriers"></app-plan-filter>
-  <div class="row mb-5">
+  <app-plan-filter [carrierPlans]="carriers" planType="health"></app-plan-filter>
+  <div class="row health-button-group">
     <div class="col-12">
       <button class="btn btn-primary">Save PDF</button>
       <a class="btn btn-primary float-right" routerLink="/employer-details/dental">Select Dental</a>
