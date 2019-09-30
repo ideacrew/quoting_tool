@@ -292,7 +292,10 @@ export class EmployerDetailsComponent implements OnInit {
     this.rows = roster.employees;
   }
 
-  removeEmployeeFromRoster(row) {
+  removeEmployeeFromRoster(rowIndex) {
+    this.rows.splice(rowIndex, 1)
+    this.employerDetails.employees.splice(rowIndex, 1)
+    localStorage.setItem('employerDetails', JSON.stringify(this.employerDetails));
   }
 
   formatDOB(value) {
