@@ -108,9 +108,15 @@
                 {{row['dependents'].length}}
               </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column name="" width="250">
+            <ngx-datatable-column name="">
               <ng-template let-row="row" ngx-datatable-cell-template>
-
+                <div ngbDropdown class="d-inline-block" container="body">
+                  <button class="btn btn-outline-primary" ngbDropdownToggle>Actions</button>
+                  <div ngbDropdownMenu>
+                    <button ngbDropdownItem>Edit</button>
+                    <button ngbDropdownItem (click)='removeEmployeeFromRoster(row)'>Delete</button>
+                  </div>
+                </div>
               </ng-template>
             </ngx-datatable-column>
         </ngx-datatable>
