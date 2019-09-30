@@ -9,3 +9,8 @@ a {
 a:hover {
   color: #c56c24;
 }
+
+a.active {
+  color: #c56c24;
+  text-decoration: underline;
+}
