@@ -34,8 +34,11 @@ export class EmployerDetailsComponent implements OnInit {
   employee: any;
   employeeIndex: any;
   employerDetails: any;
+  showEditHousehold: any;
   public counties: any;
   public quoteForm: FormGroup;
+  public editEmployeeForm: FormGroup;
+  public editEmployeeIndex: any;
   public showEmployeeRoster = false;
   public showHouseholds = true;
   public employeeRoster: any;
@@ -62,6 +65,16 @@ export class EmployerDetailsComponent implements OnInit {
       zip: ['', Validators.required],
       county: [{value: '', disabled: true}],
       employees: this.fb.array([])
+    });
+
+    this.showEditHousehold = false
+
+    this.editEmployeeForm = this.fb.group({
+      firstName: [''],
+      lastName: [''],
+      dob: ['', Validators.required],
+      coverageKind: ['', Validators.required],
+      dependents: this.fb.array([])
     });
 
     this.months = [
@@ -296,6 +309,40 @@ export class EmployerDetailsComponent implements OnInit {
     this.rows.splice(rowIndex, 1)
     this.employerDetails.employees.splice(rowIndex, 1)
     localStorage.setItem('employerDetails', JSON.stringify(this.employerDetails));
+  }
+
+  editEmployee(rowIndex) {
+    this.editEmployeeIndex = rowIndex;
+    this.showEditHousehold = true;
+    const employee = this.rows[rowIndex];
+    const employeeForm = this.editEmployeeForm;
+    const currentContext = this;
+    employeeForm.patchValue({
+      firstName: employee.firstName,
+      lastName: employee.lastName,
+      dob: new Date(Date.parse(employee.dob)),
+      coverageKind: employee.coverageKind
+    })
+    employeeForm.controls.dependents = this.fb.array([]);
+    employee.dependents.forEach(function(dependent) {
+      (<FormArray>employeeForm.controls.dependents).push(
+        currentContext.fb.group({
+          firstName: [dependent.firstName],
+          lastName: [dependent.lastName],
+          dob: [new Date(Date.parse(dependent.dob)), Validators.required],
+          relationship: [dependent.relationship],
+        })
+      );
+    });
+  }
+
+  updateEmployee() {
+    this.showEditHousehold = false
+    this.rows[this.editEmployeeIndex] = this.editEmployeeForm.value;
+    this.rows = [...this.rows];
+    this.employerDetails.employees[this.editEmployeeIndex] = this.editEmployeeForm.value
+    localStorage.setItem('employerDetails', JSON.stringify(this.employerDetails));
+    this.editEmployeeIndex = null;
   }
 
   formatDOB(value) {

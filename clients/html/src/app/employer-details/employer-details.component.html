@@ -113,7 +113,7 @@
                 <div ngbDropdown class="d-inline-block" container="body">
                   <button class="btn btn-outline-primary" ngbDropdownToggle>Actions</button>
                   <div ngbDropdownMenu>
-                    <button ngbDropdownItem>Edit</button>
+                    <button ngbDropdownItem (click)='editEmployee(rowIndex)'>Edit</button>
                     <button ngbDropdownItem (click)='removeEmployeeFromRoster(rowIndex)'>Delete</button>
                   </div>
                 </div>
@@ -121,6 +121,92 @@
             </ngx-datatable-column>
         </ngx-datatable>
       </div>
+
+      <div class="row pl-2" *ngIf="showEditHousehold">
+        <form [formGroup]="editEmployeeForm">
+          <div [@fadeInOut]>
+            <fieldset class="household mb-3">
+              <legend><h5 class="pt-2">Edit Household</h5></legend>
+              <div class="row">
+                <div class="col-3">
+                  <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" formControlName="firstName" placeholder="First Name">
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name">
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="form-group">
+                    <label for="dob">DOB <span class="required-field">*</span></label>
+                    <input type="date" class="form-control" formControlName="dob" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" required>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="dob">Coverage Kind</label>
+                    <select type="text" class="form-control" formControlName="coverageKind">
+                      <option value="both" selected>Both</option>
+                      <option value="healthOnly">Health Only</option>
+                      <option value="dentalOnly">Dental Only</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="pl-2" formArrayName="dependents">
+                  <div *ngFor="let dependent of editEmployeeForm.get('dependents')?.controls; let j=index" [@fadeInOut]>
+                    <fieldset class="dependent">
+                      <legend><h6 class="sub-heading-text">Dependent {{j+1}}</h6></legend>
+                      <div class="row"[formGroupName]="j">
+                        <div class="col-3">
+                          <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" class="form-control" formControlName="firstName" placeholder="First Name">
+                          </div>
+                        </div>
+                        <div class="col-3">
+                          <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name">
+                          </div>
+                        </div>
+                        <div class="col-3">
+                          <div class="form-group">
+                            <label for="dob">DOB <span class="required-field">*</span></label>
+                            <input type="date" class="form-control" formControlName="dob" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" required>
+                          </div>
+                        </div>
+                        <div class="col-2">
+                          <div class="form-group">
+                            <label for="dob">Relationship</label>
+                            <select type="text" class="form-control" formControlName="relationship">
+                              <option *ngFor="let relation of relationOptions" [value]="relation.key">{{relation.value}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-1 pt-4">
+                          <i class="fas fa-trash fa-2x" (click)="deleteDependent(editEmployeeForm.controls.dependents, j)"></i>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+                <div class="col-11">
+                  <button type="button" class="btn btn-link float-right" (click)="addDependent(editEmployeeForm.controls.dependents)"><i class="fas fa-users"></i> Add Dependent</button>
+                </div>
+
+                <div class="col-12">
+                  <button class="float-right btn btn-primary" (click)="this.showEditHousehold = false"> Cancel </button> <button class="float-right btn btn-primary" (click)="updateEmployee()">Update Employee</button>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </form>
+      </div>
+
 
       <div class="row pl-2" *ngIf="showHouseholds"><!-- Row for households  -->
         <div formArrayName="employees"><!-- Start employee forms array -->
