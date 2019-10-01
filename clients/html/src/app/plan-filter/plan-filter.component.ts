@@ -35,6 +35,7 @@ export class PlanFilterComponent implements OnInit {
   selectedProductTypes = [];
   selectedInsuranceCompanies = [];
   filterCarriersResults = [];
+  filterKeysSelected = [];
 
   public planOptions = [
     {key: 'one_carrier', value: 'One Carrier', view: 'health'},
@@ -94,25 +95,34 @@ export class PlanFilterComponent implements OnInit {
       case 'metalLevel' :
         if (event.target.checked) {
           this.selectedMetalLevels.push(value);
+          this.filterKeysSelected.push(type);
         } else {
           const index = this.selectedMetalLevels.indexOf(value);
+          const keyIndex = this.filterKeysSelected.indexOf(type);
           this.selectedMetalLevels.splice(index, 1);
+          this.filterKeysSelected.splice(keyIndex, 1);
         }
         break;
       case 'productType' :
         if (event.target.checked) {
           this.selectedProductTypes.push(value);
+          this.filterKeysSelected.push(type);
         } else {
           const index = this.selectedProductTypes.indexOf(value);
+          const keyIndex = this.filterKeysSelected.indexOf(type);
           this.selectedProductTypes.splice(index, 1);
+          this.filterKeysSelected.splice(keyIndex, 1);
         }
         break;
       case 'insuranceCompany' :
         if (event.target.checked) {
           this.selectedInsuranceCompanies.push(value);
+          this.filterKeysSelected.push(type);
         } else {
           const index = this.selectedInsuranceCompanies.indexOf(value);
+          const keyIndex = this.filterKeysSelected.indexOf(type);
           this.selectedInsuranceCompanies.splice(index, 1);
+          this.filterKeysSelected.splice(keyIndex, 1);
         }
         break;
     }
@@ -162,9 +172,19 @@ export class PlanFilterComponent implements OnInit {
   }
 
   resetAll() {
-    this.clearAll = false;
     this.filteredCarriers = this.carrierPlans;
     this.filterLength = this.carrierPlans.length;
+    this.selectedMetalLevels = [];
+    this.selectedProductTypes = [];
+    this.selectedInsuranceCompanies = [];
+    this.filterCarriersResults = [];
+    this.filterKeysSelected = [];
+
+    const checkboxes = document.getElementsByClassName('checkbox-input');
+    for (let i = 0; i < checkboxes.length; i++) {
+      // @ts-ignore
+      checkboxes[i].checked = false;
+    }
   }
 
   getToolTip(type) {
