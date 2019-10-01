@@ -29,6 +29,7 @@ export class PlanFilterComponent implements OnInit {
   public costShownText: any;
   public clearAll: boolean;
   public filterLength: number;
+  public filterSelected = false;
   public tableHeaders = tableHeaders;
   selectedMetalLevels = [];
   selectedProductTypes = [];
@@ -85,6 +86,7 @@ export class PlanFilterComponent implements OnInit {
 
     this.filteredCarriers = this.carrierPlans;
     this.filterLength = this.filteredCarriers.length;
+    this.filterSelected = true;
   }
 
   selectedFilter(value, event, type) {
@@ -168,5 +170,4 @@ export class PlanFilterComponent implements OnInit {
   getToolTip(type) {
     return this.tooltips[0][this.planType][0][type];
   }
-
 }
