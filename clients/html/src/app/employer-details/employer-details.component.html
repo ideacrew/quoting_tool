@@ -229,7 +229,7 @@
           <!-- <button class="btn btn-danger" *ngIf="showEmployeeRoster" (click)="resetForm()"><i class="fas fa-redo"></i> Reset Form</button> -->
         </div>
         <div class="col-12 mt-2" *ngIf="!showEmployeeRoster">
-          <button class="float-right btn btn-primary" (click)="createRoster()" [disabled]="!quoteForm.value.employees.length > 0 || !quoteForm.valid">Create Roster</button>
+          <button class="float-right btn btn-success" (click)="createRoster()" [disabled]="!quoteForm.value.employees.length > 0 || !quoteForm.valid">Create Roster</button>
         </div>
         <div class="col-12 mt-2" *ngIf="showEmployeeRoster">
           <a class="float-right btn btn-success" routerLink="/employer-details/health"><i class="fas fa-check"></i> View Plans</a>
