@@ -10,6 +10,19 @@
         "planPremiums": "This is the cost you pay each month to the Health Connector, whether or not you use health care services.",
         "prescriptionDrugDeductible": "This is the total cost you must pay in a plan year towards your prescription medicines before your plan will pay for part or all of your prescriptions.",
         "planType": "With an HMO plan, your employees will need to use in-network providers in order to get services covered. An HMO also requires that employees choose a primary care provider (PCP). They may need to get a referral from their PCP when they need to see a specialist. \n \n With a PPO plan, employees will pay less if they use providers that belong to the plan’s network. Out-of-network providers will only be covered for part of the cost services. In a PPO, employees may be able to see specialists without a referral from a primary care physician (PCP).",
+        "metalLevel": ""
+      }
+    ],
+    "dental": [
+      {
+        "maximumMonthlyEmployerCost": "This is your maximum monthly cost based on 100% employer contribution to plan premiums, and all employees listed in your roster indicated as enrolling in a dental plan.",
+        "maximumOutOfPocket": "This is the most you pay in one year for health care services. Once you have paid this amount, your plan pays for all of your covered services for the rest for the year.",
+        "annualDeductibleFamilyIndividual": "The amount you must pay in a plan year before your plan will pay for part or all of your services.",
+        "network": "",
+        "hsaEligible": "You may be able to set up an HSA if you are enrolled in an HSA eligible plan. An HSA is a way to set aside money before taxes, to use it for certain medical costs.",
+        "planPremiums": "This is the cost you pay each month to the Health Connector, whether or not you use health care services.",
+        "prescriptionDrugDeductible": "This is the total cost you must pay in a plan year towards your prescription medicines before your plan will pay for part or all of your prescriptions.",
+        "planType": "",
         "metalLevel": "Metal levels make it easier for you to compare different plans that have similar levels of benefits. Platinum plans have the highest premiums but the lowest costs when you get health care services. \n Gold and Silver plans have lower premiums but higher costs when you get health care services. \n Bronze plans have the lowest premiums but the highest costs when you get health care services."
       }
     ]

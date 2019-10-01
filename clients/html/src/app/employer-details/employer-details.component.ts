@@ -46,6 +46,7 @@ export class EmployerDetailsComponent implements OnInit {
   public effectiveDateOptions: any;
   public months: any;
   public todaysDate = new Date();
+  public employeeRosterDetails: any;
 
   relationOptions = [
     {key: 'spouse', value: 'Spouse'},
@@ -90,6 +91,14 @@ export class EmployerDetailsComponent implements OnInit {
       'October',
       'November',
       'December'
+    ];
+
+    this.employeeRosterDetails = [
+      'Name',
+      'Date of Birth',
+      'Dependent Name(s), if any',
+      'Dependent Relationship(s)',
+      'Dependent Date of Birth(s)'
     ];
 
     const year = new Date().getFullYear();

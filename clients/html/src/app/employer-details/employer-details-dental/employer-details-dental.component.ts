@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import carriers from '../../../settings/qdp.json';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employer-details-dental',
@@ -13,17 +14,21 @@ export class EmployerDetailsDentalComponent implements OnInit {
   public costShownText: any;
   public carriers = carriers;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     const erDetails = localStorage.getItem('employerDetails');
     this.employerDetails = JSON.parse(erDetails);
-    this.erEmployees = this.employerDetails.employees;
 
-    if (this.erEmployees.length > 1) {
-      this.costShownText = `${this.erEmployees.length} people`;
+    if (this.employerDetails) {
+      this.erEmployees = this.employerDetails.employees;
+      if (this.erEmployees.length > 1) {
+        this.costShownText = `${this.erEmployees.length} people`;
+      } else {
+        this.costShownText = `${this.erEmployees.length} person`;
+      }
     } else {
-      this.costShownText = `${this.erEmployees.length} person`;
+      this.router.navigate(['/']);
     }
   }
 

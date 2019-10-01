@@ -1,5 +1,5 @@
-<div class="container mb-4">
-  <app-nav [validForm]="showEmployeeRoster"></app-nav>
+<div class="container mb-5">
+  <app-nav [validForm]="showEmployeeRoster" myPath="Employer Details"></app-nav>
   <div class="row pl-3 mt-4">
     <form [formGroup]="quoteForm">
       <div class="row">
@@ -15,7 +15,7 @@
       <div class="row">
         <div class="col-3">
           <div class="form-group">
-            <label for="formGroupExampleInput">Sic: <span class="required-field">*</span></label>
+            <label for="formGroupExampleInput">SIC Code: <span class="required-field">*</span></label>
             <ng-autocomplete
               formControlName="sic"
               [data]="sics"
@@ -69,7 +69,8 @@
       <div class="row"><!-- Row for employees roster text  -->
         <div class="col-md-9">
           <h2 class="heading-text">Employee Roster</h2>
-          <p>Select '<strong>Add New Employee</strong>' to manually enter information about employees. Or, choose '<strong>Upload Employee Roster</strong>' to upload the employee roster template. To use this option, you will need to download the template first, then upload the completed version.  For each employee you add, you will need their:<br />- Name<br />- Date of Birth<br />- Dependent Name(s), if any<br />- Dependent Relationship(s)<br />- Dependent Date of Birth(s)</p>
+          <p>Select '<strong>Add New Employee</strong>' to manually enter information about employees. Or, choose '<strong>Upload Employee Roster</strong>' to upload the employee roster template. To use this option, you will need to download the template first, then upload the completed version.  For each employee you add, you will need their:</p><ul><li *ngFor="let detail of employeeRosterDetails">{{detail}}</li></ul>
+          <button type="button" class="btn btn-link"><a href="/assets/roster_upload_template.csv" download><i class="fas fa-download"></i> Download Roster Template</a></button>
         </div>
       </div><!-- End row for employees roster text  -->
 
@@ -309,13 +310,13 @@
           <button (click)="fileUploaded(file)" type="button" class="btn btn-primary" [disabled]="true" id="file-upload-btn"><i class="fas fa-upload"></i> Upload Employee Roster </button>
         </div>
       </ng-template>
-      <div class="row mt-3">
+      <div class="row mt-3 form-button-group">
         <div class="col-12">
           <button class="float-left btn btn-primary" (click)="open(content)"><i class="fas fa-upload"></i> Upload Employee Roster</button> <button (click)="addEmployee()" class="float-right btn btn-primary"><i class="fas fa-user-plus"></i> Add New Employee</button>
-          <button class="btn btn-danger" *ngIf="showEmployeeRoster" (click)="resetForm()"><i class="fas fa-redo"></i> Reset Form</button>
+          <!-- <button class="btn btn-danger" *ngIf="showEmployeeRoster" (click)="resetForm()"><i class="fas fa-redo"></i> Reset Form</button> -->
         </div>
         <div class="col-12 mt-2" *ngIf="!showEmployeeRoster">
-          <button class="float-right btn btn-primary" (click)="createRoster()" [disabled]="!quoteForm.value.employees.length > 0 || !quoteForm.valid">Create Roster</button>
+          <button class="float-right btn btn-success" (click)="createRoster()" [disabled]="!quoteForm.value.employees.length > 0 || !quoteForm.valid"><i class="fas fa-users"></i> Create Roster</button>
         </div>
         <div class="col-12 mt-2" *ngIf="showEmployeeRoster">
           <a class="float-right btn btn-success" routerLink="/employer-details/health"><i class="fas fa-check"></i> View Plans</a>

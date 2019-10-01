@@ -1,6 +1,16 @@
 .btn-link {
   color: #005e81;
 }
+
+.btn-outline-primary {
+  color: #c56c24;
+  border-color: #c56c24;
+}
+
+.btn-outline-primary:hover {
+  background-color: #c56c24;
+}
+
 fieldset.household {
   padding: 20px;
   border-radius: 10px;
@@ -35,6 +45,10 @@ fieldset.dependent > legend {
 
 .fa-trash {
   cursor: pointer;
+}
+
+.form-button-group {
+  margin-bottom: 30px;
 }
 
 .heading-text {

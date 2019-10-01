@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import tooltips from '../../settings/tooltips.json';
+import tableHeaders from '../../settings/tableHeaders.json';
 
 @Component({
   selector: 'app-plan-filter',
@@ -27,15 +28,20 @@ export class PlanFilterComponent implements OnInit {
   public erEmployees: any;
   public costShownText: any;
   public clearAll: boolean;
+  public filterLength: number;
+  public filterSelected = false;
+  public tableHeaders = tableHeaders;
   selectedMetalLevels = [];
   selectedProductTypes = [];
   selectedInsuranceCompanies = [];
   filterCarriersResults = [];
+  filterKeysSelected = [];
 
   public planOptions = [
-    {key: 'one_carrier', value: 'One Carrier'},
-    {key: 'one_level', value: 'One Level'},
-    {key: 'one_plan', value: 'One Plan'}
+    {key: 'one_carrier', value: 'One Carrier', view: 'health'},
+    {key: 'one_level', value: 'One Level', view: 'health'},
+    {key: 'one_plan', value: 'One Plan', view: 'health'},
+    {key: 'one_plan', value: 'One Plan', view: 'dental'},
   ];
 
   @Input() carrierPlans: any;
@@ -44,6 +50,22 @@ export class PlanFilterComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    const erDetails = localStorage.getItem('employerDetails');
+    this.employerDetails = JSON.parse(erDetails);
+    this.filterLength = 0;
+
+    if (this.employerDetails) {
+      this.erEmployees = this.employerDetails.employees;
+
+      if (this.erEmployees.length > 1) {
+        this.costShownText = `${this.erEmployees.length} people`;
+      } else {
+        this.costShownText = `${this.erEmployees.length} person`;
+      }
+    }
+  }
+
+  loadData() {
     this.metalLevelOptions = this.carrierPlans.map(plan => {
       if (plan['Metal Level']) {
         return plan['Metal Level'];
@@ -64,16 +86,8 @@ export class PlanFilterComponent implements OnInit {
         unique.includes(item) ? unique : [...unique, item], []);
 
     this.filteredCarriers = this.carrierPlans;
-
-    const erDetails = localStorage.getItem('employerDetails');
-    this.employerDetails = JSON.parse(erDetails);
-    this.erEmployees = this.employerDetails.employees;
-
-    if (this.erEmployees.length > 1) {
-      this.costShownText = `${this.erEmployees.length} people`;
-    } else {
-      this.costShownText = `${this.erEmployees.length} person`;
-    }
+    this.filterLength = this.filteredCarriers.length;
+    this.filterSelected = true;
   }
 
   selectedFilter(value, event, type) {
@@ -81,25 +95,34 @@ export class PlanFilterComponent implements OnInit {
       case 'metalLevel' :
         if (event.target.checked) {
           this.selectedMetalLevels.push(value);
+          this.filterKeysSelected.push(type);
         } else {
           const index = this.selectedMetalLevels.indexOf(value);
+          const keyIndex = this.filterKeysSelected.indexOf(type);
           this.selectedMetalLevels.splice(index, 1);
+          this.filterKeysSelected.splice(keyIndex, 1);
         }
         break;
       case 'productType' :
         if (event.target.checked) {
           this.selectedProductTypes.push(value);
+          this.filterKeysSelected.push(type);
         } else {
           const index = this.selectedProductTypes.indexOf(value);
+          const keyIndex = this.filterKeysSelected.indexOf(type);
           this.selectedProductTypes.splice(index, 1);
+          this.filterKeysSelected.splice(keyIndex, 1);
         }
         break;
       case 'insuranceCompany' :
         if (event.target.checked) {
           this.selectedInsuranceCompanies.push(value);
+          this.filterKeysSelected.push(type);
         } else {
           const index = this.selectedInsuranceCompanies.indexOf(value);
+          const keyIndex = this.filterKeysSelected.indexOf(type);
           this.selectedInsuranceCompanies.splice(index, 1);
+          this.filterKeysSelected.splice(keyIndex, 1);
         }
         break;
     }
@@ -145,11 +168,26 @@ export class PlanFilterComponent implements OnInit {
 
   displayResults() {
     this.filteredCarriers = this.filterCarriersResults;
+    this.filterLength = this.filterCarriersResults.length;
   }
 
   resetAll() {
-    this.clearAll = false;
     this.filteredCarriers = this.carrierPlans;
+    this.filterLength = this.carrierPlans.length;
+    this.selectedMetalLevels = [];
+    this.selectedProductTypes = [];
+    this.selectedInsuranceCompanies = [];
+    this.filterCarriersResults = [];
+    this.filterKeysSelected = [];
+
+    const checkboxes = document.getElementsByClassName('checkbox-input');
+    for (let i = 0; i < checkboxes.length; i++) {
+      // @ts-ignore
+      checkboxes[i].checked = false;
+    }
   }
 
+  getToolTip(type) {
+    return this.tooltips[0][this.planType][0][type];
+  }
 }
