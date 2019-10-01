@@ -69,7 +69,8 @@
       <div class="row"><!-- Row for employees roster text  -->
         <div class="col-md-9">
           <h2 class="heading-text">Employee Roster</h2>
-          <p>Select '<strong>Add New Employee</strong>' to manually enter information about employees. Or, choose '<strong>Upload Employee Roster</strong>' to upload the employee roster template. To use this option, you will need to download the template first, then upload the completed version.  For each employee you add, you will need their:<br />- Name<br />- Date of Birth<br />- Dependent Name(s), if any<br />- Dependent Relationship(s)<br />- Dependent Date of Birth(s)</p>
+          <p>Select '<strong>Add New Employee</strong>' to manually enter information about employees. Or, choose '<strong>Upload Employee Roster</strong>' to upload the employee roster template. To use this option, you will need to download the template first, then upload the completed version.  For each employee you add, you will need their:</p><ul><li *ngFor="let detail of employeeRosterDetails">{{detail}}</li></ul>
+          <button type="button" class="btn btn-link"><a href="/assets/roster_upload_template.csv" download><i class="fas fa-download"></i> Download Roster Template</a></button>
         </div>
       </div><!-- End row for employees roster text  -->
 
@@ -229,7 +230,7 @@
           <!-- <button class="btn btn-danger" *ngIf="showEmployeeRoster" (click)="resetForm()"><i class="fas fa-redo"></i> Reset Form</button> -->
         </div>
         <div class="col-12 mt-2" *ngIf="!showEmployeeRoster">
-          <button class="float-right btn btn-success" (click)="createRoster()" [disabled]="!quoteForm.value.employees.length > 0 || !quoteForm.valid">Create Roster</button>
+          <button class="float-right btn btn-success" (click)="createRoster()" [disabled]="!quoteForm.value.employees.length > 0 || !quoteForm.valid"><i class="fas fa-users"></i> Create Roster</button>
         </div>
         <div class="col-12 mt-2" *ngIf="showEmployeeRoster">
           <a class="float-right btn btn-success" routerLink="/employer-details/health"><i class="fas fa-check"></i> View Plans</a>
