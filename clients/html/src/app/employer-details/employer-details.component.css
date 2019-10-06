@@ -11,6 +11,14 @@
   background-color: #c56c24;
 }
 
+.fa-question {
+  color: #005e81;
+}
+
+.fa-question:hover {
+  cursor: pointer;
+}
+
 fieldset.household {
   padding: 20px;
   border-radius: 10px;
