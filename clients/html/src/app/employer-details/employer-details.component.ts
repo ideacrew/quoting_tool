@@ -4,9 +4,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployerDetailsService } from './../services/employer-details.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { NgbDateStruct, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import zipcodes from '../../settings/zipcode.json';
-import sics from '../../settings/sic.json';
-import sicCodes from '../../settings/sicCodes.json';
+import zipcodes from '../../data/zipcode.json';
+import sics from '../../data/sic.json';
+import sicCodes from '../../data/sicCodes.json';
 import { SelectedSicService } from '../services/selected-sic.service';
 
 @Component({
@@ -26,7 +26,7 @@ import { SelectedSicService } from '../services/selected-sic.service';
 export class EmployerDetailsComponent implements OnInit {
   rows = [];
   model: NgbDateStruct;
-  date: {months: number, day: number, year: number};
+  date: { months: number, day: number, year: number };
   sicKeyword = 'standardIndustryCodeCode';
   zipKeyword = 'zipCode';
   sics = sics;
@@ -52,13 +52,12 @@ export class EmployerDetailsComponent implements OnInit {
   public todaysDate = new Date();
   public employeeRosterDetails: any;
   public show: boolean;
-  public message: string;
 
   relationOptions = [
-    {key: 'spouse', value: 'Spouse'},
-    {key: 'domestic partner', value: 'Domestic Partner'},
-    {key: 'child', value: 'Child'},
-    {key: 'disabled child', value: 'Disabled Child'},
+    { key: 'spouse', value: 'Spouse' },
+    { key: 'domestic partner', value: 'Domestic Partner' },
+    { key: 'child', value: 'Child' },
+    { key: 'disabled child', value: 'Disabled Child' },
   ];
 
   config = {
@@ -66,7 +65,7 @@ export class EmployerDetailsComponent implements OnInit {
     decoupleChildFromParent: true
   };
 
-  @ViewChild('file', {static: false}) file: ElementRef;
+  @ViewChild('file', { static: false }) file: ElementRef;
 
   constructor(private fb: FormBuilder, private modalService: NgbModal, private employerDetailsService: EmployerDetailsService,
     private dpConfig: NgbDatepickerConfig, private selectedSicService: SelectedSicService) {
@@ -75,7 +74,7 @@ export class EmployerDetailsComponent implements OnInit {
       effectiveDate: ['', Validators.required],
       sic: ['', Validators.required],
       zip: ['', Validators.required],
-      county: [{value: '', disabled: true}],
+      county: [{ value: '', disabled: true }],
       employees: this.fb.array([])
     });
 
@@ -114,8 +113,8 @@ export class EmployerDetailsComponent implements OnInit {
 
     const year = new Date().getFullYear();
 
-    this.dpConfig.minDate = {year: year - 110, month: 1, day: 1};
-    this.dpConfig.maxDate = {year: year + 1, month: 12, day: 31};
+    this.dpConfig.minDate = { year: year - 110, month: 1, day: 1 };
+    this.dpConfig.maxDate = { year: year + 1, month: 12, day: 31 };
   }
 
   ngOnInit() {
@@ -132,15 +131,15 @@ export class EmployerDetailsComponent implements OnInit {
     if (this.todaysDate.getMonth() + 1 > 11) {
       // Add next year date if next month is January
       this.effectiveDateOptions = [
-        { month: -1, value: 'SELECT START ON', disabled: true},
+        { month: -1, value: 'SELECT START ON', disabled: true },
         { month: this.todaysDate.getMonth(), value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}` },
         { month: 0, value: `${this.months[0]} ${this.todaysDate.getFullYear() + 1}` },
       ];
     } else {
       this.effectiveDateOptions = [
-        { month: -1, value: 'SELECT START ON', disabled: true},
+        { month: -1, value: 'SELECT START ON', disabled: true },
         { month: this.todaysDate.getMonth(), value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}` },
-        { month: this.todaysDate.getMonth() + 1, value: `${this.months[this.todaysDate.getMonth() + 1]} ${this.todaysDate.getFullYear()}`}
+        { month: this.todaysDate.getMonth() + 1, value: `${this.months[this.todaysDate.getMonth() + 1]} ${this.todaysDate.getFullYear()}` }
       ];
     }
   }
@@ -149,7 +148,7 @@ export class EmployerDetailsComponent implements OnInit {
     if (item !== 'default item') {
       const sicValue = this.sics.filter(sic => sic['standardIndustryCodeFull'] === item.text)[0]['standardIndustryCodeCode'];
       this.quoteForm.get('sic').setValue(sicValue);
-      console.log(sicValue);
+      this.show = false;
     }
   }
 
@@ -214,17 +213,17 @@ export class EmployerDetailsComponent implements OnInit {
     input.append('file', fileInfo.files[0]);
     this.employerDetailsService.postUpload(input)
       .subscribe();
-      // Below is used to display in the UI
-      const reader = new FileReader();
-      const csvData = [];
-      this.uploadData = csvData;
-      reader.readAsBinaryString(fileInfo.files[0]);
-      reader.onload = function () {
-       csvData.push(reader.result);
-      };
-      setTimeout(() => {
-        this.parseResults(this.uploadData[0]);
-      }, 800);
+    // Below is used to display in the UI
+    const reader = new FileReader();
+    const csvData = [];
+    this.uploadData = csvData;
+    reader.readAsBinaryString(fileInfo.files[0]);
+    reader.onload = function() {
+      csvData.push(reader.result);
+    };
+    setTimeout(() => {
+      this.parseResults(this.uploadData[0]);
+    }, 800);
   }
 
   zipChangeSearch(event) {
@@ -283,8 +282,8 @@ export class EmployerDetailsComponent implements OnInit {
         // create employees from csv
         if (relationship === 'employee') {
           this.employee = row;
-          count ++;
-           control.push(
+          count++;
+          control.push(
             this.fb.group({
               firstName: [firstName],
               lastName: [lastName],

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectedSicService } from '../services/selected-sic.service';
 import { TreeviewItem, TreeviewConfig } from 'ngx-treeview';
-import sicCodes from '../../settings/sicCodes.json';
+import sicCodes from '../../data/sicCodes.json';
 
 @Component({
   selector: 'app-dropdown-treeview-select',

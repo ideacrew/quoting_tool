@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import carriers from '../../../settings/qhp.json';
+import carriers from '../../../data/qhp.json';
 import { Router } from '@angular/router';
 
 @Component({
