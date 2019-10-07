@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import tooltips from '../../settings/tooltips.json';
-import tableHeaders from '../../settings/tableHeaders.json';
+import tooltips from '../../data/tooltips.json';
+import tableHeaders from '../../data/tableHeaders.json';
 
 @Component({
   selector: 'app-plan-filter',
