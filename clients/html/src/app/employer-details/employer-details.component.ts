@@ -7,6 +7,7 @@ import { NgbDateStruct, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import zipcodes from '../../settings/zipcode.json';
 import sics from '../../settings/sic.json';
 import sicCodes from '../../settings/sicCodes.json';
+import { SelectedSicService } from '../services/selected-sic.service';
 
 @Component({
   selector: 'app-employer-details',
@@ -51,6 +52,7 @@ export class EmployerDetailsComponent implements OnInit {
   public todaysDate = new Date();
   public employeeRosterDetails: any;
   public show: boolean;
+  public message: string;
 
   relationOptions = [
     {key: 'spouse', value: 'Spouse'},
@@ -67,7 +69,7 @@ export class EmployerDetailsComponent implements OnInit {
   @ViewChild('file', {static: false}) file: ElementRef;
 
   constructor(private fb: FormBuilder, private modalService: NgbModal, private employerDetailsService: EmployerDetailsService,
-    private dpConfig: NgbDatepickerConfig) {
+    private dpConfig: NgbDatepickerConfig, private selectedSicService: SelectedSicService) {
 
     this.quoteForm = this.fb.group({
       effectiveDate: ['', Validators.required],
@@ -117,12 +119,12 @@ export class EmployerDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.selectedSicService.currentMessage.subscribe(message => this.setSicFromTree(message));
     this.employeeRoster = localStorage.getItem('employerDetails');
     if (this.employeeRoster) {
       this.showEmployeeRoster = true;
       this.employerDetails = JSON.parse(this.employeeRoster);
       this.quoteForm.get('effectiveDate').setValue(new Date(Date.parse(this.employerDetails.effectiveDate)));
-      this.quoteForm.get('sic').setValue(this.employerDetails.sic.standardIndustryCodeCode);
       this.quoteForm.get('zip').setValue(this.employerDetails.zip.zipCode);
       this.loadEmployeesFromStorage();
     }
@@ -140,6 +142,14 @@ export class EmployerDetailsComponent implements OnInit {
         { month: this.todaysDate.getMonth(), value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}` },
         { month: this.todaysDate.getMonth() + 1, value: `${this.months[this.todaysDate.getMonth() + 1]} ${this.todaysDate.getFullYear()}`}
       ];
+    }
+  }
+
+  setSicFromTree(item) {
+    if (item !== 'default item') {
+      const sicValue = this.sics.filter(sic => sic['standardIndustryCodeFull'] === item.text)[0]['standardIndustryCodeCode'];
+      this.quoteForm.get('sic').setValue(sicValue);
+      console.log(sicValue);
     }
   }
 
