@@ -75,7 +75,7 @@ export class EmployerDetailsComponent implements OnInit {
       sic: ['', Validators.required],
       zip: ['', Validators.required],
       county: [{ value: '', disabled: true }],
-      employees: this.fb.array([])
+      employees: this.fb.array([], Validators.required)
     });
 
     this.showEditHousehold = false;

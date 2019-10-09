@@ -17,7 +17,7 @@ import tableHeaders from '../../data/tableHeaders.json';
   ]
 })
 export class PlanFilterComponent implements OnInit {
-  public tooltips = tooltips;
+  public tooltips = tooltips[0];
   public isCollapsed: any;
   public metalLevelOptions: any;
   public carriers: any;
@@ -30,7 +30,7 @@ export class PlanFilterComponent implements OnInit {
   public clearAll: boolean;
   public filterLength: number;
   public filterSelected = false;
-  public tableHeaders = tableHeaders;
+  public tableHeaders = tableHeaders[0];
   selectedMetalLevels = [];
   selectedProductTypes = [];
   selectedInsuranceCompanies = [];
@@ -188,6 +188,10 @@ export class PlanFilterComponent implements OnInit {
   }
 
   getToolTip(type) {
-    return this.tooltips[0][this.planType][0][type];
+    return this.tooltips[this.planType].map(key => key[type]);
+  }
+
+  getTableHeader(col) {
+    return this.tableHeaders[this.planType].map(key => key[col]);
   }
 }

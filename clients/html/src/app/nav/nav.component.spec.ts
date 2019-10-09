@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { NavComponent } from './nav.component';
 
@@ -8,7 +10,9 @@ describe('NavComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavComponent ]
+      declarations: [ NavComponent ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      imports: [ RouterTestingModule ]
     })
     .compileComponents();
   }));
@@ -21,5 +25,17 @@ describe('NavComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should diplay the nav link items', () => {
+    expect(component.navLinks.length === 3);
+  });
+
+  it('should have Employer Details, Health and Dental options', () => {
+    const navArr = ['Employer Details', 'Health', 'Dental'];
+    component.navLinks.map(nav => {
+      const name = nav.name;
+      expect(navArr).toContain(name);
+    });
   });
 });
