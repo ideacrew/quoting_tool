@@ -330,14 +330,14 @@
       </ng-template>
       <div class="row mt-3 form-button-group">
         <div class="col-12">
-          <button class="float-left btn btn-primary" (click)="open(content)"><i class="fas fa-upload"></i> Upload Employee Roster</button> <button (click)="addEmployee()" class="float-right btn btn-primary"><i class="fas fa-user-plus"></i> Add New Employee</button>
+          <button class="float-left btn btn-primary upload-employee-roster" (click)="open(content)"><i class="fas fa-upload"></i> Upload Employee Roster</button> <button (click)="addEmployee()" class="float-right btn btn-primary add-new-employee"><i class="fas fa-user-plus"></i> Add New Employee</button>
           <!-- <button class="btn btn-danger" *ngIf="showEmployeeRoster" (click)="resetForm()"><i class="fas fa-redo"></i> Reset Form</button> -->
         </div>
         <div class="col-12 mt-2" *ngIf="!showEmployeeRoster">
-          <button class="float-right btn btn-success" (click)="createRoster()" [disabled]="!quoteForm.value.employees.length > 0 || !quoteForm.valid"><i class="fas fa-users"></i> Create Roster</button>
+          <button class="float-right btn btn-success create-roster" (click)="createRoster()" [disabled]="!quoteForm.valid"><i class="fas fa-users"></i> Create Roster</button>
         </div>
         <div class="col-12 mt-2" *ngIf="showEmployeeRoster">
-          <a class="float-right btn btn-success" routerLink="/employer-details/health"><i class="fas fa-check"></i> View Plans</a>
+          <a class="float-right btn btn-success view-plans-button" routerLink="/employer-details/health"><i class="fas fa-check"></i> View Plans</a>
         </div>
       </div>
     </form>
