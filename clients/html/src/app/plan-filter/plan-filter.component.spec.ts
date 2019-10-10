@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PlanFilterComponent } from './plan-filter.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 
 const data = {
   effectiveDate: 'October 2019',
@@ -32,7 +33,7 @@ describe('PlanFilterComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PlanFilterComponent ],
-      imports: [ NgbModule, BrowserAnimationsModule ],
+      imports: [ NgbModule, BrowserAnimationsModule, RouterTestingModule ],
     })
     .compileComponents();
   }));

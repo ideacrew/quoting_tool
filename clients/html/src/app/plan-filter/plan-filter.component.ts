@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import tooltips from '../../data/tooltips.json';
 import tableHeaders from '../../data/tableHeaders.json';
+import html2PDF from 'jspdf-html2canvas';
 
 @Component({
   selector: 'app-plan-filter',
@@ -36,6 +37,10 @@ export class PlanFilterComponent implements OnInit {
   selectedInsuranceCompanies = [];
   filterCarriersResults = [];
   filterKeysSelected = [];
+  html2PDF = html2PDF;
+  public pdfView = false;
+  public btnName: string;
+  public btnLink: string;
 
   public planOptions = [
     {key: 'one_carrier', value: 'One Carrier', view: 'health'},
@@ -62,6 +67,14 @@ export class PlanFilterComponent implements OnInit {
       } else {
         this.costShownText = `${this.erEmployees.length} person`;
       }
+    }
+
+    if (this.planType === 'health') {
+      this.btnName = 'Select Dental';
+      this.btnLink = '/employer-details/dental';
+    } else {
+      this.btnName = 'Back to health';
+      this.btnLink = '/employer-details/health';
     }
   }
 
@@ -193,5 +206,24 @@ export class PlanFilterComponent implements OnInit {
 
   getTableHeader(col) {
     return this.tableHeaders[this.planType].map(key => key[col]);
+  }
+
+  downloadPdf() {
+    this.pdfView = true;
+    const table = document.getElementById('plan-table');
+    this.html2PDF(table, {
+    jsPDF: {
+      unit: 'pt',
+      format: 'a4'
+    },
+    imageType: 'image/png',
+    output: `./pdf/${this.planType}.pdf`,
+    success: function(pdf) {
+      pdf.save();
+    }
+    });
+    setTimeout(() => {
+      this.pdfView = false;
+    }, 500);
   }
 }
