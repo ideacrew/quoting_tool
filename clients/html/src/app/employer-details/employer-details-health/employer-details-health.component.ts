@@ -32,7 +32,6 @@ export class EmployerDetailsHealthComponent implements OnInit {
     } else {
       this.router.navigate(['/']);
     }
-
   }
 
 }

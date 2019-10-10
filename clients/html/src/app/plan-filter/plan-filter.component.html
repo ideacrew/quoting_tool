@@ -102,20 +102,20 @@
 <div class="row">
   <div class="col-12">
     <div class="card">
-      <table class="table table-striped table-bordered">
+      <table class="table table-striped table-bordered" id="plan-table">
         <thead>
           <tr>
-            <th scope="col">{{getTableHeader('col-1')}} <i class="fas fa-question-circle ml-2"></i></th>
-            <th scope="col">{{getTableHeader('col-2')}} <i class="fas fa-question-circle ml-2"></i></th>
-            <th scope="col">{{getTableHeader('col-3')}} <i class="fas fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('annualDeductibleFamilyIndividual')"></i></th>
-            <th scope="col">{{getTableHeader('col-4')}} <i class="fas fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('maximumOutOfPocket')"></i></th>
-            <th scope="col">{{getTableHeader('col-5')}} <i class="fas fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('maximumMonthlyEmployerCost')"></i></th>
-            <th scope="col">{{getTableHeader('col-6')}} <i class="fas fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('maximumMonthlyEmployerCost')"></i></th>
+            <th scope="col">{{getTableHeader('col-1')}} <i class="fas fa-question-circle ml-2" *ngIf="!pdfView"></i></th>
+            <th scope="col">{{getTableHeader('col-2')}} <i class="fas fa-question-circle ml-2" *ngIf="!pdfView"></i></th>
+            <th scope="col">{{getTableHeader('col-3')}} <i class="fas fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('annualDeductibleFamilyIndividual')" *ngIf="!pdfView"></i></th>
+            <th scope="col">{{getTableHeader('col-4')}} <i class="fas fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('maximumOutOfPocket')" *ngIf="!pdfView"></i></th>
+            <th scope="col">{{getTableHeader('col-5')}} <i class="fas fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('maximumMonthlyEmployerCost')" *ngIf="!pdfView"></i></th>
+            <th scope="col">{{getTableHeader('col-6')}} <i class="fas fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('maximumMonthlyEmployerCost')" *ngIf="!pdfView"></i></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let carrier of filteredCarriers">
-            <td><strong>{{carrier['Plan Name']}}</strong><br /><a href="/">Summary of Benefit Coverage <i class="far fa-file-pdf fa-lg"></i></a></td>
+            <td><strong>{{carrier['Plan Name']}}</strong><br /><a href="/" [hidden]="pdfView">Summary of Benefit Coverage <i class="far fa-file-pdf fa-lg"></i></a></td>
             <td></td>
             <td></td>
             <td></td>
@@ -125,5 +125,14 @@
         </tbody>
       </table>
     </div>
+  </div>
+</div>
+
+<div class="row button-group">
+  <div class="col-6">
+    <button class="btn btn-primary" (click)="downloadPdf()" [disabled]="!filterSelected">Save PDF</button>
+  </div>
+  <div class="col-6">
+    <a class="btn btn-primary float-right" [routerLink]="btnLink">{{btnName}}</a>
   </div>
 </div>

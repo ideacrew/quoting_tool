@@ -38,6 +38,7 @@
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
     "jquery": "^3.4.1",
+    "jspdf-html2canvas": "^1.1.0",
     "lodash": "^4.17.15",
     "ng-chartist": "^1.1.1",
     "ng-multiselect-dropdown": "^0.2.3",
