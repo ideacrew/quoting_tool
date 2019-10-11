@@ -208,6 +208,21 @@ export class PlanFilterComponent implements OnInit {
     return this.tableHeaders[this.planType].map(key => key[col]);
   }
 
+  metalLevelCount(metalLevel, planType) {
+    if (planType === 'health') {
+      const count = this.carrierPlans.filter(plan => plan['Metal Level'] === metalLevel);
+      return `(${count.length} Plans)`;
+    } else {
+      const count = this.carrierPlans.filter(plan => plan['Coverage Level'] === metalLevel);
+      return `(${count.length} Plans)`;
+    }
+  }
+
+  productTypeCounts(product) {
+    const count = this.carrierPlans.filter(plan => plan['Product'] === product);
+    return `(${count.length} Plans)`;
+  }
+
   downloadPdf() {
     this.pdfView = true;
     const table = document.getElementById('plan-table');

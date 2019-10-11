@@ -10,6 +10,11 @@
   color: #009efb;
 }
 
+.count-text {
+  color: #6c757d !important;
+  font-size: 80%;
+}
+
 .fa-question-circle {
   color: #009efb;
 }

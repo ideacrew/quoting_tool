@@ -22,4 +22,9 @@ describe('HeaderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have Employer Quick Tool heading', () => {
+    const title = fixture.nativeElement.innerText;
+    expect(title).toBe('Employer Quick Tool');
+  });
 });

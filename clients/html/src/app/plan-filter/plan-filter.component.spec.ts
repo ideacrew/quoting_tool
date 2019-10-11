@@ -94,7 +94,7 @@ describe('PlanFilterComponent', () => {
     expect(options.length).toEqual(1);
   });
 
-  it('should have the table headers for health if plan type dental', () => {
+  it('should have the table headers for dental if plan type dental', () => {
     component.planType = 'dental';
     fixture.detectChanges();
     const headers = fixture.nativeElement.querySelectorAll('th');
@@ -103,7 +103,7 @@ describe('PlanFilterComponent', () => {
     expect(headers[2].innerText).toEqual('Monthly Plan Premiums');
     expect(headers[3].innerText).toEqual('Annual Deductible');
     expect(headers[4].innerText).toEqual('Maximum Benefits');
-    expect(headers[5].innerText).toEqual('Maximum Employer Cost');
+    expect(headers[5].innerText).toEqual('Maximum Monthly Employer Cost');
   });
 
 });
