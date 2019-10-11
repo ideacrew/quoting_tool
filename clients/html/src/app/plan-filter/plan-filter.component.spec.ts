@@ -4,6 +4,7 @@ import { PlanFilterComponent } from './plan-filter.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 const data = {
   effectiveDate: 'October 2019',
@@ -33,7 +34,7 @@ describe('PlanFilterComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PlanFilterComponent ],
-      imports: [ NgbModule, BrowserAnimationsModule, RouterTestingModule ],
+      imports: [ NgbModule, BrowserAnimationsModule, RouterTestingModule, HttpClientTestingModule ],
     })
     .compileComponents();
   }));
@@ -65,8 +66,7 @@ describe('PlanFilterComponent', () => {
     expect(headers[1].innerText).toEqual('Benefit Cost');
     expect(headers[2].innerText).toEqual('Annual Deductible Family/individual');
     expect(headers[3].innerText).toEqual('Maximum out of Pocket Family/individual');
-    expect(headers[4].innerText).toEqual('Monthly Cost');
-    expect(headers[5].innerText).toEqual('Maximum Monthly Employer Cost');
+    expect(headers[4].innerText).toEqual('Maximum Monthly Employer Cost');
   });
 
   it('filter button should be disabled until a type is chosen', () => {
@@ -102,8 +102,7 @@ describe('PlanFilterComponent', () => {
     expect(headers[1].innerText).toEqual('Services');
     expect(headers[2].innerText).toEqual('Monthly Plan Premiums');
     expect(headers[3].innerText).toEqual('Annual Deductible');
-    expect(headers[4].innerText).toEqual('Maximum Benefits');
-    expect(headers[5].innerText).toEqual('Maximum Monthly Employer Cost');
+    expect(headers[4].innerText).toEqual('Maximum Monthly Employer Cost');
   });
 
 });

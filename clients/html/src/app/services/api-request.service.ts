@@ -22,8 +22,8 @@ export class ApiRequestService {
   }
 
   // Make an authed GET request
-  public authedGet(url: string) {
-    return this.http.get(this.getFullPath(url));
+  public authedGet(url: string, attrs?: any) {
+    return this.http.get(this.getFullPath(url), {params: attrs});
   }
 
   // Make an authed POST request
