@@ -51,13 +51,18 @@ describe('EmployerDetailsComponent', () => {
     expect(component.quoteForm.valid).toBeFalsy();
   });
 
+  it('should have Employer Information section', () => {
+    const title = fixture.nativeElement.querySelectorAll('h2')[0];
+    expect(title.innerText).toEqual('Employer Information');
+  });
+
   it('should have Employee Roster section', () => {
-    const title = fixture.nativeElement.querySelector('h2');
+    const title = fixture.nativeElement.querySelectorAll('h2')[1];
     const uploadEmployeeRosterBtn = fixture.nativeElement.querySelector('.upload-employee-roster');
     const addNewEmployeeBtn = fixture.nativeElement.querySelector('.add-new-employee');
     expect(title.innerText).toEqual('Employee Roster');
     expect(uploadEmployeeRosterBtn.innerText).toEqual('Upload Employee Roster');
-    expect(addNewEmployeeBtn.innerText).toEqual('Add New Employee');
+    expect(addNewEmployeeBtn.innerText).toEqual('Add Employee');
   });
 
   it('should have valid quote form if required fields are filled in', () => {
