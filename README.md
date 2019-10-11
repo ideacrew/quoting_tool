@@ -79,7 +79,7 @@ $ docker-compose stop
   *  MongoDb 4.2
   *  Redis
 
-## Frontend UI
+## Frontend
 
 The frontend uses the Angular framework to handle user interactions and is built using the Angular-cli generator.
 
@@ -91,6 +91,34 @@ You can visit [`localhost:4200`](http://localhost:4200) from your browser to see
 * In clients > html angular.json change references from 'quoting-tool' to 'your apps name' will be 8 total
 * In the In clients > html package.json change line 2 from 'quoting-tool' to 'your apps name'
 * Now run docker-compose build, then docker-compose up
+
+## Typescript
+
+AEQT uses [TypeScript](https://www.typescriptlang.org) for all front-end code. TS is a superset of JS that adds static typing, allowing for more robust code and enhanced tools like code autocomplete.
+Writing logic in TypeScript looks just like writing in JavaScript, but with additional type indicators for function arguments and component properties.
+
+## Linting and formatting
+
+TS code is linted with tslint, specifically the `tslint:recommended`, and `ng lint` rulesets. Run `ng lint` to check code, or integrate tslint in your editor for live feedback.
+
+We've also installed prettier, which autoformats code and enforces some style decisions. To format [integrate it into your editor](https://prettier.io/docs/en/editors.html).
+
+## Testing
+
+Testing is handled with Karma, and components are tested with Angular Cli Testing Library. Tests are usually stored beside the file they're testing. Run `ng test` to watch files as you test and see the detail test coverage across the app.
+
+## Organization
+
+Inside the clients/html/src, the directories look roughly like this:
+
+- `/app`
+  - Contains the root files for the app - Router, Services, and Components.
+- `/data`
+  - Contains the json files that will be used to populate SIC codes, ZipCodes, Tooltips, and QHP/QDP data.
+- `/services`
+  - Contains the files used to communicate data across compoents and also make HTTP request to external systems if required.
+- `/assets/scss`
+  - Contains global style info, like themes, fonts, and common functions
 
 ## Helpful UI Resources
 

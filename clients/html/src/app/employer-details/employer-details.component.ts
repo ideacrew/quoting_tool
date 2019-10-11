@@ -3,9 +3,11 @@ import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployerDetailsService } from './../services/employer-details.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { NgbDateStruct, NgbCalendar, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import zipcodes from '../../settings/zipcode.json';
-import sics from '../../settings/sic.json';
+import { NgbDateStruct, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import zipcodes from '../../data/zipcode.json';
+import sics from '../../data/sic.json';
+import sicCodes from '../../data/sicCodes.json';
+import { SelectedSicService } from '../services/selected-sic.service';
 
 @Component({
   selector: 'app-employer-details',
@@ -24,7 +26,7 @@ import sics from '../../settings/sic.json';
 export class EmployerDetailsComponent implements OnInit {
   rows = [];
   model: NgbDateStruct;
-  date: {months: number, day: number, year: number};
+  date: { months: number, day: number, year: number };
   sicKeyword = 'standardIndustryCodeCode';
   zipKeyword = 'zipCode';
   sics = sics;
@@ -35,6 +37,8 @@ export class EmployerDetailsComponent implements OnInit {
   employeeIndex: any;
   employerDetails: any;
   showEditHousehold: any;
+  sicCodes = sicCodes;
+
   public counties: any;
   public quoteForm: FormGroup;
   public editEmployeeForm: FormGroup;
@@ -47,28 +51,34 @@ export class EmployerDetailsComponent implements OnInit {
   public months: any;
   public todaysDate = new Date();
   public employeeRosterDetails: any;
+  public show: boolean;
 
   relationOptions = [
-    {key: 'spouse', value: 'Spouse'},
-    {key: 'domestic partner', value: 'Domestic Partner'},
-    {key: 'child', value: 'Child'},
-    {key: 'disabled child', value: 'Disabled Child'},
+    { key: 'spouse', value: 'Spouse' },
+    { key: 'domestic partner', value: 'Domestic Partner' },
+    { key: 'child', value: 'Child' },
+    { key: 'disabled child', value: 'Disabled Child' },
   ];
 
-  @ViewChild('file', {static: false}) file: ElementRef;
+  config = {
+    hasFilter: true,
+    decoupleChildFromParent: true
+  };
+
+  @ViewChild('file', { static: false }) file: ElementRef;
 
   constructor(private fb: FormBuilder, private modalService: NgbModal, private employerDetailsService: EmployerDetailsService,
-    private calendar: NgbCalendar, private config: NgbDatepickerConfig) {
+    private dpConfig: NgbDatepickerConfig, private selectedSicService: SelectedSicService) {
 
     this.quoteForm = this.fb.group({
       effectiveDate: ['', Validators.required],
       sic: ['', Validators.required],
       zip: ['', Validators.required],
-      county: [{value: '', disabled: true}],
-      employees: this.fb.array([])
+      county: [{ value: '', disabled: true }],
+      employees: this.fb.array([], Validators.required)
     });
 
-    this.showEditHousehold = false
+    this.showEditHousehold = false;
 
     this.editEmployeeForm = this.fb.group({
       firstName: [''],
@@ -102,36 +112,44 @@ export class EmployerDetailsComponent implements OnInit {
     ];
 
     const year = new Date().getFullYear();
-    const month = new Date().getMonth();
 
-    config.minDate = {year: year - 110, month: 1, day: 1};
-    config.maxDate = {year: year + 1, month: 12, day: 31};
+    this.dpConfig.minDate = { year: year - 110, month: 1, day: 1 };
+    this.dpConfig.maxDate = { year: year + 1, month: 12, day: 31 };
   }
 
   ngOnInit() {
+    this.selectedSicService.currentMessage.subscribe(message => this.setSicFromTree(message));
     this.employeeRoster = localStorage.getItem('employerDetails');
     if (this.employeeRoster) {
       this.showEmployeeRoster = true;
       this.employerDetails = JSON.parse(this.employeeRoster);
       this.quoteForm.get('effectiveDate').setValue(new Date(Date.parse(this.employerDetails.effectiveDate)));
-      this.quoteForm.get('sic').setValue(this.employerDetails.sic.standardIndustryCodeCode);
       this.quoteForm.get('zip').setValue(this.employerDetails.zip.zipCode);
+      this.quoteForm.get('sic').setValue(this.employerDetails.sic.standardIndustryCodeCode);
       this.loadEmployeesFromStorage();
     }
     // Sets effective Date options
     if (this.todaysDate.getMonth() + 1 > 11) {
       // Add next year date if next month is January
       this.effectiveDateOptions = [
-        { month: -1, value: 'SELECT START ON', disabled: true},
+        { month: -1, value: 'SELECT DATE', disabled: true },
         { month: this.todaysDate.getMonth(), value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}` },
         { month: 0, value: `${this.months[0]} ${this.todaysDate.getFullYear() + 1}` },
       ];
     } else {
       this.effectiveDateOptions = [
-        { month: -1, value: 'SELECT START ON', disabled: true},
+        { month: -1, value: 'SELECT DATE', disabled: true },
         { month: this.todaysDate.getMonth(), value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}` },
-        { month: this.todaysDate.getMonth() + 1, value: `${this.months[this.todaysDate.getMonth() + 1]} ${this.todaysDate.getFullYear()}`}
+        { month: this.todaysDate.getMonth() + 1, value: `${this.months[this.todaysDate.getMonth() + 1]} ${this.todaysDate.getFullYear()}` }
       ];
+    }
+  }
+
+  setSicFromTree(item) {
+    if (item !== 'default item') {
+      const sicValue = this.sics.filter(sic => sic['standardIndustryCodeFull'] === item.text)[0]['standardIndustryCodeCode'];
+      this.quoteForm.get('sic').setValue(sicValue);
+      this.show = false;
     }
   }
 
@@ -195,22 +213,18 @@ export class EmployerDetailsComponent implements OnInit {
     const input = new FormData();
     input.append('file', fileInfo.files[0]);
     this.employerDetailsService.postUpload(input)
-      .subscribe(
-        data => {
-          // this.censusDatatable.rows = data['census_records'];
-        }
-      );
-      // Below is used to display in the UI
-      const reader = new FileReader();
-      const csvData = [];
-      this.uploadData = csvData;
-      reader.readAsBinaryString(fileInfo.files[0]);
-      reader.onload = function () {
-       csvData.push(reader.result);
-      };
-      setTimeout(() => {
-        this.parseResults(this.uploadData[0]);
-      }, 800);
+      .subscribe();
+    // Below is used to display in the UI
+    const reader = new FileReader();
+    const csvData = [];
+    this.uploadData = csvData;
+    reader.readAsBinaryString(fileInfo.files[0]);
+    reader.onload = function() {
+      csvData.push(reader.result);
+    };
+    setTimeout(() => {
+      this.parseResults(this.uploadData[0]);
+    }, 800);
   }
 
   zipChangeSearch(event) {
@@ -240,7 +254,7 @@ export class EmployerDetailsComponent implements OnInit {
     }
   }
 
-  onChangeSearch(val: string) {
+  onChangeSearch() {
     // fetch remote data from here
     // And reassign the 'data' which is binded to 'data' property.
   }
@@ -249,7 +263,8 @@ export class EmployerDetailsComponent implements OnInit {
     localStorage.setItem('employerDetails', form);
   }
 
-  onFocused(e) {
+  onFocused(event) {
+    console.log(event);
     // do something when input is focused
   }
 
@@ -268,8 +283,8 @@ export class EmployerDetailsComponent implements OnInit {
         // create employees from csv
         if (relationship === 'employee') {
           this.employee = row;
-          count ++;
-           control.push(
+          count++;
+          control.push(
             this.fb.group({
               firstName: [firstName],
               lastName: [lastName],
@@ -315,8 +330,8 @@ export class EmployerDetailsComponent implements OnInit {
   }
 
   removeEmployeeFromRoster(rowIndex) {
-    this.rows.splice(rowIndex, 1)
-    this.employerDetails.employees.splice(rowIndex, 1)
+    this.rows.splice(rowIndex, 1);
+    this.employerDetails.employees.splice(rowIndex, 1);
     localStorage.setItem('employerDetails', JSON.stringify(this.employerDetails));
   }
 
@@ -331,7 +346,7 @@ export class EmployerDetailsComponent implements OnInit {
       lastName: employee.lastName,
       dob: new Date(Date.parse(employee.dob)),
       coverageKind: employee.coverageKind
-    })
+    });
     employeeForm.controls.dependents = this.fb.array([]);
     employee.dependents.forEach(function(dependent) {
       (<FormArray>employeeForm.controls.dependents).push(
@@ -346,16 +361,16 @@ export class EmployerDetailsComponent implements OnInit {
   }
 
   updateEmployee() {
-    this.showEditHousehold = false
+    this.showEditHousehold = false;
     this.rows[this.editEmployeeIndex] = this.editEmployeeForm.value;
     this.rows = [...this.rows];
-    this.employerDetails.employees[this.editEmployeeIndex] = this.editEmployeeForm.value
+    this.employerDetails.employees[this.editEmployeeIndex] = this.editEmployeeForm.value;
     localStorage.setItem('employerDetails', JSON.stringify(this.employerDetails));
     this.editEmployeeIndex = null;
   }
 
   formatDOB(value) {
     // Formats dob to valid format for datepicker
-    return new Date(parseInt(value[2]), parseInt(value[0]), parseInt(value[1]));
+    return new Date(parseInt(value[2], 0), parseInt(value[0], 0), parseInt(value[1], 0));
   }
 }

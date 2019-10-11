@@ -1,9 +1,18 @@
+.button-group {
+  margin-bottom: 80px;
+}
+
 .btn-outline-info {
   background-color: #fff;
 }
 
 .btn-outline-info:hover {
   color: #009efb;
+}
+
+.count-text {
+  color: #6c757d !important;
+  font-size: 80%;
 }
 
 .fa-question-circle {

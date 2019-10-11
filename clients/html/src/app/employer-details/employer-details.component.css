@@ -1,5 +1,5 @@
-.btn-link {
-  color: #005e81;
+.btn-link a {
+  color: #0036cb;
 }
 
 .btn-outline-primary {
@@ -9,6 +9,14 @@
 
 .btn-outline-primary:hover {
   background-color: #c56c24;
+}
+
+.fa-question {
+  color: #005e81;
+}
+
+.fa-question:hover {
+  cursor: pointer;
 }
 
 fieldset.household {
@@ -52,7 +60,7 @@ fieldset.dependent > legend {
 }
 
 .heading-text {
-  font-weight: 300;
+  font-weight: 700;
   color: #c56c24;
 }
 
@@ -68,7 +76,7 @@ fieldset.dependent > legend {
 }
 
 .required-field {
-  color: #f62d51;
+  color: #a00723;
   font-weight: 600;
 }
 

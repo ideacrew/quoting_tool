@@ -10,12 +10,21 @@ body {
   height: calc(100vh);
 }
 
+a {
+  color: #381be7;
+}
+
 a:active {
   color: #c56c24;
 }
 
 .btn-link {
   color: #c56c24;
+}
+
+.btn-outline-info {
+  color: #00507e;
+  border-color: #00507e;
 }
 
 .btn-primary {

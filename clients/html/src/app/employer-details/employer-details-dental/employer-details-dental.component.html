@@ -2,14 +2,8 @@
   <app-nav [validForm]="true" myPath="Dental"></app-nav>
   <div class="row">
     <div class="col-12 mt-2">
-      <p>Choose any dental plan from a single dental insurance carrier to offer for all employees. All available plans are displayed below. Learn more about our <a href="https://www.mahealthconnector.org/business/employers/employee-choice" target="_blank">benefit models</a>.<br /><br />The monthly cost displayed here is based on 100% employer contribution to plan premiums.</p>
+      <p class="main-text">Choose any dental plan from a single dental insurance carrier to offer for all employees. All available plans are displayed below. Learn more about our <a href="https://www.mahealthconnector.org/business/employers/employee-choice" target="_blank">benefit models</a>.<br /><br />The monthly cost displayed here is based on 100% employer contribution to plan premiums.</p>
     </div>
   </div>
   <app-plan-filter [carrierPlans]="carriers" planType="dental"></app-plan-filter>
-  <div class="row dental-button-group">
-    <div class="col-12 mb-4">
-      <button class="btn btn-primary">Save PDF</button>
-      <a class="btn btn-primary float-right" routerLink="/employer-details/health">Back to Health</a>
-    </div>
-  </div>
 </div>

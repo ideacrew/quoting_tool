@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EmployerDetailsDentalComponent } from './employer-details-dental.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EmployerDetailsDentalComponent', () => {
   let component: EmployerDetailsDentalComponent;
@@ -8,7 +10,9 @@ describe('EmployerDetailsDentalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EmployerDetailsDentalComponent ]
+      declarations: [ EmployerDetailsDentalComponent ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      imports: [ RouterTestingModule ]
     })
     .compileComponents();
   }));
@@ -21,5 +25,10 @@ describe('EmployerDetailsDentalComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should have the default paragraph text', () => {
+    const text = fixture.nativeElement.querySelector('.main-text').innerText;
+    expect(text).toContain('Choose any dental plan from a single dental insurance carrier to offer for all employees');
   });
 });

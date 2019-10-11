@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import tooltips from '../../settings/tooltips.json';
-import tableHeaders from '../../settings/tableHeaders.json';
+import tooltips from '../../data/tooltips.json';
+import tableHeaders from '../../data/tableHeaders.json';
+import html2PDF from 'jspdf-html2canvas';
 
 import { Quote, QuoteCalculator } from "../data/quotes";
 import { TieredContributionModel, RelationshipContributionModel } from "../data/contribution_models";
@@ -26,7 +27,7 @@ import { RosterEntry } from "../data/sponsor_roster";
   ]
 })
 export class PlanFilterComponent implements OnInit {
-  public tooltips = tooltips;
+  public tooltips = tooltips[0];
   public isCollapsed: any;
   public metalLevelOptions: any;
   public carriers: any;
@@ -39,12 +40,16 @@ export class PlanFilterComponent implements OnInit {
   public clearAll: boolean;
   public filterLength: number;
   public filterSelected = false;
-  public tableHeaders = tableHeaders;
+  public tableHeaders = tableHeaders[0];
   selectedMetalLevels = [];
   selectedProductTypes = [];
   selectedInsuranceCompanies = [];
   filterCarriersResults = [];
   filterKeysSelected = [];
+  html2PDF = html2PDF;
+  public pdfView = false;
+  public btnName: string;
+  public btnLink: string;
 
 
 
@@ -89,11 +94,7 @@ export class PlanFilterComponent implements OnInit {
       }
     }
 
-
     if(this.employerDetails) {
-
-      debugger
-
       this.planService.getPlansFor(
       this,
       "0111",
@@ -121,6 +122,14 @@ export class PlanFilterComponent implements OnInit {
       this.tieredCalculator = this.calculator(startDate, this.tieredContributionModel, true);
       this.relationshipContributionModel = defaultRelationshipContributionModel();
       this.relationshipCalculator = this.calculator(startDate, this.relationshipContributionModel);
+    }
+
+    if (this.planType === 'health') {
+      this.btnName = 'Select Dental';
+      this.btnLink = '/employer-details/dental';
+    } else {
+      this.btnName = 'Back to health';
+      this.btnLink = '/employer-details/health';
     }
   }
 
@@ -318,6 +327,44 @@ export class PlanFilterComponent implements OnInit {
   }
 
   getToolTip(type) {
-    return this.tooltips[0][this.planType][0][type];
+    return this.tooltips[this.planType].map(key => key[type]);
+  }
+
+  getTableHeader(col) {
+    return this.tableHeaders[this.planType].map(key => key[col]);
+  }
+
+  metalLevelCount(metalLevel, planType) {
+    if (planType === 'health') {
+      const count = this.carrierPlans.filter(plan => plan['Metal Level'] === metalLevel);
+      return `(${count.length} Plans)`;
+    } else {
+      const count = this.carrierPlans.filter(plan => plan['Coverage Level'] === metalLevel);
+      return `(${count.length} Plans)`;
+    }
+  }
+
+  productTypeCounts(product) {
+    const count = this.carrierPlans.filter(plan => plan['Product'] === product);
+    return `(${count.length} Plans)`;
+  }
+
+  downloadPdf() {
+    this.pdfView = true;
+    const table = document.getElementById('plan-table');
+    this.html2PDF(table, {
+    jsPDF: {
+      unit: 'pt',
+      format: 'a4'
+    },
+    imageType: 'image/png',
+    output: `./pdf/${this.planType}.pdf`,
+    success: function(pdf) {
+      pdf.save();
+    }
+    });
+    setTimeout(() => {
+      this.pdfView = false;
+    }, 500);
   }
 }
