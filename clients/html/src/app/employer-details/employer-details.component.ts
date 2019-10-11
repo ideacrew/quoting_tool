@@ -125,19 +125,20 @@ export class EmployerDetailsComponent implements OnInit {
       this.employerDetails = JSON.parse(this.employeeRoster);
       this.quoteForm.get('effectiveDate').setValue(new Date(Date.parse(this.employerDetails.effectiveDate)));
       this.quoteForm.get('zip').setValue(this.employerDetails.zip.zipCode);
+      this.quoteForm.get('sic').setValue(this.employerDetails.sic.standardIndustryCodeCode);
       this.loadEmployeesFromStorage();
     }
     // Sets effective Date options
     if (this.todaysDate.getMonth() + 1 > 11) {
       // Add next year date if next month is January
       this.effectiveDateOptions = [
-        { month: -1, value: 'SELECT START ON', disabled: true },
+        { month: -1, value: 'SELECT DATE', disabled: true },
         { month: this.todaysDate.getMonth(), value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}` },
         { month: 0, value: `${this.months[0]} ${this.todaysDate.getFullYear() + 1}` },
       ];
     } else {
       this.effectiveDateOptions = [
-        { month: -1, value: 'SELECT START ON', disabled: true },
+        { month: -1, value: 'SELECT DATE', disabled: true },
         { month: this.todaysDate.getMonth(), value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}` },
         { month: this.todaysDate.getMonth() + 1, value: `${this.months[this.todaysDate.getMonth() + 1]} ${this.todaysDate.getFullYear()}` }
       ];
