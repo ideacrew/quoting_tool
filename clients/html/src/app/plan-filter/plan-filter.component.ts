@@ -3,10 +3,19 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import tooltips from '../../settings/tooltips.json';
 import tableHeaders from '../../settings/tableHeaders.json';
 
+import { Quote, QuoteCalculator } from "../data/quotes";
+import { TieredContributionModel, RelationshipContributionModel } from "../data/contribution_models";
+import { ClientPreferences, CLIENT_PREFERENCES, PackageTypes, defaultRelationshipContributionModel, defaultTieredContributionModel } from "../config/client_configuration";
+import { PlanProviderService } from "../services/plan-provider.service";
+import { Product } from "../data/products";
+import { RosterEntry } from "../data/sponsor_roster";
+
+
 @Component({
   selector: 'app-plan-filter',
   templateUrl: './plan-filter.component.html',
   styleUrls: ['./plan-filter.component.css'],
+  providers: [PlanProviderService],
   animations: [
     trigger('fadeInOut', [
       state('void', style({
@@ -37,17 +46,33 @@ export class PlanFilterComponent implements OnInit {
   filterCarriersResults = [];
   filterKeysSelected = [];
 
+
+
+  private sponsorRoster : Array<RosterEntry> = [];
+  public planFilter : PackageTypes | null;
+  public hasTierCompatibleType: boolean;
+  public hasRelationshipCompatibleType: boolean;
+  public kindFilteredProducts = [];
+  public sponsorProducts = [];
+  public filteredProducts = [];
+  public clientPreferences: ClientPreferences = CLIENT_PREFERENCES;
+  public relationshipCalculator: QuoteCalculator;
+  public tieredCalculator: QuoteCalculator;
+  public relationshipContributionModel:RelationshipContributionModel;
+  public tieredContributionModel:TieredContributionModel;
+
   public planOptions = [
-    {key: 'one_carrier', value: 'One Carrier', view: 'health'},
-    {key: 'one_level', value: 'One Level', view: 'health'},
-    {key: 'one_plan', value: 'One Plan', view: 'health'},
-    {key: 'one_plan', value: 'One Plan', view: 'dental'},
+    {key: 'single_issuer', value: 'One Carrier', view: 'health'},
+    {key: 'metal_level', value: 'One Level', view: 'health'},
+    {key: 'single_product', value: 'One Plan', view: 'health'},
+    {key: 'single_product', value: 'One Plan', view: 'dental'},
   ];
 
   @Input() carrierPlans: any;
   @Input() planType: any;
 
-  constructor() { }
+  constructor(private planService: PlanProviderService) {
+  }
 
   ngOnInit() {
     const erDetails = localStorage.getItem('employerDetails');
@@ -62,6 +87,40 @@ export class PlanFilterComponent implements OnInit {
       } else {
         this.costShownText = `${this.erEmployees.length} person`;
       }
+    }
+
+
+    if(this.employerDetails) {
+
+      debugger
+
+      this.planService.getPlansFor(
+      this,
+      "0111",
+      new Date(2019, 6, 1),
+      "MA",
+      "Hampden",
+      "01001");
+
+      // const startDate = this.employerDetails.effectiveDate
+      const consumer = this;
+      this.employerDetails.employees.forEach(function(employee) {
+        var employeeJson = { dob: new Date(employee.dob), will_enroll: true, roster_dependents: [] }
+
+        employee.dependents.forEach(function(dependent) {
+          employeeJson.roster_dependents.push({
+            dob: new Date(dependent.dob),
+            relationship: dependent.relationship
+          })
+        })
+
+        consumer.sponsorRoster.push(employeeJson)
+      })
+      const startDate = new Date(2019,6,1)
+      this.tieredContributionModel = defaultTieredContributionModel();
+      this.tieredCalculator = this.calculator(startDate, this.tieredContributionModel, true);
+      this.relationshipContributionModel = defaultRelationshipContributionModel();
+      this.relationshipCalculator = this.calculator(startDate, this.relationshipContributionModel);
     }
   }
 
@@ -88,6 +147,77 @@ export class PlanFilterComponent implements OnInit {
     this.filteredCarriers = this.carrierPlans;
     this.filterLength = this.filteredCarriers.length;
     this.filterSelected = true;
+  }
+
+  public onProductsLoaded(products: Array<Product>): void {
+    this.planFilter = null;
+    this.hasRelationshipCompatibleType = false;
+    this.hasTierCompatibleType = false;
+    this.sponsorProducts = products;
+    this.kindFilteredProducts = products;
+    this.filteredProducts = products;
+  }
+
+  changePackageFilter(evt) {
+    var newVal : PackageTypes | null = <PackageTypes>evt;
+    this.planFilter = newVal;
+    this.hasTierCompatibleType = false;
+    this.hasRelationshipCompatibleType = false;
+    if (newVal != null) {
+      this.hasRelationshipCompatibleType = this.isRelationshipPackageType(this.planFilter);
+      this.hasTierCompatibleType = this.isTieredPackageType(this.planFilter);
+    }
+    var packageKinds = this.planFilter;
+    this.kindFilteredProducts = this.sponsorProducts;
+    if (packageKinds != null) {
+      this.kindFilteredProducts = this.sponsorProducts.filter(function(p) {
+        return p.package_kinds.includes(packageKinds);
+      });
+    }
+    this.filteredProducts = this.kindFilteredProducts;
+    this.recalculate();
+  }
+
+  recalculate() {
+    var calculator = this.hasRelationshipCompatibleType ? this.relationshipCalculator : this.tieredCalculator;
+    var newQuotes = calculator.quoteProducts(this.kindFilteredProducts, this.planFilter);
+    var fProductsForCompare = this.filteredProducts.map(function(fp) {
+      return (fp.name + fp.provider_name);
+    });
+    var filteredQuotes = newQuotes.filter(function(nq) {
+      return fProductsForCompare.includes((nq.product_information.name + nq.product_information.provider_name))
+    })
+    this.filteredCarriers = filteredQuotes;
+    this.filterLength = filteredQuotes.length;
+    this.filterSelected = true;
+  }
+
+  isRelationshipPackageType(pt: PackageTypes) {
+    return this.clientPreferences.relationship_package_types.indexOf(pt) > -1;
+  }
+
+  isTieredPackageType(pt: PackageTypes) {
+    return this.clientPreferences.tiered_package_types.indexOf(pt) > -1;
+  }
+
+  private calculator(date, contributionModel, isTiredCalculator?:boolean) : QuoteCalculator {
+    if(isTiredCalculator) {
+      var calculator = new this.clientPreferences.tiered_quote_calculator(
+        date,
+        contributionModel,
+        this.sponsorRoster
+      );
+
+      return calculator;
+    } else {
+      var calculator = new this.clientPreferences.relationship_quote_calculator(
+        date,
+        contributionModel,
+        this.sponsorRoster
+      );
+
+      return calculator;
+    }
   }
 
   selectedFilter(value, event, type) {

@@ -14,7 +14,7 @@ module Transactions
     def load_file_info(input)
       file = Roo::Spreadsheet.open(input)
       sheet = file.sheet("Master Zip Code List")
-      Success(sheet)
+      Success({sheet: sheet})
     end
 
     def validate_file_info(input)
@@ -22,9 +22,10 @@ module Transactions
       Success(input)
     end
 
-    def load_file_data(sheet)
-      columns = sheet.row(1).map(&:underscore)
-      output = (4..sheet.last_row).inject([]) do |result, id|
+    def load_file_data(input)
+      sheet = input[:sheet]
+      columns = sheet.row(1).map(&:parameterize).map(&:underscore)
+      output = (2..sheet.last_row).inject([]) do |result, id|
         row = Hash[[columns, sheet.row(id)].transpose]
         
         result << {
@@ -35,7 +36,7 @@ module Transactions
 
         result
       end
-      Success(output)
+      Success({result: output})
     end
 
     def validate_records(input)
@@ -44,8 +45,8 @@ module Transactions
     end
 
     def create_records(input)
-      input.each_with_index do |json, i|
-        unless ::BenefitMarkets::Locations::CountyZip.find_or_create_by(json)
+      input[:result].each_with_index do |json, i|
+        unless Locations::CountyZip.find_or_create_by(json)
           return Failure({message: "Failed to create County Zip record for index #{i}"})
         end
       end

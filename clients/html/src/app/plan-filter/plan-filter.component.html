@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-12">
     <div class="form-group">
-      <select class="custom-select col-3 float-right" id="inlineFormCustomSelect" (change)="loadData()">
+      <select class="custom-select col-3 float-right" id="inlineFormCustomSelect" (change)="changePackageFilter($event.target.value)">
         <option selected>Choose type ...</option>
         <option *ngFor="let plan of planOptions" [value]="plan.key" [hidden]="plan.view !== planType">{{plan.value}}</option>
       </select>
@@ -106,21 +106,31 @@
         <thead>
           <tr>
             <th scope="col">{{tableHeaders[0][planType][0]['col-1']}} <i class="fas fa-question-circle ml-2"></i></th>
-            <th scope="col">{{tableHeaders[0][planType][0]['col-2']}} <i class="fas fa-question-circle ml-2"></i></th>
+            <th [ngStyle]="{'width': '25%'}" scope="col">{{tableHeaders[0][planType][0]['col-2']}} <i class="fas fa-question-circle ml-2"></i></th>
             <th scope="col">{{tableHeaders[0][planType][0]['col-3']}} <i class="fas fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('annualDeductibleFamilyIndividual')"></i></th>
             <th scope="col">{{tableHeaders[0][planType][0]['col-4']}} <i class="fas fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('maximumOutOfPocket')"></i></th>
-            <th scope="col">{{tableHeaders[0][planType][0]['col-5']}} <i class="fas fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('maximumMonthlyEmployerCost')"></i></th>
+            <th [ngStyle]="{'width': '20%'}" scope="col" *ngIf="this.planFilter == 'single_product'">{{tableHeaders[0][planType][0]['col-5']}} <i class="fas fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('maximumMonthlyEmployerCost')"></i></th>
             <th scope="col">{{tableHeaders[0][planType][0]['col-6']}} <i class="fas fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('maximumMonthlyEmployerCost')"></i></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let carrier of filteredCarriers">
-            <td><strong>{{carrier['Plan Name']}}</strong><br /><a href="/">Summary of Benefit Coverage <i class="far fa-file-pdf fa-lg"></i></a></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><strong>{{carrier['product_name']}}</strong><br /><a href="/">Summary of Benefit Coverage <i class="far fa-file-pdf fa-lg"></i></a></td>
+            <td>
+              <p>Hospital Stay - {{carrier['product_information']['hospital_stay'] | number: '1.2-2' }}</p>
+              <p>Emergency Stay - {{carrier['product_information']['emergency_stay'] | number: '1.2-2' }}</p>
+              <p>PCP Office Visit - {{carrier['product_information']['pcp_office_visit'] | number: '1.2-2' }}</p>
+              <p>RX - {{carrier['product_information']['rx'] | number: '1.2-2' }}</p>
+            </td>
+            <td>{{carrier['group_deductible']}}</td>
+            <td>{{carrier['maximum_member_cost'] | number: '1.2-2' }}</td>
+            <td *ngIf="this.planFilter == 'single_product'">
+              <p>Individual - {{carrier['sponsor_cost'] | number: '1.2-2' }}</p>
+              <p>Two-Person - {{carrier['sponsor_cost'] | number: '1.2-2' }}</p>
+              <p>Emp W/Child - {{carrier['sponsor_cost'] | number: '1.2-2' }}</p>
+              <p>Family - {{carrier['sponsor_cost'] | number: '1.2-2' }}</p>
+            </td>
+            <td>{{carrier['sponsor_cost'] | number: '1.2-2'}}</td>
           </tr>
         </tbody>
       </table>
