@@ -1,8 +1,8 @@
-import { QuoteCalculator } from "../data/quotes";
-import { RosterEntry } from "../data/sponsor_roster";
-import { RelationshipContributionModel, TieredContributionModel } from "../data/contribution_models";
-import { RelationshipCoverageCostCalculatorService } from "../services/calculators/relationship_coverage_cost_calculator.service";
-import { TieredCoverageCostCalculatorService } from "../services/calculators/tiered_coverage_cost_calculator.service";
+import { QuoteCalculator } from '../data/quotes';
+import { RosterEntry } from '../data/sponsor_roster';
+import { RelationshipContributionModel, TieredContributionModel } from '../data/contribution_models';
+import { RelationshipCoverageCostCalculatorService } from '../services/calculators/relationship_coverage_cost_calculator.service';
+import { TieredCoverageCostCalculatorService } from '../services/calculators/tiered_coverage_cost_calculator.service';
 
 interface QuoteCalculatorConstructor<T> {
   new(
@@ -24,42 +24,42 @@ export interface ClientPreferences {
 }
 
 export enum PackageTypes {
-  METAL_LEVEL = "metal_level",
-  SINGLE_ISSUER = "single_issuer",
-  SINGLE_PRODUCT = "single_product"
+  METAL_LEVEL = 'metal_level',
+  SINGLE_ISSUER = 'single_issuer',
+  SINGLE_PRODUCT = 'single_product'
 }
 
 export enum ContributionRelationship {
-  SELF = "Self",
-  SPOUSE = "Spouse",
-  CHILD = "Child",
-  DOMESTIC_PARTNER = "Domestic Partner"
+  SELF = 'Self',
+  SPOUSE = 'Spouse',
+  CHILD = 'Child',
+  DOMESTIC_PARTNER = 'Domestic Partner'
 }
 
 export enum ContributionTierName {
-  EMPLOYEE_ONLY = "Employee Only",
-  EMPLOYEE_AND_SPOUSE = "Employee and Spouse",
-  EMPLOYEE_AND_DEPENDENTS = "Employee and Dependents",
-  FAMILY = "Family"
+  EMPLOYEE_ONLY = 'Employee Only',
+  EMPLOYEE_AND_SPOUSE = 'Employee and Spouse',
+  EMPLOYEE_AND_DEPENDENTS = 'Employee and Dependents',
+  FAMILY = 'Family'
 }
 
 export function defaultRelationshipContributionModel() {
-  var subscriber_level = {
+  const subscriber_level = {
     name: ContributionRelationship.SELF,
     contribution: 100,
     offered: true
   };
-  var spouse_level = {
+  const spouse_level = {
     name: ContributionRelationship.SPOUSE,
     contribution: 100,
     offered: true
   };
-  var dependent_level = {
+  const dependent_level = {
     name: ContributionRelationship.CHILD,
     contribution: 100,
     offered: true
   };
-  var domestic_partner_level = {
+  const domestic_partner_level = {
     name: ContributionRelationship.DOMESTIC_PARTNER,
     contribution: 100,
     offered: true
@@ -75,22 +75,22 @@ export function defaultRelationshipContributionModel() {
 }
 
 export function defaultTieredContributionModel() {
-  var subscriber_level = {
+  const subscriber_level = {
     name: ContributionTierName.EMPLOYEE_ONLY,
     contribution: 100,
     offered: true
   };
-  var spouse_level = {
+  const spouse_level = {
     name: ContributionTierName.EMPLOYEE_AND_SPOUSE,
     contribution: 100,
     offered: true
   };
-  var dependent_level = {
+  const dependent_level = {
     name: ContributionTierName.EMPLOYEE_AND_DEPENDENTS,
     contribution: 100,
     offered: true
   };
-  var domestic_partner_level = {
+  const domestic_partner_level = {
     name: ContributionTierName.FAMILY,
     contribution: 100,
     offered: true
@@ -116,8 +116,8 @@ export const CLIENT_PREFERENCES: ClientPreferences = {
   ],
   relationship_quote_calculator: RelationshipCoverageCostCalculatorService,
   tiered_quote_calculator: TieredCoverageCostCalculatorService,
-  default_state: "MA",
-  minimum_start_date: new Date(2017,0,1),
-  maximum_start_date: new Date(2019,11,1),
+  default_state: 'MA',
+  minimum_start_date: new Date(2017, 0, 1),
+  maximum_start_date: new Date(2019, 11, 1),
   county_zip_required: true
-}
+};

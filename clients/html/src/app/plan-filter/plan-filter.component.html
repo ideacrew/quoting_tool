@@ -42,6 +42,10 @@
             </div>
             <div class="col-3">
               <p class="heading-label">HSA Eligible <i class="far fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('hsaEligible')"></i></p>
+              <div class="custom-control custom-checkbox mr-sm-2 m-b-15" *ngFor="let hsa of hsaEligible; let i = index">
+                <input type="checkbox" class="custom-control-input checkbox-input" id="checkbox-hsa-{{i}}" [value]="hsa" (click)="selectedFilter(hsa, $event, 'hsa')">
+                <label class="custom-control-label" for="checkbox-hsa-{{i}}">{{hsa}} <span class="count-text">{{hsaCounts(hsa)}}</span></label>
+              </div>
             </div>
           </div>
           <div class="row">
@@ -117,12 +121,12 @@
         </thead>
         <tbody>
           <tr *ngFor="let carrier of filteredCarriers">
-            <td><strong>{{carrier['product_name']}}</strong><br /><a href="/">Summary of Benefit Coverage <i class="far fa-file-pdf fa-lg"></i></a></td>
+            <td><strong>{{carrier['product_information']['provider_name']}}</strong><br /><strong>{{carrier['product_name']}}</strong><br /><a href="/">Summary of Benefit Coverage <i class="far fa-file-pdf fa-lg"></i></a></td>
             <td>
-              <p>Hospital Stay - {{carrier['product_information']['hospital_stay'] | number: '1.2-2' }}</p>
-              <p>Emergency Stay - {{carrier['product_information']['emergency_stay'] | number: '1.2-2' }}</p>
-              <p>PCP Office Visit - {{carrier['product_information']['pcp_office_visit'] | number: '1.2-2' }}</p>
-              <p>RX - {{carrier['product_information']['rx'] | number: '1.2-2' }}</p>
+              <p class="mb-0">Hospital Stay - {{carrier['product_information']['hospital_stay'] | number: '1.2-2' }}</p>
+              <p class="mb-0">Emergency Stay - {{carrier['product_information']['emergency_stay'] | number: '1.2-2' }}</p>
+              <p class="mb-0">PCP Office Visit - {{carrier['product_information']['pcp_office_visit'] | number: '1.2-2' }}</p>
+              <p class="mb-0">RX - {{carrier['product_information']['rx'] | number: '1.2-2' }}</p>
             </td>
             <td>{{carrier['group_deductible']}}</td>
             <td>{{carrier['maximum_member_cost'] | number: '1.2-2' }}</td>

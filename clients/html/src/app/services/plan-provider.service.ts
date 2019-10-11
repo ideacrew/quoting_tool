@@ -1,8 +1,7 @@
-import { Inject, Injectable } from "@angular/core";
-import { ProductDataLoader } from  './product-data-loader.service';
+import { Injectable } from '@angular/core';
+import { ProductDataLoader } from './product-data-loader.service';
 import { Product } from '../data/products';
-import { HttpClient } from "@angular/common/http";
-import { ProductData } from "../data/products";
+import { ProductData } from '../data/products';
 import { ApiRequestService } from './api-request.service';
 
 interface ProductListUser {
@@ -13,9 +12,9 @@ interface ProductListUser {
   providedIn: 'root'
 })
 export class PlanProviderService {
-  public dataLoader : ProductDataLoader;
+  public dataLoader: ProductDataLoader;
 
-  constructor(@Inject(HttpClient) private http: HttpClient, private api_request: ApiRequestService) {
+  constructor(private api_request: ApiRequestService) {
     this.dataLoader = new ProductDataLoader();
   }
 
@@ -26,15 +25,15 @@ export class PlanProviderService {
     state: string,
     county_name: string,
     zip: string) {
-    var formattedDate = startDate.toISOString().substring(0,10);
-    var transformer = this.dataLoader;
+    const formattedDate = startDate.toISOString().substring(0, 10);
+    const transformer = this.dataLoader;
     const attrs = {
       sic_code: sic_code,
       start_date: formattedDate,
       county_name: county_name,
       zip_code: zip,
       state: state
-    }
+    };
     this.api_request.authedGet('employees/get_plans.json', attrs).subscribe(function(data: Array<ProductData>) {
       consumer.onProductsLoaded(transformer.castData(data['plans']));
     });

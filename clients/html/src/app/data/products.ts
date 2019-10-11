@@ -1,4 +1,4 @@
-import { ContributionTierName, PackageTypes } from "../config/client_configuration";
+import { ContributionTierName, PackageTypes } from '../config/client_configuration';
 
 export interface RateEntry {
   age: string;
@@ -6,7 +6,7 @@ export interface RateEntry {
 }
 
 export interface FactorData {
-  [key: string]: number
+  [key: string]: number;
 }
 
 export interface RateData {
@@ -16,7 +16,7 @@ export interface RateData {
 }
 
 export interface GroupSizeFactorData {
-  max_group_size: number,
+  max_group_size: number;
   factors: FactorData;
 }
 
@@ -64,7 +64,7 @@ export interface Product {
   rx: number;
   hospital_stay: number;
   group_size_factor(group_size: string): number;
-  group_tier_factor(tier_name: ContributionTierName) : number;
-  participation_factor(participation: string) : number;
-  cost(age: string) : number;
+  group_tier_factor(tier_name: ContributionTierName): number;
+  participation_factor(participation: string): number;
+  cost(age: string): number;
 }
