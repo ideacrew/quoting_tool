@@ -4,4 +4,6 @@ package-lock.json
 
 dist
 
+docs
+
 .angulardoc.json

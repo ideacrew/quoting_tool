@@ -1,10 +1,10 @@
 // In this scss you can overwrite all our scss, we suggested you to add your scss into this, so whenever the update comes it will not affect your code.
 
-@import url("http://fonts.googleapis.com/css?family=Roboto+Slab:300,400,700&display=swap");
+@import url('http://fonts.googleapis.com/css?family=Roboto+Slab:300,400,700&display=swap');
 
 body {
   background-color: #f2f2f2;
-  font-family: "Roboto Slab", serif;
+  font-family: 'Roboto Slab', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: calc(100vh);
