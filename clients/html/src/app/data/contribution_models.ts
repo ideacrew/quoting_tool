@@ -1,21 +1,24 @@
-import { ContributionRelationship, ContributionTierName } from '../config/client_configuration';
+import {
+  ContributionRelationship,
+  ContributionTierName,
+} from '../config/client_configuration'
 
 export interface RelationshipContributionLevel {
-  name: ContributionRelationship;
-  contribution: number;
-  offered: boolean;
+  name: ContributionRelationship
+  contribution: number
+  offered: boolean
 }
 
 export interface RelationshipContributionModel {
-  levels: Array<RelationshipContributionLevel>;
+  levels: Array<RelationshipContributionLevel>
 }
 
 export interface TieredContributionLevel {
-  name: ContributionTierName;
-  contribution: number;
-  offered: boolean;
+  name: ContributionTierName
+  contribution: number
+  offered: boolean
 }
 
 export interface TieredContributionModel {
-  levels: Array<TieredContributionLevel>;
+  levels: Array<TieredContributionLevel>
 }
