@@ -27,14 +27,14 @@
               <p class="heading-label">Metal Level <i class="far fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('metalLevel')"></i></p>
               <div class="custom-control custom-checkbox mr-sm-2 m-b-15" *ngFor="let metalLevel of metalLevelOptions; let i = index">
                 <input type="checkbox" class="custom-control-input checkbox-input" id="checkbox-metal-{{i}}" [value]="metalLevel" (click)="selectedFilter(metalLevel, $event, 'metalLevel')">
-                <label class="custom-control-label" for="checkbox-metal-{{i}}">{{metalLevel}} <span class="count-text">{{metalLevelCount(metalLevel, planType)}}</span></label>
+                <label class="custom-control-label" for="checkbox-metal-{{i}}">{{metalLevel | titlecase}} <span class="count-text">{{metalLevelCount(metalLevel, planType)}}</span></label>
               </div>
             </div>
             <div class="col-3">
               <p class="heading-label">Plan Type <i class="far fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('planType')"></i></p>
               <div class="custom-control custom-checkbox mr-sm-2 m-b-15" *ngFor="let product of products; let i = index">
                 <input type="checkbox" class="custom-control-input checkbox-input" id="checkbox-plan-{{i}}" [value]="product" (click)="selectedFilter(product, $event, 'productType')">
-                <label class="custom-control-label" for="checkbox-plan-{{i}}">{{product}} <span class="count-text">{{productTypeCounts(product)}}</span></label>
+                <label class="custom-control-label" for="checkbox-plan-{{i}}">{{product.toUpperCase()}} <span class="count-text">{{productTypeCounts(product)}}</span></label>
               </div>
             </div>
             <div class="col-3">
@@ -121,20 +121,20 @@
         </thead>
         <tbody>
           <tr *ngFor="let carrier of filteredCarriers">
-            <td><strong>{{carrier['product_information']['provider_name']}}</strong><br /><strong>{{carrier['product_name']}}</strong><br /><a href="/">Summary of Benefit Coverage <i class="far fa-file-pdf fa-lg"></i></a></td>
+            <td><strong>{{carrier['product_information']['provider_name']}}</strong><br /><strong>{{carrier['product_name']}}</strong><br /><a href="/" *ngIf="!pdfView">Summary of Benefit Coverage <i class="far fa-file-pdf fa-lg"></i></a></td>
             <td>
-              <p class="mb-0">Hospital Stay - {{carrier['product_information']['hospital_stay'] | number: '1.2-2' }}</p>
-              <p class="mb-0">Emergency Stay - {{carrier['product_information']['emergency_stay'] | number: '1.2-2' }}</p>
-              <p class="mb-0">PCP Office Visit - {{carrier['product_information']['pcp_office_visit'] | number: '1.2-2' }}</p>
-              <p class="mb-0">RX - {{carrier['product_information']['rx'] | number: '1.2-2' }}</p>
+              <p class="mb-0"><strong>Hospital Stay -</strong> {{carrier['product_information']['hospital_stay'] | number: '1.2-2' }}</p>
+              <p class="mb-0"><strong>Emergency Stay -</strong> {{carrier['product_information']['emergency_stay'] | number: '1.2-2' }}</p>
+              <p class="mb-0"><strong>PCP Office Visit -</strong> {{carrier['product_information']['pcp_office_visit'] | number: '1.2-2' }}</p>
+              <p class="mb-0"><strong>RX -</strong> {{carrier['product_information']['rx'] | number: '1.2-2' }}</p>
             </td>
             <td>{{carrier['group_deductible']}}</td>
             <td>{{carrier['maximum_member_cost'] | number: '1.2-2' }}</td>
             <td *ngIf="this.planFilter == 'single_product'">
-              <p>Individual - {{carrier['sponsor_cost'] | number: '1.2-2' }}</p>
-              <p>Two-Person - {{carrier['sponsor_cost'] | number: '1.2-2' }}</p>
-              <p>Emp W/Child - {{carrier['sponsor_cost'] | number: '1.2-2' }}</p>
-              <p>Family - {{carrier['sponsor_cost'] | number: '1.2-2' }}</p>
+              <p class="mb-0"><strong>Individual -</strong> {{carrier['sponsor_cost'] | number: '1.2-2' }}</p>
+              <p class="mb-0"><strong>Two-Person -</strong> {{carrier['sponsor_cost'] | number: '1.2-2' }}</p>
+              <p class="mb-0"><strong>Emp W/Child -</strong> {{carrier['sponsor_cost'] | number: '1.2-2' }}</p>
+              <p class="mb-0"><strong>Family -</strong> {{carrier['sponsor_cost'] | number: '1.2-2' }}</p>
             </td>
             <td>{{carrier['sponsor_cost'] | number: '1.2-2'}}</td>
           </tr>
@@ -146,7 +146,7 @@
 
 <div class="row button-group">
   <div class="col-6">
-    <button class="btn btn-primary" (click)="downloadPdf()" [disabled]="!filterSelected">Save PDF</button>
+    <button class="btn btn-primary" (click)="downloadPdf()" [disabled]="!filterSelected"><i class="fas fa-file-download"></i> Save PDF</button>
   </div>
   <div class="col-6">
     <a class="btn btn-primary float-right" [routerLink]="btnLink">{{btnName}}</a>

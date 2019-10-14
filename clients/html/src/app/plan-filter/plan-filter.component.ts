@@ -189,6 +189,7 @@ export class PlanFilterComponent implements OnInit {
     }
     this.filteredProducts = this.kindFilteredProducts;
     this.recalculate();
+    this.resetAll();
   }
 
   recalculate() {
@@ -287,8 +288,34 @@ export class PlanFilterComponent implements OnInit {
 
   filterCarriers() {
     const tempArray = [];
+    const multiArray = [];
     this.filteredCarriers.map(plan => {
-      if (this.selectedMetalLevels) {
+      // Filters by Carriers & Metal Levels
+      if (this.selectedInsuranceCompanies.length > 0 && this.selectedMetalLevels.length > 0) {
+        this.selectedInsuranceCompanies.map(carrier => {
+          if (carrier === plan['product_information']['provider_name']) {
+            multiArray.push(plan);
+          }
+        }).map(() => {
+          [...this.selectedMetalLevels].filter(ml => {
+            multiArray.filter(array => array['product_information']['metal_level'] === ml);
+          });
+        });
+      }
+      // Filters by Carriers & Plan Type
+      if (this.selectedInsuranceCompanies.length > 0 && this.selectedProductTypes.length > 0) {
+        this.selectedInsuranceCompanies.map(carrier => {
+          if (carrier === plan['product_information']['provider_name']) {
+            multiArray.push(plan);
+          }
+        }).map(() => {
+          [...this.selectedProductTypes].filter(product => {
+            multiArray.filter(array => array['product_information']['product_type'] === product);
+          });
+        });
+      }
+      // Filters by Metal Levels
+      if (this.selectedMetalLevels.length > 0 && this.selectedInsuranceCompanies.length === 0) {
         this.selectedMetalLevels.filter(metalLevel => {
           if (plan['product_information']['metal_level']) {
             if (metalLevel === plan['product_information']['metal_level']) {
@@ -297,23 +324,23 @@ export class PlanFilterComponent implements OnInit {
           }
         });
       }
-
-      if (this.selectedProductTypes) {
+      // Filters by Product Types
+      if (this.selectedProductTypes.length > 0) {
         this.selectedProductTypes.filter(product => {
           if (product === plan['product_information']['product_type']) {
             tempArray.push(plan);
           }
         });
       }
-
-      if (this.selectedInsuranceCompanies) {
+      // Filters by Carriers
+      if (this.selectedInsuranceCompanies.length > 0 && this.selectedMetalLevels.length === 0) {
         this.selectedInsuranceCompanies.filter(carrier => {
           if (carrier === plan['product_information']['provider_name']) {
             tempArray.push(plan);
           }
         });
       }
-
+      // Filters by HSA
       if (this.selectedHSAs) {
         this.selectedHSAs.filter(hsa => {
           if (hsa === plan['product_information']['hsa_eligible']) {
@@ -322,7 +349,12 @@ export class PlanFilterComponent implements OnInit {
         });
       }
     });
+    // Passes results to the array
+    if (multiArray.length > 0) {
+      this.filterCarriersResults = multiArray;
+    } else {
     this.filterCarriersResults = tempArray;
+    }
   }
 
   displayResults() {
