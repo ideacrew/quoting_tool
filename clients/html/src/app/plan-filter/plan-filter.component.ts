@@ -405,9 +405,22 @@ export class PlanFilterComponent implements OnInit {
     return `(${count.length} Plans)`;
   }
 
+  openPdfMsg() {
+    alert('Creating PDF');
+  }
+
+  closePdfMsg() {
+    console.log('Pdf MSG Closed');
+  }
+
   downloadPdf() {
     this.pdfView = true;
     const table = document.getElementById('plan-table');
+    this.openPdfMsg();
+    function closeMe() {
+      console.log('I worked');
+      console.log(PlanFilterComponent);
+    }
     this.html2PDF(table, {
       jsPDF: {
         unit: 'pt',
@@ -417,6 +430,7 @@ export class PlanFilterComponent implements OnInit {
       output: `./pdf/${this.planType}.pdf`,
       success: function(pdf) {
         pdf.save();
+        closeMe();
       }
     });
     setTimeout(() => {

@@ -73,7 +73,7 @@
     "@types/jasmine": "^2.8.16",
     "@types/jasminewd2": "^2.0.8",
     "@types/jquery": "^3.3.31",
-    "@types/node": "~8.9.4",
+    "@types/node": "~12.7.12",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
@@ -89,7 +89,7 @@
     "ts-node": "~8.4.1",
     "tslint": "~5.20.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "~3.4.5"
+    "typescript": "~3.5.0"
   },
   "husky": {
     "hooks": {
