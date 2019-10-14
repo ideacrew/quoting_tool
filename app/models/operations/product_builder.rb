@@ -2,10 +2,19 @@ module Operations
   class ProductBuilder
     include Dry::Transaction::Operation
 
-    attr_accessor :qhp
+    VISIT_TYPES = {
+      pcp: "Primary Care Visit to Treat an Injury or Illness",
+      emeergency_stay: "Emergency Room Services",
+      hospital_stay: "Inpatient Hospital Services (e.g., Hospital Stay)",
+      rx: "Generic Drugs"
+    }
+
+    attr_accessor :qhp, :health_data_map, :dental_data_map
 
     def call(params)
       @qhp = params[:qhp]
+      @health_data_map = params[:health_data_map]
+      @dental_data_map = params[:dental_data_map]
       @qhp.qhp_cost_share_variances.each do |cost_share_variance|
         hios_base_id, csr_variant_id = cost_share_variance.hios_plan_and_variant_id.split("-")
         next if csr_variant_id == "00"
@@ -13,7 +22,7 @@ module Operations
         product = ::Products::Product.where(
           :"hios_base_id" => hios_base_id,
           :"csr_variant_id" => csr_variant_id,
-          :"application_period.min".gte => Date.new(qhp.active_year, 1, 1), :"application_period.min".lte => Date.new(qhp.active_year, 1, 1).end_of_year
+          :"application_period.min".gte => Date.new(qhp.active_year, 1, 1), :"application_period.max".lte => Date.new(qhp.active_year, 1, 1).end_of_year
         ).first
 
         shared_attrs ={
@@ -31,20 +40,37 @@ module Operations
         }
 
         attrs = if is_health_product?
+          variance = qhp.qhp_cost_share_variances.first
+          info = health_data_map[[hios_base_id, qhp.active_year]] || {}
           {
             health_plan_kind: qhp.plan_type.downcase,
-            ehb: qhp.ehb_percent_premium.present? ? qhp.ehb_percent_premium : 1.0
+            ehb: qhp.ehb_percent_premium.present? ? qhp.ehb_percent_premium : 1.0,
+            pcp_in_network_copay: variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:pcp]).first.copay_in_network_tier_1,
+            hospital_stay_in_network_copay: variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:hospital_stay]).first.copay_in_network_tier_1,
+            emergency_in_network_copay: variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:emeergency_stay]).first.copay_in_network_tier_1,
+            drug_in_network_copay: variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:rx]).first.copay_in_network_tier_1,
+            is_standard_plan: info[:is_standard_plan],
+            network_information: info[:network_information],
+            title: (info[:title] || cost_share_variance.plan_marketing_name.squish!),
+            product_package_kinds: info[:product_package_kinds],
+            rx_formulary_url: info[:rx_formulary_url],
+            provider_directory_url: info[:provider_directory_url]
           }
         else
+          info = dental_data_map[[hios_base_id, qhp.active_year]] || {}
           {
             dental_plan_kind: qhp.plan_type.downcase,
             dental_level: qhp.metal_level.downcase,
-            product_package_kinds: ::Products::DentalProduct::PRODUCT_PACKAGE_KINDS
+            product_package_kinds: ::Products::DentalProduct::PRODUCT_PACKAGE_KINDS,
+            is_standard_plan: info[:is_standard_plan],
+            network_information: info[:network_information],
+            title: (info[:title] || cost_share_variance.plan_marketing_name.squish!),
+            provider_directory_url: info[:provider_directory_url]
           }
         end.merge(shared_attrs)
 
         if product.present?
-          product.issuer_hios_ids += qhp.issuer_id
+          product.issuer_hios_ids += [qhp.issuer_id]
           product.issuer_hios_ids = product.issuer_hios_ids.uniq
           product.update_attributes!(attrs)
         else

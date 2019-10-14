@@ -16,10 +16,6 @@ module Products
     field :metal_level_kind,            type: Symbol
     field :ehb,                         type: Float,    default: 0.0
 
-    belongs_to  :renewal_product,
-                inverse_of: nil,
-                class_name: "Products::DentalProduct"
-
     validates :metal_level_kind,
               presence: true,
               inclusion: {in: METAL_LEVEL_KINDS, message: "%{value} is not a valid metal level kind"}

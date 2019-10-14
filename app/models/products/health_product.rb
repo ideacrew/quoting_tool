@@ -32,14 +32,12 @@ module Products
     field :hsa_eligibility,             type: Boolean,  default: false
     field :network_information,         type: String
 
+    # Visits
+    field :pcp_in_network_copay,             type: String
+    field :hospital_stay_in_network_copay,   type: String
+    field :emergency_in_network_copay,       type: String
+    field :drug_in_network_copay,            type: String
 
-    belongs_to  :renewal_product,
-                inverse_of: nil,
-                class_name: "Products::::HealthProduct"
-
-    belongs_to  :catastrophic_age_off_product,
-                inverse_of: nil,
-                class_name: "Products::HealthProduct"
 
     validates_presence_of :hios_id, :health_plan_kind, :ehb
 

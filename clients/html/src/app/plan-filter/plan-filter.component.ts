@@ -98,7 +98,7 @@ export class PlanFilterComponent implements OnInit {
       this.planService.getPlansFor(
       this,
       "0111",
-      new Date(2019, 6, 1),
+      new Date(2020, 1, 1),
       "MA",
       "Hampden",
       "01001");
