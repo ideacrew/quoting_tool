@@ -135,7 +135,7 @@ export class PlanFilterComponent implements OnInit {
       this.btnName = 'Select Dental';
       this.btnLink = '/employer-details/dental';
     } else {
-      this.btnName = 'Back to health';
+      this.btnName = 'Back to Health';
       this.btnLink = '/employer-details/health';
     }
   }
