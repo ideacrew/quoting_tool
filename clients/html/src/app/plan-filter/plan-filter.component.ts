@@ -74,6 +74,7 @@ export class PlanFilterComponent implements OnInit {
   public tieredCalculator: QuoteCalculator;
   public relationshipContributionModel: RelationshipContributionModel;
   public tieredContributionModel: TieredContributionModel;
+  private closePdfMsg: any;
 
   public planOptions = [
     { key: 'single_issuer', value: 'One Carrier', view: 'health' },
