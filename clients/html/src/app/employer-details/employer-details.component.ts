@@ -16,17 +16,20 @@ import { SelectedSicService } from '../services/selected-sic.service';
   providers: [NgbModal, EmployerDetailsService],
   animations: [
     trigger('fadeInOut', [
-      state('void', style({
-        opacity: 0
-      })),
-      transition('void <=> *', animate(400)),
+      state(
+        'void',
+        style({
+          opacity: 0
+        })
+      ),
+      transition('void <=> *', animate(400))
     ])
   ]
 })
 export class EmployerDetailsComponent implements OnInit {
   rows = [];
   model: NgbDateStruct;
-  date: { months: number, day: number, year: number };
+  date: { months: number; day: number; year: number };
   sicKeyword = 'standardIndustryCodeCode';
   zipKeyword = 'zipCode';
   sics = sics;
@@ -57,7 +60,7 @@ export class EmployerDetailsComponent implements OnInit {
     { key: 'spouse', value: 'Spouse' },
     { key: 'domestic partner', value: 'Domestic Partner' },
     { key: 'child', value: 'Child' },
-    { key: 'disabled child', value: 'Disabled Child' },
+    { key: 'disabled child', value: 'Disabled Child' }
   ];
 
   config = {
@@ -67,9 +70,13 @@ export class EmployerDetailsComponent implements OnInit {
 
   @ViewChild('file', { static: false }) file: ElementRef;
 
-  constructor(private fb: FormBuilder, private modalService: NgbModal, private employerDetailsService: EmployerDetailsService,
-    private dpConfig: NgbDatepickerConfig, private selectedSicService: SelectedSicService) {
-
+  constructor(
+    private fb: FormBuilder,
+    private modalService: NgbModal,
+    private employerDetailsService: EmployerDetailsService,
+    private dpConfig: NgbDatepickerConfig,
+    private selectedSicService: SelectedSicService
+  ) {
     this.quoteForm = this.fb.group({
       effectiveDate: ['', Validators.required],
       sic: ['', Validators.required],
@@ -118,7 +125,7 @@ export class EmployerDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedSicService.currentMessage.subscribe(message => this.setSicFromTree(message));
+    this.selectedSicService.currentMessage.subscribe((message) => this.setSicFromTree(message));
     this.employeeRoster = localStorage.getItem('employerDetails');
     if (this.employeeRoster) {
       this.showEmployeeRoster = true;
@@ -133,21 +140,35 @@ export class EmployerDetailsComponent implements OnInit {
       // Add next year date if next month is January
       this.effectiveDateOptions = [
         { month: -1, value: 'SELECT DATE', disabled: true },
-        { month: this.todaysDate.getMonth(), value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}` },
-        { month: 0, value: `${this.months[0]} ${this.todaysDate.getFullYear() + 1}` },
+        {
+          month: this.todaysDate.getMonth(),
+          value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}`
+        },
+        {
+          month: 0,
+          value: `${this.months[0]} ${this.todaysDate.getFullYear() + 1}`
+        }
       ];
     } else {
       this.effectiveDateOptions = [
         { month: -1, value: 'SELECT DATE', disabled: true },
-        { month: this.todaysDate.getMonth(), value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}` },
-        { month: this.todaysDate.getMonth() + 1, value: `${this.months[this.todaysDate.getMonth() + 1]} ${this.todaysDate.getFullYear()}` }
+        {
+          month: this.todaysDate.getMonth(),
+          value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}`
+        },
+        {
+          month: this.todaysDate.getMonth() + 1,
+          value: `${this.months[this.todaysDate.getMonth() + 1]} ${this.todaysDate.getFullYear()}`
+        }
       ];
     }
   }
 
   setSicFromTree(item) {
     if (item !== 'default item') {
-      const sicValue = this.sics.filter(sic => sic['standardIndustryCodeFull'] === item.text)[0]['standardIndustryCodeCode'];
+      const sicValue = this.sics.filter((sic) => sic['standardIndustryCodeFull'] === item.text)[0][
+        'standardIndustryCodeCode'
+      ];
       this.quoteForm.get('sic').setValue(sicValue);
       this.show = false;
     }
@@ -191,7 +212,7 @@ export class EmployerDetailsComponent implements OnInit {
         firstName: [''],
         lastName: [''],
         dob: ['', Validators.required],
-        relationship: [''],
+        relationship: ['']
       })
     );
   }
@@ -209,11 +230,9 @@ export class EmployerDetailsComponent implements OnInit {
   }
 
   fileUploaded(fileInfo) {
-
     const input = new FormData();
     input.append('file', fileInfo.files[0]);
-    this.employerDetailsService.postUpload(input)
-      .subscribe();
+    this.employerDetailsService.postUpload(input).subscribe();
     // Below is used to display in the UI
     const reader = new FileReader();
     const csvData = [];
@@ -229,7 +248,7 @@ export class EmployerDetailsComponent implements OnInit {
 
   zipChangeSearch(event) {
     if (event.length === 5) {
-      this.counties = zipcodes.filter(zipcode => zipcode.zipCode === event);
+      this.counties = zipcodes.filter((zipcode) => zipcode.zipCode === event);
       this.enableCounty();
     }
   }
@@ -239,7 +258,7 @@ export class EmployerDetailsComponent implements OnInit {
   }
 
   getCounties(item) {
-    this.counties = zipcodes.filter(zipcode => zipcode.zipCode === item.zipCode);
+    this.counties = zipcodes.filter((zipcode) => zipcode.zipCode === item.zipCode);
     this.enableCounty();
   }
 
@@ -300,7 +319,7 @@ export class EmployerDetailsComponent implements OnInit {
               firstName: [firstName],
               lastName: [lastName],
               dob: [this.formatDOB(dobValues)],
-              relationship: [relationship],
+              relationship: [relationship]
             })
           );
         }
@@ -354,7 +373,7 @@ export class EmployerDetailsComponent implements OnInit {
           firstName: [dependent.firstName],
           lastName: [dependent.lastName],
           dob: [new Date(Date.parse(dependent.dob)), Validators.required],
-          relationship: [dependent.relationship],
+          relationship: [dependent.relationship]
         })
       );
     });

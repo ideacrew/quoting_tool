@@ -74,10 +74,9 @@ class LoadedProduct {
 }
 
 export class ProductDataLoader {
-
   public load(raw_data: string): Array<Product> {
     const data: Array<ProductData> | null = <Array<ProductData>>JSON.parse(raw_data);
-    if (data !=  null) {
+    if (data != null) {
       return this.castData(data);
     }
     return [];
@@ -86,14 +85,14 @@ export class ProductDataLoader {
   public castJSON(parsed_data: any) {
     const data: LoadedProductList | null = <LoadedProductList>parsed_data;
     if (data != null) {
-       const products = [];
-       const caster = this;
-       Object.keys(data).forEach(function(k) {
-          if (k !== 'default') {
-            products.push(caster.castSingleProduct(data[k]));
-          }
-       });
-       return products;
+      const products = [];
+      const caster = this;
+      Object.keys(data).forEach(function(k) {
+        if (k !== 'default') {
+          products.push(caster.castSingleProduct(data[k]));
+        }
+      });
+      return products;
     }
     return [];
   }
@@ -107,30 +106,18 @@ export class ProductDataLoader {
     const group_size_factors = new Map<string, number>();
     const rates = new Map<string, number>();
     Object.keys(data.participation_factors).forEach(function(k) {
-      participation_factors.set(
-        k,
-        data.participation_factors[k]
-      );
+      participation_factors.set(k, data.participation_factors[k]);
     });
     Object.keys(data.group_size_factors.factors).forEach(function(k) {
-      group_size_factors.set(
-        k,
-        data.group_size_factors.factors[k]
-      );
+      group_size_factors.set(k, data.group_size_factors.factors[k]);
     });
     Object.keys(data.rates.entries).forEach(function(k) {
-      rates.set(
-        k,
-        data.rates.entries[k]
-      );
+      rates.set(k, data.rates.entries[k]);
     });
     const product_tfs = new Map<ContributionTierName, number>();
     if (data.group_tier_factors != null) {
       data.group_tier_factors.forEach(function(gtf) {
-        product_tfs.set(
-          gtf.name,
-          gtf.factor
-        );
+        product_tfs.set(gtf.name, gtf.factor);
       });
     }
     return new LoadedProduct(

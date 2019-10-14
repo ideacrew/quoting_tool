@@ -24,7 +24,8 @@ export class PlanProviderService {
     startDate: Date,
     state: string,
     county_name: string,
-    zip: string) {
+    zip: string
+  ) {
     const formattedDate = startDate.toISOString().substring(0, 10);
     const transformer = this.dataLoader;
     const attrs = {

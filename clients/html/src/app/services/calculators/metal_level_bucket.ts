@@ -3,19 +3,14 @@ import { Product } from '../../data/products';
 import { Quote } from '../../data/quotes';
 
 class CostResult {
-  constructor(
-    public family: RosterEntry,
-    public total: number
-  ) { }
+  constructor(public family: RosterEntry, public total: number) {}
 }
 
 export class MetalLevelBucket {
-  private expensiveFamilies:  Map<String, CostResult> = new Map<String, CostResult>();
-  private cheapFamilies: Map<String, CostResult>  = new Map<String, CostResult>();
+  private expensiveFamilies: Map<String, CostResult> = new Map<String, CostResult>();
+  private cheapFamilies: Map<String, CostResult> = new Map<String, CostResult>();
 
-  constructor() {
-
-  }
+  constructor() {}
 
   add(product: Product, re: RosterEntry, total: number): void {
     if (this.expensiveFamilies.has(product.metal_level)) {
@@ -36,14 +31,14 @@ export class MetalLevelBucket {
     }
   }
 
-  cheapestFor(q: Quote):  CostResult | null {
+  cheapestFor(q: Quote): CostResult | null {
     if (this.cheapFamilies.has(q.product_information.metal_level)) {
       return this.cheapFamilies.get(q.product_information.metal_level);
     }
     return null;
   }
 
-  mostExpensiveFor(q: Quote):  CostResult | null {
+  mostExpensiveFor(q: Quote): CostResult | null {
     if (this.expensiveFamilies.has(q.product_information.metal_level)) {
       return this.expensiveFamilies.get(q.product_information.metal_level);
     }

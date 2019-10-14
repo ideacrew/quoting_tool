@@ -8,15 +8,12 @@ describe('EmployerDetailsHealthComponent', () => {
   let component: EmployerDetailsHealthComponent;
   let fixture: ComponentFixture<EmployerDetailsHealthComponent>;
 
-
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EmployerDetailsHealthComponent ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-      imports: [ RouterTestingModule ]
-    })
-    .compileComponents();
+      declarations: [EmployerDetailsHealthComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [RouterTestingModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

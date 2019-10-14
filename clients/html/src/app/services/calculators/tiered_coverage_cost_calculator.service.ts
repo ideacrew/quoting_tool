@@ -20,7 +20,7 @@ class FilteredRelationshipRosterEntry {
     dob: Date,
     deps: Array<RosterDependent>,
     will_enroll: boolean
-    ) {
+  ) {
     this.dob = dob;
     this.will_enroll = will_enroll;
     this.setBucketAndDeps(start_date, deps, rel_map, allowed_buckets);
@@ -32,7 +32,7 @@ class FilteredRelationshipRosterEntry {
     if (dob.getMonth() > coverageDate.getMonth()) {
       offset = -1;
     } else if (dob.getMonth() === coverageDate.getMonth()) {
-      offset = (dob.getDate() > coverageDate.getDate()) ? -1 : 0;
+      offset = dob.getDate() > coverageDate.getDate() ? -1 : 0;
     }
     return year_diff + offset;
   }
@@ -40,22 +40,31 @@ class FilteredRelationshipRosterEntry {
   private kickTooOldChildren(start_date: Date, deps: Array<RosterDependent>) {
     const age_calc = this;
     return deps.filter(function(rd) {
-       if (rd.relationship === ContributionRelationship.CHILD) {
-         const age = age_calc.coverageAge(start_date, rd.dob);
-         if (age > 26) {
-           return false;
-         }
-       }
-       return true;
+      if (rd.relationship === ContributionRelationship.CHILD) {
+        const age = age_calc.coverageAge(start_date, rd.dob);
+        if (age > 26) {
+          return false;
+        }
+      }
+      return true;
     });
   }
 
-  private filterDependents(start_date: Date, deps: Array<RosterDependent>, rel_map: Map<ContributionTierName, boolean>) {
+  private filterDependents(
+    start_date: Date,
+    deps: Array<RosterDependent>,
+    rel_map: Map<ContributionTierName, boolean>
+  ) {
     if (rel_map.get(ContributionTierName.FAMILY)) {
       return deps;
     }
-    if (!(rel_map.get(ContributionTierName.FAMILY) || rel_map.get(ContributionTierName.EMPLOYEE_AND_SPOUSE)
-    || ContributionTierName.EMPLOYEE_AND_DEPENDENTS)) {
+    if (
+      !(
+        rel_map.get(ContributionTierName.FAMILY) ||
+        rel_map.get(ContributionTierName.EMPLOYEE_AND_SPOUSE) ||
+        ContributionTierName.EMPLOYEE_AND_DEPENDENTS
+      )
+    ) {
       return [];
     }
     let filtered_deps = deps;
@@ -72,12 +81,7 @@ class FilteredRelationshipRosterEntry {
     return filtered_deps;
   }
 
-  private setBucketAndDeps(
-    start_date,
-    deps,
-    rel_map,
-    allowed_buckets
-  ) {
+  private setBucketAndDeps(start_date, deps, rel_map, allowed_buckets) {
     const clean_deps = this.kickTooOldChildren(start_date, deps);
     this.roster_dependents = this.filterDependents(start_date, clean_deps, rel_map);
     this.bucket = this.selectBucket(this.roster_dependents, allowed_buckets);
@@ -95,16 +99,19 @@ class FilteredRelationshipRosterEntry {
     }
     const rels = this.remainingRelationships(remaining_deps);
     if (remain_to_pick.indexOf(ContributionTierName.EMPLOYEE_AND_SPOUSE) > -1) {
-      if ((rels.indexOf(ContributionRelationship.SPOUSE) > -1) || (rels.indexOf(ContributionRelationship.DOMESTIC_PARTNER) > -1)) {
+      if (
+        rels.indexOf(ContributionRelationship.SPOUSE) > -1 ||
+        rels.indexOf(ContributionRelationship.DOMESTIC_PARTNER) > -1
+      ) {
         if (rels.indexOf(ContributionRelationship.CHILD) === -1) {
           return ContributionTierName.EMPLOYEE_AND_SPOUSE;
         }
       }
     }
     if (
-      (remain_to_pick.indexOf(ContributionTierName.EMPLOYEE_AND_SPOUSE) > -1) &&
-      (rels.indexOf(ContributionRelationship.CHILD) > -1)
-      ) {
+      remain_to_pick.indexOf(ContributionTierName.EMPLOYEE_AND_SPOUSE) > -1 &&
+      rels.indexOf(ContributionRelationship.CHILD) > -1
+    ) {
       remain_to_pick = allowed_buckets.filter(function(ab) {
         return ab !== ContributionTierName.EMPLOYEE_AND_SPOUSE;
       });
@@ -113,9 +120,10 @@ class FilteredRelationshipRosterEntry {
       return remain_to_pick[0];
     }
     if (
-      (remain_to_pick.indexOf(ContributionTierName.EMPLOYEE_AND_DEPENDENTS) > -1) &&
-      ((rels.indexOf(ContributionRelationship.SPOUSE) > -1) || (rels.indexOf(ContributionRelationship.DOMESTIC_PARTNER) > -1))
-      ) {
+      remain_to_pick.indexOf(ContributionTierName.EMPLOYEE_AND_DEPENDENTS) > -1 &&
+      (rels.indexOf(ContributionRelationship.SPOUSE) > -1 ||
+        rels.indexOf(ContributionRelationship.DOMESTIC_PARTNER) > -1)
+    ) {
       remain_to_pick = allowed_buckets.filter(function(ab) {
         return ab !== ContributionTierName.EMPLOYEE_AND_DEPENDENTS;
       });
@@ -134,48 +142,36 @@ class FilteredRelationshipRosterEntry {
 }
 
 class BucketCount {
-   constructor(
-     public counts: Map<ContributionTierName, number>,
-     public total: number
-   ) { }
+  constructor(public counts: Map<ContributionTierName, number>, public total: number) {}
 
-   public add(entry: FilteredRelationshipRosterEntry, price: number) {
-     const current_count = this.counts.get(entry.bucket);
-     this.counts.set(
-       entry.bucket,
-       current_count + 1
-     );
-     return new BucketCount(
-       this.counts,
-       this.total + price
-     );
-   }
+  public add(entry: FilteredRelationshipRosterEntry, price: number) {
+    const current_count = this.counts.get(entry.bucket);
+    this.counts.set(entry.bucket, current_count + 1);
+    return new BucketCount(this.counts, this.total + price);
+  }
 
-   public toLevels(product) {
-     let denominator = 0.00;
-     this.counts.forEach(function(v, k) {
-       denominator = denominator + (v * product.group_tier_factor(k));
-     });
-     const bucket_map = new Map<ContributionTierName, number>();
-     const reduced_value = this.total / denominator;
-     bucket_map.set(
-       ContributionTierName.EMPLOYEE_ONLY,
-       reduced_value * product.group_tier_factor(ContributionTierName.EMPLOYEE_ONLY)
-     );
-     bucket_map.set(
-       ContributionTierName.EMPLOYEE_AND_SPOUSE,
-       reduced_value * product.group_tier_factor(ContributionTierName.EMPLOYEE_AND_SPOUSE)
-     );
-     bucket_map.set(
-       ContributionTierName.EMPLOYEE_AND_DEPENDENTS,
-       reduced_value * product.group_tier_factor(ContributionTierName.EMPLOYEE_AND_DEPENDENTS)
-     );
-     bucket_map.set(
-       ContributionTierName.FAMILY,
-       reduced_value * product.group_tier_factor(ContributionTierName.FAMILY)
-     );
-     return bucket_map;
-   }
+  public toLevels(product) {
+    let denominator = 0.0;
+    this.counts.forEach(function(v, k) {
+      denominator = denominator + v * product.group_tier_factor(k);
+    });
+    const bucket_map = new Map<ContributionTierName, number>();
+    const reduced_value = this.total / denominator;
+    bucket_map.set(
+      ContributionTierName.EMPLOYEE_ONLY,
+      reduced_value * product.group_tier_factor(ContributionTierName.EMPLOYEE_ONLY)
+    );
+    bucket_map.set(
+      ContributionTierName.EMPLOYEE_AND_SPOUSE,
+      reduced_value * product.group_tier_factor(ContributionTierName.EMPLOYEE_AND_SPOUSE)
+    );
+    bucket_map.set(
+      ContributionTierName.EMPLOYEE_AND_DEPENDENTS,
+      reduced_value * product.group_tier_factor(ContributionTierName.EMPLOYEE_AND_DEPENDENTS)
+    );
+    bucket_map.set(ContributionTierName.FAMILY, reduced_value * product.group_tier_factor(ContributionTierName.FAMILY));
+    return bucket_map;
+  }
 }
 
 export class TieredCoverageCostCalculatorService {
@@ -185,11 +181,7 @@ export class TieredCoverageCostCalculatorService {
   private filteredRoster: Array<FilteredRelationshipRosterEntry>;
   private relContributions: Map<ContributionTierName, number>;
 
-  constructor(
-      startDate: Date,
-      contributionModel: TieredContributionModel,
-      roster: Array<RosterEntry>
-    ) {
+  constructor(startDate: Date, contributionModel: TieredContributionModel, roster: Array<RosterEntry>) {
     this.startDate = startDate;
     this.groupSize = this.calculateGroupSize(roster);
     this.participation = this.calculateParticipation(roster);
@@ -202,15 +194,15 @@ export class TieredCoverageCostCalculatorService {
   }
 
   private calculateParticipation(roster: Array<RosterEntry>) {
-    const will_enroll = roster.filter(function(re)  {
+    const will_enroll = roster.filter(function(re) {
       return re.will_enroll;
     });
-    const percentage = (will_enroll.length / roster.length) * 100.00;
+    const percentage = (will_enroll.length / roster.length) * 100.0;
     return Math.round(percentage).toString();
   }
 
   private calculateGroupSize(roster: Array<RosterEntry>) {
-    const will_enroll = roster.filter(function(re)  {
+    const will_enroll = roster.filter(function(re) {
       return re.will_enroll;
     });
     if (will_enroll.length < 1) {
@@ -263,15 +255,12 @@ export class TieredCoverageCostCalculatorService {
   public calculateQuote(product: Product): Quote {
     const levels = this.calculateLevels(product);
     const calculator = this;
-    const total = this.filteredRoster.reduce(
-      function(current, entry) {
-         return calculator.sumTotals(levels, entry, current);
-      },
-      new ResultTotal(0.00, 0.00)
-    );
+    const total = this.filteredRoster.reduce(function(current, entry) {
+      return calculator.sumTotals(levels, entry, current);
+    }, new ResultTotal(0.0, 0.0));
     const avg_member_cost = (total.total_cost - total.sponsor_cost) / parseFloat(this.groupSize);
-    let maxMemberCost = 0.00;
-    let minMemberCost = 100000000.00;
+    let maxMemberCost = 0.0;
+    let minMemberCost = 100000000.0;
     const contribution_map = this.relContributions;
     levels.forEach(function(val, k) {
       const contribution = val * contribution_map.get(k) * 0.01;
@@ -283,13 +272,17 @@ export class TieredCoverageCostCalculatorService {
         maxMemberCost = mCost;
       }
     });
-    if (minMemberCost === 100000000.00) {
-      minMemberCost = 0.00;
+    if (minMemberCost === 100000000.0) {
+      minMemberCost = 0.0;
     }
     return new RosterQuote(
       product,
-      total.total_cost, total.sponsor_cost,
-      avg_member_cost, minMemberCost, maxMemberCost);
+      total.total_cost,
+      total.sponsor_cost,
+      avg_member_cost,
+      minMemberCost,
+      maxMemberCost
+    );
   }
 
   private sumTotals(
@@ -300,12 +293,7 @@ export class TieredCoverageCostCalculatorService {
     const contribution_map = this.relContributions;
     const cost = levels.get(entry.bucket);
     const contribution = cost * contribution_map.get(entry.bucket) * 0.01;
-    return current_total.add(
-      new ResultTotal(
-        cost,
-        contribution
-      )
-    );
+    return current_total.add(new ResultTotal(cost, contribution));
   }
 
   private calculateLevels(product: Product) {
@@ -314,19 +302,9 @@ export class TieredCoverageCostCalculatorService {
     const sic_code_factor = product.sic_code_factor;
     const level_totals = this.initialBucket();
     const calculator = this;
-    const bucket_result = this.filteredRoster.reduce(
-      function(current, re) {
-         return calculator.group_cost(
-           product,
-           re,
-           sic_code_factor,
-           gs_factor,
-           pr_factor,
-           current
-         );
-      },
-      level_totals
-    );
+    const bucket_result = this.filteredRoster.reduce(function(current, re) {
+      return calculator.group_cost(product, re, sic_code_factor, gs_factor, pr_factor, current);
+    }, level_totals);
     return bucket_result.toLevels(product);
   }
 
@@ -345,13 +323,19 @@ export class TieredCoverageCostCalculatorService {
     sic_factor: number,
     gs_factor: number,
     pr_factor: number,
-    b_count: BucketCount) {
-    const subscriber_cost = product.cost(this.coverageAge(this.startDate,
-      roster_entry.dob).toFixed(0)) * sic_factor * gs_factor * pr_factor;
+    b_count: BucketCount
+  ) {
+    const subscriber_cost =
+      product.cost(this.coverageAge(this.startDate, roster_entry.dob).toFixed(0)) * sic_factor * gs_factor * pr_factor;
     const calculator = this;
     const total = roster_entry.roster_dependents.reduce(function(current_total, rd) {
-      return current_total + (product.cost(calculator.coverageAge(calculator.startDate,
-        rd.dob).toFixed(0)) * sic_factor * gs_factor * pr_factor);
+      return (
+        current_total +
+        product.cost(calculator.coverageAge(calculator.startDate, rd.dob).toFixed(0)) *
+          sic_factor *
+          gs_factor *
+          pr_factor
+      );
     }, subscriber_cost);
     return b_count.add(roster_entry, total);
   }
@@ -362,7 +346,7 @@ export class TieredCoverageCostCalculatorService {
     if (dob.getMonth() > coverageDate.getMonth()) {
       offset = -1;
     } else if (dob.getMonth() === coverageDate.getMonth()) {
-      offset = (dob.getDate() > coverageDate.getDate()) ? -1 : 0;
+      offset = dob.getDate() > coverageDate.getDate() ? -1 : 0;
     }
     return year_diff + offset;
   }
