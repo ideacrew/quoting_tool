@@ -14,7 +14,7 @@ export class EmployerDetailsDentalComponent implements OnInit {
   public costShownText: any;
   public carriers = carriers;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   ngOnInit() {
     const erDetails = localStorage.getItem('employerDetails');
@@ -31,5 +31,4 @@ export class EmployerDetailsDentalComponent implements OnInit {
       this.router.navigate(['/']);
     }
   }
-
 }

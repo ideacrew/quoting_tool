@@ -4,12 +4,11 @@ import { RelationshipContributionModel, TieredContributionModel } from '../data/
 import { RelationshipCoverageCostCalculatorService } from '../services/calculators/relationship_coverage_cost_calculator.service';
 import { TieredCoverageCostCalculatorService } from '../services/calculators/tiered_coverage_cost_calculator.service';
 
-interface QuoteCalculatorConstructor<T> {
-  new(
-    startDate: Date,
-    contributionModel: T,
-    roster: Array<RosterEntry>): QuoteCalculator;
-}
+type QuoteCalculatorConstructor<T> = new (
+  startDate: Date,
+  contributionModel: T,
+  roster: Array<RosterEntry>
+) => QuoteCalculator;
 
 export interface ClientPreferences {
   display_contribution_management: boolean;
@@ -65,12 +64,7 @@ export function defaultRelationshipContributionModel() {
     offered: true
   };
   return {
-    levels: [
-      subscriber_level,
-      spouse_level,
-      dependent_level,
-      domestic_partner_level
-    ]
+    levels: [subscriber_level, spouse_level, dependent_level, domestic_partner_level]
   };
 }
 
@@ -96,24 +90,14 @@ export function defaultTieredContributionModel() {
     offered: true
   };
   return {
-    levels: [
-      subscriber_level,
-      spouse_level,
-      dependent_level,
-      domestic_partner_level
-    ]
+    levels: [subscriber_level, spouse_level, dependent_level, domestic_partner_level]
   };
 }
 
 export const CLIENT_PREFERENCES: ClientPreferences = {
   display_contribution_management: true,
-  relationship_package_types: [
-    PackageTypes.METAL_LEVEL,
-    PackageTypes.SINGLE_ISSUER
-  ],
-  tiered_package_types: [
-    PackageTypes.SINGLE_PRODUCT
-  ],
+  relationship_package_types: [PackageTypes.METAL_LEVEL, PackageTypes.SINGLE_ISSUER],
+  tiered_package_types: [PackageTypes.SINGLE_PRODUCT],
   relationship_quote_calculator: RelationshipCoverageCostCalculatorService,
   tiered_quote_calculator: TieredCoverageCostCalculatorService,
   default_state: 'MA',

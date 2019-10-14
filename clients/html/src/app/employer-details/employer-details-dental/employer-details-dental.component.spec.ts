@@ -10,11 +10,10 @@ describe('EmployerDetailsDentalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EmployerDetailsDentalComponent ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-      imports: [ RouterTestingModule ]
-    })
-    .compileComponents();
+      declarations: [EmployerDetailsDentalComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [RouterTestingModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

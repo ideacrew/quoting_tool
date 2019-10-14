@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,15 +19,18 @@ describe('EmployerDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EmployerDetailsComponent, NavComponent ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-      imports: [ ReactiveFormsModule, NgbModule, RouterTestingModule, HttpClientTestingModule,
-        AutocompleteLibModule, BrowserAnimationsModule ],
-      providers: [
-        { provide: FormBuilder, useValue: formBuilder }
-      ]
-    })
-    .compileComponents();
+      declarations: [EmployerDetailsComponent, NavComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [
+        ReactiveFormsModule,
+        NgbModule,
+        RouterTestingModule,
+        HttpClientTestingModule,
+        AutocompleteLibModule,
+        BrowserAnimationsModule
+      ],
+      providers: [{ provide: FormBuilder, useValue: formBuilder }]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -68,9 +71,13 @@ describe('EmployerDetailsComponent', () => {
   it('should have valid quote form if required fields are filled in', () => {
     component.quoteForm = formBuilder.group({
       effectiveDate: 'October 2019',
-      sic: {industryGroupLabel: 'Cash Grains', standardIndustryCode: '0111',
-      standardIndustryCodeFull: '0111: Wheat', standardIndustryCodeLabel: 'Wheat'},
-      zip: {zipCode: '01001', county: 'Hampden'},
+      sic: {
+        industryGroupLabel: 'Cash Grains',
+        standardIndustryCode: '0111',
+        standardIndustryCodeFull: '0111: Wheat',
+        standardIndustryCodeLabel: 'Wheat'
+      },
+      zip: { zipCode: '01001', county: 'Hampden' },
       employees: formBuilder.array([])
     });
     // Adds employees to form

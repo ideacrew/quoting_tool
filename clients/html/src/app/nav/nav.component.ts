@@ -12,10 +12,10 @@ export class NavComponent implements OnInit {
   navLinks = [
     { path: '/employer-details', name: 'Employer Details' },
     { path: '/employer-details/health', name: 'Health' },
-    { path: '/employer-details/dental', name: 'Dental' },
+    { path: '/employer-details/dental', name: 'Dental' }
   ];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {}
 
@@ -36,5 +36,4 @@ export class NavComponent implements OnInit {
       return false;
     }
   }
-
 }

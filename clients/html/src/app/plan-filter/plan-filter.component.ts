@@ -6,12 +6,16 @@ import html2PDF from 'jspdf-html2canvas';
 
 import { QuoteCalculator } from '../data/quotes';
 import { TieredContributionModel, RelationshipContributionModel } from '../data/contribution_models';
-import { ClientPreferences, CLIENT_PREFERENCES, PackageTypes,
-  defaultRelationshipContributionModel, defaultTieredContributionModel } from '../config/client_configuration';
+import {
+  ClientPreferences,
+  CLIENT_PREFERENCES,
+  PackageTypes,
+  defaultRelationshipContributionModel,
+  defaultTieredContributionModel
+} from '../config/client_configuration';
 import { PlanProviderService } from '../services/plan-provider.service';
 import { Product } from '../data/products';
 import { RosterEntry } from '../data/sponsor_roster';
-
 
 @Component({
   selector: 'app-plan-filter',
@@ -20,10 +24,13 @@ import { RosterEntry } from '../data/sponsor_roster';
   providers: [PlanProviderService],
   animations: [
     trigger('fadeInOut', [
-      state('void', style({
-        opacity: 0
-      })),
-      transition('void <=> *', animate(400)),
+      state(
+        'void',
+        style({
+          opacity: 0
+        })
+      ),
+      transition('void <=> *', animate(400))
     ])
   ]
 })
@@ -55,8 +62,6 @@ export class PlanFilterComponent implements OnInit {
   public btnName: string;
   public btnLink: string;
 
-
-
   private sponsorRoster: Array<RosterEntry> = [];
   public planFilter: PackageTypes | null;
   public hasTierCompatibleType: boolean;
@@ -71,17 +76,16 @@ export class PlanFilterComponent implements OnInit {
   public tieredContributionModel: TieredContributionModel;
 
   public planOptions = [
-    {key: 'single_issuer', value: 'One Carrier', view: 'health'},
-    {key: 'metal_level', value: 'One Level', view: 'health'},
-    {key: 'single_product', value: 'One Plan', view: 'health'},
-    {key: 'single_product', value: 'One Plan', view: 'dental'},
+    { key: 'single_issuer', value: 'One Carrier', view: 'health' },
+    { key: 'metal_level', value: 'One Level', view: 'health' },
+    { key: 'single_product', value: 'One Plan', view: 'health' },
+    { key: 'single_product', value: 'One Plan', view: 'dental' }
   ];
 
   @Input() carrierPlans: any;
   @Input() planType: any;
 
-  constructor(private planService: PlanProviderService) {
-  }
+  constructor(private planService: PlanProviderService) {}
 
   ngOnInit() {
     const erDetails = localStorage.getItem('employerDetails');
@@ -99,18 +103,16 @@ export class PlanFilterComponent implements OnInit {
     }
 
     if (this.employerDetails) {
-      this.planService.getPlansFor(
-      this,
-      '0111',
-      new Date(2019, 6, 1),
-      'MA',
-      'Hampden',
-      '01001');
+      this.planService.getPlansFor(this, '0111', new Date(2019, 6, 1), 'MA', 'Hampden', '01001');
 
       // const startDate = this.employerDetails.effectiveDate
       const consumer = this;
       this.employerDetails.employees.forEach(function(employee) {
-        const employeeJson = { dob: new Date(employee.dob), will_enroll: true, roster_dependents: [] };
+        const employeeJson = {
+          dob: new Date(employee.dob),
+          will_enroll: true,
+          roster_dependents: []
+        };
 
         employee.dependents.forEach(function(dependent) {
           employeeJson.roster_dependents.push({
@@ -138,25 +140,25 @@ export class PlanFilterComponent implements OnInit {
   }
 
   loadData() {
-    this.metalLevelOptions = this.filteredCarriers.map(plan => {
-      if (plan['product_information']['metal_level']) {
-        return plan['product_information']['metal_level'];
-      }
-    })
-      .reduce((unique, item) =>
-        unique.includes(item) ? unique : [...unique, item], []);
+    this.metalLevelOptions = this.filteredCarriers
+      .map((plan) => {
+        if (plan['product_information']['metal_level']) {
+          return plan['product_information']['metal_level'];
+        }
+      })
+      .reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
 
-    this.carriers = this.filteredCarriers.map(plan => plan['product_information']['provider_name'])
-      .reduce((unique, item) =>
-        unique.includes(item) ? unique : [...unique, item], []);
+    this.carriers = this.filteredCarriers
+      .map((plan) => plan['product_information']['provider_name'])
+      .reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
 
-    this.products = this.filteredCarriers.map(plan => plan['product_information']['product_type'])
-      .reduce((unique, item) =>
-        unique.includes(item) ? unique : [...unique, item], []);
+    this.products = this.filteredCarriers
+      .map((plan) => plan['product_information']['product_type'])
+      .reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
 
-    this.hsaEligible = this.filteredCarriers.map(plan => plan['product_information']['hsa_eligible'])
-      .reduce((unique, item) =>
-        unique.includes(item) ? unique : [...unique, item], []);
+    this.hsaEligible = this.filteredCarriers
+      .map((plan) => plan['product_information']['hsa_eligible'])
+      .reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
 
     this.filterLength = this.filteredCarriers.length;
     this.filterSelected = true;
@@ -189,16 +191,17 @@ export class PlanFilterComponent implements OnInit {
     }
     this.filteredProducts = this.kindFilteredProducts;
     this.recalculate();
+    this.resetAll();
   }
 
   recalculate() {
     const calculator = this.hasRelationshipCompatibleType ? this.relationshipCalculator : this.tieredCalculator;
     const newQuotes = calculator.quoteProducts(this.kindFilteredProducts, this.planFilter);
     const fProductsForCompare = this.filteredProducts.map(function(fp) {
-      return (fp.name + fp.provider_name);
+      return fp.name + fp.provider_name;
     });
     const filteredQuotes = newQuotes.filter(function(nq) {
-      return fProductsForCompare.includes((nq.product_information.name + nq.product_information.provider_name));
+      return fProductsForCompare.includes(nq.product_information.name + nq.product_information.provider_name);
     });
     this.filteredCarriers = filteredQuotes;
     this.defaultCarriers = this.filteredCarriers;
@@ -217,11 +220,7 @@ export class PlanFilterComponent implements OnInit {
 
   private calculator(date, contributionModel, isTiredCalculator?: boolean): QuoteCalculator {
     if (isTiredCalculator) {
-      const calc = new this.clientPreferences.tiered_quote_calculator(
-        date,
-        contributionModel,
-        this.sponsorRoster
-      );
+      const calc = new this.clientPreferences.tiered_quote_calculator(date, contributionModel, this.sponsorRoster);
 
       return calc;
     } else {
@@ -237,7 +236,7 @@ export class PlanFilterComponent implements OnInit {
 
   selectedFilter(value, event, type) {
     switch (type) {
-      case 'metalLevel' :
+      case 'metalLevel':
         if (event.target.checked) {
           this.selectedMetalLevels.push(value);
           this.filterKeysSelected.push(type);
@@ -248,7 +247,7 @@ export class PlanFilterComponent implements OnInit {
           this.filterKeysSelected.splice(keyIndex, 1);
         }
         break;
-      case 'productType' :
+      case 'productType':
         if (event.target.checked) {
           this.selectedProductTypes.push(value);
           this.filterKeysSelected.push(type);
@@ -259,7 +258,7 @@ export class PlanFilterComponent implements OnInit {
           this.filterKeysSelected.splice(keyIndex, 1);
         }
         break;
-      case 'insuranceCompany' :
+      case 'insuranceCompany':
         if (event.target.checked) {
           this.selectedInsuranceCompanies.push(value);
           this.filterKeysSelected.push(type);
@@ -270,7 +269,7 @@ export class PlanFilterComponent implements OnInit {
           this.filterKeysSelected.splice(keyIndex, 1);
         }
         break;
-      case 'hsa' :
+      case 'hsa':
         if (event.target.checked) {
           this.selectedHSAs.push(value);
           this.filterKeysSelected.push(type);
@@ -287,9 +286,39 @@ export class PlanFilterComponent implements OnInit {
 
   filterCarriers() {
     const tempArray = [];
-    this.filteredCarriers.map(plan => {
-      if (this.selectedMetalLevels) {
-        this.selectedMetalLevels.filter(metalLevel => {
+    const multiArray = [];
+    this.filteredCarriers.map((plan) => {
+      // Filters by Carriers & Metal Levels
+      if (this.selectedInsuranceCompanies.length > 0 && this.selectedMetalLevels.length > 0) {
+        this.selectedInsuranceCompanies
+          .map((carrier) => {
+            if (carrier === plan['product_information']['provider_name']) {
+              multiArray.push(plan);
+            }
+          })
+          .map(() => {
+            [...this.selectedMetalLevels].filter((ml) => {
+              multiArray.filter((array) => array['product_information']['metal_level'] === ml);
+            });
+          });
+      }
+      // Filters by Carriers & Plan Type
+      if (this.selectedInsuranceCompanies.length > 0 && this.selectedProductTypes.length > 0) {
+        this.selectedInsuranceCompanies
+          .map((carrier) => {
+            if (carrier === plan['product_information']['provider_name']) {
+              multiArray.push(plan);
+            }
+          })
+          .map(() => {
+            [...this.selectedProductTypes].filter((product) => {
+              multiArray.filter((array) => array['product_information']['product_type'] === product);
+            });
+          });
+      }
+      // Filters by Metal Levels
+      if (this.selectedMetalLevels.length > 0 && this.selectedInsuranceCompanies.length === 0) {
+        this.selectedMetalLevels.filter((metalLevel) => {
           if (plan['product_information']['metal_level']) {
             if (metalLevel === plan['product_information']['metal_level']) {
               tempArray.push(plan);
@@ -297,32 +326,37 @@ export class PlanFilterComponent implements OnInit {
           }
         });
       }
-
-      if (this.selectedProductTypes) {
-        this.selectedProductTypes.filter(product => {
+      // Filters by Product Types
+      if (this.selectedProductTypes.length > 0) {
+        this.selectedProductTypes.filter((product) => {
           if (product === plan['product_information']['product_type']) {
             tempArray.push(plan);
           }
         });
       }
-
-      if (this.selectedInsuranceCompanies) {
-        this.selectedInsuranceCompanies.filter(carrier => {
+      // Filters by Carriers
+      if (this.selectedInsuranceCompanies.length > 0 && this.selectedMetalLevels.length === 0) {
+        this.selectedInsuranceCompanies.filter((carrier) => {
           if (carrier === plan['product_information']['provider_name']) {
             tempArray.push(plan);
           }
         });
       }
-
+      // Filters by HSA
       if (this.selectedHSAs) {
-        this.selectedHSAs.filter(hsa => {
+        this.selectedHSAs.filter((hsa) => {
           if (hsa === plan['product_information']['hsa_eligible']) {
             tempArray.push(plan);
           }
         });
       }
     });
-    this.filterCarriersResults = tempArray;
+    // Passes results to the array
+    if (multiArray.length > 0) {
+      this.filterCarriersResults = multiArray;
+    } else {
+      this.filterCarriersResults = tempArray;
+    }
   }
 
   displayResults() {
@@ -347,27 +381,27 @@ export class PlanFilterComponent implements OnInit {
   }
 
   getToolTip(type) {
-    return this.tooltips[this.planType].map(key => key[type]);
+    return this.tooltips[this.planType].map((key) => key[type]);
   }
 
   getTableHeader(col) {
-    return this.tableHeaders[this.planType].map(key => key[col]);
+    return this.tableHeaders[this.planType].map((key) => key[col]);
   }
 
   metalLevelCount(metalLevel, planType) {
     if (planType === 'health') {
-      const count = this.filteredCarriers.filter(plan => plan['product_information']['metal_level'] === metalLevel);
+      const count = this.filteredCarriers.filter((plan) => plan['product_information']['metal_level'] === metalLevel);
       return `(${count.length} Plans)`;
     }
   }
 
   productTypeCounts(product) {
-    const count = this.filteredCarriers.filter(plan => plan['product_information']['product_type'] === product);
+    const count = this.filteredCarriers.filter((plan) => plan['product_information']['product_type'] === product);
     return `(${count.length} Plans)`;
   }
 
   hsaCounts(hsa) {
-    const count = this.filteredCarriers.filter(plan => plan['product_information']['hsa_eligible'] === hsa);
+    const count = this.filteredCarriers.filter((plan) => plan['product_information']['hsa_eligible'] === hsa);
     return `(${count.length} Plans)`;
   }
 
@@ -375,15 +409,15 @@ export class PlanFilterComponent implements OnInit {
     this.pdfView = true;
     const table = document.getElementById('plan-table');
     this.html2PDF(table, {
-    jsPDF: {
-      unit: 'pt',
-      format: 'a4'
-    },
-    imageType: 'image/png',
-    output: `./pdf/${this.planType}.pdf`,
-    success: function(pdf) {
-      pdf.save();
-    }
+      jsPDF: {
+        unit: 'pt',
+        format: 'a4'
+      },
+      imageType: 'image/png',
+      output: `./pdf/${this.planType}.pdf`,
+      success: function(pdf) {
+        pdf.save();
+      }
     });
     setTimeout(() => {
       this.pdfView = false;

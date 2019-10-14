@@ -6,8 +6,8 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class ApiRequestService {
-  headers = new HttpHeaders({'Content-Type': 'application/json'});
-  constructor(private http: HttpClient) { }
+  headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  constructor(private http: HttpClient) {}
 
   // The API version
   public version = 1.0;
@@ -15,15 +15,14 @@ export class ApiRequestService {
   // URL to the API we want to use
   private api = environment.envApi;
 
-
   // Get the full URL to the API
   private getFullPath(url: any) {
-    return (`${this.api}/api/v${this.version}/${url}`);
+    return `${this.api}/api/v${this.version}/${url}`;
   }
 
   // Make an authed GET request
   public authedGet(url: string, attrs?: any) {
-    return this.http.get(this.getFullPath(url), {params: attrs});
+    return this.http.get(this.getFullPath(url), { params: attrs });
   }
 
   // Make an authed POST request
@@ -35,5 +34,4 @@ export class ApiRequestService {
   public authedPut(url: string, body: any) {
     return this.http.put(this.getFullPath(url), body);
   }
-
 }
