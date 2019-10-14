@@ -1,4 +1,4 @@
-import { Product } from "../../data/products";
+import { Product } from '../../data/products';
 
 export class RosterQuote {
   product_information: Product;
@@ -10,7 +10,7 @@ export class RosterQuote {
   hsa_eligible: boolean;
 
   constructor(
-    product : Product,
+    product: Product,
     public total_cost: number,
     public sponsor_cost: number,
     public average_member_cost: number,
@@ -22,7 +22,7 @@ export class RosterQuote {
     this.deductible = product.deductible;
     this.group_deductible = product.group_deductible;
     this.member_cost = total_cost - sponsor_cost;
-    this.separate_prescription_deductable = product.integrated_drug_deductible ? "No" : "Yes";
+    this.separate_prescription_deductable = product.integrated_drug_deductible ? 'No' : 'Yes';
     this.hsa_eligible = product.hsa_eligible;
   }
 }

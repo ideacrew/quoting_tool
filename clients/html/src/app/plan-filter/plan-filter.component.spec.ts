@@ -4,26 +4,67 @@ import { PlanFilterComponent } from './plan-filter.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 const data = {
   effectiveDate: 'October 2019',
-  sic: {'industryGroupLabel': 'Cash Grains', 'standardIndustryCodeFull': '0112: Rice',
-  'standardIndustryCodeCode': '0112', 'standardIndustryCodeLabel': 'Rice'},
-  zip: {'zipCode': '01001', 'county': 'Hampden'},
-  employees: [{'firstName': 'Larry', 'lastName': 'Smith', 'dob': '1924-01-12T05:00:00.000Z',
-  'coverageKind': 'both', 'dependents':
-    [{'firstName': 'Sue', 'lastName': 'Smith', 'dob': '2004-11-01T05:00:00.000Z',
-    'relationship': 'spouse'},
-    {'firstName': 'James', 'lastName': 'Smith', 'dob': '1954-12-19T05:00:00.000Z',
-    'relationship': 'child'}]},
-    {'firstName': 'Jane', 'lastName': 'Brown', 'dob': '1990-11-01T05:00:00.000Z',
-    'coverageKind': 'both',
-    'dependents': [{'firstName': 'John', 'lastName': 'Brown',
-    'dob': '2000-11-01T05:00:00.000Z', 'relationship': 'spouse'}]},
-    {'firstName': 'Sean ', 'lastName': 'King', 'dob': '2001-02-01T05:00:00.000Z',
-    'coverageKind': 'both', 'dependents': []},
-    {'firstName': 'Lauren', 'lastName': 'Morris', 'dob': '1995-08-01T04:00:00.000Z',
-    'coverageKind': 'both', 'dependents': []}]
+  sic: {
+    industryGroupLabel: 'Cash Grains',
+    standardIndustryCodeFull: '0112: Rice',
+    standardIndustryCodeCode: '0112',
+    standardIndustryCodeLabel: 'Rice'
+  },
+  zip: { zipCode: '01001', county: 'Hampden' },
+  employees: [
+    {
+      firstName: 'Larry',
+      lastName: 'Smith',
+      dob: '1924-01-12T05:00:00.000Z',
+      coverageKind: 'both',
+      dependents: [
+        {
+          firstName: 'Sue',
+          lastName: 'Smith',
+          dob: '2004-11-01T05:00:00.000Z',
+          relationship: 'spouse'
+        },
+        {
+          firstName: 'James',
+          lastName: 'Smith',
+          dob: '1954-12-19T05:00:00.000Z',
+          relationship: 'child'
+        }
+      ]
+    },
+    {
+      firstName: 'Jane',
+      lastName: 'Brown',
+      dob: '1990-11-01T05:00:00.000Z',
+      coverageKind: 'both',
+      dependents: [
+        {
+          firstName: 'John',
+          lastName: 'Brown',
+          dob: '2000-11-01T05:00:00.000Z',
+          relationship: 'spouse'
+        }
+      ]
+    },
+    {
+      firstName: 'Sean ',
+      lastName: 'King',
+      dob: '2001-02-01T05:00:00.000Z',
+      coverageKind: 'both',
+      dependents: []
+    },
+    {
+      firstName: 'Lauren',
+      lastName: 'Morris',
+      dob: '1995-08-01T04:00:00.000Z',
+      coverageKind: 'both',
+      dependents: []
+    }
+  ]
 };
 
 describe('PlanFilterComponent', () => {
@@ -32,10 +73,9 @@ describe('PlanFilterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlanFilterComponent ],
-      imports: [ NgbModule, BrowserAnimationsModule, RouterTestingModule ],
-    })
-    .compileComponents();
+      declarations: [PlanFilterComponent],
+      imports: [NgbModule, BrowserAnimationsModule, RouterTestingModule, HttpClientTestingModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -53,7 +93,7 @@ describe('PlanFilterComponent', () => {
   it('Choose type should have One Carrier, One Plan, and One Level if health', () => {
     component.planType = 'health';
     fixture.detectChanges();
-    const options = component.planOptions.filter(plan => plan.view === component.planType);
+    const options = component.planOptions.filter((plan) => plan.view === component.planType);
     expect(options.length).toEqual(3);
   });
 
@@ -65,8 +105,7 @@ describe('PlanFilterComponent', () => {
     expect(headers[1].innerText).toEqual('Benefit Cost');
     expect(headers[2].innerText).toEqual('Annual Deductible Family/individual');
     expect(headers[3].innerText).toEqual('Maximum out of Pocket Family/individual');
-    expect(headers[4].innerText).toEqual('Monthly Cost');
-    expect(headers[5].innerText).toEqual('Maximum Monthly Employer Cost');
+    expect(headers[4].innerText).toEqual('Maximum Monthly Employer Cost');
   });
 
   it('filter button should be disabled until a type is chosen', () => {
@@ -90,7 +129,7 @@ describe('PlanFilterComponent', () => {
   it('Choose type should have One Plan if dental', () => {
     component.planType = 'dental';
     fixture.detectChanges();
-    const options = component.planOptions.filter(plan => plan.view === component.planType);
+    const options = component.planOptions.filter((plan) => plan.view === component.planType);
     expect(options.length).toEqual(1);
   });
 
@@ -102,8 +141,6 @@ describe('PlanFilterComponent', () => {
     expect(headers[1].innerText).toEqual('Services');
     expect(headers[2].innerText).toEqual('Monthly Plan Premiums');
     expect(headers[3].innerText).toEqual('Annual Deductible');
-    expect(headers[4].innerText).toEqual('Maximum Benefits');
-    expect(headers[5].innerText).toEqual('Maximum Monthly Employer Cost');
+    expect(headers[4].innerText).toEqual('Maximum Monthly Employer Cost');
   });
-
 });

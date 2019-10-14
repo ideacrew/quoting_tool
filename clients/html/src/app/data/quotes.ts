@@ -1,8 +1,8 @@
-import { Product } from "./products";
-import { PackageTypes } from "../config/client_configuration";
+import { Product } from './products';
+import { PackageTypes } from '../config/client_configuration';
 
 export interface QuoteCalculator {
-  quoteProducts(products : Array<Product>, pType: PackageTypes) : Array<Quote>;
+  quoteProducts(products: Array<Product>, pType: PackageTypes): Array<Quote>;
 }
 
 export interface Quote {

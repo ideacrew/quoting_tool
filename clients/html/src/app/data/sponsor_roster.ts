@@ -1,4 +1,4 @@
-import { ContributionRelationship } from "../config/client_configuration";
+import { ContributionRelationship } from '../config/client_configuration';
 
 export interface RosterDependent {
   dob: Date;

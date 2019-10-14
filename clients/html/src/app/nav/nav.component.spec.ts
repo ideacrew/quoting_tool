@@ -10,11 +10,10 @@ describe('NavComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavComponent ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-      imports: [ RouterTestingModule ]
-    })
-    .compileComponents();
+      declarations: [NavComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [RouterTestingModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -33,7 +32,7 @@ describe('NavComponent', () => {
 
   it('should have Employer Details, Health and Dental options', () => {
     const navArr = ['Employer Details', 'Health', 'Dental'];
-    component.navLinks.map(nav => {
+    component.navLinks.map((nav) => {
       const name = nav.name;
       expect(navArr).toContain(name);
     });

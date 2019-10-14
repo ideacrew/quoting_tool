@@ -11,7 +11,7 @@ File: scss
 @import 'theme-colors/dark-theme';
 
 // Import Bootstrap source files (Required file)
-@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import '../../../node_modules/bootstrap/scss/bootstrap';
 
 //This is for the components (Required file)
 @import 'components';
@@ -37,8 +37,8 @@ File: scss
 @import 'icons/weather-icons/css/weather-icons.min.css';
 @import 'icons/themify-icons/themify-icons.css';
 @import 'icons/flag-icon-css/flag-icon.min.css';
-@import "icons/material-design-iconic-font/css/materialdesignicons.min.css";
-@import "icons/crypto-icons/cryptocoins.css";
+@import 'icons/material-design-iconic-font/css/materialdesignicons.min.css';
+@import 'icons/crypto-icons/cryptocoins.css';
 
 // this is for the perfect scrollbar
 @import '~perfect-scrollbar/css/perfect-scrollbar.css';
