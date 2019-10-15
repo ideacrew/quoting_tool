@@ -61,6 +61,7 @@ export class PlanFilterComponent implements OnInit {
   public pdfView = false;
   public btnName: string;
   public btnLink: string;
+  public isLoading: boolean;
 
   private sponsorRoster: Array<RosterEntry> = [];
   public planFilter: PackageTypes | null;
@@ -88,6 +89,7 @@ export class PlanFilterComponent implements OnInit {
   constructor(private planService: PlanProviderService) {}
 
   ngOnInit() {
+    this.isLoading = false;
     const erDetails = localStorage.getItem('employerDetails');
     this.employerDetails = JSON.parse(erDetails);
     this.filterLength = 0;
@@ -103,10 +105,10 @@ export class PlanFilterComponent implements OnInit {
     }
 
     if (this.employerDetails) {
-      this.planService.getPlansFor(this, '0111', new Date(2020, 1, 1), 'MA', 'Hampden', '01001');
-
-      // const startDate = this.employerDetails.effectiveDate
       const consumer = this;
+      this.isLoading = true;
+      this.planService.getPlansFor(this, '0111', new Date(2020, 1, 1), 'MA', 'Hampden', '01001', consumer);
+      // const startDate = this.employerDetails.effectiveDate
       this.employerDetails.employees.forEach(function(employee) {
         const employeeJson = {
           dob: new Date(employee.dob),
