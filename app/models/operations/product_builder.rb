@@ -9,6 +9,13 @@ module Operations
       rx: "Generic Drugs"
     }
 
+    TF_NAME_MAP = {
+      "employee_only" => "Employee Only",
+      "employee_and_spouse" => "Employee and Spouse",
+      "employee_and_one_or_more_dependents" => "Employee and Dependents",
+      "family" => "Family"
+    }
+
     attr_accessor :qhp, :health_data_map, :dental_data_map
 
     def call(params)
@@ -37,6 +44,9 @@ module Operations
           family_deductible: cost_share_variance.qhp_deductable.in_network_tier_1_family,
           is_reference_plan_eligible: true,
           metal_level_kind: retrieve_metal_level.to_sym,
+          group_size_factors: group_size_factors(qhp.active_year, qhp.issuer_id),
+          group_tier_factors: group_tier_factors(qhp.active_year, qhp.issuer_id),
+          participation_factors: participation_factors(qhp.active_year, qhp.issuer_id)
         }
 
         attrs = if is_health_product?
@@ -45,10 +55,10 @@ module Operations
           {
             health_plan_kind: qhp.plan_type.downcase,
             ehb: qhp.ehb_percent_premium.present? ? qhp.ehb_percent_premium : 1.0,
-            pcp_in_network_copay: variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:pcp]).first.copay_in_network_tier_1,
-            hospital_stay_in_network_copay: variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:hospital_stay]).first.copay_in_network_tier_1,
-            emergency_in_network_copay: variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:emeergency_stay]).first.copay_in_network_tier_1,
-            drug_in_network_copay: variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:rx]).first.copay_in_network_tier_1,
+            pcp_in_network_copay: variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:pcp]).first.copay_in_network_tier_1.split(" ")[0].gsub("$",""),
+            hospital_stay_in_network_copay: variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:hospital_stay]).first.copay_in_network_tier_1.split(" ")[0].gsub("$",""),
+            emergency_in_network_copay: variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:emeergency_stay]).first.copay_in_network_tier_1.split(" ")[0].gsub("$",""),
+            drug_in_network_copay: variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:rx]).first.copay_in_network_tier_1.split(" ")[0].gsub("$",""),
             is_standard_plan: info[:is_standard_plan],
             network_information: info[:network_information],
             title: (info[:title] || cost_share_variance.plan_marketing_name.squish!),
@@ -84,6 +94,48 @@ module Operations
           if new_product.save!
             cost_share_variance.product_id = new_product.id
           end
+        end
+      end
+    end
+
+    def group_size_factors(year, hios_id)
+      Rails.cache.fetch("group_size_factors_#{hios_id}_#{year}", expires_in: 15.minutes) do
+        factor = Products::ActuarialFactors::GroupSizeActuarialFactor.where(:"active_year" => year, :"issuer_hios_id" => hios_id).first
+        if factor.nil?
+          output = (1..50).inject({}) {|result, key| result[key.to_s] = 1.0; result }
+          max_group_size = 1
+        end
+
+        output ||= factor.actuarial_factor_entries.inject({}) do |result, afe|
+          result[afe.factor_key] = afe.factor_value
+          result
+        end
+
+        max_group_size ||= factor.max_integer_factor_key
+
+        {:factors => output, :max_group_size => max_group_size}
+      end
+    end
+
+    def group_tier_factors(year, hios_id)
+      Rails.cache.fetch("group_tier_factors_#{hios_id}_#{year}", expires_in: 15.minutes) do
+        factor = Products::ActuarialFactors::CompositeRatingTierActuarialFactor.where(:"active_year" => year, :"issuer_hios_id" => hios_id).first
+        return [] if factor.nil?
+        factor.actuarial_factor_entries.inject([]) do |result, afe|
+          key = TF_NAME_MAP[afe.factor_key]
+          result << {factor: afe.factor_value, name: key}
+          result
+        end
+      end
+    end
+
+    def participation_factors(year, hios_id)
+      Rails.cache.fetch("participation_factors_#{hios_id}_#{year}", expires_in: 15.minutes) do
+        factor = Products::ActuarialFactors::ParticipationRateActuarialFactor.where(:"active_year" => year, :"issuer_hios_id" => hios_id).first
+        return (1..100).inject({}) {|result, key| result[key.to_s] = 1.0; result } if factor.nil?
+        factor.actuarial_factor_entries.inject({}) do |result, afe|
+          result[afe.factor_key] = afe.factor_value
+          result
         end
       end
     end
