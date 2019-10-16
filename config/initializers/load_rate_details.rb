@@ -9,3 +9,12 @@ Products::Product.all.each do |product|
     $rates[[product.id, pt.rating_area_id]] = {entries: output, max_age: product.premium_ages.max, min_age: product.premium_ages.min}
   end
 end
+
+
+$sic_factors = {}
+
+Products::ActuarialFactors::SicActuarialFactor.each do |factor|
+  factor.actuarial_factor_entries.each do |entry|
+    $sic_factors[[entry.factor_key, factor.active_year, factor.issuer_hios_id]] = entry.factor_value
+  end
+end

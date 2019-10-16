@@ -40,22 +40,12 @@ class ProductSerializer
   end
 
   attribute :sic_code_factor do |object, params|
-    factor = Products::ActuarialFactors::SicActuarialFactor.where(:"active_year" => object.active_year, :"issuer_hios_id".in => object.issuer_hios_ids).first
-    return 1 if factor.blank?
-    entry = factor.actuarial_factor_entries.where(factor_key: params[:sic]).first
-    entry.blank? ? 1.0 : entry.factor_value
+    $sic_factors[[params[:sic], object.active_year, object.issuer_hios_ids.first]] || 1.0
   end
 
   attribute :rates do |object, params|
     Rails.cache.fetch("rates_#{object.id}_#{params[:rating_area_id]}", expires_in: 45.minutes) do
       $rates[[object.id, params[:rating_area_id]]]
-      # pt = object.premium_tables.where(rating_area_id: params[:rating_area_id]).first
-
-      # output = pt.premium_tuples.inject({}) do |result, tuple|
-      #   result[tuple.age] = tuple.cost
-      #   result
-      # end
-      # {entries: output, max_age: object.premium_ages.max, min_age: object.premium_ages.min}
     end
   end
 end
