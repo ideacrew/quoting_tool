@@ -107,7 +107,7 @@ export class PlanFilterComponent implements OnInit {
     if (this.employerDetails) {
       const consumer = this;
       this.isLoading = true;
-      this.planService.getPlansFor(this, '0111', new Date(2020, 1, 1), 'MA', 'Hampden', '01001', consumer);
+      this.planService.getPlansFor(this, this.employerDetails['sic']['standardIndustryCodeCode'], new Date(2020, 1, 1), 'MA', this.employerDetails['zip']['county'], this.employerDetails['zip']['zipCode'], consumer);
       // const startDate = this.employerDetails.effectiveDate
       this.employerDetails.employees.forEach(function(employee) {
         const employeeJson = {
