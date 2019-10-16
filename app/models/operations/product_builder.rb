@@ -55,10 +55,10 @@ module Operations
           {
             health_plan_kind: qhp.plan_type.downcase,
             ehb: qhp.ehb_percent_premium.present? ? qhp.ehb_percent_premium : 1.0,
-            pcp_in_network_copay: variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:pcp]).first.copay_in_network_tier_1.split(" ")[0].gsub("$",""),
-            hospital_stay_in_network_copay: variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:hospital_stay]).first.copay_in_network_tier_1.split(" ")[0].gsub("$",""),
-            emergency_in_network_copay: variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:emeergency_stay]).first.copay_in_network_tier_1.split(" ")[0].gsub("$",""),
-            drug_in_network_copay: variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:rx]).first.copay_in_network_tier_1.split(" ")[0].gsub("$",""),
+            pcp_in_network_copay: pcp_in_network_copay(variance),
+            hospital_stay_in_network_copay: hospital_stay_in_network_copay(variance),
+            emergency_in_network_copay: emergency_in_network_copay(variance),
+            drug_in_network_copay: drug_in_network_copay(variance),
             is_standard_plan: info[:is_standard_plan],
             network_information: info[:network_information],
             title: (info[:title] || cost_share_variance.plan_marketing_name.squish!),
@@ -83,6 +83,7 @@ module Operations
           product.issuer_hios_ids += [qhp.issuer_id]
           product.issuer_hios_ids = product.issuer_hios_ids.uniq
           product.update_attributes!(attrs)
+          cost_share_variance.product_id = product.id if cost_share_variance.product_id.blank?
         else
           attrs.merge!({issuer_hios_ids: [qhp.issuer_id]})
           new_product = if is_health_product?
@@ -140,6 +141,26 @@ module Operations
       end
     end
 
+    def pcp_in_network_copay(variance)
+      val = variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:pcp]).first.copay_in_network_tier_1
+      parse_value(val)
+    end
+
+    def hospital_stay_in_network_copay(variance)
+      val = variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:hospital_stay]).first.copay_in_network_tier_1
+      parse_value(val)
+    end
+
+    def emergency_in_network_copay(variance)
+      val = variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:emeergency_stay]).first.copay_in_network_tier_1
+      parse_value(val)
+    end
+
+    def drug_in_network_copay(variance)
+      val = variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:rx]).first.copay_in_network_tier_1
+      parse_value(val)
+    end
+
     def retrieve_metal_level
       is_health_product? ? qhp.metal_level.downcase : "dental"
     end
@@ -150,6 +171,10 @@ module Operations
 
     def parse_market
       qhp.market_coverage = qhp.market_coverage.downcase.include?("shop") ? "shop" : "individual"
+    end
+
+    def parse_value(val)
+      val == "Not Applicable" ? nil : val.split(" ")[0].gsub("$","")
     end
   end
 end
