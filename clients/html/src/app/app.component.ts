@@ -9,6 +9,6 @@ export class AppComponent implements OnInit {
   title = 'app';
 
   ngOnInit() {
-    localStorage.removeItem('employerDetails');
+    // localStorage.removeItem('employerDetails');
   }
 }

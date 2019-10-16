@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployerDetailsService } from './../services/employer-details.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { NgbDateStruct, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import zipcodes from '../../data/zipcode.json';
+import zipcodes from '../../data/zipCode.json';
 import sics from '../../data/sic.json';
 import sicCodes from '../../data/sicCodes.json';
 import { SelectedSicService } from '../services/selected-sic.service';
