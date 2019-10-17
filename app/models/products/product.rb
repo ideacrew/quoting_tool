@@ -35,6 +35,10 @@ module Products
     field :service_area_id, type: BSON::ObjectId
     field :network_information, type: String
 
+    field :group_size_factors, type: Hash
+    field :group_tier_factors, type: Array
+    field :participation_factors, type: Hash
+
     # embeds_one  :sbc_document, as: :documentable,
     #             :class_name => "::Document"
 

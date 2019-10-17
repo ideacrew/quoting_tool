@@ -34,7 +34,7 @@ class Api::V1::ProductsController < ApplicationController
     data = Rails.cache.fetch("data_#{county}_#{zip}_#{year}_#{month}", expires_in: 45.minutes) do
       products = Products::Product.where(:"service_area_id".in => service_area_ids, :"application_period.min".gte => effective_date, :"application_period.max".lte => Date.new(year, 1, 1).end_of_year)
       products.inject([]) do |result, product|
-        result << ::ProductSerializer.new(products[0], params: {key: params[:sic_code], rating_area_id: rating_area_id}).serializable_hash[:data][:attributes]
+        result << ::ProductSerializer.new(product, params: {key: params[:sic_code], rating_area_id: rating_area_id}).serializable_hash[:data][:attributes]
         result
       end
     end
