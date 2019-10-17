@@ -10,7 +10,7 @@ services:
         BUNDLER_VERSION: '2.0.2'
         NODE_MAJOR: '11'
         YARN_VERSION: '1.17.3'
-    image: ideacrew/hra_calculator_app:0.1.0
+    image: ideacrew/quoting_tool_app:0.1.0
     volumes:
       - rails_cache:/app/tmp/cache
       - bundle:/bundle
@@ -46,7 +46,7 @@ services:
       dockerfile: ./.docker/production/web/Dockerfile
       args:
         API_URL: 'localhost'
-    image: ideacrew/hra_calculator_web:0.1.0
+    image: ideacrew/quoting_tool_web:0.1.0
     volumes:
       - node_modules_web:/app/node_modules
     tmpfs:
