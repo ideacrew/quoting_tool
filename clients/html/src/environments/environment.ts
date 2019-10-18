@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  envApi: 'http://localhost:3000'
+  envApi: 'https://quick-tool.herokuapp.com'
 };
 
 /*

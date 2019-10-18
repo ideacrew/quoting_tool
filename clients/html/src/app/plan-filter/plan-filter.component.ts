@@ -76,6 +76,7 @@ export class PlanFilterComponent implements OnInit {
   public tieredCalculator: QuoteCalculator;
   public relationshipContributionModel: RelationshipContributionModel;
   public tieredContributionModel: TieredContributionModel;
+  private closePdfMsg: any;
 
   public planOptions = [
     { key: 'single_issuer', value: 'One Carrier', view: 'health' },
@@ -145,7 +146,7 @@ export class PlanFilterComponent implements OnInit {
       this.btnName = 'Select Dental';
       this.btnLink = '/employer-details/dental';
     } else {
-      this.btnName = 'Back to health';
+      this.btnName = 'Back to Health';
       this.btnLink = '/employer-details/health';
     }
   }
