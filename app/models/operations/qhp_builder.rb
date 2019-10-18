@@ -4,10 +4,12 @@ module Operations
 
     INVALID_PLAN_IDS = ["88806MA0020005", "88806MA0040005", "88806MA0020051", "18076MA0010001", "80538MA0020001", "80538MA0020002", "11821MA0020001", "11821MA0040001"]
 
-    attr_accessor :package, :product, :qhp, :service_area_map
+    attr_accessor :package, :product, :qhp, :service_area_map, :health_data_map, :dental_data_map
 
     def call(params)
       @service_area_map = params[:service_area_map]
+      @health_data_map = params[:health_data_map]
+      @dental_data_map = params[:dental_data_map]
       packages = params[:packages]
 
       packages.each do |package|
@@ -63,7 +65,7 @@ module Operations
 
     def validate_and_persist_qhp
       if !INVALID_PLAN_IDS.include?(qhp.standard_component_id.strip)
-        result = ProductBuilder.new.call({qhp: qhp, service_area_map: service_area_map})
+        result = ProductBuilder.new.call({qhp: qhp, health_data_map: health_data_map, dental_data_map: dental_data_map, service_area_map: service_area_map})
         if qhp.save!
           Success({message: ["Succesfully created QHP"]})
         end

@@ -35,8 +35,12 @@ module Products
     field :service_area_id, type: BSON::ObjectId
     field :network_information, type: String
 
-    embeds_one  :sbc_document, as: :documentable,
-                :class_name => "::Document"
+    field :group_size_factors, type: Hash
+    field :group_tier_factors, type: Array
+    field :participation_factors, type: Hash
+
+    # embeds_one  :sbc_document, as: :documentable,
+    #             :class_name => "::Document"
 
     embeds_many :premium_tables,
                 class_name: "::Products::PremiumTable"
@@ -97,18 +101,6 @@ module Products
     scope :by_service_area,             ->(service_area){ where(service_area: service_area) }
     scope :by_service_areas,            ->(service_area_ids) { where("service_area_id" => {"$in" => service_area_ids }) }
 
-=begin
-    scope :by_coverage_date, ->(coverage_date) {
-      where(
-        "premium_tables.effective_period" => {
-          "$elemMatch" => {
-              "min" => { "$lte" => coverage_date },
-              "max" => { "$gte" => coverage_date }
-          }
-        }
-      )
-    }
-=end
     scope :by_metal_level_kind,         ->(metal_level){ where(metal_level_kind: /#{metal_level}/i) }
 
     scope :effective_with_premiums_on,  ->(effective_date){ where(:"premium_tables.effective_period.min".lte => effective_date,

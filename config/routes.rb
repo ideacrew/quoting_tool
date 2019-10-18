@@ -11,6 +11,12 @@ Rails.application.routes.draw do
           get :get_plans
         end
       end
+
+      resources :products do
+        collection do
+          get :plans
+        end
       end
     end
   end
+end

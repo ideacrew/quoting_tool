@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  envApi: 'https://quick-tool.herokuapp.com'
+  envApi: 'https://API_URL'
 };

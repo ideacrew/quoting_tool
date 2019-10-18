@@ -22,8 +22,8 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have Employer Quick Tool heading', () => {
+  it('should have Employer Quoting Tool heading', () => {
     const title = fixture.nativeElement.innerText;
-    expect(title).toBe('Employer Quick Tool');
+    expect(title).toBe('Employer Quoting Tool');
   });
 });

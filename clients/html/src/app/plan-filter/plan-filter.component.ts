@@ -61,6 +61,8 @@ export class PlanFilterComponent implements OnInit {
   public pdfView = false;
   public btnName: string;
   public btnLink: string;
+  public isLoading: boolean;
+  public showPlansTable = false;
 
   private sponsorRoster: Array<RosterEntry> = [];
   public planFilter: PackageTypes | null;
@@ -89,6 +91,7 @@ export class PlanFilterComponent implements OnInit {
   constructor(private planService: PlanProviderService) {}
 
   ngOnInit() {
+    this.isLoading = false;
     const erDetails = localStorage.getItem('employerDetails');
     this.employerDetails = JSON.parse(erDetails);
     this.filterLength = 0;
@@ -97,17 +100,25 @@ export class PlanFilterComponent implements OnInit {
       this.erEmployees = this.employerDetails.employees;
 
       if (this.erEmployees.length > 1) {
-        this.costShownText = `${this.erEmployees.length} people`;
+        this.costShownText = `${this.erEmployees.length} employees`;
       } else {
-        this.costShownText = `${this.erEmployees.length} person`;
+        this.costShownText = `${this.erEmployees.length} employee`;
       }
     }
 
     if (this.employerDetails) {
-      this.planService.getPlansFor(this, '0111', new Date(2019, 6, 1), 'MA', 'Hampden', '01001');
-
-      // const startDate = this.employerDetails.effectiveDate
       const consumer = this;
+      this.isLoading = true;
+      this.planService.getPlansFor(
+        this,
+        this.employerDetails['sic']['standardIndustryCodeCode'],
+        new Date(2020, 1, 1),
+        'MA',
+        this.employerDetails['zip']['county'],
+        this.employerDetails['zip']['zipCode'],
+        consumer
+      );
+      // const startDate = this.employerDetails.effectiveDate
       this.employerDetails.employees.forEach(function(employee) {
         const employeeJson = {
           dob: new Date(employee.dob),
@@ -193,6 +204,7 @@ export class PlanFilterComponent implements OnInit {
     this.filteredProducts = this.kindFilteredProducts;
     this.recalculate();
     this.resetAll();
+    this.showPlansTable = true;
   }
 
   recalculate() {
