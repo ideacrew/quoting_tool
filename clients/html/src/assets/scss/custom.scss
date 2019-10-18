@@ -1,7 +1,5 @@
 // In this scss you can overwrite all our scss, we suggested you to add your scss into this, so whenever the update comes it will not affect your code.
 
-@import url('http://fonts.googleapis.com/css?family=Roboto+Slab:300,400,700&display=swap');
-
 body {
   background-color: #f2f2f2;
   font-family: 'Roboto Slab', serif;
@@ -33,6 +31,11 @@ a:active {
 }
 
 .btn-primary:hover {
+  background-color: #c56c24;
+  border-color: #c56c24;
+}
+
+.btn-success, .btn-success:disabled {
   background-color: #c56c24;
   border-color: #c56c24;
 }
