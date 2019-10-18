@@ -25,6 +25,8 @@
 
 .heading-label {
   font-weight: 600;
+  color: #c56c24;
+  text-decoration: underline;
 }
 
 .monthly-cost-row {

@@ -35,7 +35,7 @@ export class PlanProviderService {
       county_name: county_name,
       zip_code: zip,
       state: state
-    }
+    };
     this.api_request.authedGet('products/plans.json', attrs).subscribe(function(data: Array<ProductData>) {
       consumer.onProductsLoaded(transformer.castData(data['plans']));
       component.isLoading = false;

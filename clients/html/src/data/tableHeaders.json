@@ -4,8 +4,8 @@
       {
         "col-1": "Plan name/Summary of Benefits",
         "col-2": "Benefit Cost",
-        "col-3": "Annual Deductible \n Family/individual",
-        "col-4": "Maximum out of Pocket \n Family/individual",
+        "col-3": "Annual Deductible \n Individual/Family",
+        "col-4": "Maximum out of Pocket \n Individual/Family",
         "col-5": "Monthly Cost",
         "col-6": "Maximum Monthly \n Employer Cost"
       }
