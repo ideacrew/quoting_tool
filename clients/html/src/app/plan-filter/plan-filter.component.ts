@@ -62,6 +62,7 @@ export class PlanFilterComponent implements OnInit {
   public btnName: string;
   public btnLink: string;
   public isLoading: boolean;
+  public showPlansTable = false;
 
   private sponsorRoster: Array<RosterEntry> = [];
   public planFilter: PackageTypes | null;
@@ -98,16 +99,24 @@ export class PlanFilterComponent implements OnInit {
       this.erEmployees = this.employerDetails.employees;
 
       if (this.erEmployees.length > 1) {
-        this.costShownText = `${this.erEmployees.length} people`;
+        this.costShownText = `${this.erEmployees.length} employees`;
       } else {
-        this.costShownText = `${this.erEmployees.length} person`;
+        this.costShownText = `${this.erEmployees.length} employee`;
       }
     }
 
     if (this.employerDetails) {
       const consumer = this;
       this.isLoading = true;
-      this.planService.getPlansFor(this, this.employerDetails['sic']['standardIndustryCodeCode'], new Date(2020, 1, 1), 'MA', this.employerDetails['zip']['county'], this.employerDetails['zip']['zipCode'], consumer);
+      this.planService.getPlansFor(
+        this,
+        this.employerDetails['sic']['standardIndustryCodeCode'],
+        new Date(2020, 1, 1),
+        'MA',
+        this.employerDetails['zip']['county'],
+        this.employerDetails['zip']['zipCode'],
+        consumer
+      );
       // const startDate = this.employerDetails.effectiveDate
       this.employerDetails.employees.forEach(function(employee) {
         const employeeJson = {
@@ -194,6 +203,7 @@ export class PlanFilterComponent implements OnInit {
     this.filteredProducts = this.kindFilteredProducts;
     this.recalculate();
     this.resetAll();
+    this.showPlansTable = true;
   }
 
   recalculate() {
@@ -407,22 +417,9 @@ export class PlanFilterComponent implements OnInit {
     return `(${count.length} Plans)`;
   }
 
-  openPdfMsg() {
-    alert('Creating PDF');
-  }
-
-  closePdfMsg() {
-    console.log('Pdf MSG Closed');
-  }
-
   downloadPdf() {
     this.pdfView = true;
     const table = document.getElementById('plan-table');
-    this.openPdfMsg();
-    function closeMe() {
-      console.log('I worked');
-      console.log(PlanFilterComponent);
-    }
     this.html2PDF(table, {
       jsPDF: {
         unit: 'pt',
@@ -432,7 +429,6 @@ export class PlanFilterComponent implements OnInit {
       output: `./pdf/${this.planType}.pdf`,
       success: function(pdf) {
         pdf.save();
-        closeMe();
       }
     });
     setTimeout(() => {
