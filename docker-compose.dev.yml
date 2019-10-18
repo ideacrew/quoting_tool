@@ -32,7 +32,7 @@ services:
       - credentials
     stdin_open: true
     tty: true
-    command: bash -c "rm -f tmp/pids/server.pid && bundle && yarn install --check-files && bundle exec puma -C config/puma.rb"
+    command: bash -c "mkdir -p tmp/pids && bundle && yarn install --check-files && bundle exec puma -C config/puma.rb"
     ports:
       - '3000:3000'
     depends_on:
@@ -58,7 +58,7 @@ services:
     secrets:
       - ssl_cert
       - ssl_key
-    command: bash -c "npm install  && ng serve --host 0.0.0.0 --port 4200"
+    command: bash -c "rm -rf /app/node_modules/* && npm install  && ng serve --host 0.0.0.0 --port 4200"
     ports:
       - '4200:4200'
     depends_on:
@@ -70,7 +70,7 @@ services:
       - mongodb:/data/db
       - mongodb_config:/data/configdb
     ports:
-      - 27017:27017
+      - 27017
 
   redis:
     image: redis:3.2-alpine
