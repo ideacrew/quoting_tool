@@ -1,7 +1,23 @@
 class ProductSerializer
   include FastJsonapi::ObjectSerializer
 
-  attributes :deductible, :name, :group_size_factors, :group_tier_factors, :participation_factors
+  ProviderMap = {
+    "36046" => "Harvard Pilgrim Health Care",
+    "80538" => "Delta Dental",
+    "11821" => "Delta Dental",
+    "31779" => "UnitedHealthcare",
+    "29125" => "Tufts Health Premier",
+    "88806" => "Fallon Health",
+    "52710" => "Fallon Health",
+    "41304" => "AllWays Health Partners",
+    "18076" => "Altus Dental",
+    "34484" => "Health New England",
+    "59763" => "Tufts Health Direct",
+    "42690" => "Blue Cross Blue Shield MA",
+    "82569" => "BMC HealthNet Plan"
+  }
+
+  attributes :deductible, :name, :group_size_factors, :group_tier_factors, :participation_factors, :hsa_eligible
 
   attribute :available_packages, &:product_package_kinds
   attribute :group_deductible, &:family_deductible
@@ -23,8 +39,8 @@ class ProductSerializer
     object.health? ? object.drug_in_network_copay : nil
   end
 
-  attribute :hsa_eligible do |object|
-    nil
+  attribute :metal_level do |object|
+    object.metal_level_kind
   end
 
   attribute :integrated_drug_deductible do |object|
@@ -36,7 +52,7 @@ class ProductSerializer
   end
 
   attribute :provider_name do |object|
-    nil
+    ProviderMap[object.issuer_hios_ids.first]
   end
 
   attribute :sic_code_factor do |object, params|
