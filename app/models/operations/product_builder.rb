@@ -46,7 +46,7 @@ module Operations
           metal_level_kind: retrieve_metal_level.to_sym,
           group_size_factors: group_size_factors(qhp.active_year, qhp.issuer_id),
           group_tier_factors: group_tier_factors(qhp.active_year, qhp.issuer_id),
-          participation_factors: participation_factors(qhp.active_year, qhp.issuer_id)
+          participation_factors: participation_factors(qhp.active_year, qhp.issuer_id),
           hsa_eligible: qhp.hsa_eligibility
         }
 
