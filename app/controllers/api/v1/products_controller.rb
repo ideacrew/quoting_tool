@@ -6,6 +6,7 @@ class Api::V1::ProductsController < ApplicationController
     effective_date = DateTime.new(2020, 1, 1)
     year = 2020 || effective_date.year # toDO
     month = 1 || effective_date.month
+    kind = params[:kind].to_sym
 
     county = params[:county_name].squish!
     zip = params[:zip_code].squish!
@@ -31,8 +32,8 @@ class Api::V1::ProductsController < ApplicationController
       ).first.id
     end
 
-    data = Rails.cache.fetch("data_#{county}_#{zip}_#{year}_#{month}", expires_in: 45.minutes) do
-      products = Products::Product.where(:"service_area_id".in => service_area_ids, :"application_period.min".gte => effective_date, :"application_period.max".lte => Date.new(year, 1, 1).end_of_year)
+    data = Rails.cache.fetch("data_#{kind}_#{county}_#{zip}_#{year}_#{month}", expires_in: 45.minutes) do
+      products = Products::Product.where(:"kind" => kind, :"service_area_id".in => service_area_ids, :"application_period.min".gte => effective_date, :"application_period.max".lte => Date.new(year, 1, 1).end_of_year)
       products.inject([]) do |result, product|
         result << ::ProductSerializer.new(product, params: {key: params[:sic_code], rating_area_id: rating_area_id}).serializable_hash[:data][:attributes]
         result

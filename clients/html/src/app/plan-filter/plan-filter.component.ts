@@ -116,6 +116,7 @@ export class PlanFilterComponent implements OnInit {
         'MA',
         this.employerDetails['zip']['county'],
         this.employerDetails['zip']['zipCode'],
+        this.planType,
         consumer
       );
       // const startDate = this.employerDetails.effectiveDate

@@ -25,6 +25,7 @@ export class PlanProviderService {
     state: string,
     county_name: string,
     zip: string,
+    kind: string,
     component
   ) {
     const formattedDate = startDate.toISOString().substring(0, 10);
@@ -34,7 +35,8 @@ export class PlanProviderService {
       start_date: formattedDate,
       county_name: county_name,
       zip_code: zip,
-      state: state
+      state: state,
+      kind: kind
     };
     this.api_request.authedGet('products/plans.json', attrs).subscribe(function(data: Array<ProductData>) {
       consumer.onProductsLoaded(transformer.castData(data['plans']));
