@@ -111,10 +111,11 @@ export class PlanFilterComponent implements OnInit {
     if (this.employerDetails) {
       const consumer = this;
       this.isLoading = true;
+      const startDate = new Date(2020, 1, 1);
       this.planService.getPlansFor(
         this,
         this.employerDetails['sic']['standardIndustryCodeCode'],
-        new Date(2020, 1, 1),
+        startDate,
         'MA',
         this.employerDetails['county']['county'],
         this.employerDetails['zip'],
@@ -138,7 +139,7 @@ export class PlanFilterComponent implements OnInit {
 
         consumer.sponsorRoster.push(employeeJson);
       });
-      const startDate = new Date(2019, 6, 1);
+
       this.tieredContributionModel = defaultTieredContributionModel();
       this.tieredCalculator = this.calculator(startDate, this.tieredContributionModel, true);
       this.relationshipContributionModel = defaultRelationshipContributionModel();
