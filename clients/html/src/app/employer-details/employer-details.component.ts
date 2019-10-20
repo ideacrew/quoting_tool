@@ -12,7 +12,7 @@ import { SelectedSicService } from '../services/selected-sic.service';
 @Component({
   selector: 'app-employer-details',
   templateUrl: './employer-details.component.html',
-  styleUrls: ['./employer-details.component.css'],
+  styleUrls: ['./employer-details.component.scss'],
   providers: [NgbModal, EmployerDetailsService],
   animations: [
     trigger('fadeInOut', [
@@ -34,6 +34,7 @@ export class EmployerDetailsComponent implements OnInit {
   zipKeyword = 'zipCode';
   sics = sics;
   zipcodes = zipcodes;
+  availableCounties = zipcodes;
   defaultSelect: boolean;
   uploadData: any;
   employee: any;
@@ -81,7 +82,7 @@ export class EmployerDetailsComponent implements OnInit {
       effectiveDate: ['', Validators.required],
       sic: ['', Validators.required],
       zip: ['', Validators.required],
-      county: [{ value: '', disabled: true }],
+      county: [''],
       employees: this.fb.array([], Validators.required)
     });
 
@@ -125,13 +126,14 @@ export class EmployerDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getZipCodes();
     this.selectedSicService.currentMessage.subscribe((message) => this.setSicFromTree(message));
     this.employeeRoster = localStorage.getItem('employerDetails');
     if (this.employeeRoster) {
       this.showEmployeeRoster = true;
       this.employerDetails = JSON.parse(this.employeeRoster);
       this.quoteForm.get('effectiveDate').setValue(new Date(Date.parse(this.employerDetails.effectiveDate)));
-      this.quoteForm.get('zip').setValue(this.employerDetails.zip.zipCode);
+      this.quoteForm.get('zip').setValue(this.employerDetails.zip);
       this.quoteForm.get('sic').setValue(this.employerDetails.sic.standardIndustryCodeCode);
       this.loadEmployeesFromStorage();
     }
@@ -151,7 +153,6 @@ export class EmployerDetailsComponent implements OnInit {
       ];
     } else {
       this.effectiveDateOptions = [
-        { month: -1, value: 'SELECT DATE', disabled: true },
         {
           month: this.todaysDate.getMonth(),
           value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}`
@@ -162,6 +163,16 @@ export class EmployerDetailsComponent implements OnInit {
         }
       ];
     }
+  }
+
+  getZipCodes() {
+    const zipCodes = [];
+    zipcodes.map(zipcode => zipCodes.push(zipcode.zipCode));
+    this.zipcodes = zipCodes.reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
+  }
+
+  setCounty(value) {
+    this.quoteForm.get('county').setValue(value);
   }
 
   setSicFromTree(item) {
@@ -248,7 +259,8 @@ export class EmployerDetailsComponent implements OnInit {
 
   zipChangeSearch(event) {
     if (event.length === 5) {
-      this.counties = zipcodes.filter((zipcode) => zipcode.zipCode === event);
+      this.counties = this.availableCounties.filter((zipcode) => zipcode.zipCode === event);
+      this.quoteForm.get('county').setValue(this.counties[0]);
       this.enableCounty();
     }
   }
@@ -258,7 +270,8 @@ export class EmployerDetailsComponent implements OnInit {
   }
 
   getCounties(item) {
-    this.counties = zipcodes.filter((zipcode) => zipcode.zipCode === item.zipCode);
+    this.counties = this.availableCounties.filter((zipcode) => zipcode.zipCode === item);
+    this.quoteForm.get('county').setValue(this.counties[0]);
     this.enableCounty();
   }
 
@@ -270,6 +283,8 @@ export class EmployerDetailsComponent implements OnInit {
 
     if (this.counties.length > 1) {
       countyField.removeAttribute('disabled');
+    } else {
+      countyField.setAttribute('disabled', 'true');
     }
   }
 
@@ -283,7 +298,6 @@ export class EmployerDetailsComponent implements OnInit {
   }
 
   onFocused(event) {
-    console.log(event);
     // do something when input is focused
   }
 

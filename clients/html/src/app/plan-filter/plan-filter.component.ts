@@ -76,7 +76,9 @@ export class PlanFilterComponent implements OnInit {
   public tieredCalculator: QuoteCalculator;
   public relationshipContributionModel: RelationshipContributionModel;
   public tieredContributionModel: TieredContributionModel;
-  private closePdfMsg: any;
+  sortDirection = true;
+  sortKind: any;
+  get sortFilter() { return this.sortDirection ? 'asc' : 'desc'; }
 
   public planOptions = [
     { key: 'single_issuer', value: 'One Carrier', view: 'health' },
@@ -114,8 +116,8 @@ export class PlanFilterComponent implements OnInit {
         this.employerDetails['sic']['standardIndustryCodeCode'],
         new Date(2020, 1, 1),
         'MA',
-        this.employerDetails['zip']['county'],
-        this.employerDetails['zip']['zipCode'],
+        this.employerDetails['county']['county'],
+        this.employerDetails['zip'],
         consumer
       );
       // const startDate = this.employerDetails.effectiveDate
@@ -205,6 +207,7 @@ export class PlanFilterComponent implements OnInit {
     this.recalculate();
     this.resetAll();
     this.showPlansTable = true;
+    this.sortDirection = true;
   }
 
   recalculate() {
@@ -435,5 +438,10 @@ export class PlanFilterComponent implements OnInit {
     setTimeout(() => {
       this.pdfView = false;
     }, 500);
+  }
+
+  sortData(kind) {
+    this.sortKind = kind;
+    this.sortDirection = !this.sortDirection;
   }
 }
