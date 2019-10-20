@@ -1,3 +1,5 @@
+@import '../../../src/assets/scss/variable';
+
 .btn-link a {
   color: #0036cb;
 }
@@ -12,7 +14,7 @@
 }
 
 .fa-question {
-  color: #005e81;
+  color: $ma-dark-blue;
 }
 
 .fa-question:hover {
@@ -61,7 +63,7 @@ fieldset.dependent > legend {
 
 .heading-text {
   font-weight: 700;
-  color: #c56c24;
+  color: $ma-primary-orange;
 }
 
 ::-webkit-inner-spin-button,
