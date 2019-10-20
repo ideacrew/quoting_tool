@@ -36,7 +36,7 @@ module Transactions
 
     def load_rating_factors(input)
       puts ":: Loading County Rating Factor ::"
-      files = ["db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/rating_factors/2020/SHOP_RateFactors_CY2020.xlsx"]
+      files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/rating_factors/2020/SHOP_RateFactors_CY2020.xlsx"))
       parsed_files = parse_files(files)
       parsed_files.each do |file|
         Transactions::LoadFactors.new.call(file)

@@ -38,6 +38,7 @@ module Products
     field :group_size_factors, type: Hash
     field :group_tier_factors, type: Array
     field :participation_factors, type: Hash
+    field :hsa_eligible, type: Boolean
 
     # embeds_one  :sbc_document, as: :documentable,
     #             :class_name => "::Document"

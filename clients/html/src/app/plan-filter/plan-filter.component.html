@@ -1,8 +1,15 @@
-<div class="row">
-  <div class="col-12">
+<div class="row pt-4">
+  <div class="col-8">
+    <button class="btn btn-rounded btn-outline-info">
+      <span class="cs-text">Cost shown for</span>
+      <i class="fas fa-user ml-1"></i> {{ costShownText }}
+    </button>
+    Effective Date: <strong>{{ employerDetails?.effectiveDate }}</strong>
+  </div>
+  <div class="col-4">
     <div class="form-group">
       <select
-        class="custom-select col-3 float-right"
+        class="custom-select col-9 float-right"
         id="inlineFormCustomSelect"
         (change)="changePackageFilter($event.target.value)"
         [disabled]="isLoading ? '' : null"
@@ -13,15 +20,6 @@
         }}</option>
       </select>
     </div>
-  </div>
-</div>
-<div class="row mb-2">
-  <div class="col-12">
-    <button class="btn btn-rounded btn-outline-info">
-      <span class="cs-text">Cost shown for</span>
-      <i class="fas fa-user ml-1"></i> {{ costShownText }}
-    </button>
-    Effective Date: <strong>{{ employerDetails?.effectiveDate }}</strong>
   </div>
 </div>
 
@@ -174,14 +172,11 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-6 offset-md-6">
+            <div class="row mt-4">
+              <div class="col-6 offset-md-8">
                 <div class="row">
-                  <div class="col-4">
-                    <p class="font-weight-bold">Maximum Monthly <br />Employer Cost</p>
-                  </div>
-                  <div class="col-4 mr-2">
-                    <button class="btn btn-warning" (click)="resetAll()">
+                  <div class="col-5 mr-2">
+                    <button class="btn btn-primary" (click)="resetAll()">
                       Clear Filters
                     </button>
                   </div>
@@ -212,7 +207,7 @@
               <th scope="col">
                 {{ getTableHeader('col-1') }}
               </th>
-              <th [ngStyle]="{ width: '25%' }" scope="col">
+              <th [ngStyle]="{ width: '20%' }" scope="col">
                 {{ getTableHeader('col-2') }}
               </th>
               <th scope="col">
@@ -233,7 +228,7 @@
                   *ngIf="!pdfView"
                 ></i>
               </th>
-              <th [ngStyle]="{ width: '20%' }" scope="col" *ngIf="this.planFilter == 'single_product'">
+              <th [ngStyle]="{ width: '17%' }" scope="col" *ngIf="this.planFilter == 'single_product'">
                 {{ getTableHeader('col-5') }}
                 <i
                   class="fas fa-question-circle ml-2"
@@ -242,8 +237,9 @@
                   *ngIf="!pdfView"
                 ></i>
               </th>
-              <th scope="col">
+              <th scope="col" (click)="sortData(getTableHeader('col-6'))" class="clickable-header">
                 {{ getTableHeader('col-6') }}
+                <i class="fas" [ngClass]="sortDirection ? 'fa-arrow-up' : 'fa-arrow-down'" *ngIf="!pdfView"></i>
                 <i
                   class="fas fa-question-circle ml-2"
                   placement="right"
@@ -254,7 +250,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let carrier of filteredCarriers">
+            <tr *ngFor="let carrier of (filteredCarriers | orderBy: sortFilter : planType : planFilter : sortKind)">
               <td>
                 <strong>{{ carrier['product_information']['provider_name'] }}</strong
                 ><br /><strong>{{ carrier['product_name'] }}</strong
