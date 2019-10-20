@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { PlanFilterPipe } from './plan-filter.pipe';
+import { OrderByPipe } from './order-by.pipe';
 
 const data = {
   effectiveDate: 'October 2019',
@@ -16,6 +17,7 @@ const data = {
     standardIndustryCodeLabel: 'Rice'
   },
   zip: { zipCode: '01001', county: 'Hampden' },
+  county: 'Hampden',
   employees: [
     {
       firstName: 'Larry',
@@ -74,7 +76,7 @@ describe('PlanFilterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PlanFilterComponent, PlanFilterPipe],
+      declarations: [PlanFilterComponent, PlanFilterPipe, OrderByPipe],
       imports: [NgbModule, BrowserAnimationsModule, RouterTestingModule, HttpClientTestingModule]
     }).compileComponents();
   }));

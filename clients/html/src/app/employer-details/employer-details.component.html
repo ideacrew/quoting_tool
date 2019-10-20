@@ -19,6 +19,7 @@
               formControlName="effectiveDate"
               id="effectiveDate"
             >
+              <option selected>SELECT DATE</option>
               <option
                 *ngFor="let date of effectiveDateOptions"
                 [selected]="isSelected(date)"
@@ -43,6 +44,7 @@
               [searchKeyword]="sicKeyword"
               [itemTemplate]="sicTemplate"
               [notFoundTemplate]="sicNotFoundTemplate"
+              class="inout-fix"
             >
             </ng-autocomplete>
 
@@ -80,7 +82,7 @@
             </ng-autocomplete>
 
             <ng-template #zipTemplate let-zip>
-              <a [innerHTML]="zip.zipCode"></a>
+              <a [innerHTML]="zip"></a>
             </ng-template>
 
             <ng-template #zipNotFoundTemplate let-zipNotFound>
@@ -92,11 +94,11 @@
           <div class="form-group">
             <label for="countyField">County:</label>
             <select
-              class="custom-select"
               formControlName="county"
+              class="custom-select"
               id="countyField"
             >
-              <option *ngFor="let county of counties">{{
+              <option *ngFor="let county of counties" [ngValue]="county">{{
                 county.county
               }}</option>
             </select>
