@@ -598,13 +598,13 @@
         <div class="col-12">
           <button
             class="float-left btn btn-primary upload-employee-roster"
-            (click)="open(content)"
+            (click)="open(content)" *ngIf="!showEmployeeRoster"
           >
             <i class="fas fa-upload"></i> Upload Employee Roster
           </button>
           <button
             (click)="addEmployee()"
-            class="btn btn-primary add-new-employee"
+            class="btn btn-primary add-new-employee" *ngIf="!showEmployeeRoster"
           >
             <i class="fas fa-user-plus"></i> Add Employee
           </button>
