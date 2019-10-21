@@ -42,12 +42,13 @@ class FilteredRelationshipRosterEntry {
     deps: Array<RosterDependent>,
     rel_map: Map<ContributionRelationship, boolean>
   ) {
-    return deps.filter(function(rd) {
+    return deps.filter((rd) => {
       if (rd.relationship === ContributionRelationship.CHILD) {
         const age = this.coverageAge(start_date, rd.dob);
         if (age > 26) {
           return false;
         }
+        return true;
       }
       if (rel_map.has(rd.relationship)) {
         return rel_map.get(rd.relationship);

@@ -58,10 +58,10 @@ export class EmployerDetailsComponent implements OnInit {
   public show: boolean;
 
   relationOptions = [
-    { key: 'spouse', value: 'Spouse' },
-    { key: 'domestic partner', value: 'Domestic Partner' },
-    { key: 'child', value: 'Child' },
-    { key: 'disabled child', value: 'Disabled Child' }
+    { key: 'Spouse', value: 'Spouse' },
+    { key: 'Domestic Partner', value: 'Domestic Partner' },
+    { key: 'Child', value: 'Child' },
+    { key: 'Child', value: 'Disabled Child' }
   ];
 
   config = {
