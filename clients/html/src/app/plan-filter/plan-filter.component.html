@@ -259,22 +259,39 @@
                 ></a>
               </td>
               <td>
-                <p class="mb-0">
-                  <strong>Hospital Stay -</strong>
-                  {{ carrier['product_information']['hospital_stay'] | number: '1.2-2' }}
-                </p>
-                <p class="mb-0">
-                  <strong>Emergency Stay -</strong>
-                  {{ carrier['product_information']['emergency_stay'] | number: '1.2-2' }}
-                </p>
-                <p class="mb-0">
-                  <strong>PCP Office Visit -</strong>
-                  {{ carrier['product_information']['pcp_office_visit'] | number: '1.2-2' }}
-                </p>
-                <p class="mb-0">
-                  <strong>RX -</strong>
-                  {{ carrier['product_information']['rx'] | number: '1.2-2' }}
-                </p>
+                <span *ngIf="planType == 'health'">
+                  <p class="mb-0">
+                    <strong>Hospital Stay -</strong>
+                    {{ carrier['product_information']['hospital_stay'] | number: '1.2-2' }}
+                  </p>
+                  <p class="mb-0">
+                    <strong>Emergency Stay -</strong>
+                    {{ carrier['product_information']['emergency_stay'] | number: '1.2-2' }}
+                  </p>
+                  <p class="mb-0">
+                    <strong>PCP Office Visit -</strong>
+                    {{ carrier['product_information']['pcp_office_visit'] | number: '1.2-2' }}
+                  </p>
+                  <p class="mb-0">
+                    <strong>RX -</strong>
+                    {{ carrier['product_information']['rx'] | number: '1.2-2' }}
+                  </p>
+                </span>
+
+                <span *ngIf="planType == 'dental'">
+                  <p class="mb-0">
+                    <strong>Preventive Services -</strong>
+                    {{ carrier['product_information']['preventive_dental_services'] }}
+                  </p>
+                  <p class="mb-0">
+                    <strong>Basic Services -</strong>
+                    {{ carrier['product_information']['basic_dental_services'] }}
+                  </p>
+                  <p class="mb-0">
+                    <strong>Major Services -</strong>
+                    {{ carrier['product_information']['major_dental_services'] }}
+                  </p>
+                </span>
               </td>
               <td>{{ carrier['group_deductible'] }}</td>
               <td>{{ carrier['maximum_member_cost'] | number: '1.2-2' }}</td>

@@ -16,6 +16,12 @@ module Products
     field :metal_level_kind,            type: Symbol
     field :ehb,                         type: Float,    default: 0.0
 
+    # Visits
+
+    field :basic_dental_services,        type: String
+    field :major_dental_services,        type: String
+    field :preventive_dental_services,   type: String
+
     validates :metal_level_kind,
               presence: true,
               inclusion: {in: METAL_LEVEL_KINDS, message: "%{value} is not a valid metal level kind"}
