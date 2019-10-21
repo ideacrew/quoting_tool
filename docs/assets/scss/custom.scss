@@ -1,13 +1,11 @@
 // In this scss you can overwrite all our scss, we suggested you to add your scss into this, so whenever the update comes it will not affect your code.
 
-@import url('http://fonts.googleapis.com/css?family=Roboto+Slab:300,400,700&display=swap');
-
 body {
-  background-color: #f2f2f2;
+  background-color: #f2efef;
   font-family: 'Roboto Slab', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: calc(100vh);
+  height: 100%;
 }
 
 a {
@@ -16,6 +14,11 @@ a {
 
 a:active {
   color: #c56c24;
+}
+
+.btn {
+  text-transform: uppercase;
+  font-weight: 700;
 }
 
 .btn-link {
@@ -28,13 +31,24 @@ a:active {
 }
 
 .btn-primary {
-  background-color: #005e81;
-  border-color: #005e81;
+  background-color: $ma-dark-blue;
+  border-color: $ma-dark-blue;
 }
 
 .btn-primary:hover {
   background-color: #c56c24;
   border-color: #c56c24;
+}
+
+.btn-success, .btn-success:disabled {
+  background-color: #c56c24;
+  border-color: #c56c24;
+  color: #fff;
+}
+
+.btn-success:hover {
+  background-color: lighten($ma-primary-orange, 10%);
+  border-color: lighten($ma-primary-orange, 10%);
 }
 
 .btn-primary.disabled,
@@ -45,6 +59,23 @@ a:active {
 
 .btn-success {
   color: #fff;
+}
+
+.footer {
+  font-size: 14px;
+  color: #ffffff;
+  background-color: $ma-dark-blue;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.autocomplete-container, .autocomplete-container .input-container input {
+  height: calc(1.5em + 0.75rem + 2px) !important;
+  box-shadow: none !important;
+  border: 1px solid #e9ecef;
+  border-radius: 2px;
 }
 
 .ngx-datatable .datatable-header {

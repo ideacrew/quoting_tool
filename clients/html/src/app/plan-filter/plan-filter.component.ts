@@ -57,12 +57,17 @@ export class PlanFilterComponent implements OnInit {
   selectedHSAs = [];
   filterCarriersResults = [];
   filterKeysSelected = [];
+  planPremiumsFrom: any;
+  planPremiumsTo: any;
+  yearlyMedicalDeductibleFrom: any;
+  yearlyMedicalDeductibleTo: any;
   html2PDF = html2PDF;
   public pdfView = false;
   public btnName: string;
   public btnLink: string;
   public isLoading: boolean;
   public showPlansTable = false;
+  selected = -1;
 
   private sponsorRoster: Array<RosterEntry> = [];
   public planFilter: PackageTypes | null;
@@ -111,13 +116,15 @@ export class PlanFilterComponent implements OnInit {
     if (this.employerDetails) {
       const consumer = this;
       this.isLoading = true;
+      const startDate = new Date(2020, 1, 1);
       this.planService.getPlansFor(
         this,
         this.employerDetails['sic']['standardIndustryCodeCode'],
-        new Date(2020, 1, 1),
+        startDate,
         'MA',
         this.employerDetails['county']['county'],
         this.employerDetails['zip'],
+        this.planType,
         consumer
       );
       // const startDate = this.employerDetails.effectiveDate
@@ -137,7 +144,7 @@ export class PlanFilterComponent implements OnInit {
 
         consumer.sponsorRoster.push(employeeJson);
       });
-      const startDate = new Date(2019, 6, 1);
+
       this.tieredContributionModel = defaultTieredContributionModel();
       this.tieredCalculator = this.calculator(startDate, this.tieredContributionModel, true);
       this.relationshipContributionModel = defaultRelationshipContributionModel();
@@ -301,78 +308,63 @@ export class PlanFilterComponent implements OnInit {
   }
 
   filterCarriers() {
+    const plans = this.filteredCarriers;
     const tempArray = [];
-    const multiArray = [];
-    this.filteredCarriers.map((plan) => {
-      // Filters by Carriers & Metal Levels
-      if (this.selectedInsuranceCompanies.length > 0 && this.selectedMetalLevels.length > 0) {
-        this.selectedInsuranceCompanies
-          .map((carrier) => {
-            if (carrier === plan['product_information']['provider_name']) {
-              multiArray.push(plan);
-            }
-          })
-          .map(() => {
-            [...this.selectedMetalLevels].filter((ml) => {
-              multiArray.filter((array) => array['product_information']['metal_level'] === ml);
-            });
-          });
-      }
-      // Filters by Carriers & Plan Type
-      if (this.selectedInsuranceCompanies.length > 0 && this.selectedProductTypes.length > 0) {
-        this.selectedInsuranceCompanies
-          .map((carrier) => {
-            if (carrier === plan['product_information']['provider_name']) {
-              multiArray.push(plan);
-            }
-          })
-          .map(() => {
-            [...this.selectedProductTypes].filter((product) => {
-              multiArray.filter((array) => array['product_information']['product_type'] === product);
-            });
-          });
-      }
-      // Filters by Metal Levels
-      if (this.selectedMetalLevels.length > 0 && this.selectedInsuranceCompanies.length === 0) {
-        this.selectedMetalLevels.filter((metalLevel) => {
-          if (plan['product_information']['metal_level']) {
-            if (metalLevel === plan['product_information']['metal_level']) {
-              tempArray.push(plan);
-            }
-          }
-        });
-      }
-      // Filters by Product Types
-      if (this.selectedProductTypes.length > 0) {
-        this.selectedProductTypes.filter((product) => {
-          if (product === plan['product_information']['product_type']) {
-            tempArray.push(plan);
-          }
-        });
-      }
-      // Filters by Carriers
-      if (this.selectedInsuranceCompanies.length > 0 && this.selectedMetalLevels.length === 0) {
-        this.selectedInsuranceCompanies.filter((carrier) => {
-          if (carrier === plan['product_information']['provider_name']) {
-            tempArray.push(plan);
-          }
-        });
-      }
-      // Filters by HSA
-      if (this.selectedHSAs) {
-        this.selectedHSAs.filter((hsa) => {
-          if (hsa === plan['product_information']['hsa_eligible']) {
-            tempArray.push(plan);
-          }
-        });
-      }
+    [...this.selectedMetalLevels].map(metalLevel => {
+      tempArray.push(plans.filter(plan => plan['product_information']['metal_level'] === metalLevel));
     });
-    // Passes results to the array
-    if (multiArray.length > 0) {
-      this.filterCarriersResults = multiArray;
-    } else {
-      this.filterCarriersResults = tempArray;
+    [...this.selectedProductTypes].map(productType => {
+      tempArray.push(plans.filter(plan => plan['product_information']['product_type'] === productType));
+    });
+    [...this.selectedHSAs].map(hsa => {
+      tempArray.push(plans.filter(plan => plan['product_information']['hsa_eligible'] === hsa));
+    });
+
+    if (this.yearlyMedicalDeductibleFrom && !this.yearlyMedicalDeductibleTo) {
+       tempArray.push(plans.filter(plan => parseInt(plan['product_information']['deductible']
+        .replace('$', '').replace(',', ''), 0) >= this.yearlyMedicalDeductibleTo));
     }
+
+    if (!this.yearlyMedicalDeductibleFrom && this.yearlyMedicalDeductibleTo) {
+       tempArray.push(plans.filter(plan => parseInt(plan['product_information']['deductible']
+        .replace('$', '').replace(',', ''), 0) <= this.yearlyMedicalDeductibleTo));
+    }
+
+    if (this.yearlyMedicalDeductibleFrom && this.yearlyMedicalDeductibleTo) {
+       tempArray.push(plans.filter(plan => parseInt(plan['product_information']['deductible']
+        .replace('$', '').replace(',', ''), 0) >= this.yearlyMedicalDeductibleFrom && parseInt(plan['product_information']['deductible']
+        .replace('$', '').replace(',', ''), 0) <= this.yearlyMedicalDeductibleTo));
+    }
+
+    if (this.planPremiumsFrom && !this.planPremiumsTo) {
+       tempArray.push(plans.filter(plan => plan['total_cost'] >= this.planPremiumsFrom));
+    }
+
+    if (!this.planPremiumsFrom && this.planPremiumsTo) {
+       tempArray.push(plans.filter(plan => plan['total_cost'] <= this.planPremiumsTo));
+    }
+
+    if (this.planPremiumsFrom && this.planPremiumsTo) {
+       tempArray.push(plans.filter(plan => plan['total_cost']
+        >= this.planPremiumsFrom && plan['total_cost']
+        <= this.planPremiumsTo));
+    }
+
+    let resultsArray = [].concat.apply([], tempArray)
+      .reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
+
+    if (this.selectedInsuranceCompanies.length > 0) {
+      [this.selectedInsuranceCompanies].map(providerName => {
+        if (resultsArray.length > 0) {
+          resultsArray = resultsArray.filter(plan => plan['product_information']['provider_name'] === providerName.toString());
+        } else {
+          resultsArray = plans.filter(plan => plan['product_information']['provider_name'] === providerName.toString());
+        }
+        return resultsArray;
+      });
+    }
+
+    this.filterCarriersResults = resultsArray;
   }
 
   displayResults() {
@@ -388,6 +380,10 @@ export class PlanFilterComponent implements OnInit {
     this.selectedInsuranceCompanies = [];
     this.filterCarriersResults = [];
     this.filterKeysSelected = [];
+    this.yearlyMedicalDeductibleFrom = '';
+    this.yearlyMedicalDeductibleTo = '';
+    this.planPremiumsFrom = '';
+    this.planPremiumsTo = '';
 
     const checkboxes = document.getElementsByClassName('checkbox-input');
     for (let i = 0; i < checkboxes.length; i++) {
@@ -443,5 +439,13 @@ export class PlanFilterComponent implements OnInit {
   sortData(kind) {
     this.sortKind = kind;
     this.sortDirection = !this.sortDirection;
+  }
+
+  validateNumber(event) {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
   }
 }
