@@ -50,7 +50,8 @@ module Operations
           group_size_factors: group_size_factors(qhp.active_year, qhp.issuer_id),
           group_tier_factors: group_tier_factors(qhp.active_year, qhp.issuer_id),
           participation_factors: participation_factors(qhp.active_year, qhp.issuer_id),
-          hsa_eligible: qhp.hsa_eligibility
+          hsa_eligible: qhp.hsa_eligibility,
+          out_of_pocket_in_network: out_of_pocket_in_network(cost_share_variance)
         }
 
         attrs = if is_health_product?
@@ -178,6 +179,10 @@ module Operations
 
     def preventive_dental_services(variance)
       variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:preventive_dental_services]).first.co_insurance_in_network_tier_1
+    end
+
+    def out_of_pocket_in_network(variance)
+      variance.qhp_maximum_out_of_pockets.first.in_network_tier_1_family_amount
     end
 
     def retrieve_metal_level

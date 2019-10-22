@@ -17,7 +17,7 @@ class ProductSerializer
     "82569" => "BMC HealthNet Plan"
   }
 
-  attributes :deductible, :name, :group_size_factors, :group_tier_factors, :participation_factors, :hsa_eligible
+  attributes :deductible, :name, :group_size_factors, :group_tier_factors, :participation_factors, :hsa_eligible, :out_of_pocket_in_network
 
   attribute :available_packages, &:product_package_kinds
   attribute :group_deductible, &:family_deductible

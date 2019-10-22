@@ -295,7 +295,7 @@
                 </span>
               </td>
               <td>{{ carrier['group_deductible'] }}</td>
-              <td>{{ carrier['maximum_member_cost'] | number: '1.2-2' }}</td>
+              <td>{{ carrier['product_information']['out_of_pocket_in_network'] }}</td>
               <td *ngIf="this.planFilter == 'single_product'">
                 <p class="mb-0">
                   <strong>Individual -</strong>
