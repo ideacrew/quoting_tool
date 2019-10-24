@@ -58,10 +58,10 @@ export class EmployerDetailsComponent implements OnInit {
   public show: boolean;
 
   relationOptions = [
-    { key: 'spouse', value: 'Spouse' },
-    { key: 'domestic partner', value: 'Domestic Partner' },
-    { key: 'child', value: 'Child' },
-    { key: 'disabled child', value: 'Disabled Child' }
+    { key: 'Spouse', value: 'Spouse' },
+    { key: 'Domestic Partner', value: 'Domestic Partner' },
+    { key: 'Child', value: 'Child' },
+    { key: 'Child', value: 'Disabled Child' }
   ];
 
   config = {
@@ -141,7 +141,6 @@ export class EmployerDetailsComponent implements OnInit {
     if (this.todaysDate.getMonth() + 1 > 11) {
       // Add next year date if next month is January
       this.effectiveDateOptions = [
-        { month: -1, value: 'SELECT DATE', disabled: true },
         {
           month: this.todaysDate.getMonth(),
           value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}`

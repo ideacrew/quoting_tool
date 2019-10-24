@@ -6,7 +6,10 @@ module Operations
       pcp: "Primary Care Visit to Treat an Injury or Illness",
       emeergency_stay: "Emergency Room Services",
       hospital_stay: "Inpatient Hospital Services (e.g., Hospital Stay)",
-      rx: "Generic Drugs"
+      rx: "Generic Drugs",
+      basic_dental_services: "Basic Dental Care - Adult",
+      major_dental_services: "Major Dental Care - Adult",
+      preventive_dental_services: "Routine Dental Services (Adult)"
     }
 
     TF_NAME_MAP = {
@@ -47,19 +50,19 @@ module Operations
           group_size_factors: group_size_factors(qhp.active_year, qhp.issuer_id),
           group_tier_factors: group_tier_factors(qhp.active_year, qhp.issuer_id),
           participation_factors: participation_factors(qhp.active_year, qhp.issuer_id),
-          hsa_eligible: qhp.hsa_eligibility
+          hsa_eligible: qhp.hsa_eligibility,
+          out_of_pocket_in_network: out_of_pocket_in_network(cost_share_variance)
         }
 
         attrs = if is_health_product?
-          variance = qhp.qhp_cost_share_variances.first
           info = health_data_map[[hios_base_id, qhp.active_year]] || {}
           {
             health_plan_kind: qhp.plan_type.downcase,
             ehb: qhp.ehb_percent_premium.present? ? qhp.ehb_percent_premium : 1.0,
-            pcp_in_network_copay: pcp_in_network_copay(variance),
-            hospital_stay_in_network_copay: hospital_stay_in_network_copay(variance),
-            emergency_in_network_copay: emergency_in_network_copay(variance),
-            drug_in_network_copay: drug_in_network_copay(variance),
+            pcp_in_network_copay: pcp_in_network_copay(cost_share_variance),
+            hospital_stay_in_network_copay: hospital_stay_in_network_copay(cost_share_variance),
+            emergency_in_network_copay: emergency_in_network_copay(cost_share_variance),
+            drug_in_network_copay: drug_in_network_copay(cost_share_variance),
             is_standard_plan: info[:is_standard_plan],
             network_information: info[:network_information],
             title: (info[:title] || cost_share_variance.plan_marketing_name.squish!),
@@ -76,7 +79,10 @@ module Operations
             is_standard_plan: info[:is_standard_plan],
             network_information: info[:network_information],
             title: (info[:title] || cost_share_variance.plan_marketing_name.squish!),
-            provider_directory_url: info[:provider_directory_url]
+            provider_directory_url: info[:provider_directory_url],
+            basic_dental_services: basic_dental_services(cost_share_variance),
+            major_dental_services: major_dental_services(cost_share_variance),
+            preventive_dental_services: preventive_dental_services(cost_share_variance)
           }
         end.merge(shared_attrs)
 
@@ -160,6 +166,23 @@ module Operations
     def drug_in_network_copay(variance)
       val = variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:rx]).first.copay_in_network_tier_1
       parse_value(val)
+    end
+
+    def basic_dental_services(variance)
+      variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:basic_dental_services]).first.co_insurance_in_network_tier_1
+    end
+
+    def major_dental_services(variance)
+      visit = variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:major_dental_services]).first
+      visit.co_insurance_in_network_tier_1 if visit
+    end
+
+    def preventive_dental_services(variance)
+      variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:preventive_dental_services]).first.co_insurance_in_network_tier_1
+    end
+
+    def out_of_pocket_in_network(variance)
+      variance.qhp_maximum_out_of_pockets.first.in_network_tier_1_family_amount
     end
 
     def retrieve_metal_level

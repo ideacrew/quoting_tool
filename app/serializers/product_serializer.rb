@@ -17,7 +17,7 @@ class ProductSerializer
     "82569" => "BMC HealthNet Plan"
   }
 
-  attributes :deductible, :name, :group_size_factors, :group_tier_factors, :participation_factors, :hsa_eligible
+  attributes :deductible, :name, :group_size_factors, :group_tier_factors, :participation_factors, :hsa_eligible, :out_of_pocket_in_network
 
   attribute :available_packages, &:product_package_kinds
   attribute :group_deductible, &:family_deductible
@@ -37,6 +37,18 @@ class ProductSerializer
 
   attribute :rx do |object|
     object.health? ? object.drug_in_network_copay : nil
+  end
+
+  attribute :basic_dental_services do |object|
+    object.dental? ? object.basic_dental_services : nil
+  end
+
+  attribute :major_dental_services do |object|
+    object.dental? ? object.major_dental_services : nil
+  end
+
+  attribute :preventive_dental_services do |object|
+    object.dental? ? object.preventive_dental_services : nil
   end
 
   attribute :metal_level do |object|

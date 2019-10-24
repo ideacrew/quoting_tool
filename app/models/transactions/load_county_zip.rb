@@ -50,12 +50,12 @@ module Transactions
           return Failure({message: "Failed to create County Zip record for index #{i}"})
         end
       end
-      Success({message: "Successfully created #{input.size} County Zip records"})
+      Success({message: "Successfully created #{input[:result].size} County Zip records"})
     end
 
     def parse_text(input)
       return nil if input.nil?
-      input.squish!
+      input.to_s.squish!
     end
   end
 end

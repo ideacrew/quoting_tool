@@ -40,6 +40,8 @@ module Products
     field :participation_factors, type: Hash
     field :hsa_eligible, type: Boolean
 
+    field :out_of_pocket_in_network, type: String
+
     # embeds_one  :sbc_document, as: :documentable,
     #             :class_name => "::Document"
 
