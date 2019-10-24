@@ -28,11 +28,10 @@ export class PlanProviderService {
     kind: string,
     component
   ) {
-    const formattedDate = startDate.toISOString().substring(0, 10);
     const transformer = this.dataLoader;
     const attrs = {
       sic_code: sic_code,
-      start_date: formattedDate,
+      start_date: startDate,
       county_name: county_name,
       zip_code: zip,
       state: state,

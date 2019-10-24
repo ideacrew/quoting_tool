@@ -116,7 +116,7 @@ export class PlanFilterComponent implements OnInit {
     if (this.employerDetails) {
       const consumer = this;
       this.isLoading = true;
-      const startDate = new Date(2020, 1, 1);
+      const startDate = this.employerDetails['effectiveDate'];
       this.planService.getPlansFor(
         this,
         this.employerDetails['sic']['standardIndustryCodeCode'],
@@ -127,7 +127,6 @@ export class PlanFilterComponent implements OnInit {
         this.planType,
         consumer
       );
-      // const startDate = this.employerDetails.effectiveDate
       this.employerDetails.employees.forEach(function(employee) {
         const employeeJson = {
           dob: new Date(employee.dob),
@@ -145,10 +144,12 @@ export class PlanFilterComponent implements OnInit {
         consumer.sponsorRoster.push(employeeJson);
       });
 
+      const formattedStartDate = new Date(startDate.replace(" ", " 1, "))
+
       this.tieredContributionModel = defaultTieredContributionModel();
-      this.tieredCalculator = this.calculator(startDate, this.tieredContributionModel, true);
+      this.tieredCalculator = this.calculator(formattedStartDate, this.tieredContributionModel, true);
       this.relationshipContributionModel = defaultRelationshipContributionModel();
-      this.relationshipCalculator = this.calculator(startDate, this.relationshipContributionModel);
+      this.relationshipCalculator = this.calculator(formattedStartDate, this.relationshipContributionModel);
     }
 
     if (this.planType === 'health') {
