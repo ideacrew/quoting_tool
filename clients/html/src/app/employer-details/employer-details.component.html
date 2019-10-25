@@ -24,7 +24,8 @@
                 *ngFor="let date of effectiveDateOptions"
                 [selected]="isSelected(date)"
                 [disabled]="date.disabled"
-                >{{ date.value }}</option
+                [attr.value]="date"
+                >{{ date | date:'MMMM, y' }}</option
               >
             </select>
           </div>

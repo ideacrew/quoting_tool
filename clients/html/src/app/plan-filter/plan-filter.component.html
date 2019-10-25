@@ -4,7 +4,7 @@
       <span class="cs-text">Cost shown for</span>
       <i class="fas fa-user ml-1"></i> {{ costShownText }}
     </button>
-    Effective Date: <strong>{{ employerDetails?.effectiveDate }}</strong>
+    Effective Date: <strong>{{ employerDetails?.effectiveDate | date:'MMMM, y' }}</strong>
   </div>
   <div class="col-4">
     <div class="form-group">

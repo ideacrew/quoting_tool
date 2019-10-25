@@ -132,35 +132,17 @@ export class EmployerDetailsComponent implements OnInit {
     if (this.employeeRoster) {
       this.showEmployeeRoster = true;
       this.employerDetails = JSON.parse(this.employeeRoster);
-      this.quoteForm.get('effectiveDate').setValue(new Date(Date.parse(this.employerDetails.effectiveDate)));
+      this.quoteForm.get('effectiveDate').setValue(new Date(this.employerDetails.effectiveDate));
       this.quoteForm.get('zip').setValue(this.employerDetails.zip);
       this.quoteForm.get('sic').setValue(this.employerDetails.sic.standardIndustryCodeCode);
       this.loadEmployeesFromStorage();
     }
     // Sets effective Date options
-    if (this.todaysDate.getMonth() + 1 > 11) {
-      // Add next year date if next month is January
-      this.effectiveDateOptions = [
-        {
-          month: this.todaysDate.getMonth(),
-          value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}`
-        },
-        {
-          month: 0,
-          value: `${this.months[0]} ${this.todaysDate.getFullYear() + 1}`
-        }
-      ];
+
+    if(this.todaysDate.getDate() > 15) {
+      this.effectiveDateOptions = [new Date(this.todaysDate.getFullYear(), this.todaysDate.getMonth()+2, 1), new Date(this.todaysDate.getFullYear(), this.todaysDate.getMonth()+3, 1)]
     } else {
-      this.effectiveDateOptions = [
-        {
-          month: this.todaysDate.getMonth(),
-          value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}`
-        },
-        {
-          month: this.todaysDate.getMonth() + 1,
-          value: `${this.months[this.todaysDate.getMonth() + 1]} ${this.todaysDate.getFullYear()}`
-        }
-      ];
+      this.effectiveDateOptions = [new Date(this.todaysDate.getFullYear(), this.todaysDate.getMonth()+1, 1), new Date(this.todaysDate.getFullYear(), this.todaysDate.getMonth()+2, 1)]
     }
   }
 
@@ -185,7 +167,7 @@ export class EmployerDetailsComponent implements OnInit {
   }
 
   isSelected(date) {
-    if (this.employerDetails && date.value === this.employerDetails.effectiveDate) {
+    if (this.employerDetails && date.toString() === this.employerDetails.effectiveDate) {
       return true;
     } else {
       return false;
