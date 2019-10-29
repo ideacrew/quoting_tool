@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Transactions::LoadRatingAreas, type: :transaction do
 
-  let(:subject) {Transactions::LoadRatingAreas.new.call(file)}
+  let!(:county_zip) { FactoryBot.create(:county_zip, zip: "12345", county_name: "County 1")}
+  let!(:subject) {Transactions::LoadRatingAreas.new.call(file)}
 
   context "succesful" do
 
@@ -12,7 +13,7 @@ RSpec.describe Transactions::LoadRatingAreas, type: :transaction do
       expect(subject.success?).to eq true
     end
 
-    it "should create new county zip" do
+    it "should create new rating area" do
       expect(Locations::RatingArea.all.size).not_to eq 0
     end
 
