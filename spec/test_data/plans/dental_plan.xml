@@ -1,0 +1,936 @@
+<?xml version="1.0"?>
+<planBenefitTemplateVO xmlns="http://vo.ffe.cms.hhs.gov">
+  <packagesList>
+    <packages>
+      <header>
+        <templateVersion>v9.0</templateVersion>
+        <issuerId cellLocation="Benefits_Package_1-B.2">
+          <cellValue>11111</cellValue>
+        </issuerId>
+        <statePostalCode cellLocation="Benefits_Package_1-B.3">
+          <cellValue>MA</cellValue>
+        </statePostalCode>
+        <marketCoverage cellLocation="Benefits_Package_1-B.4">
+          <cellValue>SHOP (Small Group)</cellValue>
+        </marketCoverage>
+        <dentalPlanOnlyInd cellLocation="Benefits_Package_1-B.5">
+          <cellValue>Yes</cellValue>
+        </dentalPlanOnlyInd>
+        <tin cellLocation="Benefits_Package_1-B.6">
+          <cellValue>05-0513223</cellValue>
+        </tin>
+      </header>
+      <benefitsList>
+        <benefits>
+          <benefitTypeCode cellLocation="Benefits_Package_1-A.67">
+            <cellValue>Routine Dental Services (Adult)</cellValue>
+          </benefitTypeCode>
+          <isEHB cellLocation="Benefits_Package_1-C.67">
+            <cellValue/>
+          </isEHB>
+          <isBenefitCovered cellLocation="Benefits_Package_1-D.67">
+            <cellValue>Covered</cellValue>
+          </isBenefitCovered>
+          <serviceLimit cellLocation="Benefits_Package_1-E.67">
+            <cellValue>Yes</cellValue>
+          </serviceLimit>
+          <quantityLimit cellLocation="Benefits_Package_1-F.67">
+            <cellValue>2</cellValue>
+          </quantityLimit>
+          <unitLimit cellLocation="Benefits_Package_1-G.67">
+            <cellValue>Visit(s) per Year</cellValue>
+          </unitLimit>
+          <exclusion cellLocation="Benefits_Package_1-H.67">
+            <cellValue>subject to time &amp; frequency limitations</cellValue>
+          </exclusion>
+          <explanation cellLocation="Benefits_Package_1-I.67">
+            <cellValue>Routine exams &amp; cleanings. Benefit limit varies based upon procedure. Subject to Annual Maximum of $1,250</cellValue>
+          </explanation>
+          <ehbVarianceReason cellLocation="Benefits_Package_1-J.67">
+            <cellValue>Not EHB</cellValue>
+          </ehbVarianceReason>
+          <excludedInNetworkMOOP cellLocation="Benefits_Package_1-K.67">
+            <cellValue>Yes</cellValue>
+          </excludedInNetworkMOOP>
+          <excludedOutOfNetworkMOOP cellLocation="Benefits_Package_1-L.67">
+            <cellValue>Yes</cellValue>
+          </excludedOutOfNetworkMOOP>
+        </benefits>
+        <benefits>
+          <benefitTypeCode cellLocation="Benefits_Package_1-A.103">
+            <cellValue>Dental Check-Up for Children</cellValue>
+          </benefitTypeCode>
+          <isEHB cellLocation="Benefits_Package_1-C.103">
+            <cellValue>Yes</cellValue>
+          </isEHB>
+          <isBenefitCovered cellLocation="Benefits_Package_1-D.103">
+            <cellValue>Covered</cellValue>
+          </isBenefitCovered>
+          <serviceLimit cellLocation="Benefits_Package_1-E.103">
+            <cellValue>Yes</cellValue>
+          </serviceLimit>
+          <quantityLimit cellLocation="Benefits_Package_1-F.103">
+            <cellValue>2</cellValue>
+          </quantityLimit>
+          <unitLimit cellLocation="Benefits_Package_1-G.103">
+            <cellValue>Visit(s) per Year</cellValue>
+          </unitLimit>
+          <exclusion cellLocation="Benefits_Package_1-H.103">
+            <cellValue/>
+          </exclusion>
+          <explanation cellLocation="Benefits_Package_1-I.103">
+            <cellValue>Oral exams, cleanings, fluoide limited to twice in 12 months. In addition, comprehensive exams are covered once per member per provider</cellValue>
+          </explanation>
+          <ehbVarianceReason cellLocation="Benefits_Package_1-J.103">
+            <cellValue>Substantially Equal</cellValue>
+          </ehbVarianceReason>
+          <excludedInNetworkMOOP cellLocation="Benefits_Package_1-K.103">
+            <cellValue>No</cellValue>
+          </excludedInNetworkMOOP>
+          <excludedOutOfNetworkMOOP cellLocation="Benefits_Package_1-L.103">
+            <cellValue>Yes</cellValue>
+          </excludedOutOfNetworkMOOP>
+        </benefits>
+        <benefits>
+          <benefitTypeCode cellLocation="Benefits_Package_1-A.109">
+            <cellValue>Basic Dental Care - Child</cellValue>
+          </benefitTypeCode>
+          <isEHB cellLocation="Benefits_Package_1-C.109">
+            <cellValue>Yes</cellValue>
+          </isEHB>
+          <isBenefitCovered cellLocation="Benefits_Package_1-D.109">
+            <cellValue>Covered</cellValue>
+          </isBenefitCovered>
+          <serviceLimit cellLocation="Benefits_Package_1-E.109">
+            <cellValue>No</cellValue>
+          </serviceLimit>
+          <quantityLimit cellLocation="Benefits_Package_1-F.109">
+            <cellValue/>
+          </quantityLimit>
+          <unitLimit cellLocation="Benefits_Package_1-G.109">
+            <cellValue/>
+          </unitLimit>
+          <exclusion cellLocation="Benefits_Package_1-H.109">
+            <cellValue>subject to time &amp; frequency limitations</cellValue>
+          </exclusion>
+          <explanation cellLocation="Benefits_Package_1-I.109">
+            <cellValue/>
+          </explanation>
+          <ehbVarianceReason cellLocation="Benefits_Package_1-J.109">
+            <cellValue>Additional EHB Benefit</cellValue>
+          </ehbVarianceReason>
+          <excludedInNetworkMOOP cellLocation="Benefits_Package_1-K.109">
+            <cellValue>No</cellValue>
+          </excludedInNetworkMOOP>
+          <excludedOutOfNetworkMOOP cellLocation="Benefits_Package_1-L.109">
+            <cellValue>Yes</cellValue>
+          </excludedOutOfNetworkMOOP>
+        </benefits>
+        <benefits>
+          <benefitTypeCode cellLocation="Benefits_Package_1-A.110">
+            <cellValue>Orthodontia - Child</cellValue>
+          </benefitTypeCode>
+          <isEHB cellLocation="Benefits_Package_1-C.110">
+            <cellValue/>
+          </isEHB>
+          <isBenefitCovered cellLocation="Benefits_Package_1-D.110">
+            <cellValue>Covered</cellValue>
+          </isBenefitCovered>
+          <serviceLimit cellLocation="Benefits_Package_1-E.110">
+            <cellValue>No</cellValue>
+          </serviceLimit>
+          <quantityLimit cellLocation="Benefits_Package_1-F.110">
+            <cellValue/>
+          </quantityLimit>
+          <unitLimit cellLocation="Benefits_Package_1-G.110">
+            <cellValue/>
+          </unitLimit>
+          <exclusion cellLocation="Benefits_Package_1-H.110">
+            <cellValue>elective ortho</cellValue>
+          </exclusion>
+          <explanation cellLocation="Benefits_Package_1-I.110">
+            <cellValue>Prior authorization required</cellValue>
+          </explanation>
+          <ehbVarianceReason cellLocation="Benefits_Package_1-J.110">
+            <cellValue>Additional EHB Benefit</cellValue>
+          </ehbVarianceReason>
+          <excludedInNetworkMOOP cellLocation="Benefits_Package_1-K.110">
+            <cellValue>No</cellValue>
+          </excludedInNetworkMOOP>
+          <excludedOutOfNetworkMOOP cellLocation="Benefits_Package_1-L.110">
+            <cellValue>Yes</cellValue>
+          </excludedOutOfNetworkMOOP>
+        </benefits>
+        <benefits>
+          <benefitTypeCode cellLocation="Benefits_Package_1-A.111">
+            <cellValue>Major Dental Care - Child</cellValue>
+          </benefitTypeCode>
+          <isEHB cellLocation="Benefits_Package_1-C.111">
+            <cellValue>Yes</cellValue>
+          </isEHB>
+          <isBenefitCovered cellLocation="Benefits_Package_1-D.111">
+            <cellValue>Covered</cellValue>
+          </isBenefitCovered>
+          <serviceLimit cellLocation="Benefits_Package_1-E.111">
+            <cellValue>No</cellValue>
+          </serviceLimit>
+          <quantityLimit cellLocation="Benefits_Package_1-F.111">
+            <cellValue/>
+          </quantityLimit>
+          <unitLimit cellLocation="Benefits_Package_1-G.111">
+            <cellValue/>
+          </unitLimit>
+          <exclusion cellLocation="Benefits_Package_1-H.111">
+            <cellValue>subject to time &amp; frequency limitations</cellValue>
+          </exclusion>
+          <explanation cellLocation="Benefits_Package_1-I.111">
+            <cellValue/>
+          </explanation>
+          <ehbVarianceReason cellLocation="Benefits_Package_1-J.111">
+            <cellValue>Additional EHB Benefit</cellValue>
+          </ehbVarianceReason>
+          <excludedInNetworkMOOP cellLocation="Benefits_Package_1-K.111">
+            <cellValue>No</cellValue>
+          </excludedInNetworkMOOP>
+          <excludedOutOfNetworkMOOP cellLocation="Benefits_Package_1-L.111">
+            <cellValue>Yes</cellValue>
+          </excludedOutOfNetworkMOOP>
+        </benefits>
+        <benefits>
+          <benefitTypeCode cellLocation="Benefits_Package_1-A.112">
+            <cellValue>Basic Dental Care - Adult</cellValue>
+          </benefitTypeCode>
+          <isEHB cellLocation="Benefits_Package_1-C.112">
+            <cellValue/>
+          </isEHB>
+          <isBenefitCovered cellLocation="Benefits_Package_1-D.112">
+            <cellValue>Covered</cellValue>
+          </isBenefitCovered>
+          <serviceLimit cellLocation="Benefits_Package_1-E.112">
+            <cellValue>No</cellValue>
+          </serviceLimit>
+          <quantityLimit cellLocation="Benefits_Package_1-F.112">
+            <cellValue/>
+          </quantityLimit>
+          <unitLimit cellLocation="Benefits_Package_1-G.112">
+            <cellValue/>
+          </unitLimit>
+          <exclusion cellLocation="Benefits_Package_1-H.112">
+            <cellValue>subject to time &amp; frequency limitations</cellValue>
+          </exclusion>
+          <explanation cellLocation="Benefits_Package_1-I.112">
+            <cellValue>Benefit limit varies based upon procedure. Subject to Annual Maximum of $1,250</cellValue>
+          </explanation>
+          <ehbVarianceReason cellLocation="Benefits_Package_1-J.112">
+            <cellValue>Not EHB</cellValue>
+          </ehbVarianceReason>
+          <excludedInNetworkMOOP cellLocation="Benefits_Package_1-K.112">
+            <cellValue>Yes</cellValue>
+          </excludedInNetworkMOOP>
+          <excludedOutOfNetworkMOOP cellLocation="Benefits_Package_1-L.112">
+            <cellValue>Yes</cellValue>
+          </excludedOutOfNetworkMOOP>
+        </benefits>
+        <benefits>
+          <benefitTypeCode cellLocation="Benefits_Package_1-A.113">
+            <cellValue>Orthodontia - Adult</cellValue>
+          </benefitTypeCode>
+          <isEHB cellLocation="Benefits_Package_1-C.113">
+            <cellValue/>
+          </isEHB>
+          <isBenefitCovered cellLocation="Benefits_Package_1-D.113">
+            <cellValue>Not Covered</cellValue>
+          </isBenefitCovered>
+          <serviceLimit cellLocation="Benefits_Package_1-E.113">
+            <cellValue/>
+          </serviceLimit>
+          <quantityLimit cellLocation="Benefits_Package_1-F.113">
+            <cellValue/>
+          </quantityLimit>
+          <unitLimit cellLocation="Benefits_Package_1-G.113">
+            <cellValue/>
+          </unitLimit>
+          <exclusion cellLocation="Benefits_Package_1-H.113">
+            <cellValue/>
+          </exclusion>
+          <explanation cellLocation="Benefits_Package_1-I.113">
+            <cellValue/>
+          </explanation>
+          <ehbVarianceReason cellLocation="Benefits_Package_1-J.113">
+            <cellValue/>
+          </ehbVarianceReason>
+          <excludedInNetworkMOOP cellLocation="Benefits_Package_1-K.113">
+            <cellValue/>
+          </excludedInNetworkMOOP>
+          <excludedOutOfNetworkMOOP cellLocation="Benefits_Package_1-L.113">
+            <cellValue/>
+          </excludedOutOfNetworkMOOP>
+        </benefits>
+        <benefits>
+          <benefitTypeCode cellLocation="Benefits_Package_1-A.114">
+            <cellValue>Major Dental Care - Adult</cellValue>
+          </benefitTypeCode>
+          <isEHB cellLocation="Benefits_Package_1-C.114">
+            <cellValue/>
+          </isEHB>
+          <isBenefitCovered cellLocation="Benefits_Package_1-D.114">
+            <cellValue>Covered</cellValue>
+          </isBenefitCovered>
+          <serviceLimit cellLocation="Benefits_Package_1-E.114">
+            <cellValue>No</cellValue>
+          </serviceLimit>
+          <quantityLimit cellLocation="Benefits_Package_1-F.114">
+            <cellValue/>
+          </quantityLimit>
+          <unitLimit cellLocation="Benefits_Package_1-G.114">
+            <cellValue/>
+          </unitLimit>
+          <exclusion cellLocation="Benefits_Package_1-H.114">
+            <cellValue>subject to time &amp; frequency limitations</cellValue>
+          </exclusion>
+          <explanation cellLocation="Benefits_Package_1-I.114">
+            <cellValue>Benefit limit varies based upon procedure. Subject to Annual Maximum of $1,250</cellValue>
+          </explanation>
+          <ehbVarianceReason cellLocation="Benefits_Package_1-J.114">
+            <cellValue>Not EHB</cellValue>
+          </ehbVarianceReason>
+          <excludedInNetworkMOOP cellLocation="Benefits_Package_1-K.114">
+            <cellValue>Yes</cellValue>
+          </excludedInNetworkMOOP>
+          <excludedOutOfNetworkMOOP cellLocation="Benefits_Package_1-L.114">
+            <cellValue>Yes</cellValue>
+          </excludedOutOfNetworkMOOP>
+        </benefits>
+        <benefits>
+          <benefitTypeCode cellLocation="Benefits_Package_1-A.117">
+            <cellValue>Accidental Dental</cellValue>
+          </benefitTypeCode>
+          <isEHB cellLocation="Benefits_Package_1-C.117">
+            <cellValue/>
+          </isEHB>
+          <isBenefitCovered cellLocation="Benefits_Package_1-D.117">
+            <cellValue>Not Covered</cellValue>
+          </isBenefitCovered>
+          <serviceLimit cellLocation="Benefits_Package_1-E.117">
+            <cellValue/>
+          </serviceLimit>
+          <quantityLimit cellLocation="Benefits_Package_1-F.117">
+            <cellValue/>
+          </quantityLimit>
+          <unitLimit cellLocation="Benefits_Package_1-G.117">
+            <cellValue/>
+          </unitLimit>
+          <exclusion cellLocation="Benefits_Package_1-H.117">
+            <cellValue/>
+          </exclusion>
+          <explanation cellLocation="Benefits_Package_1-I.117">
+            <cellValue/>
+          </explanation>
+          <ehbVarianceReason cellLocation="Benefits_Package_1-J.117">
+            <cellValue/>
+          </ehbVarianceReason>
+          <excludedInNetworkMOOP cellLocation="Benefits_Package_1-K.117">
+            <cellValue/>
+          </excludedInNetworkMOOP>
+          <excludedOutOfNetworkMOOP cellLocation="Benefits_Package_1-L.117">
+            <cellValue/>
+          </excludedOutOfNetworkMOOP>
+        </benefits>
+      </benefitsList>
+      <plansList>
+        <plans>
+          <planAttributes>
+            <standardComponentID cellLocation="Benefits_Package_1-A.9">
+              <cellValue>11111MA0010002</cellValue>
+            </standardComponentID>
+            <planMarketingName cellLocation="Benefits_Package_1-B.9">
+              <cellValue>Altus Dental High Plan</cellValue>
+            </planMarketingName>
+            <hiosProductID cellLocation="Benefits_Package_1-C.9">
+              <cellValue>11111MA001</cellValue>
+            </hiosProductID>
+            <hpid cellLocation="Benefits_Package_1-D.9">
+              <cellValue/>
+            </hpid>
+            <networkID cellLocation="Benefits_Package_1-E.9">
+              <cellValue>MAN001</cellValue>
+            </networkID>
+            <serviceAreaID cellLocation="Benefits_Package_1-F.9">
+              <cellValue>MAS001</cellValue>
+            </serviceAreaID>
+            <formularyID cellLocation="Benefits_Package_1-G.9">
+              <cellValue/>
+            </formularyID>
+            <isNewPlan cellLocation="Benefits_Package_1-H.9">
+              <cellValue>Existing</cellValue>
+            </isNewPlan>
+            <planType cellLocation="Benefits_Package_1-I.9">
+              <cellValue>PPO</cellValue>
+            </planType>
+            <metalLevel cellLocation="Benefits_Package_1-J.9">
+              <cellValue>High</cellValue>
+            </metalLevel>
+            <planDesignType cellLocation="Benefits_Package_1-K.9">
+              <cellValue>Not Applicable</cellValue>
+            </planDesignType>
+            <uniquePlanDesign cellLocation="Benefits_Package_1-L.9">
+              <cellValue/>
+            </uniquePlanDesign>
+            <qhpOrNonQhp cellLocation="Benefits_Package_1-M.9">
+              <cellValue>Both</cellValue>
+            </qhpOrNonQhp>
+            <insurancePlanPregnancyNoticeReqInd cellLocation="Benefits_Package_1-N.9">
+              <cellValue/>
+            </insurancePlanPregnancyNoticeReqInd>
+            <isSpecialistReferralRequired cellLocation="Benefits_Package_1-O.9">
+              <cellValue/>
+            </isSpecialistReferralRequired>
+            <healthCareSpecialistReferralType cellLocation="Benefits_Package_1-P.9">
+              <cellValue/>
+            </healthCareSpecialistReferralType>
+            <insurancePlanBenefitExclusionText cellLocation="Benefits_Package_1-Q.9">
+              <cellValue/>
+            </insurancePlanBenefitExclusionText>
+            <indianPlanVariation cellLocation="Benefits_Package_1-R.9">
+              <cellValue/>
+            </indianPlanVariation>
+            <insurancePlanCompositePremiumAvailableIndicator cellLocation="Benefits_Package_1-S.9">
+              <cellValue>No</cellValue>
+            </insurancePlanCompositePremiumAvailableIndicator>
+            <childOnlyOffering cellLocation="Benefits_Package_1-T.9">
+              <cellValue>Allows Adult and Child-Only</cellValue>
+            </childOnlyOffering>
+            <childOnlyPlanID cellLocation="Benefits_Package_1-U.9">
+              <cellValue/>
+            </childOnlyPlanID>
+            <isWellnessProgramOffered cellLocation="Benefits_Package_1-V.9">
+              <cellValue/>
+            </isWellnessProgramOffered>
+            <isDiseaseMgmtProgramsOffered cellLocation="Benefits_Package_1-W.9">
+              <cellValue/>
+            </isDiseaseMgmtProgramsOffered>
+            <ehbPercentPremium cellLocation="Benefits_Package_1-X.9">
+              <cellValue/>
+            </ehbPercentPremium>
+            <ehbApportionmentForPediatricDental cellLocation="Benefits_Package_1-Y.9">
+              <cellValue>1</cellValue>
+            </ehbApportionmentForPediatricDental>
+            <guaranteedVsEstimatedRate cellLocation="Benefits_Package_1-Z.9">
+              <cellValue>Guaranteed Rate </cellValue>
+            </guaranteedVsEstimatedRate>
+            <planEffectiveDate cellLocation="Benefits_Package_1-AA.9">
+              <cellValue>1/1/2020</cellValue>
+            </planEffectiveDate>
+            <planExpirationDate cellLocation="Benefits_Package_1-AB.9">
+              <cellValue/>
+            </planExpirationDate>
+            <outOfCountryCoverage cellLocation="Benefits_Package_1-AC.9">
+              <cellValue>No</cellValue>
+            </outOfCountryCoverage>
+            <outOfCountryCoverageDescription cellLocation="Benefits_Package_1-AD.9">
+              <cellValue/>
+            </outOfCountryCoverageDescription>
+            <outOfServiceAreaCoverage cellLocation="Benefits_Package_1-AE.9">
+              <cellValue>Yes</cellValue>
+            </outOfServiceAreaCoverage>
+            <outOfServiceAreaCoverageDescription cellLocation="Benefits_Package_1-AF.9">
+              <cellValue>National Network</cellValue>
+            </outOfServiceAreaCoverageDescription>
+            <nationalNetwork cellLocation="Benefits_Package_1-AG.9">
+              <cellValue>Yes</cellValue>
+            </nationalNetwork>
+            <enrollmentPaymentURL cellLocation="Benefits_Package_1-AH.9">
+              <cellValue/>
+            </enrollmentPaymentURL>
+          </planAttributes>
+          <costShareVariancesList>
+            <costShareVariance>
+              <planId cellLocation="Cost_Share_Variances_1-A.4">
+                <cellValue>11111MA0010002-00</cellValue>
+              </planId>
+              <planVariantMarketingName cellLocation="Cost_Share_Variances_1-B.4">
+                <cellValue>Altus Dental High Plan</cellValue>
+              </planVariantMarketingName>
+              <metalLevel cellLocation="Cost_Share_Variances_1-C.4">
+                <cellValue>High</cellValue>
+              </metalLevel>
+              <csrVariationType cellLocation="Cost_Share_Variances_1-D.4">
+                <cellValue>Standard High Off Exchange Plan</cellValue>
+              </csrVariationType>
+              <medicalAndDrugDeductiblesIntegrated cellLocation="Cost_Share_Variances_1-G.4">
+                <cellValue/>
+              </medicalAndDrugDeductiblesIntegrated>
+              <medicalAndDrugMaxOutOfPocketIntegrated cellLocation="Cost_Share_Variances_1-H.4">
+                <cellValue/>
+              </medicalAndDrugMaxOutOfPocketIntegrated>
+              <multipleProviderTiers cellLocation="Cost_Share_Variances_1-I.4">
+                <cellValue>No</cellValue>
+              </multipleProviderTiers>
+              <firstTierUtilization cellLocation="Cost_Share_Variances_1-J.4">
+                <cellValue>100%</cellValue>
+              </firstTierUtilization>
+              <secondTierUtilization cellLocation="Cost_Share_Variances_1-K.4">
+                <cellValue/>
+              </secondTierUtilization>
+              <hsa>
+                <hsaEligibility cellLocation="Cost_Share_Variances_1-BZ.4">
+                  <cellValue/>
+                </hsaEligibility>
+                <employerHSAHRAContributionIndicator cellLocation="Cost_Share_Variances_1-CA.4">
+                  <cellValue/>
+                </employerHSAHRAContributionIndicator>
+                <empContributionAmountForHSAOrHRA cellLocation="Cost_Share_Variances_1-CB.4">
+                  <cellValue/>
+                </empContributionAmountForHSAOrHRA>
+              </hsa>
+              <url>
+                <summaryBenefitAndCoverageURL cellLocation="Cost_Share_Variances_1-CC.4">
+                  <cellValue>https://www.altusdental.com/Content/docs/Form_AD200-GRPX_(MA)_High_Plan.pdf</cellValue>
+                </summaryBenefitAndCoverageURL>
+                <planBrochure cellLocation="Cost_Share_Variances_1-CD.4">
+                  <cellValue>https://www.altusdental.com/Content/MAConnector</cellValue>
+                </planBrochure>
+              </url>
+              <moopList>
+                <moop>
+                  <name cellLocation="Cost_Share_Variances_1-AN.1">
+                    <cellValue>Maximum Out of Pocket for Medical EHB Benefits</cellValue>
+                  </name>
+                  <inNetworkTier1IndividualAmount cellLocation="Cost_Share_Variances_1-AN.4">
+                    <cellValue>$350</cellValue>
+                  </inNetworkTier1IndividualAmount>
+                  <inNetworkTier1FamilyAmount cellLocation="Cost_Share_Variances_1-AO.4">
+                    <cellValue>$350 per person | $700 per group</cellValue>
+                  </inNetworkTier1FamilyAmount>
+                  <outOfNetworkIndividualAmount cellLocation="Cost_Share_Variances_1-AR.4">
+                    <cellValue>Not Applicable</cellValue>
+                  </outOfNetworkIndividualAmount>
+                  <outOfNetworkFamilyAmount cellLocation="Cost_Share_Variances_1-AS.4">
+                    <cellValue>per person not applicable | per group not applicable</cellValue>
+                  </outOfNetworkFamilyAmount>
+                  <combinedInOutNetworkIndividualAmount cellLocation="Cost_Share_Variances_1-AT.4">
+                    <cellValue>Not Applicable</cellValue>
+                  </combinedInOutNetworkIndividualAmount>
+                  <combinedInOutNetworkFamilyAmount cellLocation="Cost_Share_Variances_1-AU.4">
+                    <cellValue>per person not applicable | per group not applicable</cellValue>
+                  </combinedInOutNetworkFamilyAmount>
+                </moop>
+              </moopList>
+              <planDeductibleList>
+                <planDeductible>
+                  <deductibleType cellLocation="Cost_Share_Variances_1-BP.1">
+                    <cellValue>Medical EHB Deductible</cellValue>
+                  </deductibleType>
+                  <inNetworkTier1Individual cellLocation="Cost_Share_Variances_1-BP.4">
+                    <cellValue>$50</cellValue>
+                  </inNetworkTier1Individual>
+                  <inNetworkTier1Family cellLocation="Cost_Share_Variances_1-BQ.4">
+                    <cellValue>$50 per person | $150 per group</cellValue>
+                  </inNetworkTier1Family>
+                  <coinsuranceInNetworkTier1 cellLocation="Cost_Share_Variances_1-BR.4">
+                    <cellValue/>
+                  </coinsuranceInNetworkTier1>
+                  <outOfNetworkIndividual cellLocation="Cost_Share_Variances_1-BV.4">
+                    <cellValue>$50</cellValue>
+                  </outOfNetworkIndividual>
+                  <outOfNetworkFamily cellLocation="Cost_Share_Variances_1-BW.4">
+                    <cellValue>$50 per person | $150 per group</cellValue>
+                  </outOfNetworkFamily>
+                  <combinedInOrOutNetworkIndividual cellLocation="Cost_Share_Variances_1-BX.4">
+                    <cellValue>Not Applicable</cellValue>
+                  </combinedInOrOutNetworkIndividual>
+                  <combinedInOrOutNetworkFamily cellLocation="Cost_Share_Variances_1-BY.4">
+                    <cellValue>per person not applicable | per group not applicable</cellValue>
+                  </combinedInOrOutNetworkFamily>
+                </planDeductible>
+              </planDeductibleList>
+              <avCalculator>
+                <avCalculatorOutputNumber cellLocation="Cost_Share_Variances_1-F.4">
+                  <cellValue/>
+                </avCalculatorOutputNumber>
+                <issuerActuarialValue cellLocation="Cost_Share_Variances_1-E.4">
+                  <cellValue/>
+                </issuerActuarialValue>
+                <maximumCoinsuranceForSpecialtyDrugs cellLocation="Cost_Share_Variances_1-CE.4">
+                  <cellValue/>
+                </maximumCoinsuranceForSpecialtyDrugs>
+                <maxNumDaysForChargingInpatientCopay cellLocation="Cost_Share_Variances_1-CF.4">
+                  <cellValue/>
+                </maxNumDaysForChargingInpatientCopay>
+                <beginPrimaryCareCostSharingAfterSetNumberVisits cellLocation="Cost_Share_Variances_1-CG.4">
+                  <cellValue/>
+                </beginPrimaryCareCostSharingAfterSetNumberVisits>
+                <beginPrimaryCareDeductibleOrCoinsuranceAfterSetNumberCopays cellLocation="Cost_Share_Variances_1-CH.4">
+                  <cellValue/>
+                </beginPrimaryCareDeductibleOrCoinsuranceAfterSetNumberCopays>
+              </avCalculator>
+              <serviceVisitList>
+                <serviceVisit>
+                  <visitType cellLocation="Cost_Share_Variances_1-DJ.1">
+                    <cellValue>Routine Dental Services (Adult)</cellValue>
+                  </visitType>
+                  <copayInNetworkTier1 cellLocation="Cost_Share_Variances_1-DJ.4">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayInNetworkTier1>
+                  <copayOutOfNetwork cellLocation="Cost_Share_Variances_1-DL.4">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayOutOfNetwork>
+                  <coInsuranceInNetworkTier1 cellLocation="Cost_Share_Variances_1-DM.4">
+                    <cellValue>No Charge</cellValue>
+                  </coInsuranceInNetworkTier1>
+                  <coInsuranceOutOfNetwork cellLocation="Cost_Share_Variances_1-DO.4">
+                    <cellValue>20.00%</cellValue>
+                  </coInsuranceOutOfNetwork>
+                </serviceVisit>
+                <serviceVisit>
+                  <visitType cellLocation="Cost_Share_Variances_1-DP.1">
+                    <cellValue>Dental Check-Up for Children</cellValue>
+                  </visitType>
+                  <copayInNetworkTier1 cellLocation="Cost_Share_Variances_1-DP.4">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayInNetworkTier1>
+                  <copayOutOfNetwork cellLocation="Cost_Share_Variances_1-DR.4">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayOutOfNetwork>
+                  <coInsuranceInNetworkTier1 cellLocation="Cost_Share_Variances_1-DS.4">
+                    <cellValue>No Charge</cellValue>
+                  </coInsuranceInNetworkTier1>
+                  <coInsuranceOutOfNetwork cellLocation="Cost_Share_Variances_1-DU.4">
+                    <cellValue>20.00%</cellValue>
+                  </coInsuranceOutOfNetwork>
+                </serviceVisit>
+                <serviceVisit>
+                  <visitType cellLocation="Cost_Share_Variances_1-DV.1">
+                    <cellValue>Basic Dental Care - Child</cellValue>
+                  </visitType>
+                  <copayInNetworkTier1 cellLocation="Cost_Share_Variances_1-DV.4">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayInNetworkTier1>
+                  <copayOutOfNetwork cellLocation="Cost_Share_Variances_1-DX.4">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayOutOfNetwork>
+                  <coInsuranceInNetworkTier1 cellLocation="Cost_Share_Variances_1-DY.4">
+                    <cellValue>25.00% Coinsurance after deductible</cellValue>
+                  </coInsuranceInNetworkTier1>
+                  <coInsuranceOutOfNetwork cellLocation="Cost_Share_Variances_1-EA.4">
+                    <cellValue>45.00% Coinsurance after deductible</cellValue>
+                  </coInsuranceOutOfNetwork>
+                </serviceVisit>
+                <serviceVisit>
+                  <visitType cellLocation="Cost_Share_Variances_1-EB.1">
+                    <cellValue>Orthodontia - Child</cellValue>
+                  </visitType>
+                  <copayInNetworkTier1 cellLocation="Cost_Share_Variances_1-EB.4">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayInNetworkTier1>
+                  <copayOutOfNetwork cellLocation="Cost_Share_Variances_1-ED.4">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayOutOfNetwork>
+                  <coInsuranceInNetworkTier1 cellLocation="Cost_Share_Variances_1-EE.4">
+                    <cellValue>50.00%</cellValue>
+                  </coInsuranceInNetworkTier1>
+                  <coInsuranceOutOfNetwork cellLocation="Cost_Share_Variances_1-EG.4">
+                    <cellValue>70.00%</cellValue>
+                  </coInsuranceOutOfNetwork>
+                </serviceVisit>
+                <serviceVisit>
+                  <visitType cellLocation="Cost_Share_Variances_1-EH.1">
+                    <cellValue>Major Dental Care - Child</cellValue>
+                  </visitType>
+                  <copayInNetworkTier1 cellLocation="Cost_Share_Variances_1-EH.4">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayInNetworkTier1>
+                  <copayOutOfNetwork cellLocation="Cost_Share_Variances_1-EJ.4">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayOutOfNetwork>
+                  <coInsuranceInNetworkTier1 cellLocation="Cost_Share_Variances_1-EK.4">
+                    <cellValue>50.00% Coinsurance after deductible</cellValue>
+                  </coInsuranceInNetworkTier1>
+                  <coInsuranceOutOfNetwork cellLocation="Cost_Share_Variances_1-EM.4">
+                    <cellValue>70.00% Coinsurance after deductible</cellValue>
+                  </coInsuranceOutOfNetwork>
+                </serviceVisit>
+                <serviceVisit>
+                  <visitType cellLocation="Cost_Share_Variances_1-EN.1">
+                    <cellValue>Basic Dental Care - Adult</cellValue>
+                  </visitType>
+                  <copayInNetworkTier1 cellLocation="Cost_Share_Variances_1-EN.4">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayInNetworkTier1>
+                  <copayOutOfNetwork cellLocation="Cost_Share_Variances_1-EP.4">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayOutOfNetwork>
+                  <coInsuranceInNetworkTier1 cellLocation="Cost_Share_Variances_1-EQ.4">
+                    <cellValue>25.00% Coinsurance after deductible</cellValue>
+                  </coInsuranceInNetworkTier1>
+                  <coInsuranceOutOfNetwork cellLocation="Cost_Share_Variances_1-ES.4">
+                    <cellValue>45.00% Coinsurance after deductible</cellValue>
+                  </coInsuranceOutOfNetwork>
+                </serviceVisit>
+                <serviceVisit>
+                  <visitType cellLocation="Cost_Share_Variances_1-ET.1">
+                    <cellValue>Major Dental Care - Adult</cellValue>
+                  </visitType>
+                  <copayInNetworkTier1 cellLocation="Cost_Share_Variances_1-ET.4">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayInNetworkTier1>
+                  <copayOutOfNetwork cellLocation="Cost_Share_Variances_1-EV.4">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayOutOfNetwork>
+                  <coInsuranceInNetworkTier1 cellLocation="Cost_Share_Variances_1-EW.4">
+                    <cellValue>50.00% Coinsurance after deductible</cellValue>
+                  </coInsuranceInNetworkTier1>
+                  <coInsuranceOutOfNetwork cellLocation="Cost_Share_Variances_1-EY.4">
+                    <cellValue>70.00% Coinsurance after deductible</cellValue>
+                  </coInsuranceOutOfNetwork>
+                </serviceVisit>
+              </serviceVisitList>
+            </costShareVariance>
+            <costShareVariance>
+              <planId cellLocation="Cost_Share_Variances_1-A.5">
+                <cellValue>11111MA0010002-01</cellValue>
+              </planId>
+              <planVariantMarketingName cellLocation="Cost_Share_Variances_1-B.5">
+                <cellValue>Standard Family High:  Altus Dental High Plan</cellValue>
+              </planVariantMarketingName>
+              <metalLevel cellLocation="Cost_Share_Variances_1-C.5">
+                <cellValue>High</cellValue>
+              </metalLevel>
+              <csrVariationType cellLocation="Cost_Share_Variances_1-D.5">
+                <cellValue>Standard High On Exchange Plan</cellValue>
+              </csrVariationType>
+              <medicalAndDrugDeductiblesIntegrated cellLocation="Cost_Share_Variances_1-G.5">
+                <cellValue/>
+              </medicalAndDrugDeductiblesIntegrated>
+              <medicalAndDrugMaxOutOfPocketIntegrated cellLocation="Cost_Share_Variances_1-H.5">
+                <cellValue/>
+              </medicalAndDrugMaxOutOfPocketIntegrated>
+              <multipleProviderTiers cellLocation="Cost_Share_Variances_1-I.5">
+                <cellValue>No</cellValue>
+              </multipleProviderTiers>
+              <firstTierUtilization cellLocation="Cost_Share_Variances_1-J.5">
+                <cellValue>100%</cellValue>
+              </firstTierUtilization>
+              <secondTierUtilization cellLocation="Cost_Share_Variances_1-K.5">
+                <cellValue/>
+              </secondTierUtilization>
+              <hsa>
+                <hsaEligibility cellLocation="Cost_Share_Variances_1-BZ.5">
+                  <cellValue/>
+                </hsaEligibility>
+                <employerHSAHRAContributionIndicator cellLocation="Cost_Share_Variances_1-CA.5">
+                  <cellValue/>
+                </employerHSAHRAContributionIndicator>
+                <empContributionAmountForHSAOrHRA cellLocation="Cost_Share_Variances_1-CB.5">
+                  <cellValue/>
+                </empContributionAmountForHSAOrHRA>
+              </hsa>
+              <url>
+                <summaryBenefitAndCoverageURL cellLocation="Cost_Share_Variances_1-CC.5">
+                  <cellValue>https://www.altusdental.com/Content/docs/Form_AD200-GRPX_(MA)_High_Plan.pdf</cellValue>
+                </summaryBenefitAndCoverageURL>
+                <planBrochure cellLocation="Cost_Share_Variances_1-CD.5">
+                  <cellValue>https://www.altusdental.com/Content/MAConnector</cellValue>
+                </planBrochure>
+              </url>
+              <moopList>
+                <moop>
+                  <name cellLocation="Cost_Share_Variances_1-AN.1">
+                    <cellValue>Maximum Out of Pocket for Medical EHB Benefits</cellValue>
+                  </name>
+                  <inNetworkTier1IndividualAmount cellLocation="Cost_Share_Variances_1-AN.5">
+                    <cellValue>$350</cellValue>
+                  </inNetworkTier1IndividualAmount>
+                  <inNetworkTier1FamilyAmount cellLocation="Cost_Share_Variances_1-AO.5">
+                    <cellValue>$350 per person | $700 per group</cellValue>
+                  </inNetworkTier1FamilyAmount>
+                  <outOfNetworkIndividualAmount cellLocation="Cost_Share_Variances_1-AR.5">
+                    <cellValue>Not Applicable</cellValue>
+                  </outOfNetworkIndividualAmount>
+                  <outOfNetworkFamilyAmount cellLocation="Cost_Share_Variances_1-AS.5">
+                    <cellValue>per person not applicable | per group not applicable</cellValue>
+                  </outOfNetworkFamilyAmount>
+                  <combinedInOutNetworkIndividualAmount cellLocation="Cost_Share_Variances_1-AT.5">
+                    <cellValue>Not Applicable</cellValue>
+                  </combinedInOutNetworkIndividualAmount>
+                  <combinedInOutNetworkFamilyAmount cellLocation="Cost_Share_Variances_1-AU.5">
+                    <cellValue>per person not applicable | per group not applicable</cellValue>
+                  </combinedInOutNetworkFamilyAmount>
+                </moop>
+              </moopList>
+              <planDeductibleList>
+                <planDeductible>
+                  <deductibleType cellLocation="Cost_Share_Variances_1-BP.1">
+                    <cellValue>Medical EHB Deductible</cellValue>
+                  </deductibleType>
+                  <inNetworkTier1Individual cellLocation="Cost_Share_Variances_1-BP.5">
+                    <cellValue>$50</cellValue>
+                  </inNetworkTier1Individual>
+                  <inNetworkTier1Family cellLocation="Cost_Share_Variances_1-BQ.5">
+                    <cellValue>$50 per person | $150 per group</cellValue>
+                  </inNetworkTier1Family>
+                  <coinsuranceInNetworkTier1 cellLocation="Cost_Share_Variances_1-BR.5">
+                    <cellValue/>
+                  </coinsuranceInNetworkTier1>
+                  <outOfNetworkIndividual cellLocation="Cost_Share_Variances_1-BV.5">
+                    <cellValue>$50</cellValue>
+                  </outOfNetworkIndividual>
+                  <outOfNetworkFamily cellLocation="Cost_Share_Variances_1-BW.5">
+                    <cellValue>$50 per person | $150 per group</cellValue>
+                  </outOfNetworkFamily>
+                  <combinedInOrOutNetworkIndividual cellLocation="Cost_Share_Variances_1-BX.5">
+                    <cellValue>Not Applicable</cellValue>
+                  </combinedInOrOutNetworkIndividual>
+                  <combinedInOrOutNetworkFamily cellLocation="Cost_Share_Variances_1-BY.5">
+                    <cellValue>per person not applicable | per group not applicable</cellValue>
+                  </combinedInOrOutNetworkFamily>
+                </planDeductible>
+              </planDeductibleList>
+              <avCalculator>
+                <avCalculatorOutputNumber cellLocation="Cost_Share_Variances_1-F.5">
+                  <cellValue/>
+                </avCalculatorOutputNumber>
+                <issuerActuarialValue cellLocation="Cost_Share_Variances_1-E.5">
+                  <cellValue/>
+                </issuerActuarialValue>
+                <maximumCoinsuranceForSpecialtyDrugs cellLocation="Cost_Share_Variances_1-CE.5">
+                  <cellValue/>
+                </maximumCoinsuranceForSpecialtyDrugs>
+                <maxNumDaysForChargingInpatientCopay cellLocation="Cost_Share_Variances_1-CF.5">
+                  <cellValue/>
+                </maxNumDaysForChargingInpatientCopay>
+                <beginPrimaryCareCostSharingAfterSetNumberVisits cellLocation="Cost_Share_Variances_1-CG.5">
+                  <cellValue/>
+                </beginPrimaryCareCostSharingAfterSetNumberVisits>
+                <beginPrimaryCareDeductibleOrCoinsuranceAfterSetNumberCopays cellLocation="Cost_Share_Variances_1-CH.5">
+                  <cellValue/>
+                </beginPrimaryCareDeductibleOrCoinsuranceAfterSetNumberCopays>
+              </avCalculator>
+              <serviceVisitList>
+                <serviceVisit>
+                  <visitType cellLocation="Cost_Share_Variances_1-DJ.1">
+                    <cellValue>Routine Dental Services (Adult)</cellValue>
+                  </visitType>
+                  <copayInNetworkTier1 cellLocation="Cost_Share_Variances_1-DJ.5">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayInNetworkTier1>
+                  <copayOutOfNetwork cellLocation="Cost_Share_Variances_1-DL.5">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayOutOfNetwork>
+                  <coInsuranceInNetworkTier1 cellLocation="Cost_Share_Variances_1-DM.5">
+                    <cellValue>No Charge</cellValue>
+                  </coInsuranceInNetworkTier1>
+                  <coInsuranceOutOfNetwork cellLocation="Cost_Share_Variances_1-DO.5">
+                    <cellValue>20.00%</cellValue>
+                  </coInsuranceOutOfNetwork>
+                </serviceVisit>
+                <serviceVisit>
+                  <visitType cellLocation="Cost_Share_Variances_1-DP.1">
+                    <cellValue>Dental Check-Up for Children</cellValue>
+                  </visitType>
+                  <copayInNetworkTier1 cellLocation="Cost_Share_Variances_1-DP.5">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayInNetworkTier1>
+                  <copayOutOfNetwork cellLocation="Cost_Share_Variances_1-DR.5">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayOutOfNetwork>
+                  <coInsuranceInNetworkTier1 cellLocation="Cost_Share_Variances_1-DS.5">
+                    <cellValue>No Charge</cellValue>
+                  </coInsuranceInNetworkTier1>
+                  <coInsuranceOutOfNetwork cellLocation="Cost_Share_Variances_1-DU.5">
+                    <cellValue>20.00%</cellValue>
+                  </coInsuranceOutOfNetwork>
+                </serviceVisit>
+                <serviceVisit>
+                  <visitType cellLocation="Cost_Share_Variances_1-DV.1">
+                    <cellValue>Basic Dental Care - Child</cellValue>
+                  </visitType>
+                  <copayInNetworkTier1 cellLocation="Cost_Share_Variances_1-DV.5">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayInNetworkTier1>
+                  <copayOutOfNetwork cellLocation="Cost_Share_Variances_1-DX.5">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayOutOfNetwork>
+                  <coInsuranceInNetworkTier1 cellLocation="Cost_Share_Variances_1-DY.5">
+                    <cellValue>25.00% Coinsurance after deductible</cellValue>
+                  </coInsuranceInNetworkTier1>
+                  <coInsuranceOutOfNetwork cellLocation="Cost_Share_Variances_1-EA.5">
+                    <cellValue>45.00% Coinsurance after deductible</cellValue>
+                  </coInsuranceOutOfNetwork>
+                </serviceVisit>
+                <serviceVisit>
+                  <visitType cellLocation="Cost_Share_Variances_1-EB.1">
+                    <cellValue>Orthodontia - Child</cellValue>
+                  </visitType>
+                  <copayInNetworkTier1 cellLocation="Cost_Share_Variances_1-EB.5">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayInNetworkTier1>
+                  <copayOutOfNetwork cellLocation="Cost_Share_Variances_1-ED.5">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayOutOfNetwork>
+                  <coInsuranceInNetworkTier1 cellLocation="Cost_Share_Variances_1-EE.5">
+                    <cellValue>50.00%</cellValue>
+                  </coInsuranceInNetworkTier1>
+                  <coInsuranceOutOfNetwork cellLocation="Cost_Share_Variances_1-EG.5">
+                    <cellValue>70.00%</cellValue>
+                  </coInsuranceOutOfNetwork>
+                </serviceVisit>
+                <serviceVisit>
+                  <visitType cellLocation="Cost_Share_Variances_1-EH.1">
+                    <cellValue>Major Dental Care - Child</cellValue>
+                  </visitType>
+                  <copayInNetworkTier1 cellLocation="Cost_Share_Variances_1-EH.5">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayInNetworkTier1>
+                  <copayOutOfNetwork cellLocation="Cost_Share_Variances_1-EJ.5">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayOutOfNetwork>
+                  <coInsuranceInNetworkTier1 cellLocation="Cost_Share_Variances_1-EK.5">
+                    <cellValue>50.00% Coinsurance after deductible</cellValue>
+                  </coInsuranceInNetworkTier1>
+                  <coInsuranceOutOfNetwork cellLocation="Cost_Share_Variances_1-EM.5">
+                    <cellValue>70.00% Coinsurance after deductible</cellValue>
+                  </coInsuranceOutOfNetwork>
+                </serviceVisit>
+                <serviceVisit>
+                  <visitType cellLocation="Cost_Share_Variances_1-EN.1">
+                    <cellValue>Basic Dental Care - Adult</cellValue>
+                  </visitType>
+                  <copayInNetworkTier1 cellLocation="Cost_Share_Variances_1-EN.5">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayInNetworkTier1>
+                  <copayOutOfNetwork cellLocation="Cost_Share_Variances_1-EP.5">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayOutOfNetwork>
+                  <coInsuranceInNetworkTier1 cellLocation="Cost_Share_Variances_1-EQ.5">
+                    <cellValue>25.00% Coinsurance after deductible</cellValue>
+                  </coInsuranceInNetworkTier1>
+                  <coInsuranceOutOfNetwork cellLocation="Cost_Share_Variances_1-ES.5">
+                    <cellValue>45.00% Coinsurance after deductible</cellValue>
+                  </coInsuranceOutOfNetwork>
+                </serviceVisit>
+                <serviceVisit>
+                  <visitType cellLocation="Cost_Share_Variances_1-ET.1">
+                    <cellValue>Major Dental Care - Adult</cellValue>
+                  </visitType>
+                  <copayInNetworkTier1 cellLocation="Cost_Share_Variances_1-ET.5">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayInNetworkTier1>
+                  <copayOutOfNetwork cellLocation="Cost_Share_Variances_1-EV.5">
+                    <cellValue>Not Applicable</cellValue>
+                  </copayOutOfNetwork>
+                  <coInsuranceInNetworkTier1 cellLocation="Cost_Share_Variances_1-EW.5">
+                    <cellValue>50.00% Coinsurance after deductible</cellValue>
+                  </coInsuranceInNetworkTier1>
+                  <coInsuranceOutOfNetwork cellLocation="Cost_Share_Variances_1-EY.5">
+                    <cellValue>70.00% Coinsurance after deductible</cellValue>
+                  </coInsuranceOutOfNetwork>
+                </serviceVisit>
+              </serviceVisitList>
+            </costShareVariance>
+          </costShareVariancesList>
+        </plans>
+      </plansList>
+    </packages>
+  </packagesList>
+</planBenefitTemplateVO>
