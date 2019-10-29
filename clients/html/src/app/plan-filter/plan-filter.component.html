@@ -289,19 +289,19 @@
               <td *ngIf="this.planFilter == 'single_product'">
                 <p class="mb-0">
                   <strong>Individual -</strong>
-                  {{ carrier['sponsor_cost'] | number: '1.2-2' }}
+                  {{ carrier.tier_costs.get("Employee Only").sponsor_cost | number: '1.2-2' }}
                 </p>
                 <p class="mb-0">
                   <strong>Two-Person -</strong>
-                  {{ carrier['sponsor_cost'] | number: '1.2-2' }}
+                  {{ carrier.tier_costs.get("Employee and Spouse").sponsor_cost | number: '1.2-2' }}
                 </p>
                 <p class="mb-0">
                   <strong>Emp W/Child -</strong>
-                  {{ carrier['sponsor_cost'] | number: '1.2-2' }}
+                  {{ carrier.tier_costs.get("Employee and Dependents").sponsor_cost | number: '1.2-2' }}
                 </p>
                 <p class="mb-0">
                   <strong>Family -</strong>
-                  {{ carrier['sponsor_cost'] | number: '1.2-2' }}
+                  {{ carrier.tier_costs.get("Family").sponsor_cost | number: '1.2-2' }}
                 </p>
               </td>
               <td>{{ carrier['sponsor_cost'] | number: '1.2-2' }}</td>

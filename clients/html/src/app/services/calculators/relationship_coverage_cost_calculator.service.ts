@@ -1,8 +1,8 @@
 import { RelationshipContributionModel } from '../../data/contribution_models';
-import { PackageTypes, ContributionRelationship } from '../../config/client_configuration';
+import { PackageTypes, ContributionRelationship, ContributionTierName } from '../../config/client_configuration';
 import { RosterEntry, RosterDependent } from '../../data/sponsor_roster';
 import { Product } from '../../data/products';
-import { Quote } from '../../data/quotes';
+import { Quote, ContributionTierCost } from '../../data/quotes';
 import { ResultTotal } from './result_total';
 import { MetalLevelBucket } from './metal_level_bucket';
 import { IssuerBucket } from './issuer_bucket';
@@ -181,13 +181,15 @@ export class RelationshipCoverageCostCalculatorService {
     if (this.minMemberCost === 100000000.0) {
       this.minMemberCost = 0.0;
     }
+    var emptyTierMap = new Map<ContributionTierName,ContributionTierCost>();
     return new RosterQuote(
       product,
       total.total_cost,
       total.sponsor_cost,
       avg_member_cost,
       this.minMemberCost,
-      this.maxMemberCost
+      this.maxMemberCost,
+      emptyTierMap
     );
   }
 
