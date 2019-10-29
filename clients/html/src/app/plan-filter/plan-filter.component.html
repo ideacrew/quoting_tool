@@ -253,19 +253,19 @@
                 <span *ngIf="planType == 'health'">
                   <p class="mb-0">
                     <strong>Hospital Stay -</strong>
-                    {{ carrier['product_information']['hospital_stay'] | number: '1.2-2' }}
+                    {{ carrier['product_information']['hospital_stay'] | currency }}
                   </p>
                   <p class="mb-0">
                     <strong>Emergency Stay -</strong>
-                    {{ carrier['product_information']['emergency_stay'] | number: '1.2-2' }}
+                    {{ carrier['product_information']['emergency_stay'] | currency }}
                   </p>
                   <p class="mb-0">
                     <strong>PCP Office Visit -</strong>
-                    {{ carrier['product_information']['pcp_office_visit'] | number: '1.2-2' }}
+                    {{ carrier['product_information']['pcp_office_visit'] | currency }}
                   </p>
                   <p class="mb-0">
                     <strong>RX -</strong>
-                    {{ carrier['product_information']['rx'] | number: '1.2-2' }}
+                    {{ carrier['product_information']['rx'] | currency }}
                   </p>
                 </span>
 
@@ -289,22 +289,22 @@
               <td *ngIf="this.planFilter == 'single_product'">
                 <p class="mb-0">
                   <strong>Individual -</strong>
-                  {{ carrier.tier_costs.get("Employee Only").sponsor_cost | number: '1.2-2' }}
+                  {{ carrier.tier_costs.get("Employee Only").sponsor_cost | currency }}
                 </p>
                 <p class="mb-0">
                   <strong>Two-Person -</strong>
-                  {{ carrier.tier_costs.get("Employee and Spouse").sponsor_cost | number: '1.2-2' }}
+                  {{ carrier.tier_costs.get("Employee and Spouse").sponsor_cost | currency }}
                 </p>
                 <p class="mb-0">
                   <strong>Emp W/Child -</strong>
-                  {{ carrier.tier_costs.get("Employee and Dependents").sponsor_cost | number: '1.2-2' }}
+                  {{ carrier.tier_costs.get("Employee and Dependents").sponsor_cost | currency }}
                 </p>
                 <p class="mb-0">
                   <strong>Family -</strong>
-                  {{ carrier.tier_costs.get("Family").sponsor_cost | number: '1.2-2' }}
+                  {{ carrier.tier_costs.get("Family").sponsor_cost | currency }}
                 </p>
               </td>
-              <td>{{ carrier['sponsor_cost'] | number: '1.2-2' }}</td>
+              <td>{{ carrier['sponsor_cost'] | currency }}</td>
             </tr>
           </tbody>
         </table>
