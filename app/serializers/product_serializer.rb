@@ -68,7 +68,7 @@ class ProductSerializer
   end
 
   attribute :sic_code_factor do |object, params|
-    $sic_factors[[params[:sic], object.active_year, object.issuer_hios_ids.first]] || 1.0
+    $sic_factors[[params[:key], object.active_year, object.issuer_hios_ids.first]] || 1.0
   end
 
   attribute :rates do |object, params|
