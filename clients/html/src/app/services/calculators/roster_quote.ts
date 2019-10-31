@@ -1,6 +1,6 @@
 import { Product } from '../../data/products';
-import { ContributionTierName } from "../../config/client_configuration";
-import { ContributionTierCost } from "../../data/quotes";
+import { ContributionTierName } from '../../config/client_configuration';
+import { ContributionTierCost } from '../../data/quotes';
 
 export class RosterQuote {
   product_information: Product;
@@ -18,7 +18,7 @@ export class RosterQuote {
     public average_member_cost: number,
     public minimum_member_cost: number,
     public maximum_member_cost: number,
-    public tier_costs: Map<ContributionTierName,ContributionTierCost>
+    public tier_costs: Map<ContributionTierName, ContributionTierCost>
   ) {
     this.product_name = product.name;
     this.product_information = product;

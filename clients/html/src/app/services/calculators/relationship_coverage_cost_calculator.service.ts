@@ -181,7 +181,7 @@ export class RelationshipCoverageCostCalculatorService {
     if (this.minMemberCost === 100000000.0) {
       this.minMemberCost = 0.0;
     }
-    var emptyTierMap = new Map<ContributionTierName,ContributionTierCost>();
+    const emptyTierMap = new Map<ContributionTierName, ContributionTierCost>();
     return new RosterQuote(
       product,
       total.total_cost,
