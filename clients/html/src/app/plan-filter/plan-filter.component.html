@@ -1,29 +1,17 @@
-<div class="row pt-4">
-  <div class="col-8">
+<div class="row pt-12">
+  <div class="col-8 mt-2">
     <button class="btn btn-rounded btn-outline-info">
       <span class="cs-text">Cost shown for</span>
       <i class="fas fa-user ml-1"></i> {{ costShownText }}
     </button>
     Effective Date: <strong>{{ employerDetails?.effectiveDate | date:'MMMM, y' }}</strong>
   </div>
-  <div class="col-4">
-    <div class="form-group">
-      <select
-        class="custom-select col-9 float-right"
-        id="inlineFormCustomSelect"
-        (change)="changePackageFilter($event.target.value)"
-        [disabled]="isLoading ? '' : null"
-      >
-        <option selected>Choose type ...</option>
-        <option *ngFor="let plan of planOptions" [value]="plan.key" [hidden]="plan.view !== planType">{{
-          plan.value
-        }}</option>
-      </select>
+  <div class="col-12 mt-4 mb-4">
+    <div class="custom-control custom-radio custom-control-inline" *ngFor="let plan of planOptions; let i = index" [hidden]="plan.view !== planType">
+      <input type="radio" id="customRadioInline{{i}}" name="customRadioInline" class="custom-control-input" (click)="changePackageFilter(plan.key)">
+      <label class="custom-control-label" for="customRadioInline{{i}}">{{plan.value}}</label>
     </div>
-  </div>
 </div>
-
-<div *ngIf="!isLoading"></div>
 
 <div *ngIf="!isLoading">
   <div class="row">
