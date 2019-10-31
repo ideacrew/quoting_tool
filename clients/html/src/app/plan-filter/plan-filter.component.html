@@ -7,6 +7,7 @@
     Effective Date: <strong>{{ employerDetails?.effectiveDate | date:'MMMM, y' }}</strong>
   </div>
   <div class="col-12 mt-4 mb-4">
+    <h5 class="mb-3"><strong>Select Benefit Offering</strong></h5>
     <div class="custom-control custom-radio custom-control-inline" *ngFor="let plan of planOptions; let i = index" [hidden]="plan.view !== planType">
       <input type="radio" id="customRadioInline{{i}}" name="customRadioInline" class="custom-control-input" (click)="changePackageFilter(plan.key)">
       <label class="custom-control-label" for="customRadioInline{{i}}">{{plan.value}}</label>
