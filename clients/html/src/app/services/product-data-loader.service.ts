@@ -32,7 +32,7 @@ class LoadedProduct {
     public basic_dental_services: string,
     public major_dental_services: string,
     public preventive_dental_services: string,
-    public out_of_pocket_in_network:string,
+    public out_of_pocket_in_network: string,
     public network: string,
     public deductible: number,
     public group_deductible: string,

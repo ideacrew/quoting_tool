@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployerDetailsService } from './../services/employer-details.service';
@@ -71,6 +71,10 @@ export class EmployerDetailsComponent implements OnInit {
 
   @ViewChild('file', { static: false }) file: ElementRef;
 
+  @HostListener('window:beforeunload', ['$event']) unloadHandler(event: Event) {
+    event.returnValue = false;
+  }
+
   constructor(
     private fb: FormBuilder,
     private modalService: NgbModal,
@@ -139,10 +143,12 @@ export class EmployerDetailsComponent implements OnInit {
     }
     // Sets effective Date options
 
-    if(this.todaysDate.getDate() > 15) {
-      this.effectiveDateOptions = [new Date(this.todaysDate.getFullYear(), this.todaysDate.getMonth()+2, 1), new Date(this.todaysDate.getFullYear(), this.todaysDate.getMonth()+3, 1)]
+    if (this.todaysDate.getDate() > 15) {
+      this.effectiveDateOptions = [new Date(this.todaysDate.getFullYear(),
+        this.todaysDate.getMonth() + 2, 1), new Date(this.todaysDate.getFullYear(), this.todaysDate.getMonth() + 3, 1)];
     } else {
-      this.effectiveDateOptions = [new Date(this.todaysDate.getFullYear(), this.todaysDate.getMonth()+1, 1), new Date(this.todaysDate.getFullYear(), this.todaysDate.getMonth()+2, 1)]
+      this.effectiveDateOptions = [new Date(this.todaysDate.getFullYear(),
+        this.todaysDate.getMonth() + 1, 1), new Date(this.todaysDate.getFullYear(), this.todaysDate.getMonth() + 2, 1)];
     }
   }
 
