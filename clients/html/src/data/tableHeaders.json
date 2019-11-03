@@ -14,8 +14,8 @@
       {
         "col-1": "Plan name",
         "col-2": "Services",
-        "col-3": "Monthly Plan Premiums",
-        "col-4": "Annual Deductible",
+        "col-3": "Annual Deductible",
+        "col-4": "Maximum Out of Pocket",
         "col-5": "Maximum Benefits",
         "col-6": "Maximum Monthly \n Employer Cost"
       }
