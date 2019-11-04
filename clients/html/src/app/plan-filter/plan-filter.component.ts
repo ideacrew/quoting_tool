@@ -262,7 +262,7 @@ export class PlanFilterComponent implements OnInit {
     switch (type) {
       case 'metalLevel':
         if (event.target.checked) {
-          this.selectedMetalLevels.push(value);
+          this.selectedMetalLevels.push({key: 'metal_level', value: value});
           this.filterKeysSelected.push(type);
         } else {
           const index = this.selectedMetalLevels.indexOf(value);
@@ -273,7 +273,7 @@ export class PlanFilterComponent implements OnInit {
         break;
       case 'productType':
         if (event.target.checked) {
-          this.selectedProductTypes.push(value);
+          this.selectedProductTypes.push({key: 'product_type', value: value});
           this.filterKeysSelected.push(type);
         } else {
           const index = this.selectedProductTypes.indexOf(value);
@@ -284,7 +284,7 @@ export class PlanFilterComponent implements OnInit {
         break;
       case 'insuranceCompany':
         if (event.target.checked) {
-          this.selectedInsuranceCompanies.push(value);
+          this.selectedInsuranceCompanies.push({key: 'provider_name', value: value});
           this.filterKeysSelected.push(type);
         } else {
           const index = this.selectedInsuranceCompanies.indexOf(value);
@@ -295,7 +295,7 @@ export class PlanFilterComponent implements OnInit {
         break;
       case 'hsa':
         if (event.target.checked) {
-          this.selectedHSAs.push(value);
+          this.selectedHSAs.push({key: 'hsa_eligible', value: value});
           this.filterKeysSelected.push(type);
         } else {
           const index = this.selectedHSAs.indexOf(value);
@@ -311,45 +311,32 @@ export class PlanFilterComponent implements OnInit {
   filterCarriers() {
     const plans = this.filteredCarriers;
     const tempArray = [];
-    [...this.selectedMetalLevels].map(metalLevel => {
-      tempArray.push(plans.filter(plan => plan['product_information']['metal_level'] === metalLevel));
+    const filters = [].concat(this.selectedMetalLevels).concat(this.selectedProductTypes)
+                      .concat(this.selectedHSAs).concat(this.selectedInsuranceCompanies);
+    /*
+     plans.filter(plan => {
+      filters.map(filter => {
+        if (plan['product_information'][filter.key] && plan['product_information'][filter.key] === filter.value) {
+          tempArray.push(plan);
+        }
+        if (plan[filter.key] && plan[filter.key] === filter.value) {
+          tempArray.push(plan);
+        }
+      });
     });
-    [...this.selectedProductTypes].map(productType => {
-      tempArray.push(plans.filter(plan => plan['product_information']['product_type'] === productType));
+    */
+
+    filters.map(filter => {
+      plans.filter(plan => {
+        if (plan['product_information'][filter.key] && plan['product_information'][filter.key] === filter.value) {
+          if (tempArray.length < 1) {
+            tempArray.push(plan);
+          } else {
+            
+          }
+        }
+      });
     });
-    [...this.selectedHSAs].map(hsa => {
-      tempArray.push(plans.filter(plan => plan['product_information']['hsa_eligible'] === hsa));
-    });
-
-    if (this.yearlyMedicalDeductibleFrom && !this.yearlyMedicalDeductibleTo) {
-       tempArray.push(plans.filter(plan => parseInt(plan['product_information']['deductible']
-        .replace('$', '').replace(',', ''), 0) >= this.yearlyMedicalDeductibleTo));
-    }
-
-    if (!this.yearlyMedicalDeductibleFrom && this.yearlyMedicalDeductibleTo) {
-       tempArray.push(plans.filter(plan => parseInt(plan['product_information']['deductible']
-        .replace('$', '').replace(',', ''), 0) <= this.yearlyMedicalDeductibleTo));
-    }
-
-    if (this.yearlyMedicalDeductibleFrom && this.yearlyMedicalDeductibleTo) {
-       tempArray.push(plans.filter(plan => parseInt(plan['product_information']['deductible']
-        .replace('$', '').replace(',', ''), 0) >= this.yearlyMedicalDeductibleFrom && parseInt(plan['product_information']['deductible']
-        .replace('$', '').replace(',', ''), 0) <= this.yearlyMedicalDeductibleTo));
-    }
-
-    if (this.planPremiumsFrom && !this.planPremiumsTo) {
-       tempArray.push(plans.filter(plan => plan['total_cost'] >= this.planPremiumsFrom));
-    }
-
-    if (!this.planPremiumsFrom && this.planPremiumsTo) {
-       tempArray.push(plans.filter(plan => plan['total_cost'] <= this.planPremiumsTo));
-    }
-
-    if (this.planPremiumsFrom && this.planPremiumsTo) {
-       tempArray.push(plans.filter(plan => plan['total_cost']
-        >= this.planPremiumsFrom && plan['total_cost']
-        <= this.planPremiumsTo));
-    }
 
     let resultsArray = [].concat.apply([], tempArray)
       .reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
