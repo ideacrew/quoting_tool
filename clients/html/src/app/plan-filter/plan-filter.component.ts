@@ -144,7 +144,7 @@ export class PlanFilterComponent implements OnInit {
         consumer.sponsorRoster.push(employeeJson);
       });
 
-      const formattedStartDate = new Date(startDate)
+      const formattedStartDate = new Date(startDate);
 
       this.tieredContributionModel = defaultTieredContributionModel();
       this.tieredCalculator = this.calculator(formattedStartDate, this.tieredContributionModel, true);

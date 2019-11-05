@@ -143,7 +143,7 @@ class BucketCount {
   constructor(public counts: Map<ContributionTierName, number>, public total: number) {}
 
   public add(entry: FilteredRelationshipRosterEntry, price: number) {
-    let current_count = this.valueFromMapWithDefault(this.counts, entry.bucket, 0);
+    const current_count = this.valueFromMapWithDefault(this.counts, entry.bucket, 0);
      this.counts.set(
        entry.bucket,
        current_count + 1
@@ -177,8 +177,8 @@ class BucketCount {
     return bucket_map;
   }
 
-  private valueFromMapWithDefault<K,V>(m: Map<K,V>, k: K, default_value: V) {
-    let value = <V>m.get(k);
+  private valueFromMapWithDefault<K, V>(m: Map<K, V>, k: K, default_value: V) {
+    const value = <V>m.get(k);
     if (value != null) {
       return value;
     }
@@ -266,18 +266,18 @@ export class TieredCoverageCostCalculatorService {
 
   public calculateQuote(product: Product): Quote {
     const levels = this.calculateLevels(product);
-    var calculator = this;
+    const calculator = this;
     const total = this.filteredRoster.reduce(function(current, entry) {
       return calculator.sumTotals(levels, entry, current);
     }, new ResultTotal(0.0, 0.0));
-    var avg_member_cost = (total.total_cost - total.sponsor_cost)/parseFloat(this.groupSize);
-    var maxMemberCost = 0.00;
-    var minMemberCost = 100000000.00;
-    var levelCosts = new Map<ContributionTierName,ContributionTierCost>();
+    const avg_member_cost = (total.total_cost - total.sponsor_cost) / parseFloat(this.groupSize);
+    let maxMemberCost = 0.00;
+    let minMemberCost = 100000000.00;
+    const levelCosts = new Map<ContributionTierName, ContributionTierCost>();
     levels.forEach(function(val, k) {
-      let contribution_value = calculator.valueFromMapWithDefault(calculator.relContributions, k, 0.0);
-      var contribution = val * contribution_value * 0.01;
-      var mCost = val - contribution;
+      const contribution_value = calculator.valueFromMapWithDefault(calculator.relContributions, k, 0.0);
+      const contribution = val * contribution_value * 0.01;
+      const mCost = val - contribution;
       levelCosts.set(
         k,
         {
@@ -312,9 +312,9 @@ export class TieredCoverageCostCalculatorService {
     entry: FilteredRelationshipRosterEntry,
     current_total: ResultTotal
   ) {
-    let cost = this.valueFromMapWithDefault(levels, entry.bucket, 0.0);
-    let contribution_value = this.valueFromMapWithDefault(this.relContributions, entry.bucket, 0.0);
-    let contribution = cost * contribution_value * 0.01;
+    const cost = this.valueFromMapWithDefault(levels, entry.bucket, 0.0);
+    const contribution_value = this.valueFromMapWithDefault(this.relContributions, entry.bucket, 0.0);
+    const contribution = cost * contribution_value * 0.01;
     return current_total.add(
       new ResultTotal(
         cost,
@@ -378,8 +378,8 @@ export class TieredCoverageCostCalculatorService {
     return year_diff + offset;
   }
 
-  private valueFromMapWithDefault<K,V>(m: Map<K,V>, k: K, default_value: V) {
-    let value = <V>m.get(k);
+  private valueFromMapWithDefault<K, V>(m: Map<K, V>, k: K, default_value: V) {
+    const value = <V>m.get(k);
     if (value != null) {
       return value;
     }

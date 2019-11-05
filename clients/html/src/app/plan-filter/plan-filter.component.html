@@ -1,29 +1,18 @@
-<div class="row pt-4">
-  <div class="col-8">
+<div class="row pt-12">
+  <div class="col-8 mt-2">
     <button class="btn btn-rounded btn-outline-info">
       <span class="cs-text">Cost shown for</span>
       <i class="fas fa-user ml-1"></i> {{ costShownText }}
     </button>
     Effective Date: <strong>{{ employerDetails?.effectiveDate | date:'MMMM, y' }}</strong>
   </div>
-  <div class="col-4">
-    <div class="form-group">
-      <select
-        class="custom-select col-9 float-right"
-        id="inlineFormCustomSelect"
-        (change)="changePackageFilter($event.target.value)"
-        [disabled]="isLoading ? '' : null"
-      >
-        <option selected>Choose type ...</option>
-        <option *ngFor="let plan of planOptions" [value]="plan.key" [hidden]="plan.view !== planType">{{
-          plan.value
-        }}</option>
-      </select>
-    </div>
-  </div>
+  <div class="col-12 mt-4 mb-4">
+    <h5 class="mb-3"><strong>Select Benefit Offering</strong></h5>
+    <label class="radio-container mr-3" *ngFor="let plan of planOptions; let i = index" [hidden]="plan.view !== planType">{{plan.value}}
+      <input type="radio" name="radio" id="customRadioInline{{i}}" name="customRadioInline" (click)="changePackageFilter(plan.key)">
+      <span class="checkmark"></span>
+    </label>
 </div>
-
-<div *ngIf="!isLoading"></div>
 
 <div *ngIf="!isLoading">
   <div class="row">
@@ -219,7 +208,7 @@
                   *ngIf="!pdfView"
                 ></i>
               </th>
-              <th [ngStyle]="{ width: '17%' }" scope="col" *ngIf="this.planFilter == 'single_product'">
+              <th [ngStyle]="{ width: '17%' }" scope="col" *ngIf="this.planFilter == 'single_product' && this.planType !== 'dental'">
                 {{ getTableHeader('col-5') }}
                 <i
                   class="fas fa-question-circle ml-2"
@@ -286,7 +275,7 @@
               </td>
               <td>{{ carrier['group_deductible'] }}</td>
               <td>{{ carrier['product_information']['out_of_pocket_in_network'] }}</td>
-              <td *ngIf="this.planFilter == 'single_product'">
+              <td *ngIf="this.planFilter == 'single_product' && this.planType !== 'dental'">
                 <p class="mb-0">
                   <strong>Individual -</strong>
                   {{ carrier.tier_costs.get("Employee Only").sponsor_cost | currency }}
