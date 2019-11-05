@@ -42,4 +42,13 @@ export class PlanProviderService {
       component.isLoading = false;
     });
   }
+
+  public getSbcDocumentFor(key, bucket) {
+    this.api_request.authedCataractGet('documents/download.json', {key: key, bucket: bucket}).subscribe(response => {
+      if(response.status == "success") {
+        let pdfWindow = window.open("")
+        pdfWindow.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64, " + encodeURI(response.result[1])+"'></iframe>")
+      }
+    })
+  }
 }

@@ -437,6 +437,10 @@ export class PlanFilterComponent implements OnInit {
     }, 500);
   }
 
+  getSbcDocument() {
+    this.planService.getSbcDocumentFor("", "")
+  }
+
   sortData(kind) {
     this.sortKind = kind;
     this.sortDirection = !this.sortDirection;

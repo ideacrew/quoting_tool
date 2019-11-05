@@ -245,7 +245,7 @@
               <td>
                 <strong>{{ carrier['product_information']['provider_name'] }}</strong
                 ><br /><strong>{{ carrier['product_name'] }}</strong
-                ><br /><a href="/" *ngIf="!pdfView"
+                ><br /><a href="javascript:void(0);" *ngIf="!pdfView" (click)="getSbcDocument()"
                   >Summary of Benefit Coverage <i class="far fa-file-pdf fa-lg"></i
                 ></a>
               </td>
