@@ -36,7 +36,7 @@
               <div class="col-3">
                 <p class="heading-label">
                   Metal Level
-                  <i class="far fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('metalLevel')"></i>
+                  <i class="far fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('metalLevel')" *ngIf="planType !== 'dental'"></i>
                 </p>
                 <div
                   class="custom-control custom-checkbox mr-sm-2 m-b-15"
@@ -188,6 +188,12 @@
               </th>
               <th [ngStyle]="{ width: '20%' }" scope="col">
                 {{ getTableHeader('col-2') }}
+                <i
+                  class="fas fa-question-circle ml-2"
+                  placement="right"
+                  [ngbTooltip]="getToolTip('benefitCost')"
+                  *ngIf="!pdfView"
+                ></i>
               </th>
               <th scope="col">
                 {{ getTableHeader('col-3') }}
@@ -212,7 +218,7 @@
                 <i
                   class="fas fa-question-circle ml-2"
                   placement="right"
-                  [ngbTooltip]="getToolTip('maximumMonthlyEmployerCost')"
+                  [ngbTooltip]="getToolTip('monthlyCost')"
                   *ngIf="!pdfView"
                 ></i>
               </th>

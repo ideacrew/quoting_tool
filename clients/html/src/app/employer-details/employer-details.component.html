@@ -135,11 +135,14 @@
             about employees. Or, choose '<strong>Upload Employee Roster</strong
             >' to upload the employee roster template. To use this option, you
             will need to download the template first, then upload the completed
-            version. For each employee you add, you will need their:
+            version. <br />For each employee you add, you will need their:
           </p>
           <ul>
             <li *ngFor="let detail of employeeRosterDetails">{{ detail }}</li>
           </ul>
+          <p>
+            Note: You may use this complete roster download when you apply.
+          </p>
           <button type="button" class="btn btn-link">
             <a href="/assets/roster_upload_template.csv" download
               ><i class="fas fa-download"></i> Download Roster Template</a
