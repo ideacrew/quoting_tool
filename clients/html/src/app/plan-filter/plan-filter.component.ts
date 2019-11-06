@@ -490,7 +490,7 @@ export class PlanFilterComponent implements OnInit {
   }
 
   getSbcDocument() {
-    this.planService.getSbcDocumentFor("", "")
+    this.planService.getSbcDocumentFor('', '');
   }
 
   sortData(kind) {

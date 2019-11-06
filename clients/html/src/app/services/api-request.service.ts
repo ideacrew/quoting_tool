@@ -40,7 +40,7 @@ export class ApiRequestService {
     return this.http.put(this.getFullPath(url), body);
   }
 
-  public authedCataractGet(url: string, attrs?:any) {
+  public authedCataractGet(url: string, attrs?: any) {
     return this.http.get(this.getCataractFullPath(url), { params: attrs });
   }
 }
