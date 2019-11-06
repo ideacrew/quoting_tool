@@ -37,6 +37,7 @@ import { FooterComponent } from './footer/footer.component';
 import { DropdownTreeviewSelectComponent } from './dropdown-treeview-select/dropdown-treeview-select.component';
 import { PlanFilterPipe } from './plan-filter/plan-filter.pipe';
 import { OrderByPipe } from './plan-filter/order-by.pipe';
+import { CoverageTypePipe } from './employer-details/coverage-type.pipe';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -63,7 +64,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FooterComponent,
     DropdownTreeviewSelectComponent,
     PlanFilterPipe,
-    OrderByPipe
+    OrderByPipe,
+    CoverageTypePipe
   ],
   imports: [
     AutocompleteLibModule,

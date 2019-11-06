@@ -220,7 +220,7 @@ export class EmployerDetailsComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.quoteForm.value);
+    // console.log(this.quoteForm.value);
   }
 
   open(content) {

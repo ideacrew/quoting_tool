@@ -7,7 +7,7 @@
     Effective Date: <strong>{{ employerDetails?.effectiveDate | date:'MMMM, y' }}</strong>
   </div>
   <div class="col-12 mt-4 mb-4">
-    <h5 class="mb-3"><strong>Select Benefit Offering</strong></h5>
+    <h5 class="mb-3"><strong>Select a Benefit Model</strong></h5>
     <label class="radio-container mr-3" *ngFor="let plan of planOptions; let i = index" [hidden]="plan.view !== planType">{{plan.value}}
       <input type="radio" name="radio" id="customRadioInline{{i}}" name="customRadioInline" (click)="changePackageFilter(plan.key)">
       <span class="checkmark"></span>
@@ -36,7 +36,7 @@
               <div class="col-3">
                 <p class="heading-label">
                   Metal Level
-                  <i class="far fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('metalLevel')"></i>
+                  <i class="far fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('metalLevel')" *ngIf="planType !== 'dental'"></i>
                 </p>
                 <div
                   class="custom-control custom-checkbox mr-sm-2 m-b-15"
@@ -110,9 +110,9 @@
                 </p>
                 <div class="row">
                   <label for="pp1"></label>
-                  <input type="text" class="form-control col-3 mr-2" id="pp1" (keydown)="validateNumber($event)" [(ngModel)]="planPremiumsFrom" (blur)="filterCarriers()" />
+                  <input type="text" class="form-control col-3 mr-2" id="pp1" (keydown)="validateNumber($event)" [(ngModel)]="planPremiumsFrom" (blur)="selectedFilter('input', $event, 'planPremiumsFrom')" />
                   TO
-                  <input type="text" class="form-control col-3 ml-2" (keydown)="validateNumber($event)" [(ngModel)]="planPremiumsTo" (blur)="filterCarriers()" />
+                  <input type="text" class="form-control col-3 ml-2" (keydown)="validateNumber($event)" [(ngModel)]="planPremiumsTo" (blur)="selectedFilter('input', $event, 'planPremiumsTo')" />
                 </div>
               </div>
               <div class="col-6">
@@ -126,9 +126,9 @@
                 </p>
                 <div class="row">
                   <label for="ymb1"></label>
-                  <input type="text" class="form-control col-3 mr-2" id="ymb1" (keydown)="validateNumber($event)" [(ngModel)]="yearlyMedicalDeductibleFrom" (blur)="filterCarriers()" />
+                  <input type="text" class="form-control col-3 mr-2" id="ymb1" (keydown)="validateNumber($event)" [(ngModel)]="yearlyMedicalDeductibleFrom" (blur)="selectedFilter('input', $event, 'yearlyMedicalDeductibleFrom')" />
                   TO
-                  <input type="text" class="form-control col-3 ml-2" (keydown)="validateNumber($event)" [(ngModel)]="yearlyMedicalDeductibleTo" (blur)="filterCarriers()" />
+                  <input type="text" class="form-control col-3 ml-2" (keydown)="validateNumber($event)" [(ngModel)]="yearlyMedicalDeductibleTo" (blur)="selectedFilter('input', $event, 'yearlyMedicalDeductibleTo')" />
                 </div>
               </div>
             </div>
@@ -145,7 +145,6 @@
                     class="custom-control-input checkbox-input"
                     id="checkbox-carrier-{{ i }}"
                     [value]="carrier"
-                    [checked]="selected === i" (change)="selected = i"
                     (click)="selectedFilter(carrier, $event, 'insuranceCompany')"
                   />
                   <label class="custom-control-label" for="checkbox-carrier-{{ i }}">{{ carrier }}</label>
@@ -189,6 +188,12 @@
               </th>
               <th [ngStyle]="{ width: '20%' }" scope="col">
                 {{ getTableHeader('col-2') }}
+                <i
+                  class="fas fa-question-circle ml-2"
+                  placement="right"
+                  [ngbTooltip]="getToolTip('benefitCost')"
+                  *ngIf="!pdfView"
+                ></i>
               </th>
               <th scope="col">
                 {{ getTableHeader('col-3') }}
@@ -213,7 +218,7 @@
                 <i
                   class="fas fa-question-circle ml-2"
                   placement="right"
-                  [ngbTooltip]="getToolTip('maximumMonthlyEmployerCost')"
+                  [ngbTooltip]="getToolTip('monthlyCost')"
                   *ngIf="!pdfView"
                 ></i>
               </th>
@@ -277,15 +282,15 @@
               <td>{{ carrier['product_information']['out_of_pocket_in_network'] }}</td>
               <td *ngIf="this.planFilter == 'single_product' && this.planType !== 'dental'">
                 <p class="mb-0">
-                  <strong>Individual -</strong>
+                  <strong>Employee -</strong>
                   {{ carrier.tier_costs.get("Employee Only").sponsor_cost | currency }}
                 </p>
                 <p class="mb-0">
-                  <strong>Two-Person -</strong>
+                  <strong>Emp & Spouse -</strong>
                   {{ carrier.tier_costs.get("Employee and Spouse").sponsor_cost | currency }}
                 </p>
                 <p class="mb-0">
-                  <strong>Emp W/Child -</strong>
+                  <strong>Emp & Children -</strong>
                   {{ carrier.tier_costs.get("Employee and Dependents").sponsor_cost | currency }}
                 </p>
                 <p class="mb-0">
