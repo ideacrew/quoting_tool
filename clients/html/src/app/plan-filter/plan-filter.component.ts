@@ -83,6 +83,8 @@ export class PlanFilterComponent implements OnInit {
   public tieredContributionModel: TieredContributionModel;
   sortDirection = true;
   sortKind: any;
+  filteredPlansByMetalLevel: any;
+  filteredPlansByProductTypes: any;
   get sortFilter() { return this.sortDirection ? 'asc' : 'desc'; }
 
   public planOptions = [
@@ -308,51 +310,114 @@ export class PlanFilterComponent implements OnInit {
     this.filterCarriers();
   }
 
+  combineArray(arr) {
+    return [].concat.apply([], arr)
+      .reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
+  }
+
   filterCarriers() {
     const plans = this.filteredCarriers;
-    const tempArray = [];
-    const filters = [].concat(this.selectedMetalLevels).concat(this.selectedProductTypes)
-                      .concat(this.selectedHSAs).concat(this.selectedInsuranceCompanies);
-    /*
-     plans.filter(plan => {
-      filters.map(filter => {
-        if (plan['product_information'][filter.key] && plan['product_information'][filter.key] === filter.value) {
-          tempArray.push(plan);
-        }
-        if (plan[filter.key] && plan[filter.key] === filter.value) {
-          tempArray.push(plan);
-        }
-      });
-    });
-    */
+    const mlArray = [];
+    const ptArray = [];
+    const icArray = [];
+    const hsaArray = [];
+    let selected;
 
-    filters.map(filter => {
-      plans.filter(plan => {
-        if (plan['product_information'][filter.key] && plan['product_information'][filter.key] === filter.value) {
-          if (tempArray.length < 1) {
-            tempArray.push(plan);
-          } else {
-            
-          }
-        }
-      });
-    });
-
-    let resultsArray = [].concat.apply([], tempArray)
-      .reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
-
-    if (this.selectedInsuranceCompanies.length > 0) {
-      [this.selectedInsuranceCompanies].map(providerName => {
-        if (resultsArray.length > 0) {
-          resultsArray = resultsArray.filter(plan => plan['product_information']['provider_name'] === providerName.toString());
-        } else {
-          resultsArray = plans.filter(plan => plan['product_information']['provider_name'] === providerName.toString());
-        }
-        return resultsArray;
+    if (this.selectedMetalLevels.length > 0) {
+      this.selectedMetalLevels.map(ml => {
+        mlArray.push(plans.filter(plan => plan['product_information'][ml.key] === ml.value));
+        selected = this.combineArray(mlArray);
       });
     }
 
-    this.filterCarriersResults = resultsArray;
+    if (this.selectedProductTypes.length > 0) {
+      this.selectedProductTypes.map(pt => {
+        ptArray.push(plans.filter(plan => plan['product_information'][pt.key] === pt.value));
+        selected = this.combineArray(ptArray);
+      });
+    }
+
+    if (this.selectedInsuranceCompanies.length > 0) {
+      this.selectedInsuranceCompanies.map(ic => {
+        icArray.push(plans.filter(plan => plan['product_information'][ic.key] === ic.value));
+        selected = this.combineArray(icArray);
+      });
+    }
+
+    if (this.selectedHSAs.length > 0) {
+      this.selectedHSAs.map(hsa => {
+        hsaArray.push(plans.filter(plan => plan['product_information'][hsa.key] === hsa.value));
+        selected = this.combineArray(hsaArray);
+      });
+    }
+
+    if (this.selectedInsuranceCompanies.length > 0 && this.selectedProductTypes.length > 0) {
+      this.selectedProductTypes.map(pt => {
+        selected = this.combineArray(icArray).filter(plan => plan['product_information'][pt.key] === pt.value);
+      });
+    }
+
+    if (this.selectedInsuranceCompanies.length > 0 && this.selectedHSAs.length > 0) {
+      this.selectedHSAs.map(hsa => {
+        selected = this.combineArray(icArray).filter(plan => plan['product_information'][hsa.key] === hsa.value);
+      });
+    }
+
+    if (this.selectedMetalLevels.length > 0 && this.selectedInsuranceCompanies.length > 0) {
+      this.selectedInsuranceCompanies.map(ic => {
+        selected = this.combineArray(mlArray).filter(plan => plan['product_information'][ic.key] === ic.value);
+      });
+    }
+
+    if (this.selectedMetalLevels.length > 0 && this.selectedProductTypes.length > 0) {
+      this.selectedProductTypes.map(pt => {
+        selected = this.combineArray(mlArray).filter(plan => plan['product_information'][pt.key] === pt.value);
+      });
+    }
+
+    if (this.selectedMetalLevels.length > 0 && this.selectedHSAs.length > 0) {
+      this.selectedHSAs.map(hsa => {
+        selected = this.combineArray(mlArray).filter(plan => plan['product_information'][hsa.key] === hsa.value);
+      });
+    }
+
+    if (this.selectedMetalLevels.length > 0 && this.selectedProductTypes.length > 0 && this.selectedInsuranceCompanies.length > 0) {
+      this.selectedInsuranceCompanies.map(ic => {
+        selected = selected.filter(plan => plan['product_information'][ic.key] === ic.value);
+      });
+    }
+
+    if (this.yearlyMedicalDeductibleFrom && !this.yearlyMedicalDeductibleTo) {
+      selected = selected.filter(plan => parseInt(plan['product_information']['deductible']
+        .replace('$', '').replace(',', ''), 0) >= this.yearlyMedicalDeductibleTo);
+    }
+
+    if (!this.yearlyMedicalDeductibleFrom && this.yearlyMedicalDeductibleTo) {
+       selected = selected.filter(plan => parseInt(plan['product_information']['deductible']
+        .replace('$', '').replace(',', ''), 0) <= this.yearlyMedicalDeductibleTo);
+    }
+
+    if (this.yearlyMedicalDeductibleFrom && this.yearlyMedicalDeductibleTo) {
+       selected = selected.filter(plan => parseInt(plan['product_information']['deductible']
+        .replace('$', '').replace(',', ''), 0) >= this.yearlyMedicalDeductibleFrom && parseInt(plan['product_information']['deductible']
+        .replace('$', '').replace(',', ''), 0) <= this.yearlyMedicalDeductibleTo);
+    }
+
+    if (this.planPremiumsFrom && !this.planPremiumsTo) {
+       selected = selected.filter(plan => plan['total_cost'] >= this.planPremiumsFrom);
+    }
+
+    if (!this.planPremiumsFrom && this.planPremiumsTo) {
+       selected = selected.filter(plan => plan['total_cost'] <= this.planPremiumsTo);
+    }
+
+    if (this.planPremiumsFrom && this.planPremiumsTo) {
+       selected = selected.filter(plan => plan['total_cost']
+        >= this.planPremiumsFrom && plan['total_cost']
+        <= this.planPremiumsTo);
+    }
+
+    this.filterCarriersResults = selected;
   }
 
   displayResults() {
