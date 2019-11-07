@@ -324,7 +324,7 @@ export class TieredCoverageCostCalculatorService {
   }
 
   private calculateLevels(product: Product) {
-    const gs_factor = product.group_size_factor('1');
+    const gs_factor = product.group_size_factor(this.groupSize);
     const pr_factor = product.participation_factor(this.participation);
     const sic_code_factor = product.sic_code_factor;
     const level_totals = this.initialBucket();
