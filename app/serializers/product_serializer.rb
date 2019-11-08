@@ -55,6 +55,10 @@ class ProductSerializer
     object.metal_level_kind
   end
 
+  attribute :id do |object|
+    object.id.to_s
+  end
+
   attribute :integrated_drug_deductible do |object|
     nil
   end

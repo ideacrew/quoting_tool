@@ -20,6 +20,16 @@ class Api::V1::ProductsController < ApplicationController
     render :json => {status: "success", plans: data}
   end
 
+  def sbc_document
+    result = Transactions::SbcDocument.new.call({key: params[:key]})
+
+    if result.success?
+      render :json => {status: "success", metadata: result.value!.values}
+    else
+      render :json => {status: "failure", metadata: ''}
+    end
+  end
+
   private
 
   def county_zips(county, zip)

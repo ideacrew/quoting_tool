@@ -49,6 +49,7 @@ export interface ProductData {
   major_dental_services: string;
   basic_dental_services: string;
   out_of_pocket_in_network: string;
+  id: string;
 }
 
 export interface Product {
@@ -71,6 +72,7 @@ export interface Product {
   major_dental_services: string;
   basic_dental_services: string;
   out_of_pocket_in_network: string;
+  id: string;
   group_size_factor(group_size: string): number;
   group_tier_factor(tier_name: ContributionTierName): number;
   participation_factor(participation: string): number;

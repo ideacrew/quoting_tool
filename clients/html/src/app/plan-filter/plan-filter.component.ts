@@ -489,8 +489,8 @@ export class PlanFilterComponent implements OnInit {
     }, 500);
   }
 
-  getSbcDocument() {
-    this.planService.getSbcDocumentFor('', '');
+  getSbcDocument(key) {
+    this.planService.getSbcDocumentFor(key);
   }
 
   sortData(kind) {
