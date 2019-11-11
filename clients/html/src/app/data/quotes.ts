@@ -1,6 +1,12 @@
 import { Product } from './products';
 import { PackageTypes } from '../config/client_configuration';
 
+export interface ContributionTierCost {
+  sponsor_cost: number;
+  member_cost: number;
+  total_cost: number;
+}
+
 export interface QuoteCalculator {
   quoteProducts(products: Array<Product>, pType: PackageTypes): Array<Quote>;
 }

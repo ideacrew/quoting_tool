@@ -1,8 +1,8 @@
 import { RelationshipContributionModel } from '../../data/contribution_models';
-import { PackageTypes, ContributionRelationship } from '../../config/client_configuration';
+import { PackageTypes, ContributionRelationship, ContributionTierName } from '../../config/client_configuration';
 import { RosterEntry, RosterDependent } from '../../data/sponsor_roster';
 import { Product } from '../../data/products';
-import { Quote } from '../../data/quotes';
+import { Quote, ContributionTierCost } from '../../data/quotes';
 import { ResultTotal } from './result_total';
 import { MetalLevelBucket } from './metal_level_bucket';
 import { IssuerBucket } from './issuer_bucket';
@@ -181,18 +181,20 @@ export class RelationshipCoverageCostCalculatorService {
     if (this.minMemberCost === 100000000.0) {
       this.minMemberCost = 0.0;
     }
+    const emptyTierMap = new Map<ContributionTierName, ContributionTierCost>();
     return new RosterQuote(
       product,
       total.total_cost,
       total.sponsor_cost,
       avg_member_cost,
       this.minMemberCost,
-      this.maxMemberCost
+      this.maxMemberCost,
+      emptyTierMap
     );
   }
 
   private product_cost(product: Product) {
-    const gs_factor = product.group_size_factor(this.groupSize);
+    const gs_factor = product.group_size_factor('1');
     const pr_factor = product.participation_factor(this.participation);
     const sic_code_factor = product.sic_code_factor;
     const calculator = this;

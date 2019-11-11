@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployerDetailsService } from './../services/employer-details.service';
@@ -71,6 +71,10 @@ export class EmployerDetailsComponent implements OnInit {
 
   @ViewChild('file', { static: false }) file: ElementRef;
 
+  @HostListener('window:beforeunload', ['$event']) unloadHandler(event: Event) {
+    event.returnValue = false;
+  }
+
   constructor(
     private fb: FormBuilder,
     private modalService: NgbModal,
@@ -132,35 +136,19 @@ export class EmployerDetailsComponent implements OnInit {
     if (this.employeeRoster) {
       this.showEmployeeRoster = true;
       this.employerDetails = JSON.parse(this.employeeRoster);
-      this.quoteForm.get('effectiveDate').setValue(new Date(Date.parse(this.employerDetails.effectiveDate)));
+      this.quoteForm.get('effectiveDate').setValue(new Date(this.employerDetails.effectiveDate));
       this.quoteForm.get('zip').setValue(this.employerDetails.zip);
       this.quoteForm.get('sic').setValue(this.employerDetails.sic.standardIndustryCodeCode);
       this.loadEmployeesFromStorage();
     }
     // Sets effective Date options
-    if (this.todaysDate.getMonth() + 1 > 11) {
-      // Add next year date if next month is January
-      this.effectiveDateOptions = [
-        {
-          month: this.todaysDate.getMonth(),
-          value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}`
-        },
-        {
-          month: 0,
-          value: `${this.months[0]} ${this.todaysDate.getFullYear() + 1}`
-        }
-      ];
+
+    if (this.todaysDate.getDate() > 15) {
+      this.effectiveDateOptions = [new Date(this.todaysDate.getFullYear(),
+        this.todaysDate.getMonth() + 2, 1), new Date(this.todaysDate.getFullYear(), this.todaysDate.getMonth() + 3, 1)];
     } else {
-      this.effectiveDateOptions = [
-        {
-          month: this.todaysDate.getMonth(),
-          value: `${this.months[this.todaysDate.getMonth()]} ${this.todaysDate.getFullYear()}`
-        },
-        {
-          month: this.todaysDate.getMonth() + 1,
-          value: `${this.months[this.todaysDate.getMonth() + 1]} ${this.todaysDate.getFullYear()}`
-        }
-      ];
+      this.effectiveDateOptions = [new Date(this.todaysDate.getFullYear(),
+        this.todaysDate.getMonth() + 1, 1), new Date(this.todaysDate.getFullYear(), this.todaysDate.getMonth() + 2, 1)];
     }
   }
 
@@ -185,7 +173,7 @@ export class EmployerDetailsComponent implements OnInit {
   }
 
   isSelected(date) {
-    if (this.employerDetails && date.value === this.employerDetails.effectiveDate) {
+    if (this.employerDetails && date.toString() === this.employerDetails.effectiveDate) {
       return true;
     } else {
       return false;
@@ -232,7 +220,7 @@ export class EmployerDetailsComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.quoteForm.value);
+    // console.log(this.quoteForm.value);
   }
 
   open(content) {
@@ -262,10 +250,38 @@ export class EmployerDetailsComponent implements OnInit {
       this.quoteForm.get('county').setValue(this.counties[0]);
       this.enableCounty();
     }
+    if (event.length === 5 && this.showEmployeeRoster) {
+      this.updateFormValue(event, 'zipCode');
+    }
   }
 
   selectEvent(item) {
     this.getCounties(item);
+    if (this.showEmployeeRoster) {
+      this.updateFormValue(item, 'zipCode');
+    }
+  }
+
+  updateEffectiveDate(event) {
+    if (this.showEmployeeRoster) {
+      this.updateFormValue(event, 'effectiveDate');
+    }
+  }
+
+  updateFormValue(event, type) {
+    if (type === 'zipCode') {
+      const form = JSON.parse(localStorage.getItem('employerDetails'));
+      form.zip = event;
+      localStorage.setItem('employerDetails', JSON.stringify(form));
+      this.counties = this.availableCounties.filter((zipcode) => zipcode.zipCode === event);
+      this.quoteForm.get('county').setValue(this.counties[0]);
+      this.enableCounty();
+    }
+    if (type === 'effectiveDate') {
+      const form = JSON.parse(localStorage.getItem('employerDetails'));
+      form.effectiveDate = event;
+      localStorage.setItem('employerDetails', JSON.stringify(form));
+    }
   }
 
   getCounties(item) {

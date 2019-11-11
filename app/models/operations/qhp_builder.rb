@@ -19,6 +19,7 @@ module Operations
           build_objects(qhp_params)
         end
       end
+      Success({message: "Successfully created/updated QHP records"})
     end
 
     def build_objects(params)

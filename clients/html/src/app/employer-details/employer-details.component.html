@@ -18,13 +18,15 @@
               id="inlineFormCustomSelect"
               formControlName="effectiveDate"
               id="effectiveDate"
+              (change)="updateEffectiveDate($event.target.value)"
             >
               <option selected>SELECT DATE</option>
               <option
                 *ngFor="let date of effectiveDateOptions"
                 [selected]="isSelected(date)"
                 [disabled]="date.disabled"
-                >{{ date.value }}</option
+                [attr.value]="date"
+                >{{ date | date:'MMMM, y' }}</option
               >
             </select>
           </div>
@@ -134,11 +136,14 @@
             about employees. Or, choose '<strong>Upload Employee Roster</strong
             >' to upload the employee roster template. To use this option, you
             will need to download the template first, then upload the completed
-            version. For each employee you add, you will need their:
+            version. <br />For each employee you add, you will need their:
           </p>
           <ul>
             <li *ngFor="let detail of employeeRosterDetails">{{ detail }}</li>
           </ul>
+          <p>
+            Note: You may use this complete roster download when you apply.
+          </p>
           <button type="button" class="btn btn-link">
             <a href="/assets/roster_upload_template.csv" download
               ><i class="fas fa-download"></i> Download Roster Template</a
@@ -175,7 +180,7 @@
           </ngx-datatable-column>
           <ngx-datatable-column name="Coverage Type">
             <ng-template let-row="row" ngx-datatable-cell-template>
-              {{ row['coverageKind'] }}
+              {{ row['coverageKind'] | coverageType}}
             </ng-template>
           </ngx-datatable-column>
           <ngx-datatable-column name="Dependent Count">

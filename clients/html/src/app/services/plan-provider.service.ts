@@ -28,11 +28,10 @@ export class PlanProviderService {
     kind: string,
     component
   ) {
-    const formattedDate = startDate.toISOString().substring(0, 10);
     const transformer = this.dataLoader;
     const attrs = {
       sic_code: sic_code,
-      start_date: formattedDate,
+      start_date: startDate,
       county_name: county_name,
       zip_code: zip,
       state: state,
@@ -41,6 +40,15 @@ export class PlanProviderService {
     this.api_request.authedGet('products/plans.json', attrs).subscribe(function(data: Array<ProductData>) {
       consumer.onProductsLoaded(transformer.castData(data['plans']));
       component.isLoading = false;
+    });
+  }
+
+  public getSbcDocumentFor(key) {
+    this.api_request.authedGet('products/sbc_document.json', {key: key}).subscribe(response => {
+      if (response['status'] === 'success') {
+        const pdfWindow = window.open('');
+        pdfWindow.document.write(`<iframe width='100%' height='100%' src='data:application/pdf;base64, ${encodeURI(response['metadata'][1])}></iframe>`);
+      }
     });
   }
 }

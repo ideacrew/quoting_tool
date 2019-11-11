@@ -1,29 +1,18 @@
-<div class="row pt-4">
-  <div class="col-8">
+<div class="row pt-12">
+  <div class="col-8 mt-2">
     <button class="btn btn-rounded btn-outline-info">
       <span class="cs-text">Cost shown for</span>
       <i class="fas fa-user ml-1"></i> {{ costShownText }}
     </button>
-    Effective Date: <strong>{{ employerDetails?.effectiveDate }}</strong>
+    Effective Date: <strong>{{ employerDetails?.effectiveDate | date:'MMMM, y' }}</strong>
   </div>
-  <div class="col-4">
-    <div class="form-group">
-      <select
-        class="custom-select col-9 float-right"
-        id="inlineFormCustomSelect"
-        (change)="changePackageFilter($event.target.value)"
-        [disabled]="isLoading ? '' : null"
-      >
-        <option selected>Choose type ...</option>
-        <option *ngFor="let plan of planOptions" [value]="plan.key" [hidden]="plan.view !== planType">{{
-          plan.value
-        }}</option>
-      </select>
-    </div>
-  </div>
+  <div class="col-12 mt-4 mb-4">
+    <h5 class="mb-3"><strong>Select a Benefit Model</strong></h5>
+    <label class="radio-container mr-3" *ngFor="let plan of planOptions; let i = index" [hidden]="plan.view !== planType">{{plan.value}}
+      <input type="radio" name="radio" id="customRadioInline{{i}}" name="customRadioInline" (click)="changePackageFilter(plan.key)">
+      <span class="checkmark"></span>
+    </label>
 </div>
-
-<div *ngIf="!isLoading"></div>
 
 <div *ngIf="!isLoading">
   <div class="row">
@@ -47,7 +36,7 @@
               <div class="col-3">
                 <p class="heading-label">
                   Metal Level
-                  <i class="far fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('metalLevel')"></i>
+                  <i class="far fa-question-circle ml-2" placement="right" [ngbTooltip]="getToolTip('metalLevel')" *ngIf="planType !== 'dental'"></i>
                 </p>
                 <div
                   class="custom-control custom-checkbox mr-sm-2 m-b-15"
@@ -121,9 +110,9 @@
                 </p>
                 <div class="row">
                   <label for="pp1"></label>
-                  <input type="text" class="form-control col-3 mr-2" id="pp1" (keydown)="validateNumber($event)" [(ngModel)]="planPremiumsFrom" (blur)="filterCarriers()" />
+                  <input type="text" class="form-control col-3 mr-2" id="pp1" (keydown)="validateNumber($event)" [(ngModel)]="planPremiumsFrom" (blur)="selectedFilter('input', $event, 'planPremiumsFrom')" />
                   TO
-                  <input type="text" class="form-control col-3 ml-2" (keydown)="validateNumber($event)" [(ngModel)]="planPremiumsTo" (blur)="filterCarriers()" />
+                  <input type="text" class="form-control col-3 ml-2" (keydown)="validateNumber($event)" [(ngModel)]="planPremiumsTo" (blur)="selectedFilter('input', $event, 'planPremiumsTo')" />
                 </div>
               </div>
               <div class="col-6">
@@ -137,9 +126,9 @@
                 </p>
                 <div class="row">
                   <label for="ymb1"></label>
-                  <input type="text" class="form-control col-3 mr-2" id="ymb1" (keydown)="validateNumber($event)" [(ngModel)]="yearlyMedicalDeductibleFrom" (blur)="filterCarriers()" />
+                  <input type="text" class="form-control col-3 mr-2" id="ymb1" (keydown)="validateNumber($event)" [(ngModel)]="yearlyMedicalDeductibleFrom" (blur)="selectedFilter('input', $event, 'yearlyMedicalDeductibleFrom')" />
                   TO
-                  <input type="text" class="form-control col-3 ml-2" (keydown)="validateNumber($event)" [(ngModel)]="yearlyMedicalDeductibleTo" (blur)="filterCarriers()" />
+                  <input type="text" class="form-control col-3 ml-2" (keydown)="validateNumber($event)" [(ngModel)]="yearlyMedicalDeductibleTo" (blur)="selectedFilter('input', $event, 'yearlyMedicalDeductibleTo')" />
                 </div>
               </div>
             </div>
@@ -156,7 +145,6 @@
                     class="custom-control-input checkbox-input"
                     id="checkbox-carrier-{{ i }}"
                     [value]="carrier"
-                    [checked]="selected === i" (change)="selected = i"
                     (click)="selectedFilter(carrier, $event, 'insuranceCompany')"
                   />
                   <label class="custom-control-label" for="checkbox-carrier-{{ i }}">{{ carrier }}</label>
@@ -200,9 +188,16 @@
               </th>
               <th [ngStyle]="{ width: '20%' }" scope="col">
                 {{ getTableHeader('col-2') }}
+                <i
+                  class="fas fa-question-circle ml-2"
+                  placement="right"
+                  [ngbTooltip]="getToolTip('benefitCost')"
+                  *ngIf="!pdfView"
+                ></i>
               </th>
-              <th scope="col">
+              <th scope="col" (click)="sortData(getTableHeader('col-3')); setIcon('col-3')" class="clickable-header">
                 {{ getTableHeader('col-3') }}
+                <i class="fas" [ngClass]="sortDirection ? 'fa-arrow-up' : 'fa-arrow-down'" *ngIf="!pdfView && showIcon('col-3')"></i>
                 <i
                   class="fas fa-question-circle ml-2"
                   placement="right"
@@ -210,8 +205,9 @@
                   *ngIf="!pdfView"
                 ></i>
               </th>
-              <th scope="col">
+              <th scope="col" (click)="sortData(getTableHeader('col-4')); setIcon('col-4')" class="clickable-header">
                 {{ getTableHeader('col-4') }}
+                <i class="fas" [ngClass]="sortDirection ? 'fa-arrow-up' : 'fa-arrow-down'" *ngIf="!pdfView && showIcon('col-4')"></i>
                 <i
                   class="fas fa-question-circle ml-2"
                   placement="right"
@@ -219,18 +215,18 @@
                   *ngIf="!pdfView"
                 ></i>
               </th>
-              <th [ngStyle]="{ width: '17%' }" scope="col" *ngIf="this.planFilter == 'single_product'">
+              <th [ngStyle]="{ width: '17%' }" scope="col" *ngIf="this.planFilter == 'single_product' && this.planType !== 'dental'">
                 {{ getTableHeader('col-5') }}
                 <i
                   class="fas fa-question-circle ml-2"
                   placement="right"
-                  [ngbTooltip]="getToolTip('maximumMonthlyEmployerCost')"
+                  [ngbTooltip]="getToolTip('monthlyCost')"
                   *ngIf="!pdfView"
                 ></i>
               </th>
-              <th scope="col" (click)="sortData(getTableHeader('col-6'))" class="clickable-header">
+              <th scope="col" (click)="sortData(getTableHeader('col-6')); setIcon('col-6')" class="clickable-header">
                 {{ getTableHeader('col-6') }}
-                <i class="fas" [ngClass]="sortDirection ? 'fa-arrow-up' : 'fa-arrow-down'" *ngIf="!pdfView"></i>
+                <i class="fas" [ngClass]="sortDirection ? 'fa-arrow-up' : 'fa-arrow-down'" *ngIf="!pdfView && showIcon('col-6')"></i>
                 <i
                   class="fas fa-question-circle ml-2"
                   placement="right"
@@ -245,7 +241,7 @@
               <td>
                 <strong>{{ carrier['product_information']['provider_name'] }}</strong
                 ><br /><strong>{{ carrier['product_name'] }}</strong
-                ><br /><a href="/" *ngIf="!pdfView"
+                ><br /><a href="javascript:void(0);" *ngIf="!pdfView" (click)="getSbcDocument(carrier['product_information']['id'])"
                   >Summary of Benefit Coverage <i class="far fa-file-pdf fa-lg"></i
                 ></a>
               </td>
@@ -253,19 +249,19 @@
                 <span *ngIf="planType == 'health'">
                   <p class="mb-0">
                     <strong>Hospital Stay -</strong>
-                    {{ carrier['product_information']['hospital_stay'] | number: '1.2-2' }}
+                    {{ carrier['product_information']['hospital_stay'] | currency }}
                   </p>
                   <p class="mb-0">
                     <strong>Emergency Stay -</strong>
-                    {{ carrier['product_information']['emergency_stay'] | number: '1.2-2' }}
+                    {{ carrier['product_information']['emergency_stay'] | currency }}
                   </p>
                   <p class="mb-0">
                     <strong>PCP Office Visit -</strong>
-                    {{ carrier['product_information']['pcp_office_visit'] | number: '1.2-2' }}
+                    {{ carrier['product_information']['pcp_office_visit'] | currency }}
                   </p>
                   <p class="mb-0">
                     <strong>RX -</strong>
-                    {{ carrier['product_information']['rx'] | number: '1.2-2' }}
+                    {{ carrier['product_information']['rx'] | currency }}
                   </p>
                 </span>
 
@@ -286,25 +282,25 @@
               </td>
               <td>{{ carrier['group_deductible'] }}</td>
               <td>{{ carrier['product_information']['out_of_pocket_in_network'] }}</td>
-              <td *ngIf="this.planFilter == 'single_product'">
+              <td *ngIf="this.planFilter == 'single_product' && this.planType !== 'dental'">
                 <p class="mb-0">
-                  <strong>Individual -</strong>
-                  {{ carrier['sponsor_cost'] | number: '1.2-2' }}
+                  <strong>Employee -</strong>
+                  {{ carrier.tier_costs.get("Employee Only").sponsor_cost | currency }}
                 </p>
                 <p class="mb-0">
-                  <strong>Two-Person -</strong>
-                  {{ carrier['sponsor_cost'] | number: '1.2-2' }}
+                  <strong>Emp & Spouse -</strong>
+                  {{ carrier.tier_costs.get("Employee and Spouse").sponsor_cost | currency }}
                 </p>
                 <p class="mb-0">
-                  <strong>Emp W/Child -</strong>
-                  {{ carrier['sponsor_cost'] | number: '1.2-2' }}
+                  <strong>Emp & Children -</strong>
+                  {{ carrier.tier_costs.get("Employee and Dependents").sponsor_cost | currency }}
                 </p>
                 <p class="mb-0">
                   <strong>Family -</strong>
-                  {{ carrier['sponsor_cost'] | number: '1.2-2' }}
+                  {{ carrier.tier_costs.get("Family").sponsor_cost | currency }}
                 </p>
               </td>
-              <td>{{ carrier['sponsor_cost'] | number: '1.2-2' }}</td>
+              <td>{{ carrier['sponsor_cost'] | currency }}</td>
             </tr>
           </tbody>
         </table>

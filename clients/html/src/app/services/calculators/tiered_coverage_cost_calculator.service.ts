@@ -2,7 +2,7 @@ import { TieredContributionModel } from '../../data/contribution_models';
 import { RosterEntry, RosterDependent } from '../../data/sponsor_roster';
 import { PackageTypes, ContributionRelationship, ContributionTierName } from '../../config/client_configuration';
 import { Product } from '../../data/products';
-import { Quote } from '../../data/quotes';
+import { Quote, ContributionTierCost } from '../../data/quotes';
 import { ResultTotal } from './result_total';
 import { RosterQuote } from './roster_quote';
 
@@ -112,7 +112,7 @@ class FilteredRelationshipRosterEntry {
       remain_to_pick.indexOf(ContributionTierName.EMPLOYEE_AND_SPOUSE) > -1 &&
       rels.indexOf(ContributionRelationship.CHILD) > -1
     ) {
-      remain_to_pick = allowed_buckets.filter(function(ab) {
+      remain_to_pick = remain_to_pick.filter(function(ab) {
         return ab !== ContributionTierName.EMPLOYEE_AND_SPOUSE;
       });
     }
@@ -121,12 +121,10 @@ class FilteredRelationshipRosterEntry {
     }
     if (
       remain_to_pick.indexOf(ContributionTierName.EMPLOYEE_AND_DEPENDENTS) > -1 &&
-      (rels.indexOf(ContributionRelationship.SPOUSE) > -1 ||
+      !(rels.indexOf(ContributionRelationship.SPOUSE) > -1 ||
         rels.indexOf(ContributionRelationship.DOMESTIC_PARTNER) > -1)
     ) {
-      remain_to_pick = allowed_buckets.filter(function(ab) {
-        return ab !== ContributionTierName.EMPLOYEE_AND_DEPENDENTS;
-      });
+      return ContributionTierName.EMPLOYEE_AND_DEPENDENTS;
     }
     if (remain_to_pick.length < 2) {
       return remain_to_pick[0];
@@ -145,9 +143,15 @@ class BucketCount {
   constructor(public counts: Map<ContributionTierName, number>, public total: number) {}
 
   public add(entry: FilteredRelationshipRosterEntry, price: number) {
-    const current_count = this.counts.get(entry.bucket);
-    this.counts.set(entry.bucket, current_count + 1);
-    return new BucketCount(this.counts, this.total + price);
+    const current_count = this.valueFromMapWithDefault(this.counts, entry.bucket, 0);
+     this.counts.set(
+       entry.bucket,
+       current_count + 1
+     );
+     return new BucketCount(
+       this.counts,
+       this.total + price
+     );
   }
 
   public toLevels(product) {
@@ -171,6 +175,14 @@ class BucketCount {
     );
     bucket_map.set(ContributionTierName.FAMILY, reduced_value * product.group_tier_factor(ContributionTierName.FAMILY));
     return bucket_map;
+  }
+
+  private valueFromMapWithDefault<K, V>(m: Map<K, V>, k: K, default_value: V) {
+    const value = <V>m.get(k);
+    if (value != null) {
+      return value;
+    }
+    return default_value;
   }
 }
 
@@ -259,12 +271,21 @@ export class TieredCoverageCostCalculatorService {
       return calculator.sumTotals(levels, entry, current);
     }, new ResultTotal(0.0, 0.0));
     const avg_member_cost = (total.total_cost - total.sponsor_cost) / parseFloat(this.groupSize);
-    let maxMemberCost = 0.0;
-    let minMemberCost = 100000000.0;
-    const contribution_map = this.relContributions;
+    let maxMemberCost = 0.00;
+    let minMemberCost = 100000000.00;
+    const levelCosts = new Map<ContributionTierName, ContributionTierCost>();
     levels.forEach(function(val, k) {
-      const contribution = val * contribution_map.get(k) * 0.01;
+      const contribution_value = calculator.valueFromMapWithDefault(calculator.relContributions, k, 0.0);
+      const contribution = val * contribution_value * 0.01;
       const mCost = val - contribution;
+      levelCosts.set(
+        k,
+        {
+          sponsor_cost: contribution,
+          total_cost: val,
+          member_cost: mCost
+        }
+      );
       if (mCost < minMemberCost) {
         minMemberCost = mCost;
       }
@@ -281,7 +302,8 @@ export class TieredCoverageCostCalculatorService {
       total.sponsor_cost,
       avg_member_cost,
       minMemberCost,
-      maxMemberCost
+      maxMemberCost,
+      levelCosts
     );
   }
 
@@ -290,14 +312,19 @@ export class TieredCoverageCostCalculatorService {
     entry: FilteredRelationshipRosterEntry,
     current_total: ResultTotal
   ) {
-    const contribution_map = this.relContributions;
-    const cost = levels.get(entry.bucket);
-    const contribution = cost * contribution_map.get(entry.bucket) * 0.01;
-    return current_total.add(new ResultTotal(cost, contribution));
+    const cost = this.valueFromMapWithDefault(levels, entry.bucket, 0.0);
+    const contribution_value = this.valueFromMapWithDefault(this.relContributions, entry.bucket, 0.0);
+    const contribution = cost * contribution_value * 0.01;
+    return current_total.add(
+      new ResultTotal(
+        cost,
+        contribution
+      )
+    );
   }
 
   private calculateLevels(product: Product) {
-    const gs_factor = product.group_size_factor('1');
+    const gs_factor = product.group_size_factor(this.groupSize);
     const pr_factor = product.participation_factor(this.participation);
     const sic_code_factor = product.sic_code_factor;
     const level_totals = this.initialBucket();
@@ -349,5 +376,13 @@ export class TieredCoverageCostCalculatorService {
       offset = dob.getDate() > coverageDate.getDate() ? -1 : 0;
     }
     return year_diff + offset;
+  }
+
+  private valueFromMapWithDefault<K, V>(m: Map<K, V>, k: K, default_value: V) {
+    const value = <V>m.get(k);
+    if (value != null) {
+      return value;
+    }
+    return default_value;
   }
 }

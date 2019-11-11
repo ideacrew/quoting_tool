@@ -14,10 +14,15 @@ export class ApiRequestService {
 
   // URL to the API we want to use
   private api = environment.envApi;
+  private cataract_api = environment.cataract_api;
 
   // Get the full URL to the API
   private getFullPath(url: any) {
     return `${this.api}/api/v${this.version}/${url}`;
+  }
+
+  private getCataractFullPath(url: any) {
+    return `${this.cataract_api}/api/v${this.version}/${url}`;
   }
 
   // Make an authed GET request
@@ -33,5 +38,9 @@ export class ApiRequestService {
   // Make an authed PUT request
   public authedPut(url: string, body: any) {
     return this.http.put(this.getFullPath(url), body);
+  }
+
+  public authedCataractGet(url: string, attrs?: any) {
+    return this.http.get(this.getCataractFullPath(url), { params: attrs });
   }
 }

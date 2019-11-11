@@ -55,6 +55,10 @@ class ProductSerializer
     object.metal_level_kind
   end
 
+  attribute :id do |object|
+    object.id.to_s
+  end
+
   attribute :integrated_drug_deductible do |object|
     nil
   end
@@ -68,7 +72,7 @@ class ProductSerializer
   end
 
   attribute :sic_code_factor do |object, params|
-    $sic_factors[[params[:sic], object.active_year, object.issuer_hios_ids.first]] || 1.0
+    $sic_factors[[params[:key], object.active_year, object.issuer_hios_ids.first]] || 1.0
   end
 
   attribute :rates do |object, params|
