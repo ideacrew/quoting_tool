@@ -46,6 +46,7 @@ export class EmployerDetailsComponent implements OnInit {
   public counties: any;
   public quoteForm: FormGroup;
   public editEmployeeForm: FormGroup;
+  public addNewEmployeeForm: FormGroup;
   public editEmployeeIndex: any;
   public showEmployeeRoster = false;
   public showHouseholds = true;
@@ -56,6 +57,7 @@ export class EmployerDetailsComponent implements OnInit {
   public todaysDate = new Date();
   public employeeRosterDetails: any;
   public show: boolean;
+  showNewEmployee = false;
 
   relationOptions = [
     { key: 'Spouse', value: 'Spouse' },
@@ -93,6 +95,14 @@ export class EmployerDetailsComponent implements OnInit {
     this.showEditHousehold = false;
 
     this.editEmployeeForm = this.fb.group({
+      firstName: [''],
+      lastName: [''],
+      dob: ['', Validators.required],
+      coverageKind: ['', Validators.required],
+      dependents: this.fb.array([])
+    });
+
+    this.addNewEmployeeForm = this.fb.group({
       firstName: [''],
       lastName: [''],
       dob: ['', Validators.required],
@@ -197,6 +207,10 @@ export class EmployerDetailsComponent implements OnInit {
         dependents: this.fb.array([])
       })
     );
+  }
+
+  addNewEmployee() {
+    this.showNewEmployee = true;
   }
 
   deleteEmployee(index) {
@@ -360,6 +374,18 @@ export class EmployerDetailsComponent implements OnInit {
     // Adds the uploaded roster to localStorage
     localStorage.setItem('employerDetails', JSON.stringify(this.quoteForm.value));
     this.showHouseholds = false;
+    this.ngOnInit();
+  }
+
+  saveNewEmployee() {
+    const form = this.employerDetails;
+    const employees = form.employees;
+    const newEmployee = this.addNewEmployeeForm.value;
+    employees.push(newEmployee);
+    localStorage.setItem('employerDetails', JSON.stringify(form));
+    this.rows = employees;
+    this.showNewEmployee = false;
+    this.addNewEmployeeForm.reset();
     this.ngOnInit();
   }
 
