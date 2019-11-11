@@ -86,6 +86,7 @@ export class PlanFilterComponent implements OnInit {
   iconSelected: any;
   filteredPlansByMetalLevel: any;
   filteredPlansByProductTypes: any;
+  public availableProducts: any;
   get sortFilter() { return this.sortDirection ? 'asc' : 'desc'; }
 
   public planOptions = [
@@ -272,6 +273,7 @@ export class PlanFilterComponent implements OnInit {
           const keyIndex = this.filterKeysSelected.indexOf(type);
           this.selectedMetalLevels.splice(index, 1);
           this.filterKeysSelected.splice(keyIndex, 1);
+          this.filteredCarriers = this.defaultCarriers;
         }
         break;
       case 'productType':
@@ -283,6 +285,7 @@ export class PlanFilterComponent implements OnInit {
           const keyIndex = this.filterKeysSelected.indexOf(type);
           this.selectedProductTypes.splice(index, 1);
           this.filterKeysSelected.splice(keyIndex, 1);
+          this.filteredCarriers = this.defaultCarriers;
         }
         break;
       case 'insuranceCompany':
@@ -294,6 +297,7 @@ export class PlanFilterComponent implements OnInit {
           const keyIndex = this.filterKeysSelected.indexOf(type);
           this.selectedInsuranceCompanies.splice(index, 1);
           this.filterKeysSelected.splice(keyIndex, 1);
+          this.filteredCarriers = this.defaultCarriers;
         }
         break;
       case 'hsa':
@@ -305,6 +309,7 @@ export class PlanFilterComponent implements OnInit {
           const keyIndex = this.filterKeysSelected.indexOf(type);
           this.selectedHSAs.splice(index, 1);
           this.filterKeysSelected.splice(keyIndex, 1);
+          this.filteredCarriers = this.defaultCarriers;
         }
         break;
     }

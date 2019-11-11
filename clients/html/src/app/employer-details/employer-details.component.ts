@@ -257,7 +257,9 @@ export class EmployerDetailsComponent implements OnInit {
 
   selectEvent(item) {
     this.getCounties(item);
-    this.updateFormValue(item, 'zipCode');
+    if (this.showEmployeeRoster) {
+      this.updateFormValue(item, 'zipCode');
+    }
   }
 
   updateEffectiveDate(event) {
