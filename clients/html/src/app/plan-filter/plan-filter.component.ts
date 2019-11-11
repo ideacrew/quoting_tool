@@ -83,6 +83,7 @@ export class PlanFilterComponent implements OnInit {
   public tieredContributionModel: TieredContributionModel;
   sortDirection = true;
   sortKind: any;
+  iconSelected: any;
   filteredPlansByMetalLevel: any;
   filteredPlansByProductTypes: any;
   get sortFilter() { return this.sortDirection ? 'asc' : 'desc'; }
@@ -496,6 +497,18 @@ export class PlanFilterComponent implements OnInit {
   sortData(kind) {
     this.sortKind = kind;
     this.sortDirection = !this.sortDirection;
+  }
+
+  setIcon(col) {
+    this.iconSelected = col;
+  }
+
+  showIcon(col) {
+    if (this.iconSelected === undefined && col === 'col-6') {
+      return true;
+    } else if (this.iconSelected === col) {
+      return true;
+    }
   }
 
   validateNumber(event) {

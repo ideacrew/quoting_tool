@@ -195,8 +195,9 @@
                   *ngIf="!pdfView"
                 ></i>
               </th>
-              <th scope="col">
+              <th scope="col" (click)="sortData(getTableHeader('col-3')); setIcon('col-3')" class="clickable-header">
                 {{ getTableHeader('col-3') }}
+                <i class="fas" [ngClass]="sortDirection ? 'fa-arrow-up' : 'fa-arrow-down'" *ngIf="!pdfView && showIcon('col-3')"></i>
                 <i
                   class="fas fa-question-circle ml-2"
                   placement="right"
@@ -204,8 +205,9 @@
                   *ngIf="!pdfView"
                 ></i>
               </th>
-              <th scope="col">
+              <th scope="col" (click)="sortData(getTableHeader('col-4')); setIcon('col-4')" class="clickable-header">
                 {{ getTableHeader('col-4') }}
+                <i class="fas" [ngClass]="sortDirection ? 'fa-arrow-up' : 'fa-arrow-down'" *ngIf="!pdfView && showIcon('col-4')"></i>
                 <i
                   class="fas fa-question-circle ml-2"
                   placement="right"
@@ -222,9 +224,9 @@
                   *ngIf="!pdfView"
                 ></i>
               </th>
-              <th scope="col" (click)="sortData(getTableHeader('col-6'))" class="clickable-header">
+              <th scope="col" (click)="sortData(getTableHeader('col-6')); setIcon('col-6')" class="clickable-header">
                 {{ getTableHeader('col-6') }}
-                <i class="fas" [ngClass]="sortDirection ? 'fa-arrow-up' : 'fa-arrow-down'" *ngIf="!pdfView"></i>
+                <i class="fas" [ngClass]="sortDirection ? 'fa-arrow-up' : 'fa-arrow-down'" *ngIf="!pdfView && showIcon('col-6')"></i>
                 <i
                   class="fas fa-question-circle ml-2"
                   placement="right"
