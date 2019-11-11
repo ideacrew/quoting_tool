@@ -18,6 +18,7 @@
               id="inlineFormCustomSelect"
               formControlName="effectiveDate"
               id="effectiveDate"
+              (change)="updateEffectiveDate($event.target.value)"
             >
               <option selected>SELECT DATE</option>
               <option

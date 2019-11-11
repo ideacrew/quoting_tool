@@ -250,10 +250,36 @@ export class EmployerDetailsComponent implements OnInit {
       this.quoteForm.get('county').setValue(this.counties[0]);
       this.enableCounty();
     }
+    if (event.length === 5 && this.showEmployeeRoster) {
+      this.updateFormValue(event, 'zipCode');
+    }
   }
 
   selectEvent(item) {
     this.getCounties(item);
+    this.updateFormValue(item, 'zipCode');
+  }
+
+  updateEffectiveDate(event) {
+    if (this.showEmployeeRoster) {
+      this.updateFormValue(event, 'effectiveDate');
+    }
+  }
+
+  updateFormValue(event, type) {
+    if (type === 'zipCode') {
+      const form = JSON.parse(localStorage.getItem('employerDetails'));
+      form.zip = event;
+      localStorage.setItem('employerDetails', JSON.stringify(form));
+      this.counties = this.availableCounties.filter((zipcode) => zipcode.zipCode === event);
+      this.quoteForm.get('county').setValue(this.counties[0]);
+      this.enableCounty();
+    }
+    if (type === 'effectiveDate') {
+      const form = JSON.parse(localStorage.getItem('employerDetails'));
+      form.effectiveDate = event;
+      localStorage.setItem('employerDetails', JSON.stringify(form));
+    }
   }
 
   getCounties(item) {
