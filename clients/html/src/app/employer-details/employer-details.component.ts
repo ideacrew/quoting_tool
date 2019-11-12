@@ -447,4 +447,36 @@ export class EmployerDetailsComponent implements OnInit {
     // Formats dob to valid format for datepicker
     return new Date(parseInt(value[2], 0), parseInt(value[0], 0), parseInt(value[1], 0));
   }
+
+  validateMonthDate(str, max) {
+    if (str.charAt(0) !== '0' || str === '00') {
+      let num = parseInt(str, 10);
+      if (isNaN(num) || num <= 0 || num > max) {
+        num = 1;
+      }
+      str = num > parseInt(max.toString().charAt(0), 10) && num.toString().length === 1 ? '0' + num : num.toString();
+    }
+    return str;
+  }
+
+  formatInputDate(e) {
+    let input = e.target.value;
+    if (/\D\/$/.test(input)) {
+      input = input.substr(0, input.length - 3);
+    }
+
+    const values = input.split('/').map(function (v) {
+      return v.replace(/\D/g, '');
+    });
+    if (values[0]) {
+      values[0] = this.validateMonthDate(values[0], 12);
+    }
+    if (values[1]) {
+      values[1] = this.validateMonthDate(values[1], 31);
+    }
+    const output = values.map(function (v, i) {
+      return v.length === 2 && i < 2 ? v + ' / ' : v;
+    });
+    e.target.value = output.join('').substr(0, 14);
+  }
 }
