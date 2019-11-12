@@ -39,11 +39,11 @@ module Transactions
     end
 
     def resource
-      @resource ||= Aws::S3::Resource.new(client: client)
+      @resource ||= ::Aws::S3::Resource.new(client: client)
     end
 
     def client
-      @client ||= Aws::S3::Client.new(stub_responses: stub?)
+      @client ||= ::Aws::S3::Client.new(stub_responses: stub?)
     end
 
     def stub?
