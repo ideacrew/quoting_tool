@@ -5,6 +5,8 @@ module Documents
 
     ACCESS_RIGHTS = %w(public pii_restricted)
 
+    embedded_in :documentable, polymorphic: true
+
     # Dublin Core metadata elements
     field :title, type: String, default: "untitled"
 
