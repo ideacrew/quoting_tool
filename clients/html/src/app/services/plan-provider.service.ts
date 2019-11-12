@@ -46,8 +46,9 @@ export class PlanProviderService {
   public getSbcDocumentFor(key) {
     this.api_request.authedGet('products/sbc_document.json', {key: key}).subscribe(response => {
       if (response['status'] === 'success') {
-        const pdfWindow = window.open('');
-        pdfWindow.document.write(`<iframe width='100%' height='100%' src='data:application/pdf;base64, ${encodeURI(response['metadata'][1])}></iframe>`);
+        window.open("data:application/pdf;base64,"+response["metadata"][1])
+        // const pdfWindow = window.open('');
+        // pdfWindow.document.write(`<iframe width='100%' height='100%' src='data:application/pdf;base64, ${encodeURI(response['metadata'][1])}></iframe>`);
       }
     });
   }
