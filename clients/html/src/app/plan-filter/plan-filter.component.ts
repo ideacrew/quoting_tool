@@ -126,7 +126,7 @@ export class PlanFilterComponent implements OnInit {
         this.employerDetails['sic']['standardIndustryCodeCode'],
         startDate,
         'MA',
-        this.employerDetails['county']['county'],
+        this.employerDetails['county'],
         this.employerDetails['zip'],
         this.planType,
         consumer

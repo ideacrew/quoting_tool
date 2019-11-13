@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ProductDataLoader } from './product-data-loader.service';
-import { Product } from '../data/products';
-import { ProductData } from '../data/products';
+import { Product, ProductData } from '../data/products';
 import { ApiRequestService } from './api-request.service';
 
 interface ProductListUser {

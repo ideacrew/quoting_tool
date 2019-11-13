@@ -149,6 +149,8 @@ export class EmployerDetailsComponent implements OnInit {
       this.quoteForm.get('effectiveDate').setValue(new Date(this.employerDetails.effectiveDate));
       this.quoteForm.get('zip').setValue(this.employerDetails.zip);
       this.quoteForm.get('sic').setValue(this.employerDetails.sic.standardIndustryCodeCode);
+      this.quoteForm.get('county').setValue(this.employerDetails.county);
+      this.counties = this.availableCounties.filter((county) => county.county === this.employerDetails.county);
       this.loadEmployeesFromStorage();
     }
     // Sets effective Date options
@@ -261,7 +263,7 @@ export class EmployerDetailsComponent implements OnInit {
   zipChangeSearch(event) {
     if (event.length === 5) {
       this.counties = this.availableCounties.filter((zipcode) => zipcode.zipCode === event);
-      this.quoteForm.get('county').setValue(this.counties[0]);
+      this.quoteForm.get('county').setValue(this.counties[0].county);
       this.enableCounty();
     }
     if (event.length === 5 && this.showEmployeeRoster) {
@@ -274,6 +276,8 @@ export class EmployerDetailsComponent implements OnInit {
     if (this.showEmployeeRoster) {
       this.updateFormValue(item, 'zipCode');
     }
+    this.counties = this.availableCounties.filter((zipcode) => zipcode.zipCode === item);
+    this.quoteForm.get('county').setValue(this.counties[0].county);
   }
 
   updateEffectiveDate(event) {
@@ -302,8 +306,9 @@ export class EmployerDetailsComponent implements OnInit {
     if (type === 'zipCode') {
       const form = JSON.parse(localStorage.getItem('employerDetails'));
       form.zip = event;
-      localStorage.setItem('employerDetails', JSON.stringify(form));
       this.counties = this.availableCounties.filter((zipcode) => zipcode.zipCode === event);
+      form.county = this.counties[0].county;
+      localStorage.setItem('employerDetails', JSON.stringify(form));
       this.enableCounty();
     }
     if (type === 'effectiveDate') {
@@ -323,12 +328,12 @@ export class EmployerDetailsComponent implements OnInit {
     if (this.showEmployeeRoster) {
       const form = JSON.parse(localStorage.getItem('employerDetails'));
       if (this.counties.length === 1) {
-        form.county = this.counties[0];
+        form.county = this.counties[0].county;
         localStorage.setItem('employerDetails', JSON.stringify(form));
         this.quoteForm.get('county').setValue(form.county.county);
       }
     }
-    if (!this.showEmployeeRoster && this.counties.length === 1) {
+    if (!this.showEmployeeRoster && this.counties.length) {
       this.quoteForm.get('county').setValue(this.counties[0].county);
     }
     this.enableCounty();
@@ -338,7 +343,7 @@ export class EmployerDetailsComponent implements OnInit {
     if (this.showEmployeeRoster) {
       const form = JSON.parse(localStorage.getItem('employerDetails'));
       const selectedCounty = this.availableCounties.filter((c) => c.county === event.target.value && c.zipCode === form.zip);
-      form.county = selectedCounty[0];
+      form.county = selectedCounty[0].county;
       localStorage.setItem('employerDetails', JSON.stringify(form));
     }
   }
@@ -478,6 +483,7 @@ export class EmployerDetailsComponent implements OnInit {
     this.rows[this.editEmployeeIndex] = this.editEmployeeForm.value;
     this.rows = [...this.rows];
     this.employerDetails.employees[this.editEmployeeIndex] = this.editEmployeeForm.value;
+    console.log(this.employerDetails);
     localStorage.setItem('employerDetails', JSON.stringify(this.employerDetails));
     this.editEmployeeIndex = null;
   }
