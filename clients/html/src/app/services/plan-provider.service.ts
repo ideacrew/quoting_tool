@@ -58,9 +58,6 @@ export class PlanProviderService {
         win.document.write('<html><body>');
         win.document.write(objbuilder);
         win.document.write('</body></html>');
-        // window.open("data:application/pdf;base64,"+response["metadata"][1])
-        // const pdfWindow = window.open('');
-        // pdfWindow.document.write(`<iframe width='100%' height='100%' src='data:application/pdf;base64, ${encodeURI(response['metadata'][1])}></iframe>`);
       }
     });
   }
