@@ -328,14 +328,19 @@ export class EmployerDetailsComponent implements OnInit {
         this.quoteForm.get('county').setValue(form.county.county);
       }
     }
+    if (!this.showEmployeeRoster && this.counties.length === 1) {
+      this.quoteForm.get('county').setValue(this.counties[0].county);
+    }
     this.enableCounty();
   }
 
   updateCounty(event) {
-    const form = JSON.parse(localStorage.getItem('employerDetails'));
-    const selectedCounty = this.availableCounties.filter((c) => c.county === event.target.value && c.zipCode === form.zip);
-    form.county = selectedCounty[0];
-    localStorage.setItem('employerDetails', JSON.stringify(form));
+    if (this.showEmployeeRoster) {
+      const form = JSON.parse(localStorage.getItem('employerDetails'));
+      const selectedCounty = this.availableCounties.filter((c) => c.county === event.target.value && c.zipCode === form.zip);
+      form.county = selectedCounty[0];
+      localStorage.setItem('employerDetails', JSON.stringify(form));
+    }
   }
 
   enableCounty() {
