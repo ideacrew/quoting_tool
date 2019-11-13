@@ -43,13 +43,21 @@ export class PlanProviderService {
     });
   }
 
-  public getSbcDocumentFor(key) {
+  public getSbcDocumentFor(key, win) {
     this.api_request.authedGet('products/sbc_document.json', {key: key}).subscribe(response => {
       if (response['status'] === 'success') {
-        window.open('data:application/pdf;base64,' + response['metadata'][1]);
-        // const pdfWindow = window.open('');
-        // pdfWindow.document.write(`<iframe width='100%' height='100%' src='data:application/pdf;base64,
-        // ${encodeURI(response['metadata'][1])}></iframe>`);
+        var objbuilder = '';
+        objbuilder += ('<object width="100%" height="100%"      data="data:application/pdf;base64,');
+        objbuilder += (response["metadata"][1]);
+        objbuilder += ('" type="application/pdf" class="internal">');
+        objbuilder += ('<embed src="data:application/pdf;base64,');
+        objbuilder += (response["metadata"][1]);
+        objbuilder += ('" type="application/pdf" />');
+        objbuilder += ('</object>');
+        win.document.title = "Sbc Document";
+        win.document.write('<html><body>');
+        win.document.write(objbuilder);
+        win.document.write('</body></html>');
       }
     });
   }

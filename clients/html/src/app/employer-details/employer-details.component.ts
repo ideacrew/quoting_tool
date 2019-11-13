@@ -282,13 +282,28 @@ export class EmployerDetailsComponent implements OnInit {
     }
   }
 
+  updateSic(event) {
+    if (this.showEmployeeRoster) {
+      this.updateFormValue(event, 'sic');
+    }
+  }
+
+  updateChangedSic(event) {
+    let selectedSic;
+    if (event.length === 4) {
+      selectedSic = this.sics.find(sic => sic.standardIndustryCodeCode === event);
+    }
+    if (selectedSic && this.showEmployeeRoster) {
+      this.updateFormValue(selectedSic, 'sic');
+    }
+  }
+
   updateFormValue(event, type) {
     if (type === 'zipCode') {
       const form = JSON.parse(localStorage.getItem('employerDetails'));
       form.zip = event;
       localStorage.setItem('employerDetails', JSON.stringify(form));
       this.counties = this.availableCounties.filter((zipcode) => zipcode.zipCode === event);
-      this.quoteForm.get('county').setValue(this.counties[0]);
       this.enableCounty();
     }
     if (type === 'effectiveDate') {
@@ -296,12 +311,31 @@ export class EmployerDetailsComponent implements OnInit {
       form.effectiveDate = event;
       localStorage.setItem('employerDetails', JSON.stringify(form));
     }
+    if (type === 'sic') {
+      const form = JSON.parse(localStorage.getItem('employerDetails'));
+      form.sic = event;
+      localStorage.setItem('employerDetails', JSON.stringify(form));
+    }
   }
 
   getCounties(item) {
     this.counties = this.availableCounties.filter((zipcode) => zipcode.zipCode === item);
-    this.quoteForm.get('county').setValue(this.counties[0]);
+    if (this.showEmployeeRoster) {
+      const form = JSON.parse(localStorage.getItem('employerDetails'));
+      if (this.counties.length === 1) {
+        form.county = this.counties[0];
+        localStorage.setItem('employerDetails', JSON.stringify(form));
+        this.quoteForm.get('county').setValue(form.county.county);
+      }
+    }
     this.enableCounty();
+  }
+
+  updateCounty(event) {
+    const form = JSON.parse(localStorage.getItem('employerDetails'));
+    const selectedCounty = this.availableCounties.filter((c) => c.county === event.target.value && c.zipCode === form.zip);
+    form.county = selectedCounty[0];
+    localStorage.setItem('employerDetails', JSON.stringify(form));
   }
 
   enableCounty() {
