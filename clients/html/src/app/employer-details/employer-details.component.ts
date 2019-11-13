@@ -481,11 +481,13 @@ export class EmployerDetailsComponent implements OnInit {
   updateEmployee() {
     this.showEditHousehold = false;
     this.rows[this.editEmployeeIndex] = this.editEmployeeForm.value;
-    this.rows = [...this.rows];
     this.employerDetails.employees[this.editEmployeeIndex] = this.editEmployeeForm.value;
-    console.log(this.employerDetails);
+    if (this.editEmployeeForm.controls.dependents.value) {
+      this.employerDetails.employees[this.editEmployeeIndex].dependents = this.editEmployeeForm.controls.dependents.value;
+    }
     localStorage.setItem('employerDetails', JSON.stringify(this.employerDetails));
     this.editEmployeeIndex = null;
+    this.rows = [...this.rows];
   }
 
   formatDOB(value) {
