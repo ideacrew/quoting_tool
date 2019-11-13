@@ -9,7 +9,7 @@ end
 
 puts ":: Started Creating SBC documents ::"
 
-roster = Roo::Spreadsheet.open(ENV[:sbc_path])
+roster = Roo::Spreadsheet.open(ENV['sbc_path'])
 sheet = roster.sheet(0)
 columns = sheet.row(1)
 
@@ -28,7 +28,7 @@ end
 
 output.each do |info|
   product = ::Products::Product.where(
-    :"hios_base_id" => info[:hios_id],
+    :"hios_id" => info[:hios_id],
     :"application_period.min".gte => Date.new(info[:year], 1, 1), :"application_period.max".lte => Date.new(info[:year], 1, 1).end_of_year
   ).first
 
@@ -38,7 +38,7 @@ output.each do |info|
   end
 
   if product.sbc_document.blank?
-    product.sbc_document.build({title: info[:title], subject: "SBC", format: 'application/pdf', identifier: info[:identifier]})
+    product.sbc_document = Documents::Document.new({title: info[:title], subject: "SBC", format: 'application/pdf', identifier: info[:identifier]})
     product.save
   end
 end

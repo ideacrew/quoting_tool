@@ -149,6 +149,8 @@ export class EmployerDetailsComponent implements OnInit {
       this.quoteForm.get('effectiveDate').setValue(new Date(this.employerDetails.effectiveDate));
       this.quoteForm.get('zip').setValue(this.employerDetails.zip);
       this.quoteForm.get('sic').setValue(this.employerDetails.sic.standardIndustryCodeCode);
+      this.quoteForm.get('county').setValue(this.employerDetails.county);
+      this.counties = this.availableCounties.filter((county) => county.county === this.employerDetails.county);
       this.loadEmployeesFromStorage();
     }
     // Sets effective Date options
@@ -261,7 +263,7 @@ export class EmployerDetailsComponent implements OnInit {
   zipChangeSearch(event) {
     if (event.length === 5) {
       this.counties = this.availableCounties.filter((zipcode) => zipcode.zipCode === event);
-      this.quoteForm.get('county').setValue(this.counties[0]);
+      this.quoteForm.get('county').setValue(this.counties[0].county);
       this.enableCounty();
     }
     if (event.length === 5 && this.showEmployeeRoster) {
@@ -274,6 +276,8 @@ export class EmployerDetailsComponent implements OnInit {
     if (this.showEmployeeRoster) {
       this.updateFormValue(item, 'zipCode');
     }
+    this.counties = this.availableCounties.filter((zipcode) => zipcode.zipCode === item);
+    this.quoteForm.get('county').setValue(this.counties[0].county);
   }
 
   updateEffectiveDate(event) {
@@ -282,13 +286,29 @@ export class EmployerDetailsComponent implements OnInit {
     }
   }
 
+  updateSic(event) {
+    if (this.showEmployeeRoster) {
+      this.updateFormValue(event, 'sic');
+    }
+  }
+
+  updateChangedSic(event) {
+    let selectedSic;
+    if (event.length === 4) {
+      selectedSic = this.sics.find(sic => sic.standardIndustryCodeCode === event);
+    }
+    if (selectedSic && this.showEmployeeRoster) {
+      this.updateFormValue(selectedSic, 'sic');
+    }
+  }
+
   updateFormValue(event, type) {
     if (type === 'zipCode') {
       const form = JSON.parse(localStorage.getItem('employerDetails'));
       form.zip = event;
-      localStorage.setItem('employerDetails', JSON.stringify(form));
       this.counties = this.availableCounties.filter((zipcode) => zipcode.zipCode === event);
-      this.quoteForm.get('county').setValue(this.counties[0]);
+      form.county = this.counties[0].county;
+      localStorage.setItem('employerDetails', JSON.stringify(form));
       this.enableCounty();
     }
     if (type === 'effectiveDate') {
@@ -296,12 +316,36 @@ export class EmployerDetailsComponent implements OnInit {
       form.effectiveDate = event;
       localStorage.setItem('employerDetails', JSON.stringify(form));
     }
+    if (type === 'sic') {
+      const form = JSON.parse(localStorage.getItem('employerDetails'));
+      form.sic = event;
+      localStorage.setItem('employerDetails', JSON.stringify(form));
+    }
   }
 
   getCounties(item) {
     this.counties = this.availableCounties.filter((zipcode) => zipcode.zipCode === item);
-    this.quoteForm.get('county').setValue(this.counties[0]);
+    if (this.showEmployeeRoster) {
+      const form = JSON.parse(localStorage.getItem('employerDetails'));
+      if (this.counties.length === 1) {
+        form.county = this.counties[0].county;
+        localStorage.setItem('employerDetails', JSON.stringify(form));
+        this.quoteForm.get('county').setValue(form.county.county);
+      }
+    }
+    if (!this.showEmployeeRoster && this.counties.length) {
+      this.quoteForm.get('county').setValue(this.counties[0].county);
+    }
     this.enableCounty();
+  }
+
+  updateCounty(event) {
+    if (this.showEmployeeRoster) {
+      const form = JSON.parse(localStorage.getItem('employerDetails'));
+      const selectedCounty = this.availableCounties.filter((c) => c.county === event.target.value && c.zipCode === form.zip);
+      form.county = selectedCounty[0].county;
+      localStorage.setItem('employerDetails', JSON.stringify(form));
+    }
   }
 
   enableCounty() {
@@ -437,14 +481,49 @@ export class EmployerDetailsComponent implements OnInit {
   updateEmployee() {
     this.showEditHousehold = false;
     this.rows[this.editEmployeeIndex] = this.editEmployeeForm.value;
-    this.rows = [...this.rows];
     this.employerDetails.employees[this.editEmployeeIndex] = this.editEmployeeForm.value;
+    if (this.editEmployeeForm.controls.dependents.value) {
+      this.employerDetails.employees[this.editEmployeeIndex].dependents = this.editEmployeeForm.controls.dependents.value;
+    }
     localStorage.setItem('employerDetails', JSON.stringify(this.employerDetails));
     this.editEmployeeIndex = null;
+    this.rows = [...this.rows];
   }
 
   formatDOB(value) {
     // Formats dob to valid format for datepicker
     return new Date(parseInt(value[2], 0), parseInt(value[0], 0), parseInt(value[1], 0));
+  }
+
+  validateMonthDate(str, max) {
+    if (str.charAt(0) !== '0' || str === '00') {
+      let num = parseInt(str, 10);
+      if (isNaN(num) || num <= 0 || num > max) {
+        num = 1;
+      }
+      str = num > parseInt(max.toString().charAt(0), 10) && num.toString().length === 1 ? '0' + num : num.toString();
+    }
+    return str;
+  }
+
+  formatInputDate(e) {
+    let input = e.target.value;
+    if (/\D\/$/.test(input)) {
+      input = input.substr(0, input.length - 3);
+    }
+
+    const values = input.split('/').map(function (v) {
+      return v.replace(/\D/g, '');
+    });
+    if (values[0]) {
+      values[0] = this.validateMonthDate(values[0], 12);
+    }
+    if (values[1]) {
+      values[1] = this.validateMonthDate(values[1], 31);
+    }
+    const output = values.map(function (v, i) {
+      return v.length === 2 && i < 2 ? v + ' / ' : v;
+    });
+    e.target.value = output.join('').substr(0, 14);
   }
 }

@@ -43,7 +43,7 @@ module Products
     field :out_of_pocket_in_network, type: String
 
     embeds_one  :sbc_document,
-                :class_name => "Documents::Document"
+                :class_name => "Documents::Document", as: :documentable
 
     embeds_many :premium_tables,
                 class_name: "::Products::PremiumTable"

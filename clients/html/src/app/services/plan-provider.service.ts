@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ProductDataLoader } from './product-data-loader.service';
-import { Product } from '../data/products';
-import { ProductData } from '../data/products';
+import { Product, ProductData } from '../data/products';
 import { ApiRequestService } from './api-request.service';
 
 interface ProductListUser {
@@ -43,11 +42,21 @@ export class PlanProviderService {
     });
   }
 
-  public getSbcDocumentFor(key) {
+  public getSbcDocumentFor(key, win) {
     this.api_request.authedGet('products/sbc_document.json', {key: key}).subscribe(response => {
       if (response['status'] === 'success') {
-        const pdfWindow = window.open('');
-        pdfWindow.document.write(`<iframe width='100%' height='100%' src='data:application/pdf;base64, ${encodeURI(response['metadata'][1])}></iframe>`);
+        let objbuilder = '';
+        objbuilder += ('<object width="100%" height="100%" data="data:application/pdf;base64,');
+        objbuilder += (response['metadata'][1]);
+        objbuilder += ('" type="application/pdf" class="internal">');
+        objbuilder += ('<embed src="data:application/pdf;base64,');
+        objbuilder += (response['metadata'][1]);
+        objbuilder += ('" type="application/pdf" />');
+        objbuilder += ('</object>');
+        win.document.title = 'Sbc Document';
+        win.document.write('<html><body>');
+        win.document.write(objbuilder);
+        win.document.write('</body></html>');
       }
     });
   }

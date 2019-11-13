@@ -126,7 +126,7 @@ export class PlanFilterComponent implements OnInit {
         this.employerDetails['sic']['standardIndustryCodeCode'],
         startDate,
         'MA',
-        this.employerDetails['county']['county'],
+        this.employerDetails['county'],
         this.employerDetails['zip'],
         this.planType,
         consumer
@@ -274,6 +274,7 @@ export class PlanFilterComponent implements OnInit {
           this.selectedMetalLevels.splice(index, 1);
           this.filterKeysSelected.splice(keyIndex, 1);
           this.filteredCarriers = this.defaultCarriers;
+          this.filterLength = this.filteredCarriers.length;
         }
         break;
       case 'productType':
@@ -286,6 +287,7 @@ export class PlanFilterComponent implements OnInit {
           this.selectedProductTypes.splice(index, 1);
           this.filterKeysSelected.splice(keyIndex, 1);
           this.filteredCarriers = this.defaultCarriers;
+          this.filterLength = this.filteredCarriers.length;
         }
         break;
       case 'insuranceCompany':
@@ -298,6 +300,7 @@ export class PlanFilterComponent implements OnInit {
           this.selectedInsuranceCompanies.splice(index, 1);
           this.filterKeysSelected.splice(keyIndex, 1);
           this.filteredCarriers = this.defaultCarriers;
+          this.filterLength = this.filteredCarriers.length;
         }
         break;
       case 'hsa':
@@ -310,6 +313,7 @@ export class PlanFilterComponent implements OnInit {
           this.selectedHSAs.splice(index, 1);
           this.filterKeysSelected.splice(keyIndex, 1);
           this.filteredCarriers = this.defaultCarriers;
+          this.filterLength = this.filteredCarriers.length;
         }
         break;
     }
@@ -496,7 +500,8 @@ export class PlanFilterComponent implements OnInit {
   }
 
   getSbcDocument(key) {
-    this.planService.getSbcDocumentFor(key);
+    const win = window.open('', '_blank');
+    this.planService.getSbcDocumentFor(key, win);
   }
 
   sortData(kind) {
