@@ -47,6 +47,8 @@
               [itemTemplate]="sicTemplate"
               [notFoundTemplate]="sicNotFoundTemplate"
               class="inout-fix"
+              (selected)='updateSic($event)'
+              (inputChanged)='updateChangedSic($event)'
             >
             </ng-autocomplete>
 

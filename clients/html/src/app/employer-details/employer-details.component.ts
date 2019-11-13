@@ -282,6 +282,22 @@ export class EmployerDetailsComponent implements OnInit {
     }
   }
 
+  updateSic(event) {
+    if (this.showEmployeeRoster) {
+      this.updateFormValue(event, 'sic');
+    }
+  }
+
+  updateChangedSic(event) {
+    let selectedSic;
+    if (event.length === 4) {
+      selectedSic = this.sics.find(sic => sic.standardIndustryCodeCode === event);
+    }
+    if (selectedSic && this.showEmployeeRoster) {
+      this.updateFormValue(selectedSic, 'sic');
+    }
+  }
+
   updateFormValue(event, type) {
     if (type === 'zipCode') {
       const form = JSON.parse(localStorage.getItem('employerDetails'));
@@ -293,6 +309,11 @@ export class EmployerDetailsComponent implements OnInit {
     if (type === 'effectiveDate') {
       const form = JSON.parse(localStorage.getItem('employerDetails'));
       form.effectiveDate = event;
+      localStorage.setItem('employerDetails', JSON.stringify(form));
+    }
+    if (type === 'sic') {
+      const form = JSON.parse(localStorage.getItem('employerDetails'));
+      form.sic = event;
       localStorage.setItem('employerDetails', JSON.stringify(form));
     }
   }
