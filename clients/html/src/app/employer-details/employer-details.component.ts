@@ -288,7 +288,6 @@ export class EmployerDetailsComponent implements OnInit {
       form.zip = event;
       localStorage.setItem('employerDetails', JSON.stringify(form));
       this.counties = this.availableCounties.filter((zipcode) => zipcode.zipCode === event);
-      this.quoteForm.get('county').setValue(this.counties[0]);
       this.enableCounty();
     }
     if (type === 'effectiveDate') {
@@ -300,8 +299,22 @@ export class EmployerDetailsComponent implements OnInit {
 
   getCounties(item) {
     this.counties = this.availableCounties.filter((zipcode) => zipcode.zipCode === item);
-    this.quoteForm.get('county').setValue(this.counties[0]);
+    if (this.showEmployeeRoster) {
+      const form = JSON.parse(localStorage.getItem('employerDetails'));
+      if (this.counties.length === 1) {
+        form.county = this.counties[0];
+        localStorage.setItem('employerDetails', JSON.stringify(form));
+        this.quoteForm.get('county').setValue(form.county.county);
+      }
+    }
     this.enableCounty();
+  }
+
+  updateCounty(event) {
+    const form = JSON.parse(localStorage.getItem('employerDetails'));
+    const selectedCounty = this.availableCounties.filter((c) => c.county === event.target.value && c.zipCode === form.zip);
+    form.county = selectedCounty[0];
+    localStorage.setItem('employerDetails', JSON.stringify(form));
   }
 
   enableCounty() {

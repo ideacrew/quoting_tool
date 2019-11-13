@@ -99,8 +99,9 @@
               formControlName="county"
               class="custom-select"
               id="countyField"
+              (change)="updateCounty($event)"
             >
-              <option *ngFor="let county of counties" [ngValue]="county">{{
+              <option *ngFor="let county of counties" [value]="county.county">{{
                 county.county
               }}</option>
             </select>
