@@ -46,15 +46,15 @@ export class PlanProviderService {
   public getSbcDocumentFor(key, win) {
     this.api_request.authedGet('products/sbc_document.json', {key: key}).subscribe(response => {
       if (response['status'] === 'success') {
-        var objbuilder = '';
-        objbuilder += ('<object width="100%" height="100%"      data="data:application/pdf;base64,');
-        objbuilder += (response["metadata"][1]);
+        let objbuilder = '';
+        objbuilder += ('<object width="100%" height="100%" data="data:application/pdf;base64,');
+        objbuilder += (response['metadata'][1]);
         objbuilder += ('" type="application/pdf" class="internal">');
         objbuilder += ('<embed src="data:application/pdf;base64,');
-        objbuilder += (response["metadata"][1]);
+        objbuilder += (response['metadata'][1]);
         objbuilder += ('" type="application/pdf" />');
         objbuilder += ('</object>');
-        win.document.title = "Sbc Document";
+        win.document.title = 'Sbc Document';
         win.document.write('<html><body>');
         win.document.write(objbuilder);
         win.document.write('</body></html>');

@@ -496,7 +496,7 @@ export class PlanFilterComponent implements OnInit {
   }
 
   getSbcDocument(key) {
-    var win = window.open("","_blank");
+    const win = window.open('', '_blank');
     this.planService.getSbcDocumentFor(key, win);
   }
 
