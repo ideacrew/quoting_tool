@@ -8,6 +8,8 @@ import zipcodes from '../../data/zipCode.json';
 import sics from '../../data/sic.json';
 import sicCodes from '../../data/sicCodes.json';
 import { SelectedSicService } from '../services/selected-sic.service';
+import * as XLSX from 'xlsx';
+type AOA = any[][];
 
 @Component({
   selector: 'app-employer-details',
@@ -58,6 +60,7 @@ export class EmployerDetailsComponent implements OnInit {
   public employeeRosterDetails: any;
   public show: boolean;
   showNewEmployee = false;
+  excelArray: any;
 
   relationOptions = [
     { key: 'Spouse', value: 'Spouse' },
@@ -248,16 +251,30 @@ export class EmployerDetailsComponent implements OnInit {
     input.append('file', fileInfo.files[0]);
     this.employerDetailsService.postUpload(input).subscribe();
     // Below is used to display in the UI
-    const reader = new FileReader();
-    const csvData = [];
-    this.uploadData = csvData;
-    reader.readAsBinaryString(fileInfo.files[0]);
-    reader.onload = function() {
-      csvData.push(reader.result);
-    };
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+     /* read workbook */
+     const bstr: string = e.target.result;
+     const wb: XLSX.WorkBook = XLSX.read(bstr, {type: 'binary'});
+
+     /* grab first sheet */
+     const wsname: string = wb.SheetNames[0];
+     const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+     /* save data */
+     const data = <AOA>(XLSX.utils.sheet_to_json(ws, {header: 1}));
+     const dataFromArray = [];
+     data.map((d, i) => {
+       if (i > 2 && d.length > 0) {
+         dataFromArray.push({relation: d[1], lastName: d[2], firstName: d[3], dob: this.getJsDateFromExcel(d[8])});
+       }
+     });
+     this.excelArray = dataFromArray;
+   };
+   reader.readAsBinaryString(fileInfo.files[0]);
     setTimeout(() => {
-      this.parseResults(this.uploadData[0]);
-    }, 800);
+      this.parseResults(this.excelArray);
+    }, 500);
   }
 
   zipChangeSearch(event) {
@@ -374,42 +391,37 @@ export class EmployerDetailsComponent implements OnInit {
     // do something when input is focused
   }
 
-  parseResults(data) {
+  getJsDateFromExcel(excelDate) {
+    return new Date((excelDate - (25567 + 1)) *  86400 * 1000);
+  }
+
+  parseResults(excelArray) {
     this.modalService.dismissAll();
-    const rows = data.split(/\r\n|\n/);
     let count = 0;
-    rows.map((row, index) => {
+
+    excelArray.map((data) => {
       const control = <FormArray>this.quoteForm.controls.employees;
-      // ignore the header row
-      if (index > 0) {
-        const firstName = row.split(',')[0];
-        const lastName = row.split(',')[1];
-        const dobValues = row.split(',')[2].split('/');
-        const relationship = row.split(',')[3];
-        // create employees from csv
-        if (relationship === 'employee') {
-          this.employee = row;
-          count++;
-          control.push(
-            this.fb.group({
-              firstName: [firstName],
-              lastName: [lastName],
-              dob: [this.formatDOB(dobValues)],
-              coverageKind: ['both'],
-              dependents: this.fb.array([])
-            })
-          );
-        } else {
-          // Add dependents to employee if dependents
-          control['controls'][count - 1]['controls']['dependents'].push(
-            this.fb.group({
-              firstName: [firstName],
-              lastName: [lastName],
-              dob: [this.formatDOB(dobValues)],
-              relationship: [relationship]
-            })
-          );
-        }
+      if (data.relation === 'Employee') {
+        count++;
+        control.push(
+          this.fb.group({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            dob: new Date(data.dob.getFullYear(), data.dob.getMonth(), data.dob.getDate()),
+            coverageKind: ['both'],
+            dependents: this.fb.array([])
+          })
+        );
+      } else {
+        // Add dependents to employee if dependents
+        control['controls'][count - 1]['controls']['dependents'].push(
+          this.fb.group({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            dob: new Date(data.dob.getFullYear(), data.dob.getMonth(), data.dob.getDate()),
+            relationship: data.relation
+          })
+        );
       }
     });
   }
@@ -488,11 +500,6 @@ export class EmployerDetailsComponent implements OnInit {
     localStorage.setItem('employerDetails', JSON.stringify(this.employerDetails));
     this.editEmployeeIndex = null;
     this.rows = [...this.rows];
-  }
-
-  formatDOB(value) {
-    // Formats dob to valid format for datepicker
-    return new Date(parseInt(value[2], 0), parseInt(value[0], 0), parseInt(value[1], 0));
   }
 
   validateMonthDate(str, max) {
