@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import tooltips from '../../data/tooltips.json';
 import tableHeaders from '../../data/tableHeaders.json';
@@ -98,6 +98,10 @@ export class PlanFilterComponent implements OnInit {
 
   @Input() carrierPlans: any;
   @Input() planType: any;
+
+  @HostListener('window:beforeunload', ['$event']) unloadHandler(event: Event) {
+    event.returnValue = false;
+  }
 
   constructor(private planService: PlanProviderService) {}
 
@@ -395,6 +399,10 @@ export class PlanFilterComponent implements OnInit {
       this.selectedInsuranceCompanies.map(ic => {
         selected = selected.filter(plan => plan['product_information'][ic.key] === ic.value);
       });
+    }
+
+    if (selected === undefined) {
+      selected = plans;
     }
 
     if (this.yearlyMedicalDeductibleFrom && !this.yearlyMedicalDeductibleTo) {

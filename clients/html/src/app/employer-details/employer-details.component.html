@@ -198,14 +198,15 @@
               ngx-datatable-cell-template
             >
               <div ngbDropdown class="d-inline-block" container="body">
-                <button class="btn btn-outline-primary" ngbDropdownToggle>
+                <button type="button" class="btn btn-outline-primary" ngbDropdownToggle>
                   Actions
                 </button>
                 <div ngbDropdownMenu>
-                  <button ngbDropdownItem (click)="editEmployee(rowIndex)">
+                  <button type="button" ngbDropdownItem (click)="editEmployee(rowIndex)">
                     Edit
                   </button>
                   <button
+                    type="button"
                     ngbDropdownItem
                     (click)="removeEmployeeFromRoster(rowIndex)"
                   >
@@ -373,12 +374,14 @@
 
                 <div class="col-12">
                   <button
+                    type="button"
                     class="float-right btn btn-primary"
                     (click)="this.showEditHousehold = false"
                   >
                     Cancel
                   </button>
                   <button
+                    type="button"
                     class="float-right btn btn-primary"
                     (click)="updateEmployee()"
                   >
@@ -784,24 +787,28 @@
       <div class="row mt-3 form-button-group">
         <div class="col-12">
           <button
+            type="button"
             class="float-left btn btn-primary upload-employee-roster"
             (click)="open(content)" *ngIf="!showEmployeeRoster"
           >
             <i class="fas fa-upload"></i> Upload Employee Roster
           </button>
           <button
+            type="button"
             (click)="addEmployee()"
             class="btn btn-primary add-new-employee" *ngIf="!showEmployeeRoster"
           >
             <i class="fas fa-user-plus"></i> Add Employee
           </button>
           <button
+            type="button"
             (click)="addNewEmployee()"
             class="btn btn-primary add-new-employee" *ngIf="showEmployeeRoster"
           >
             <i class="fas fa-user-plus"></i> Add Employee
           </button>
           <button
+            type="button"
             class="btn btn-success create-roster"
             (click)="createRoster()"
             [disabled]="!quoteForm.valid"
