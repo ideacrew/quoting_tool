@@ -401,8 +401,8 @@ export class PlanFilterComponent implements OnInit {
       });
     }
 
-    if(selected == undefined) {
-      selected = plans
+    if (selected === undefined) {
+      selected = plans;
     }
 
     if (this.yearlyMedicalDeductibleFrom && !this.yearlyMedicalDeductibleTo) {
