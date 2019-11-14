@@ -1,5 +1,7 @@
 import { RelationshipContributionModel } from '../../data/contribution_models';
-import { PackageTypes, ContributionRelationship, ContributionTierName } from '../../config/client_configuration';
+import { PackageTypes } from '../../config/package_types';
+import { ContributionRelationship } from '../../config/contribution_relationship';
+import { ContributionTierName } from '../../config/contribution_tier_name';
 import { RosterEntry, RosterDependent } from '../../data/sponsor_roster';
 import { Product } from '../../data/products';
 import { Quote, ContributionTierCost } from '../../data/quotes';
