@@ -8,6 +8,7 @@ import zipcodes from '../../data/zipCode.json';
 import sics from '../../data/sic.json';
 import sicCodes from '../../data/sicCodes.json';
 import { SelectedSicService } from '../services/selected-sic.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-employer-details',
@@ -248,15 +249,21 @@ export class EmployerDetailsComponent implements OnInit {
     input.append('file', fileInfo.files[0]);
     this.employerDetailsService.postUpload(input).subscribe();
     // Below is used to display in the UI
-    const reader = new FileReader();
-    const csvData = [];
-    this.uploadData = csvData;
-    reader.readAsBinaryString(fileInfo.files[0]);
-    reader.onload = function() {
-      csvData.push(reader.result);
-    };
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+     /* read workbook */
+     const bstr: string = e.target.result;
+     const wb: XLSX.WorkBook = XLSX.read(bstr, {type: 'binary'});
+     /* grab first sheet */
+     const wsname: string = wb.SheetNames[0];
+     const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+     /* save data */
+     const data = <AOA>(XLSX.utils.sheet_to_json(ws, {header: 1}));
+     console.log(data);
+   };
+   reader.readAsBinaryString(fileInfo.files[0]);
     setTimeout(() => {
-      this.parseResults(this.uploadData[0]);
+      // this.parseResults(this.uploadData[0]);
     }, 800);
   }
 
