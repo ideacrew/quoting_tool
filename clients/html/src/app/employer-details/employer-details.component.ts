@@ -11,6 +11,7 @@ import { SelectedSicService } from '../services/selected-sic.service';
 import * as XLSX from 'xlsx';
 type AOA = any[][];
 
+
 @Component({
   selector: 'app-employer-details',
   templateUrl: './employer-details.component.html',
