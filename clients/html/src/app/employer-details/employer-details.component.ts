@@ -247,7 +247,7 @@ export class EmployerDetailsComponent implements OnInit {
   fileUploaded(fileInfo) {
     const input = new FormData();
     input.append('file', fileInfo.files[0]);
-    this.employerDetailsService.postUpload(input).subscribe();
+    // this.employerDetailsService.postUpload(input).subscribe();
     // Below is used to display in the UI
     const reader: FileReader = new FileReader();
     reader.onload = (e: any) => {
@@ -260,11 +260,11 @@ export class EmployerDetailsComponent implements OnInit {
      /* save data */
      const data = <AOA>(XLSX.utils.sheet_to_json(ws, {header: 1}));
      console.log(data);
+    // setTimeout(() => {
+      // this.parseResults(data);
+    // }, 800);
    };
-   reader.readAsBinaryString(fileInfo.files[0]);
-    setTimeout(() => {
-      // this.parseResults(this.uploadData[0]);
-    }, 800);
+   // reader.readAsBinaryString(fileInfo.files[0]);
   }
 
   zipChangeSearch(event) {
