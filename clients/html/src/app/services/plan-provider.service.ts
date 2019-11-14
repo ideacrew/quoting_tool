@@ -17,6 +17,26 @@ export class PlanProviderService {
     this.dataLoader = new ProductDataLoader();
   }
 
+  private b64toBlob = (b64Data, contentType='', sliceSize=512) => {
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, {type: contentType});
+    return blob;
+  }
+
   public getPlansFor(
     consumer: ProductListUser,
     sic_code: string,
@@ -45,13 +65,17 @@ export class PlanProviderService {
   public getSbcDocumentFor(key, win) {
     this.api_request.authedGet('products/sbc_document.json', {key: key}).subscribe(response => {
       if (response['status'] === 'success') {
+        const contentType = 'application/pdf';
+        const b64Data = response['metadata'][1]
+        const blob = this.b64toBlob(b64Data, contentType);
+        const blobUrl = URL.createObjectURL(blob);
+
         let objbuilder = '';
         objbuilder += ('<object width="100%" height="100%" data="data:application/pdf;base64,');
-        objbuilder += (response['metadata'][1]);
+        objbuilder += (blobUrl);
         objbuilder += ('" type="application/pdf" class="internal">');
-        objbuilder += ('<embed src="data:application/pdf;base64,');
-        objbuilder += (response['metadata'][1]);
-        objbuilder += ('" type="application/pdf" />');
+        objbuilder += ('<embed src="' + blobUrl);
+        objbuilder += ('" type="application/pdf" width="100%" height="100%"/>');
         objbuilder += ('</object>');
         win.document.title = 'Sbc Document';
         win.document.write('<html><body>');
