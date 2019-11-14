@@ -401,6 +401,10 @@ export class PlanFilterComponent implements OnInit {
       });
     }
 
+    if(selected == undefined) {
+      selected = plans
+    }
+
     if (this.yearlyMedicalDeductibleFrom && !this.yearlyMedicalDeductibleTo) {
       selected = selected.filter(plan => parseInt(plan['product_information']['deductible']
         .replace('$', '').replace(',', ''), 0) >= this.yearlyMedicalDeductibleTo);
