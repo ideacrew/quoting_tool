@@ -104,6 +104,7 @@ module Operations
           end
         end
       end
+      Success({message: "Successfully created/updated Plan records"})
     end
 
     def group_size_factors(year, hios_id)
