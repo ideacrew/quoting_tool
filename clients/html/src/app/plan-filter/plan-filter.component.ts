@@ -138,7 +138,7 @@ export class PlanFilterComponent implements OnInit {
       this.employerDetails.employees.forEach(function(employee) {
         const employeeJson = {
           dob: new Date(employee.dob),
-          will_enroll: true,
+          will_enroll: consumer.will_enroll(employee.coverageKind),
           roster_dependents: []
         };
 
@@ -167,6 +167,13 @@ export class PlanFilterComponent implements OnInit {
       this.btnName = 'Back to Health';
       this.btnLink = '/employer-details/health';
     }
+  }
+
+  will_enroll(kind) {
+    if(kind == '' || kind == 'both' || kind.match(this.planType)) {
+      return true;
+    }
+    return false;
   }
 
   loadData() {

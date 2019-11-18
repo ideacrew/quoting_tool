@@ -246,7 +246,7 @@ export class TieredCoverageCostCalculatorService {
   private filterRoster(start_d: Date, contributionModel: TieredContributionModel, roster: Array<RosterEntry>) {
     const rel_map = this.tierOfferedMap(contributionModel);
     const allowedTiers = this.allowedTiers(contributionModel);
-    return roster.map(function(re) {
+    return roster.filter((re) => {return re.will_enroll }).map(function(re) {
       const filteredMember = new FilteredRelationshipRosterEntry(
         start_d,
         rel_map,
