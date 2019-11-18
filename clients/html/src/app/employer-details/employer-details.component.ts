@@ -209,7 +209,7 @@ export class EmployerDetailsComponent implements OnInit {
         firstName: [''],
         lastName: [''],
         dob: ['', Validators.required],
-        coverageKind: [''],
+        coverageKind: ['', Validators.required],
         dependents: this.fb.array([])
       })
     );
@@ -230,7 +230,7 @@ export class EmployerDetailsComponent implements OnInit {
         firstName: [''],
         lastName: [''],
         dob: ['', Validators.required],
-        relationship: ['']
+        relationship: ['', Validators.required]
       })
     );
   }
@@ -467,6 +467,7 @@ export class EmployerDetailsComponent implements OnInit {
   }
 
   editEmployee(rowIndex) {
+    // this.editEmployeeForm.reset();
     this.editEmployeeIndex = rowIndex;
     this.showEditHousehold = true;
     const employee = this.rows[rowIndex];
@@ -485,7 +486,7 @@ export class EmployerDetailsComponent implements OnInit {
           firstName: [dependent.firstName],
           lastName: [dependent.lastName],
           dob: [new Date(Date.parse(dependent.dob)), Validators.required],
-          relationship: [dependent.relationship]
+          relationship: [dependent.relationship, Validators.required]
         })
       );
     });

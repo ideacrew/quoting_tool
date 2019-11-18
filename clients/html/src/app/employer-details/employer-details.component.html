@@ -266,7 +266,7 @@
                 </div>
                 <div class="col-2">
                   <div class="form-group">
-                    <label for="dob">Coverage Kind</label>
+                    <label for="coverageKind">Coverage Kind <span class="required-field">*</span></label>
                     <select
                       type="text"
                       class="form-control"
@@ -333,7 +333,7 @@
                         </div>
                         <div class="col-2">
                           <div class="form-group">
-                            <label for="dob">Relationship</label>
+                            <label for="relationship">Relationship <span class="required-field">*</span></label>
                             <select
                               type="text"
                               class="form-control"
@@ -383,6 +383,7 @@
                   <button
                     type="button"
                     class="float-right btn btn-primary"
+                    [disabled]="editEmployeeForm.invalid"
                     (click)="updateEmployee()"
                   >
                     Update Employee
@@ -441,7 +442,7 @@
                 </div>
                 <div class="col-2">
                   <div class="form-group">
-                    <label for="dob">Coverage Kind</label>
+                    <label for="coverageKind">Coverage Kind <span class="required-field">*</span></label>
                     <select
                       type="text"
                       class="form-control"
@@ -508,7 +509,7 @@
                         </div>
                         <div class="col-2">
                           <div class="form-group">
-                            <label for="dob">Relationship</label>
+                            <label for="relationship">Relationship <span class="required-field">*</span></label>
                             <select
                               type="text"
                               class="form-control"
@@ -558,6 +559,7 @@
                   <button
                     class="float-right btn btn-primary"
                     type="button"
+                    [disabled]="!addNewEmployeeForm.valid"
                     (click)="saveNewEmployee(i)"
                   >
                     Save Employee
@@ -630,7 +632,7 @@
                 </div>
                 <div class="col-2">
                   <div class="form-group">
-                    <label for="dob">Coverage Type</label>
+                    <label for="coverageKind">Coverage Type <span class="required-field">*</span></label>
                     <select
                       type="text"
                       class="form-control"
@@ -701,7 +703,7 @@
                         </div>
                         <div class="col-2">
                           <div class="form-group">
-                            <label for="dob">Relationship</label>
+                            <label for="relationship">Relationship <span class="required-field">*</span></label>
                             <select
                               type="text"
                               class="form-control"
