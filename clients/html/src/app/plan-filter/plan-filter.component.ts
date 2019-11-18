@@ -170,7 +170,7 @@ export class PlanFilterComponent implements OnInit {
   }
 
   will_enroll(kind) {
-    if(kind == '' || kind == 'both' || kind.match(this.planType)) {
+    if (kind === '' || kind === 'both' || kind.match(this.planType)) {
       return true;
     }
     return false;

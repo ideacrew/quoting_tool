@@ -113,7 +113,7 @@ export class RelationshipCoverageCostCalculatorService {
 
   private filterRoster(start_d: Date, contributionModel: RelationshipContributionModel, roster: Array<RosterEntry>) {
     const rel_map = this.relationshipOfferedMap(contributionModel);
-    return roster.filter((re) => {return re.will_enroll }).map(function(re) {
+    return roster.filter((re) => re.will_enroll).map(function(re) {
       const filteredMember = new FilteredRelationshipRosterEntry(
         start_d,
         rel_map,
