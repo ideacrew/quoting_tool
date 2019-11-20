@@ -1,9 +1,9 @@
 import { RosterDependent } from '../../data/sponsor_roster';
-import { ContributionRelationship } from "../../config/client_configuration";
-import { RelationshipCoverageCostCalculatorService } from "./relationship_coverage_cost_calculator.service"
-import { ContributionTierName, defaultRelationshipContributionModel } from "./../../config/client_configuration";
+import { ContributionRelationship } from '../../config/client_configuration';
+import { RelationshipCoverageCostCalculatorService } from './relationship_coverage_cost_calculator.service';
+import { ContributionTierName, defaultRelationshipContributionModel } from './../../config/client_configuration';
 
-function createMockDependent(rel: ContributionRelationship, dob: Date) : RosterDependent {
+function createMockDependent(rel: ContributionRelationship, dob: Date): RosterDependent {
   return {
     dob: dob,
     relationship: rel
@@ -20,8 +20,8 @@ class MockRosterEntry {
     }
 }
 
-export function getDefaultValue<K,V>(m: Map<K,V>, k: K, default_value: V) {
-  let value = <V>m.get(k);
+export function getDefaultValue<K, V>(m: Map<K, V>, k: K, default_value: V) {
+  const value = <V>m.get(k);
   if (value != null) {
     return value;
   }
@@ -42,7 +42,7 @@ class MockCalculationProduct {
     private max_age: number,
     public provider_name: string,
     public metal_level: string,
-    public product_type : string,
+    public product_type: string,
     public network: string,
     public deductible: number,
     public group_deductible: string,
@@ -60,27 +60,27 @@ class MockCalculationProduct {
   ) {
   }
 
-  public group_tier_factor(tier_name: ContributionTierName) : number {
+  public group_tier_factor(tier_name: ContributionTierName): number {
     return 1.0;
   }
 
-  public group_size_factor(group_size: string) : number {
-    var gs_int = parseInt(group_size);
+  public group_size_factor(group_size: string): number {
+    const gs_int = parseInt(group_size, 0);
     if (gs_int > this.max_group_size) {
       return getDefaultValue(this.group_size_factors, this.max_group_size.toFixed(0), 1.0);
     }
     return getDefaultValue(this.group_size_factors, group_size, 1.0);
   }
-  public participation_factor(participation: string) : number {
+  public participation_factor(participation: string): number {
     return getDefaultValue(this.participation_factors, participation, 1.0);
   }
 
-  public cost(age: string) : number {
-    var age_int = parseInt(age);
+  public cost(age: string): number {
+    const age_int = parseInt(age, 0);
     if (age_int > this.max_age) {
-      return this.getRate(this.max_age.toFixed(0))
+      return this.getRate(this.max_age.toFixed(0));
     } else if (age_int < this.min_age) {
-      return this.getRate(this.min_age.toFixed(0))
+      return this.getRate(this.min_age.toFixed(0));
     }
     return this.getRate(age);
   }
@@ -92,38 +92,38 @@ class MockCalculationProduct {
 
 class MockProduct  {
   public package_kinds = [];
-  public name : string = "MOCK PRODUCT";
+  public name = 'MOCK PRODUCT';
 
-  public sic_code_factor: number = 1.0;
+  public sic_code_factor = 1.0;
 
-  public group_size_factor(group_size: string) : number {
+  public group_size_factor(group_size: string): number {
     return 1.0;
   }
-  public participation_factor(participation: string) : number {
+  public participation_factor(participation: string): number {
     return 1.0;
   }
 
-  public cost(age: string) : number {
+  public cost(age: string): number {
     return 1.0;
   }
 }
 
-describe("RelationshipCoverageCostCalculatorService, created with a roster", () => {
-  var start_date = new Date(2019, 0, 1);
-  var subscriber_1_dob = new Date(1999, 11, 15);
+describe('RelationshipCoverageCostCalculatorService, created with a roster', () => {
+  const start_date = new Date(2019, 0, 1);
+  const subscriber_1_dob = new Date(1999, 11, 15);
 
-  var gs_factors =  new Map<string, number>();
-  gs_factors.set("1", 1.00);
-  gs_factors.set("2", 1.00);
+  const gs_factors =  new Map<string, number>();
+  gs_factors.set('1', 1.00);
+  gs_factors.set('2', 1.00);
 
-  var pr_factors =  new Map<string, number>();
-  pr_factors.set("100", 1);
+  const pr_factors =  new Map<string, number>();
+  pr_factors.set('100', 1);
 
-  var rates = new Map<string, number>();
-  rates.set("19", 1.00);
+  const rates = new Map<string, number>();
+  rates.set('19', 1.00);
 
-  var product = new MockCalculationProduct(
-    "MockCalculationProduct",
+  const product = new MockCalculationProduct(
+    'MockCalculationProduct',
     2,
     gs_factors,
     pr_factors,
@@ -131,57 +131,57 @@ describe("RelationshipCoverageCostCalculatorService, created with a roster", () 
     rates,
     19,
     19,
-    "Carefirst",
-    "silver",
-    "hmo",
-    "DCS0",
+    'Carefirst',
+    'silver',
+    'hmo',
+    'DCS0',
     1000,
-    "LOTS",
+    'LOTS',
     true,
     false,
     21,
     21,
     21,
     21,
-    "20%",
-    "20%",
-    "20%",
-    "20%",
-    "1"
+    '20%',
+    '20%',
+    '20%',
+    '20%',
+    '1'
   );
-  it("calculates the product quote", () => {
-    var dependents = []
+  it('calculates the product quote', () => {
+    const dependents = [];
 
-    var entry_1 = new MockRosterEntry(
+    const entry_1 = new MockRosterEntry(
       subscriber_1_dob,
       true,
       dependents
     );
-    
-    var service = new RelationshipCoverageCostCalculatorService(
+
+    const service = new RelationshipCoverageCostCalculatorService(
       start_date,
       defaultRelationshipContributionModel(),
       [entry_1],
       'health'
     );
-    var quote = service.calculateQuote(product);
+    const quote = service.calculateQuote(product);
     expect(quote.total_cost).not.toBe(0.00);
   });
 
-  it("should not calculate health product quote for 4th child age < 21", () => {
-    var dependents = [
+  it('should not calculate health product quote for 4th child age < 21', () => {
+    const dependents = [
       createMockDependent(ContributionRelationship.CHILD, new Date()),
-      createMockDependent(ContributionRelationship.CHILD,new Date()),
+      createMockDependent(ContributionRelationship.CHILD, new Date()),
       createMockDependent(ContributionRelationship.CHILD, new Date()),
       createMockDependent(ContributionRelationship.CHILD, new Date())
-    ]
+    ];
 
-    var entry_1 = new MockRosterEntry(
+    const entry_1 = new MockRosterEntry(
       subscriber_1_dob,
       true,
       dependents
     );
-    var service = new RelationshipCoverageCostCalculatorService(
+    const service = new RelationshipCoverageCostCalculatorService(
       start_date,
       defaultRelationshipContributionModel(),
       [entry_1],
@@ -210,7 +210,7 @@ describe("RelationshipCoverageCostCalculatorService, created with a roster", () 
       [entry_1],
       'dental'
     );
-    var quote = service.calculateQuote(product);
+    const quote = service.calculateQuote(product);
     expect(quote.total_cost).toBe(5.00);
   });
-})
+});
