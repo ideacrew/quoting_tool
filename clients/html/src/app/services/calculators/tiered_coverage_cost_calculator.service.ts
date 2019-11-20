@@ -7,7 +7,7 @@ import { Product } from '../../data/products';
 import { Quote, ContributionTierCost } from '../../data/quotes';
 import { ResultTotal } from './result_total';
 import { RosterQuote } from './roster_quote';
-import { CLIENT_PREFERENCES } from "../../config/client_configuration";
+import { CLIENT_PREFERENCES } from '../../config/client_configuration';
 
 class FilteredRelationshipRosterEntry {
   dob: Date;
@@ -361,21 +361,21 @@ export class TieredCoverageCostCalculatorService {
       product.cost(this.coverageAge(this.startDate, roster_entry.dob).toFixed(0)) * sic_factor * gs_factor * pr_factor;
     const calculator = this;
     let members_in_threshold = 0;
-    let sorted_dependents = roster_entry.roster_dependents.sort(function(a, b) {
-      let a_age = calculator.coverageAge(calculator.startDate, a.dob);
-      let b_age = calculator.coverageAge(calculator.startDate, b.dob);
+    const sorted_dependents = roster_entry.roster_dependents.sort(function(a, b) {
+      const a_age = calculator.coverageAge(calculator.startDate, a.dob);
+      const b_age = calculator.coverageAge(calculator.startDate, b.dob);
       return b_age - a_age;
     });
     const total = sorted_dependents.reduce(function(current_total, rd) {
-      let age = calculator.coverageAge(calculator.startDate, rd.dob);
+      const age = calculator.coverageAge(calculator.startDate, rd.dob);
       let dependentCost = product.cost(age.toFixed(0)) *
           sic_factor *
           gs_factor *
-          pr_factor
-      if (calculator.kind == 'health' && CLIENT_PREFERENCES.relationship_discount) {
+          pr_factor;
+      if (calculator.kind === 'health' && CLIENT_PREFERENCES.relationship_discount) {
         if (
           (age < CLIENT_PREFERENCES.relationship_discount.relationship_threshold_age) &&
-          (rd.relationship == CLIENT_PREFERENCES.relationship_discount.relationship_kind)
+          (rd.relationship === CLIENT_PREFERENCES.relationship_discount.relationship_kind)
           ) {
           members_in_threshold = members_in_threshold + 1;
           if (members_in_threshold >= CLIENT_PREFERENCES.relationship_discount.relationship_threshold) {
