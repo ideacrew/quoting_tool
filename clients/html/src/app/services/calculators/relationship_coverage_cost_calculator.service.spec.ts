@@ -185,6 +185,29 @@ describe("RelationshipCoverageCostCalculatorService, created with a roster", () 
       start_date,
       defaultRelationshipContributionModel(),
       [entry_1],
+      'health'
+    );
+    var quote = service.calculateQuote(product);
+    expect(quote.total_cost).toBe(4.00);
+  });
+
+  it("should calculate dental product quote for 4th child age < 21", () => {
+    var dependents = [
+      createMockDependent(ContributionRelationship.CHILD, new Date()),
+      createMockDependent(ContributionRelationship.CHILD,new Date()),
+      createMockDependent(ContributionRelationship.CHILD, new Date()),
+      createMockDependent(ContributionRelationship.CHILD, new Date())
+    ]
+
+    var entry_1 = new MockRosterEntry(
+      subscriber_1_dob,
+      true,
+      dependents
+    );
+    var service = new RelationshipCoverageCostCalculatorService(
+      start_date,
+      defaultRelationshipContributionModel(),
+      [entry_1],
       'dental'
     );
     var quote = service.calculateQuote(product);
