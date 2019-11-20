@@ -259,14 +259,15 @@ export class PlanFilterComponent implements OnInit {
 
   private calculator(date, contributionModel, isTiredCalculator?: boolean): QuoteCalculator {
     if (isTiredCalculator) {
-      const calc = new this.clientPreferences.tiered_quote_calculator(date, contributionModel, this.sponsorRoster);
+      const calc = new this.clientPreferences.tiered_quote_calculator(date, contributionModel, this.sponsorRoster, this.planType);
 
       return calc;
     } else {
       const calculator = new this.clientPreferences.relationship_quote_calculator(
         date,
         contributionModel,
-        this.sponsorRoster
+        this.sponsorRoster,
+        this.planType
       );
 
       return calculator;

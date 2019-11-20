@@ -7,6 +7,7 @@ import { Product } from '../../data/products';
 import { Quote, ContributionTierCost } from '../../data/quotes';
 import { ResultTotal } from './result_total';
 import { RosterQuote } from './roster_quote';
+import { CLIENT_PREFERENCES } from "../../config/client_configuration";
 
 class FilteredRelationshipRosterEntry {
   dob: Date;
@@ -194,8 +195,9 @@ export class TieredCoverageCostCalculatorService {
   private groupSize: string;
   private filteredRoster: Array<FilteredRelationshipRosterEntry>;
   private relContributions: Map<ContributionTierName, number>;
+  private kind: string;
 
-  constructor(startDate: Date, contributionModel: TieredContributionModel, roster: Array<RosterEntry>) {
+  constructor(startDate: Date, contributionModel: TieredContributionModel, roster: Array<RosterEntry>, kind: string) {
     this.startDate = startDate;
     this.groupSize = this.calculateGroupSize(roster);
     this.participation = this.calculateParticipation(roster);
@@ -205,6 +207,7 @@ export class TieredCoverageCostCalculatorService {
       relCMap.set(cl.name, cl.contribution);
     });
     this.relContributions = relCMap;
+    this.kind = kind;
   }
 
   private calculateParticipation(roster: Array<RosterEntry>) {
@@ -357,14 +360,30 @@ export class TieredCoverageCostCalculatorService {
     const subscriber_cost =
       product.cost(this.coverageAge(this.startDate, roster_entry.dob).toFixed(0)) * sic_factor * gs_factor * pr_factor;
     const calculator = this;
-    const total = roster_entry.roster_dependents.reduce(function(current_total, rd) {
-      return (
-        current_total +
-        product.cost(calculator.coverageAge(calculator.startDate, rd.dob).toFixed(0)) *
+    let members_in_threshold = 0;
+    let sorted_dependents = roster_entry.roster_dependents.sort(function(a, b) {
+      let a_age = calculator.coverageAge(calculator.startDate, a.dob);
+      let b_age = calculator.coverageAge(calculator.startDate, b.dob);
+      return b_age - a_age;
+    });
+    const total = sorted_dependents.reduce(function(current_total, rd) {
+      let age = calculator.coverageAge(calculator.startDate, rd.dob);
+      let dependentCost = product.cost(age.toFixed(0)) *
           sic_factor *
           gs_factor *
           pr_factor
-      );
+      if (calculator.kind == 'health' && CLIENT_PREFERENCES.relationship_discount) {
+        if (
+          (age < CLIENT_PREFERENCES.relationship_discount.relationship_threshold_age) &&
+          (rd.relationship == CLIENT_PREFERENCES.relationship_discount.relationship_kind)
+          ) {
+          members_in_threshold = members_in_threshold + 1;
+          if (members_in_threshold >= CLIENT_PREFERENCES.relationship_discount.relationship_threshold) {
+            dependentCost = 0.00;
+          }
+        }
+      }
+      return current_total + dependentCost;
     }, subscriber_cost);
     return b_count.add(roster_entry, total);
   }

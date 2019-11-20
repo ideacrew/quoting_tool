@@ -7,8 +7,15 @@ import { TieredCoverageCostCalculatorService } from '../services/calculators/tie
 type QuoteCalculatorConstructor<T> = new (
   startDate: Date,
   contributionModel: T,
-  roster: Array<RosterEntry>
+  roster: Array<RosterEntry>,
+  kind: string
 ) => QuoteCalculator;
+
+interface RelationshipDiscountPreferences {
+  relationship_kind: ContributionRelationship;
+  relationship_threshold_age: number;
+  relationship_threshold: number;
+}
 
 export interface ClientPreferences {
   display_contribution_management: boolean;
@@ -20,6 +27,7 @@ export interface ClientPreferences {
   minimum_start_date: Date;
   maximum_start_date: Date;
   county_zip_required: boolean;
+  relationship_discount: RelationshipDiscountPreferences | null;
 }
 
 export enum PackageTypes {
@@ -103,5 +111,10 @@ export const CLIENT_PREFERENCES: ClientPreferences = {
   default_state: 'MA',
   minimum_start_date: new Date(2017, 0, 1),
   maximum_start_date: new Date(2019, 11, 1),
-  county_zip_required: true
+  county_zip_required: true,
+  relationship_discount: {
+    relationship_kind: ContributionRelationship.CHILD,
+    relationship_threshold_age: 21,
+    relationship_threshold: 4
+  }
 };
