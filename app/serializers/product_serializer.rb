@@ -72,8 +72,11 @@ class ProductSerializer
   end
 
   attribute :sic_code_factor do |object, params|
-    return 1.0 if object.dental?
-    $sic_factors[[params[:key], object.active_year, object.issuer_hios_ids.first]] || 1.0
+    if object.dental?
+      1.0
+    else
+      $sic_factors[[params[:key], object.active_year, object.issuer_hios_ids.first]] || 1.0
+    end
   end
 
   attribute :rates do |object, params|
