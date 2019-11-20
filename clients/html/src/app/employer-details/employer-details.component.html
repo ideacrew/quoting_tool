@@ -383,7 +383,7 @@
                   <button
                     type="button"
                     class="float-right btn btn-primary"
-                    [disabled]="editEmployeeForm.invalid"
+                    [disabled]="validateEmployeeEditForm()"
                     (click)="updateEmployee()"
                   >
                     Update Employee
