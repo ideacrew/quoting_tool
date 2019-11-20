@@ -4,6 +4,10 @@ end_year = start_year + 1
 
 $rates = {}
 
+def quarter(val)
+  (val / 3.0).ceil
+end
+
 ::Products::Product.where(
   :"application_period.min".gte => Date.new(start_year, 1, 1), :"application_period.max".lte => Date.new(end_year, 1, 1).end_of_year
 ).each do |product|
@@ -12,7 +16,7 @@ $rates = {}
       result[tuple.age] = tuple.cost
       result
     end
-    $rates[[product.id, pt.rating_area_id]] = {entries: output, max_age: product.premium_ages.max, min_age: product.premium_ages.min}
+    $rates[[product.id, pt.rating_area_id, quarter(pt.effective_period.min.month)]] = {entries: output, max_age: product.premium_ages.max, min_age: product.premium_ages.min}
   end
 end
 

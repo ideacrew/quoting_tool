@@ -138,7 +138,7 @@ export class PlanFilterComponent implements OnInit {
       this.employerDetails.employees.forEach(function(employee) {
         const employeeJson = {
           dob: new Date(employee.dob),
-          will_enroll: true,
+          will_enroll: consumer.will_enroll(employee.coverageKind),
           roster_dependents: []
         };
 
@@ -167,6 +167,13 @@ export class PlanFilterComponent implements OnInit {
       this.btnName = 'Back to Health';
       this.btnLink = '/employer-details/health';
     }
+  }
+
+  will_enroll(kind) {
+    if (kind === '' || kind === 'both' || kind.match(this.planType)) {
+      return true;
+    }
+    return false;
   }
 
   loadData() {
@@ -252,14 +259,15 @@ export class PlanFilterComponent implements OnInit {
 
   private calculator(date, contributionModel, isTiredCalculator?: boolean): QuoteCalculator {
     if (isTiredCalculator) {
-      const calc = new this.clientPreferences.tiered_quote_calculator(date, contributionModel, this.sponsorRoster);
+      const calc = new this.clientPreferences.tiered_quote_calculator(date, contributionModel, this.sponsorRoster, this.planType);
 
       return calc;
     } else {
       const calculator = new this.clientPreferences.relationship_quote_calculator(
         date,
         contributionModel,
-        this.sponsorRoster
+        this.sponsorRoster,
+        this.planType
       );
 
       return calculator;
@@ -407,7 +415,7 @@ export class PlanFilterComponent implements OnInit {
 
     if (this.yearlyMedicalDeductibleFrom && !this.yearlyMedicalDeductibleTo) {
       selected = selected.filter(plan => parseInt(plan['product_information']['deductible']
-        .replace('$', '').replace(',', ''), 0) >= this.yearlyMedicalDeductibleTo);
+        .replace('$', '').replace(',', ''), 0) >= this.yearlyMedicalDeductibleFrom);
     }
 
     if (!this.yearlyMedicalDeductibleFrom && this.yearlyMedicalDeductibleTo) {

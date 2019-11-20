@@ -9,6 +9,7 @@ import { ResultTotal } from './result_total';
 import { MetalLevelBucket } from './metal_level_bucket';
 import { IssuerBucket } from './issuer_bucket';
 import { RosterQuote } from './roster_quote';
+import { CLIENT_PREFERENCES } from "../../config/client_configuration";
 
 class FilteredRelationshipRosterEntry {
   dob: Date;
@@ -72,8 +73,9 @@ export class RelationshipCoverageCostCalculatorService {
   private metalLevelBucket: MetalLevelBucket = new MetalLevelBucket();
   private issuerBucket: IssuerBucket = new IssuerBucket();
   private currentPackageKind: PackageTypes | null = null;
+  private kind: string;
 
-  constructor(startDate: Date, contributionModel: RelationshipContributionModel, roster: Array<RosterEntry>) {
+  constructor(startDate: Date, contributionModel: RelationshipContributionModel, roster: Array<RosterEntry>, kind: string) {
     this.startDate = startDate;
     this.groupSize = this.calculateGroupSize(roster);
     this.participation = this.calculateParticipation(roster);
@@ -83,6 +85,7 @@ export class RelationshipCoverageCostCalculatorService {
       relCMap.set(cl.name, cl.contribution);
     });
     this.relContributions = relCMap;
+    this.kind = kind;
   }
 
   private calculateParticipation(roster: Array<RosterEntry>) {
@@ -113,7 +116,7 @@ export class RelationshipCoverageCostCalculatorService {
 
   private filterRoster(start_d: Date, contributionModel: RelationshipContributionModel, roster: Array<RosterEntry>) {
     const rel_map = this.relationshipOfferedMap(contributionModel);
-    return roster.map(function(re) {
+    return roster.filter((re) => re.will_enroll).map(function(re) {
       const filteredMember = new FilteredRelationshipRosterEntry(
         start_d,
         rel_map,
@@ -241,12 +244,30 @@ export class RelationshipCoverageCostCalculatorService {
       product.cost(this.coverageAge(this.startDate, roster_entry.dob).toFixed(0)) * sic_factor * gs_factor * pr_factor;
     const subscriber_sponsor_cost = subscriber_cost * (this.relContributions.get(ContributionRelationship.SELF) * 0.01);
     const calculator = this;
-    const total = roster_entry.roster_dependents.reduce(function(current_total, rd) {
-      const dependent_cost =
-        product.cost(calculator.coverageAge(calculator.startDate, rd.dob).toFixed(0)) *
+    let members_in_threshold = 0;
+    let sorted_dependents = roster_entry.roster_dependents.sort(function(a, b) {
+      let a_age = calculator.coverageAge(calculator.startDate, a.dob);
+      let b_age = calculator.coverageAge(calculator.startDate, b.dob);
+      return b_age - a_age;
+    });
+    const total = sorted_dependents.reduce(function(current_total, rd) {
+      const age = calculator.coverageAge(calculator.startDate, rd.dob);
+      let dependent_cost =
+        product.cost(age.toFixed(0)) *
         sic_factor *
         gs_factor *
         pr_factor;
+      if (calculator.kind == 'health' && CLIENT_PREFERENCES.relationship_discount) {
+        if (
+          (age < CLIENT_PREFERENCES.relationship_discount.relationship_threshold_age) &&
+          (rd.relationship == CLIENT_PREFERENCES.relationship_discount.relationship_kind)
+          ) {
+          members_in_threshold = members_in_threshold + 1;
+          if (members_in_threshold >= CLIENT_PREFERENCES.relationship_discount.relationship_threshold) {
+            dependent_cost = 0.00;
+          }
+        }
+      }
       const dependent_sponsor_cost = dependent_cost * (calculator.relContributions.get(rd.relationship) * 0.01);
       const dependent_total = new ResultTotal(dependent_cost, dependent_sponsor_cost);
       return current_total.add(dependent_total);
