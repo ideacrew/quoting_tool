@@ -492,6 +492,11 @@ export class EmployerDetailsComponent implements OnInit {
     });
   }
 
+  validateEmployeeEditForm() {
+    const employeeFrom = this.editEmployeeForm;
+    return employeeFrom.invalid || employeeFrom.controls.dependents.invalid;
+  }
+
   updateEmployee() {
     this.showEditHousehold = false;
     this.rows[this.editEmployeeIndex] = this.editEmployeeForm.value;
