@@ -252,7 +252,7 @@
                 <span *ngIf="planType == 'health'">
                   <p class="mb-0">
                     <strong>Hospital Stay -</strong>
-                      {{ carrier['product_information']['hospital_stay'].includes('%') ? (carrier['product_information']['hospital_stay']) : (carrier['product_information']['hospital_stay'] | currency)  }}
+                    {{ carrier['product_information']['hospital_stay'].includes('%') ? (carrier['product_information']['hospital_stay']) : (carrier['product_information']['hospital_stay'] | currency)  }}
                   </p>
                   <p class="mb-0">
                     <strong>Emergency Stay -</strong>
