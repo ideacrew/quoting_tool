@@ -24,19 +24,19 @@ class ProductSerializer
   attribute :network, &:network_information
 
   attribute :hospital_stay do |object|
-    object.health? ? object.hospital_stay_in_network_copay : nil
+    object.health? ? (object.hospital_stay_in_network_copay || object.hospital_stay_in_network_co_insurance) : nil
   end
 
   attribute :emergency_stay do |object|
-    object.health? ? object.emergency_in_network_copay : nil
+    object.health? ? (object.emergency_in_network_copay || object.emergency_in_network_co_insurance) : nil
   end
 
   attribute :pcp_office_visit do |object|
-    object.health? ? object.pcp_in_network_copay : nil
+    object.health? ? (object.pcp_in_network_copay || object.pcp_in_network_co_insurance) : nil
   end
 
   attribute :rx do |object|
-    object.health? ? object.drug_in_network_copay : nil
+    object.health? ? (object.drug_in_network_copay || object.drug_in_network_co_insurance) : nil
   end
 
   attribute :basic_dental_services do |object|

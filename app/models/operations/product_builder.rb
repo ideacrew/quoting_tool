@@ -4,7 +4,7 @@ module Operations
 
     VISIT_TYPES = {
       pcp: "Primary Care Visit to Treat an Injury or Illness",
-      emeergency_stay: "Emergency Room Services",
+      emergency_stay: "Emergency Room Services",
       hospital_stay: "Inpatient Hospital Services (e.g., Hospital Stay)",
       rx: "Generic Drugs",
       basic_dental_services: "Basic Dental Care - Adult",
@@ -63,6 +63,10 @@ module Operations
             hospital_stay_in_network_copay: hospital_stay_in_network_copay(cost_share_variance),
             emergency_in_network_copay: emergency_in_network_copay(cost_share_variance),
             drug_in_network_copay: drug_in_network_copay(cost_share_variance),
+            pcp_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :pcp),
+            hospital_stay_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :hospital_stay),
+            emergency_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :emergency_stay),
+            drug_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :rx),
             is_standard_plan: info[:is_standard_plan],
             network_information: info[:network_information],
             title: (info[:title] || cost_share_variance.plan_marketing_name.squish!),
@@ -160,7 +164,7 @@ module Operations
     end
 
     def emergency_in_network_copay(variance)
-      val = variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:emeergency_stay]).first.copay_in_network_tier_1
+      val = variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:emergency_stay]).first.copay_in_network_tier_1
       parse_value(val)
     end
 
@@ -200,6 +204,11 @@ module Operations
 
     def parse_value(val)
       val == "Not Applicable" ? nil : val.split(" ")[0].gsub("$","")
+    end
+
+    def service_visit_co_insurance(variance, type)
+      val = variance.qhp_service_visits.where(visit_type: VISIT_TYPES[type]).first.co_insurance_in_network_tier_1
+      val.present? ? parse_value(val) : nil
     end
   end
 end
