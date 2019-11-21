@@ -32,11 +32,17 @@ module Products
     field :hsa_eligibility,             type: Boolean,  default: false
     field :network_information,         type: String
 
-    # Visits
+    # Visits #co-pay
     field :pcp_in_network_copay,             type: String
     field :hospital_stay_in_network_copay,   type: String
     field :emergency_in_network_copay,       type: String
     field :drug_in_network_copay,            type: String
+
+    # Visits #co-insurance
+    field :pcp_in_network_co_insurance,             type: String
+    field :hospital_stay_in_network_co_insurance,   type: String
+    field :emergency_in_network_co_insurance,       type: String
+    field :drug_in_network_co_insurance,            type: String
 
 
     validates_presence_of :hios_id, :health_plan_kind, :ehb
