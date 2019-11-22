@@ -24,19 +24,19 @@ class ProductSerializer
   attribute :network, &:network_information
 
   attribute :hospital_stay do |object|
-    object.health? ? object.hospital_stay_in_network_copay : nil
+    object.health? ? (object.hospital_stay_in_network_copay || object.hospital_stay_in_network_co_insurance) : nil
   end
 
   attribute :emergency_stay do |object|
-    object.health? ? object.emergency_in_network_copay : nil
+    object.health? ? (object.emergency_in_network_copay || object.emergency_in_network_co_insurance) : nil
   end
 
   attribute :pcp_office_visit do |object|
-    object.health? ? object.pcp_in_network_copay : nil
+    object.health? ? (object.pcp_in_network_copay || object.pcp_in_network_co_insurance) : nil
   end
 
   attribute :rx do |object|
-    object.health? ? object.drug_in_network_copay : nil
+    object.health? ? (object.drug_in_network_copay || object.drug_in_network_co_insurance) : nil
   end
 
   attribute :basic_dental_services do |object|
@@ -72,8 +72,11 @@ class ProductSerializer
   end
 
   attribute :sic_code_factor do |object, params|
-    return 1.0 if object.dental?
-    $sic_factors[[params[:key], object.active_year, object.issuer_hios_ids.first]] || 1.0
+    if object.dental?
+      1.0
+    else
+      $sic_factors[[params[:key], object.active_year, object.issuer_hios_ids.first]] || 1.0
+    end
   end
 
   attribute :rates do |object, params|
