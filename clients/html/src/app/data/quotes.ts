@@ -1,5 +1,5 @@
 import { Product } from './products';
-import { PackageTypes } from '../config/client_configuration';
+import { PackageTypes } from '../config/package_types';
 
 export interface ContributionTierCost {
   sponsor_cost: number;

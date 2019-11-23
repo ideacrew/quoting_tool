@@ -7,7 +7,7 @@ import { Product } from '../../data/products';
 import { Quote, ContributionTierCost } from '../../data/quotes';
 import { ResultTotal } from './result_total';
 import { RosterQuote } from './roster_quote';
-import { CLIENT_PREFERENCES } from '../../config/client_configuration';
+import { RelationshipDiscounts } from '../../config/relationship_discount';
 
 class FilteredRelationshipRosterEntry {
   dob: Date;
@@ -372,13 +372,13 @@ export class TieredCoverageCostCalculatorService {
           sic_factor *
           gs_factor *
           pr_factor;
-      if (calculator.kind === 'health' && CLIENT_PREFERENCES.relationship_discount) {
+      if (calculator.kind === 'health' && RelationshipDiscounts.relationship_discount) {
         if (
-          (age < CLIENT_PREFERENCES.relationship_discount.relationship_threshold_age) &&
-          (rd.relationship === CLIENT_PREFERENCES.relationship_discount.relationship_kind)
+          (age < RelationshipDiscounts.relationship_discount.relationship_threshold_age) &&
+          (rd.relationship === RelationshipDiscounts.relationship_discount.relationship_kind)
           ) {
           members_in_threshold = members_in_threshold + 1;
-          if (members_in_threshold >= CLIENT_PREFERENCES.relationship_discount.relationship_threshold) {
+          if (members_in_threshold >= RelationshipDiscounts.relationship_discount.relationship_threshold) {
             dependentCost = 0.00;
           }
         }

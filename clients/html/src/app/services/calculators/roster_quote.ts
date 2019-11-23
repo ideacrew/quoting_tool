@@ -1,5 +1,5 @@
 import { Product } from '../../data/products';
-import { ContributionTierName } from '../../config/client_configuration';
+import { ContributionTierName } from '../../config/contribution_tier_name';
 import { ContributionTierCost } from '../../data/quotes';
 
 export class RosterQuote {

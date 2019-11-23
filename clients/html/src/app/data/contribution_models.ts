@@ -1,4 +1,5 @@
-import { ContributionRelationship, ContributionTierName } from '../config/client_configuration';
+import { ContributionTierName } from '../config/contribution_tier_name';
+import { ContributionRelationship } from '../config/contribution_relationship';
 
 export interface RelationshipContributionLevel {
   name: ContributionRelationship;

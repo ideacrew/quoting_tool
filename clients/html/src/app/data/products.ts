@@ -1,4 +1,5 @@
-import { ContributionTierName, PackageTypes } from '../config/client_configuration';
+import { PackageTypes } from '../config/package_types';
+import { ContributionTierName } from '../config/contribution_tier_name';
 
 export interface RateEntry {
   age: string;
