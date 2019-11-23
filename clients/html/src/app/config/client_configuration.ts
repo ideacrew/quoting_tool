@@ -1,5 +1,8 @@
 import { QuoteCalculator } from '../data/quotes';
 import { RosterEntry } from '../data/sponsor_roster';
+import { ContributionRelationship } from './contribution_relationship';
+import { ContributionTierName } from './contribution_tier_name';
+import { PackageTypes } from './package_types';
 import { RelationshipContributionModel, TieredContributionModel } from '../data/contribution_models';
 import { RelationshipCoverageCostCalculatorService } from '../services/calculators/relationship_coverage_cost_calculator.service';
 import { TieredCoverageCostCalculatorService } from '../services/calculators/tiered_coverage_cost_calculator.service';
@@ -28,26 +31,6 @@ export interface ClientPreferences {
   maximum_start_date: Date;
   county_zip_required: boolean;
   relationship_discount: RelationshipDiscountPreferences | null;
-}
-
-export enum PackageTypes {
-  METAL_LEVEL = 'metal_level',
-  SINGLE_ISSUER = 'single_issuer',
-  SINGLE_PRODUCT = 'single_product'
-}
-
-export enum ContributionRelationship {
-  SELF = 'Self',
-  SPOUSE = 'Spouse',
-  CHILD = 'Child',
-  DOMESTIC_PARTNER = 'Domestic Partner'
-}
-
-export enum ContributionTierName {
-  EMPLOYEE_ONLY = 'Employee Only',
-  EMPLOYEE_AND_SPOUSE = 'Employee and Spouse',
-  EMPLOYEE_AND_DEPENDENTS = 'Employee and Dependents',
-  FAMILY = 'Family'
 }
 
 export function defaultRelationshipContributionModel() {

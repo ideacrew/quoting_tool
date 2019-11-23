@@ -9,13 +9,13 @@ import { TieredContributionModel, RelationshipContributionModel } from '../data/
 import {
   ClientPreferences,
   CLIENT_PREFERENCES,
-  PackageTypes,
   defaultRelationshipContributionModel,
   defaultTieredContributionModel
 } from '../config/client_configuration';
 import { PlanProviderService } from '../services/plan-provider.service';
 import { Product } from '../data/products';
 import { RosterEntry } from '../data/sponsor_roster';
+import { PackageTypes } from '../config/package_types';
 
 @Component({
   selector: 'app-plan-filter',
