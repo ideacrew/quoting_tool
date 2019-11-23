@@ -10,6 +10,7 @@ import sicCodes from '../../data/sicCodes.json';
 import { SelectedSicService } from '../services/selected-sic.service';
 import * as XLSX from 'xlsx';
 type AOA = any[][];
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -249,7 +250,19 @@ export class EmployerDetailsComponent implements OnInit {
 
   fileUploaded(fileInfo) {
     const input = new FormData();
+    const uploadedFile = fileInfo.files[0];
+
+    if (uploadedFile.type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid file type',
+        text: 'Please use the Roster Template to upload a vaild excel file.'
+      });
+      return;
+    }
+
     input.append('file', fileInfo.files[0]);
+
     this.employerDetailsService.postUpload(input).subscribe();
     // Below is used to display in the UI
     const reader: FileReader = new FileReader();

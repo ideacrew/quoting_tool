@@ -1,5 +1,5 @@
 import { RosterDependent } from '../../data/sponsor_roster';
-import { ContributionRelationship } from '../../config/client_configuration';
+import { ContributionRelationship } from '../../config/contribution_relationship';
 import { RelationshipCoverageCostCalculatorService } from './relationship_coverage_cost_calculator.service';
 import { defaultRelationshipContributionModel } from './../../config/client_configuration';
 
