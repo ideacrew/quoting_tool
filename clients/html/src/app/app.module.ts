@@ -11,6 +11,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { TreeviewModule } from 'ngx-treeview';
 
 import { routes } from './app-routing.module';
@@ -55,6 +56,7 @@ import { CoverageTypePipe } from './employer-details/coverage-type.pipe';
     NgbModule,
     RouterModule.forRoot(routes),
     NgxDatatableModule,
+    SweetAlert2Module.forRoot(),
     TreeviewModule.forRoot()
   ],
   providers: [
