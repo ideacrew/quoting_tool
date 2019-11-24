@@ -3,6 +3,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import tooltips from '../../data/tooltips.json';
 import tableHeaders from '../../data/tableHeaders.json';
 import html2PDF from 'jspdf-html2canvas';
+import Swal from 'sweetalert2';
 
 import { QuoteCalculator } from '../data/quotes';
 import { TieredContributionModel, RelationshipContributionModel } from '../data/contribution_models';
@@ -496,9 +497,22 @@ export class PlanFilterComponent implements OnInit {
     return `(${count.length} Plans)`;
   }
 
+  showPDFGenerationMsg() {
+    Swal.fire({
+      title: 'Generating PDF',
+      html: 'Please hold while PDF is generated.',
+      icon: 'info',
+      showConfirmButton: false,
+      showCancelButton: false,
+      backdrop: true,
+      allowOutsideClick: false
+    });
+  }
+
   downloadPdf() {
     this.pdfView = true;
     const table = document.getElementById('plan-table');
+    this.showPDFGenerationMsg();
     this.html2PDF(table, {
       jsPDF: {
         unit: 'pt',
@@ -508,6 +522,7 @@ export class PlanFilterComponent implements OnInit {
       output: `./pdf/${this.planType}.pdf`,
       success: function(pdf) {
         pdf.save();
+        Swal.close();
       }
     });
     setTimeout(() => {
