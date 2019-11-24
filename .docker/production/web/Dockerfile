@@ -30,7 +30,7 @@ ARG API_URL
 RUN sed -i -r "s/API_URL/$API_URL/g" /app/src/environments/environment.prod.ts
 
 # generate build
-RUN ng build --prod --output-path=dist
+RUN ng build --prod --output-path=dist --base-href /get-a-quote/
 
 ############
 ### prod ###
