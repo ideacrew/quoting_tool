@@ -70,7 +70,7 @@ export class PlanProviderService {
         const b64Data = response['metadata'][1];
         const blob = this.b64toBlob(b64Data, contentType);
         const blobUrl = URL.createObjectURL(blob);
-        saveAs(blobUrl, "sbc_document")
+        saveAs(blobUrl, 'sbc_document');
       }
     });
   }
