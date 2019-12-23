@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ProductDataLoader } from './product-data-loader.service';
 import { Product, ProductData } from '../data/products';
 import { ApiRequestService } from './api-request.service';
+import { saveAs } from 'file-saver';
 
 interface ProductListUser {
   onProductsLoaded(products: Array<Product>): void;
@@ -62,25 +63,14 @@ export class PlanProviderService {
     });
   }
 
-  public getSbcDocumentFor(key, win) {
+  public getSbcDocumentFor(key) {
     this.api_request.authedGet('products/sbc_document.json', {key: key}).subscribe(response => {
       if (response['status'] === 'success') {
         const contentType = 'application/pdf';
         const b64Data = response['metadata'][1];
         const blob = this.b64toBlob(b64Data, contentType);
         const blobUrl = URL.createObjectURL(blob);
-
-        let objbuilder = '';
-        objbuilder += ('<object width="100%" height="100%" data="data:application/pdf;base64,');
-        objbuilder += (blobUrl);
-        objbuilder += ('" type="application/pdf" class="internal">');
-        objbuilder += ('<embed src="' + blobUrl);
-        objbuilder += ('" type="application/pdf" width="100%" height="100%"/>');
-        objbuilder += ('</object>');
-        win.document.title = 'Sbc Document';
-        win.document.write('<html><body>');
-        win.document.write(objbuilder);
-        win.document.write('</body></html>');
+        saveAs(blobUrl, 'sbc_document');
       }
     });
   }
