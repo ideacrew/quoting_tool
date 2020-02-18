@@ -68,7 +68,6 @@ export class EmployerDetailsComponent implements OnInit {
     { key: 'Spouse', value: 'Spouse' },
     { key: 'Domestic Partner', value: 'Domestic Partner' },
     { key: 'Child', value: 'Child' },
-    { key: 'Child', value: 'Disabled Child' }
   ];
 
   config = {
