@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  showIENotSupportiveMessage = true;
+  showIENotSupportiveMessage = false;
   blockIEBrowser = false;
 
   ngOnInit() {
@@ -21,8 +21,11 @@ export class AppComponent implements OnInit {
   detectBrowser() {
     const match = navigator.userAgent.search(/(?:MSIE|Trident\/.*; rv:)/);
 
-    if (match !== -1 && this.blockIEBrowser) {
-      this.showIEMessage();
+    if (match !== -1) {
+      this.showIENotSupportiveMessage = true;
+      if (this.blockIEBrowser) {
+        this.showIEMessage();
+      }
     }
   }
 
