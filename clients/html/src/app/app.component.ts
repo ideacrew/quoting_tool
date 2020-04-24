@@ -18,6 +18,10 @@ export class AppComponent implements OnInit {
     this.detectBrowser();
   }
 
+  onDismiss() {
+    this.showIENotSupportiveMessage = false;
+  }
+
   detectBrowser() {
     const match = navigator.userAgent.search(/(?:MSIE|Trident\/.*; rv:)/);
 
