@@ -160,7 +160,7 @@ export class EmployerDetailsComponent implements OnInit {
       this.loadEmployeesFromStorage();
     }
 
-    var dates = [];
+    let dates = [];
     this.employerDetailsService.getStartOnDates().subscribe(function(response) {
       dates = response['dates'].map((date) => dates.push(date));
     });
