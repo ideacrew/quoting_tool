@@ -1,52 +1,51 @@
-import * as $ from 'jquery';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
-import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { TreeviewModule } from 'ngx-treeview';
 
-import { routes } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { EmployerDetailsComponent } from './employer-details/employer-details.component';
 import { EmployerDetailsHealthComponent } from './employer-details/employer-details-health/employer-details-health.component';
-import { EmployerDetailsDentalComponent } from './employer-details/employer-details-dental/employer-details-dental.component';
-import { NavComponent } from './nav/nav.component';
-import { PlanFilterComponent } from './plan-filter/plan-filter.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { DropdownTreeviewSelectComponent } from './dropdown-treeview-select/dropdown-treeview-select.component';
-import { PlanFilterPipe } from './plan-filter/plan-filter.pipe';
-import { OrderByPipe } from './plan-filter/order-by.pipe';
-import { CoverageTypePipe } from './employer-details/coverage-type.pipe';
+import { SharedModule } from './shared/shared.module';
+import { EmployerDetailsDentalComponent } from './employer-details/employer-details-dental/employer-details-dental.component';
+import { DentalModule } from './employer-details/employer-details-dental/dental.module';
+import { HealthModule } from './employer-details/employer-details-health/health.module';
 
+const routes: Routes = [
+  {
+    path: 'employer-details',
+    loadChildren: () => import('./employer-details/employer-details.module').then((m) => m.EmployerDetailsModule)
+  },
+  {
+    path: 'employer-details/health',
+    loadChildren: () => import('./employer-details/employer-details-health/health.module').then((m) => m.HealthModule)
+  },
+  {
+    path: 'employer-details/dental',
+    loadChildren: () => import('./employer-details/employer-details-dental/dental.module').then((m) => m.DentalModule)
+  },
+  {
+    path: '',
+    redirectTo: 'employer-details',
+    pathMatch: 'full'
+  },
+  {
+    path: '**',
+    redirectTo: 'employer-details'
+  }
+];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    EmployerDetailsComponent,
-    EmployerDetailsHealthComponent,
-    EmployerDetailsDentalComponent,
-    NavComponent,
-    PlanFilterComponent,
-    HeaderComponent,
-    FooterComponent,
-    DropdownTreeviewSelectComponent,
-    PlanFilterPipe,
-    OrderByPipe,
-    CoverageTypePipe
-  ],
+  declarations: [AppComponent, HeaderComponent, FooterComponent],
   imports: [
-    AutocompleteLibModule,
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -55,12 +54,10 @@ import { CoverageTypePipe } from './employer-details/coverage-type.pipe';
     HttpClientModule,
     NgbModule,
     RouterModule.forRoot(routes),
-    NgxDatatableModule,
     SweetAlert2Module.forRoot(),
-    TreeviewModule.forRoot()
-  ],
-  providers: [
-    { provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }
+    SharedModule,
+    DentalModule,
+    HealthModule
   ],
   bootstrap: [AppComponent]
 })
