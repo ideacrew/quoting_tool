@@ -36,7 +36,7 @@ export class PlanProviderService {
 
     const blob = new Blob(byteArrays, { type: contentType });
     return blob;
-  };
+  }
 
   public getPlansFor(
     consumer: ProductListUser,
