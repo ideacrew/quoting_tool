@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class AppComponent implements OnInit {
   showIENotSupportiveMessage = false;
-  blockIEBrowser = false;
+  blockIEBrowser = true;
 
   ngOnInit() {
     localStorage.removeItem('employerDetails');
