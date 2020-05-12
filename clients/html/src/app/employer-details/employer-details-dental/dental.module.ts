@@ -3,10 +3,20 @@ import { CommonModule } from '@angular/common';
 import { NgbDateAdapter, NgbDateNativeAdapter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EmployerDetailsDentalComponent } from './employer-details-dental.component';
 import { SharedModule } from '../../shared/shared.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [EmployerDetailsDentalComponent],
-  imports: [CommonModule, NgbModule, SharedModule],
+  imports: [
+    CommonModule, NgbModule,
+    RouterModule.forChild([
+      {
+        path: '',
+        component: EmployerDetailsDentalComponent
+      }
+    ]),
+    SharedModule
+  ],
   exports: [EmployerDetailsDentalComponent]
   // providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
 })
