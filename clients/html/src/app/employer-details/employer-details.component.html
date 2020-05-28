@@ -10,9 +10,7 @@
       <div class="row">
         <div class="col-3">
           <div class="form-group">
-            <label for="effectiveDate"
-              >Effective Date: <span class="required-field">*</span></label
-            >
+            <label for="effectiveDate">Effective Date: <span class="required-field">*</span></label>
             <select
               class="custom-select pl-2"
               id="inlineFormCustomSelect"
@@ -26,7 +24,7 @@
                 [selected]="isSelected(date)"
                 [disabled]="date.disabled"
                 [attr.value]="date"
-                >{{ date | date:'MMMM, y' }}</option
+                >{{ date | date: 'MMMM, y' }}</option
               >
             </select>
           </div>
@@ -35,9 +33,7 @@
       <div class="row">
         <div class="col-3">
           <div class="form-group">
-            <label for="sicInput"
-              >SIC Code: <span class="required-field">*</span></label
-            >
+            <label for="sicInput">SIC Code: <span class="required-field">*</span></label>
             <ng-autocomplete
               id="sicInput"
               formControlName="sic"
@@ -47,8 +43,8 @@
               [itemTemplate]="sicTemplate"
               [notFoundTemplate]="sicNotFoundTemplate"
               class="inout-fix"
-              (selected)='updateSic($event)'
-              (inputChanged)='updateChangedSic($event)'
+              (selected)="updateSic($event)"
+              (inputChanged)="updateChangedSic($event)"
             >
             </ng-autocomplete>
 
@@ -66,9 +62,7 @@
         </div>
         <div class="col-3">
           <div class="form-group">
-            <label for="zip"
-              >Business ZIP Code: <span class="required-field">*</span></label
-            >
+            <label for="zip">Business ZIP Code: <span class="required-field">*</span></label>
             <ng-autocomplete
               formControlName="zip"
               id="zip"
@@ -97,15 +91,8 @@
         <div class="col-3">
           <div class="form-group">
             <label for="countyField">County:</label>
-            <select
-              formControlName="county"
-              class="custom-select"
-              id="countyField"
-              (change)="updateCounty($event)"
-            >
-              <option *ngFor="let county of counties" [value]="county.county">{{
-                county.county
-              }}</option>
+            <select formControlName="county" class="custom-select" id="countyField" (change)="updateCounty($event)">
+              <option *ngFor="let county of counties" [value]="county.county">{{ county.county }}</option>
             </select>
           </div>
         </div>
@@ -117,12 +104,11 @@
             <div class="card-body">
               <h5>Search for your matching SIC Code</h5>
               <p class="pt-2 mb-0">
-                SIC (Standard Industrial Classifications) code are used to
-                categorize your business into the appropriate rating group
+                SIC (Standard Industrial Classifications) code are used to categorize your business into the appropriate
+                rating group
               </p>
               <p>
-                You can use the browse or search through all the available code
-                -- click a SIC code to make a selection
+                You can use the browse or search through all the available code -- click a SIC code to make a selection
               </p>
               <app-dropdown-treeview-select></app-dropdown-treeview-select>
             </div>
@@ -135,11 +121,10 @@
         <div class="col-md-12 mb-3">
           <h2 class="heading-text">Employee Roster</h2>
           <p>
-            Select '<strong>Add Employee</strong>' to manually enter information
-            about employees. Or, choose '<strong>Upload Employee Roster</strong
-            >' to upload the employee roster template. To use this option, you
-            will need to download the template first, then upload the completed
-            version. <br />For each employee you add, you will need their:
+            Select '<strong>Add Employee</strong>' to manually enter information about employees. Or, choose '<strong
+              >Upload Employee Roster</strong
+            >' to upload the employee roster template. To use this option, you will need to download the template first,
+            then upload the completed version. <br />For each employee you add, you will need their:
           </p>
           <ul>
             <li *ngFor="let detail of employeeRosterDetails">{{ detail }}</li>
@@ -183,7 +168,7 @@
           </ngx-datatable-column>
           <ngx-datatable-column name="Coverage Type">
             <ng-template let-row="row" ngx-datatable-cell-template>
-              {{ row['coverageKind'] | coverageType}}
+              {{ row['coverageKind'] | coverageType }}
             </ng-template>
           </ngx-datatable-column>
           <ngx-datatable-column name="Dependent Count">
@@ -192,11 +177,7 @@
             </ng-template>
           </ngx-datatable-column>
           <ngx-datatable-column name="">
-            <ng-template
-              let-row="row"
-              let-rowIndex="rowIndex"
-              ngx-datatable-cell-template
-            >
+            <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
               <div ngbDropdown class="d-inline-block" container="body">
                 <button type="button" class="btn btn-outline-primary" ngbDropdownToggle>
                   Actions
@@ -205,11 +186,7 @@
                   <button type="button" ngbDropdownItem (click)="editEmployee(rowIndex)">
                     Edit
                   </button>
-                  <button
-                    type="button"
-                    ngbDropdownItem
-                    (click)="removeEmployeeFromRoster(rowIndex)"
-                  >
+                  <button type="button" ngbDropdownItem (click)="removeEmployeeFromRoster(rowIndex)">
                     Delete
                   </button>
                 </div>
@@ -228,30 +205,18 @@
                 <div class="col-3">
                   <div class="form-group">
                     <label for="firstName">First Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="firstName"
-                      placeholder="First Name"
-                    />
+                    <input type="text" class="form-control" formControlName="firstName" placeholder="First Name" />
                   </div>
                 </div>
                 <div class="col-3">
                   <div class="form-group">
                     <label for="lastName">Last Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="lastName"
-                      placeholder="Last Name"
-                    />
+                    <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name" />
                   </div>
                 </div>
                 <div class="col-3">
                   <div class="form-group">
-                    <label for="dob"
-                      >DOB <span class="required-field">*</span></label
-                    >
+                    <label for="dob">DOB <span class="required-field">*</span></label>
                     <input
                       placeholder="mm/dd/yyyy"
                       (input)="formatInputDate($event)"
@@ -260,18 +225,13 @@
                       ngbDatepicker
                       #d="ngbDatepicker"
                       (click)="d.toggle()"
-                      required
                     />
                   </div>
                 </div>
                 <div class="col-2">
                   <div class="form-group">
                     <label for="coverageKind">Coverage Kind <span class="required-field">*</span></label>
-                    <select
-                      type="text"
-                      class="form-control"
-                      formControlName="coverageKind"
-                    >
+                    <select type="text" class="form-control" formControlName="coverageKind">
                       <option value="both" selected>Both</option>
                       <option value="healthOnly">Health Only</option>
                       <option value="dentalOnly">Dental Only</option>
@@ -280,11 +240,7 @@
                 </div>
                 <div class="pl-2" formArrayName="dependents">
                   <div
-                    *ngFor="
-                      let dependent of editEmployeeForm.get('dependents')
-                        ?.controls;
-                      let j = index
-                    "
+                    *ngFor="let dependent of editEmployeeForm.get('dependents')?.controls; let j = index"
                     [@fadeInOut]
                   >
                     <fieldset class="dependent">
@@ -316,9 +272,7 @@
                         </div>
                         <div class="col-3">
                           <div class="form-group">
-                            <label for="dob"
-                              >DOB <span class="required-field">*</span></label
-                            >
+                            <label for="dob">DOB <span class="required-field">*</span></label>
                             <input
                               placeholder="mm/dd/yyyy"
                               (input)="formatInputDate($event)"
@@ -334,28 +288,17 @@
                         <div class="col-2">
                           <div class="form-group">
                             <label for="relationship">Relationship <span class="required-field">*</span></label>
-                            <select
-                              type="text"
-                              class="form-control"
-                              formControlName="relationship"
-                            >
-                              <option
-                                *ngFor="let relation of relationOptions"
-                                [value]="relation.key"
-                                >{{ relation.value }}</option
-                              >
+                            <select type="text" class="form-control" formControlName="relationship">
+                              <option *ngFor="let relation of relationOptions" [value]="relation.key">{{
+                                relation.value
+                              }}</option>
                             </select>
                           </div>
                         </div>
                         <div class="col-1 pt-4">
                           <i
                             class="fas fa-trash fa-2x"
-                            (click)="
-                              deleteDependent(
-                                editEmployeeForm.controls.dependents,
-                                j
-                              )
-                            "
+                            (click)="deleteDependent(editEmployeeForm.controls.dependents, j)"
                           ></i>
                         </div>
                       </div>
@@ -373,11 +316,7 @@
                 </div>
 
                 <div class="col-12">
-                  <button
-                    type="button"
-                    class="float-right btn btn-primary"
-                    (click)="this.showEditHousehold = false"
-                  >
+                  <button type="button" class="float-right btn btn-primary" (click)="this.showEditHousehold = false">
                     Cancel
                   </button>
                   <button
@@ -404,30 +343,18 @@
                 <div class="col-3">
                   <div class="form-group">
                     <label for="firstName">First Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="firstName"
-                      placeholder="First Name"
-                    />
+                    <input type="text" class="form-control" formControlName="firstName" placeholder="First Name" />
                   </div>
                 </div>
                 <div class="col-3">
                   <div class="form-group">
                     <label for="lastName">Last Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="lastName"
-                      placeholder="Last Name"
-                    />
+                    <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name" />
                   </div>
                 </div>
                 <div class="col-3">
                   <div class="form-group">
-                    <label for="dob"
-                      >DOB <span class="required-field">*</span></label
-                    >
+                    <label for="dob">DOB <span class="required-field">*</span></label>
                     <input
                       placeholder="mm/dd/yyyy"
                       (input)="formatInputDate($event)"
@@ -443,11 +370,7 @@
                 <div class="col-2">
                   <div class="form-group">
                     <label for="coverageKind">Coverage Kind <span class="required-field">*</span></label>
-                    <select
-                      type="text"
-                      class="form-control"
-                      formControlName="coverageKind"
-                    >
+                    <select type="text" class="form-control" formControlName="coverageKind">
                       <option value="both" selected>Both</option>
                       <option value="healthOnly">Health Only</option>
                       <option value="dentalOnly">Dental Only</option>
@@ -456,11 +379,7 @@
                 </div>
                 <div class="pl-2" formArrayName="dependents">
                   <div
-                    *ngFor="
-                      let dependent of addNewEmployeeForm.get('dependents')
-                        ?.controls;
-                      let j = index
-                    "
+                    *ngFor="let dependent of addNewEmployeeForm.get('dependents')?.controls; let j = index"
                     [@fadeInOut]
                   >
                     <fieldset class="dependent">
@@ -492,9 +411,7 @@
                         </div>
                         <div class="col-3">
                           <div class="form-group">
-                            <label for="dob"
-                              >DOB <span class="required-field">*</span></label
-                            >
+                            <label for="dob">DOB <span class="required-field">*</span></label>
                             <input
                               placeholder="mm/dd/yyyy"
                               (input)="formatInputDate($event)"
@@ -510,28 +427,17 @@
                         <div class="col-2">
                           <div class="form-group">
                             <label for="relationship">Relationship <span class="required-field">*</span></label>
-                            <select
-                              type="text"
-                              class="form-control"
-                              formControlName="relationship"
-                            >
-                              <option
-                                *ngFor="let relation of relationOptions"
-                                [value]="relation.key"
-                                >{{ relation.value }}</option
-                              >
+                            <select type="text" class="form-control" formControlName="relationship">
+                              <option *ngFor="let relation of relationOptions" [value]="relation.key">{{
+                                relation.value
+                              }}</option>
                             </select>
                           </div>
                         </div>
                         <div class="col-1 pt-4">
                           <i
                             class="fas fa-trash fa-2x"
-                            (click)="
-                              deleteDependent(
-                                addNewEmployeeForm.controls.dependents,
-                                j
-                              )
-                            "
+                            (click)="deleteDependent(addNewEmployeeForm.controls.dependents, j)"
                           ></i>
                         </div>
                       </div>
@@ -549,11 +455,7 @@
                 </div>
 
                 <div class="col-12">
-                  <button
-                    class="float-right btn btn-primary"
-                    type="button"
-                    (click)="this.showNewEmployee = false"
-                  >
+                  <button class="float-right btn btn-primary" type="button" (click)="this.showNewEmployee = false">
                     Cancel
                   </button>
                   <button
@@ -576,10 +478,7 @@
         <div formArrayName="employees">
           <!-- Start employee forms array -->
           <div
-            *ngFor="
-              let employee of quoteForm.get('employees')?.controls;
-              let i = index
-            "
+            *ngFor="let employee of quoteForm.get('employees')?.controls; let i = index"
             [attr.employee-index]="i"
             id="employee-hh-card"
             [@fadeInOut]
@@ -594,30 +493,18 @@
                 <div class="col-3">
                   <div class="form-group">
                     <label for="firstName">First Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="firstName"
-                      placeholder="First Name"
-                    />
+                    <input type="text" class="form-control" formControlName="firstName" placeholder="First Name" />
                   </div>
                 </div>
                 <div class="col-3">
                   <div class="form-group">
                     <label for="lastName">Last Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="lastName"
-                      placeholder="Last Name"
-                    />
+                    <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name" />
                   </div>
                 </div>
                 <div class="col-3">
                   <div class="form-group">
-                    <label for="dob"
-                      >DOB <span class="required-field">*</span></label
-                    >
+                    <label for="dob">DOB <span class="required-field">*</span></label>
                     <input
                       placeholder="mm/dd/yyyy"
                       (input)="formatInputDate($event)"
@@ -633,11 +520,7 @@
                 <div class="col-2">
                   <div class="form-group">
                     <label for="coverageKind">Coverage Type <span class="required-field">*</span></label>
-                    <select
-                      type="text"
-                      class="form-control"
-                      formControlName="coverageKind"
-                    >
+                    <select type="text" class="form-control" formControlName="coverageKind">
                       <option value="both" selected>Both</option>
                       <option value="healthOnly">Health Only</option>
                       <option value="dentalOnly">Dental Only</option>
@@ -649,13 +532,7 @@
                 </div>
                 <div class="pl-2" formArrayName="dependents">
                   <!-- starts depenendts array -->
-                  <div
-                    *ngFor="
-                      let dependent of employee.get('dependents').controls;
-                      let j = index
-                    "
-                    [@fadeInOut]
-                  >
+                  <div *ngFor="let dependent of employee.get('dependents').controls; let j = index" [@fadeInOut]>
                     <fieldset class="dependent">
                       <legend>
                         <h6 class="sub-heading-text">Dependent {{ j + 1 }}</h6>
@@ -686,9 +563,7 @@
                         </div>
                         <div class="col-3">
                           <div class="form-group">
-                            <label for="dob"
-                              >DOB <span class="required-field">*</span></label
-                            >
+                            <label for="dob">DOB <span class="required-field">*</span></label>
                             <input
                               placeholder="mm/dd/yyyy"
                               (input)="formatInputDate($event)"
@@ -704,26 +579,15 @@
                         <div class="col-2">
                           <div class="form-group">
                             <label for="relationship">Relationship <span class="required-field">*</span></label>
-                            <select
-                              type="text"
-                              class="form-control"
-                              formControlName="relationship"
-                            >
-                              <option
-                                *ngFor="let relation of relationOptions"
-                                [value]="relation.key"
-                                >{{ relation.value }}</option
-                              >
+                            <select type="text" class="form-control" formControlName="relationship">
+                              <option *ngFor="let relation of relationOptions" [value]="relation.key">{{
+                                relation.value
+                              }}</option>
                             </select>
                           </div>
                         </div>
                         <div class="col-1 pt-4">
-                          <i
-                            class="fas fa-trash fa-2x"
-                            (click)="
-                              deleteDependent(employee.controls.dependents, j)
-                            "
-                          ></i>
+                          <i class="fas fa-trash fa-2x" (click)="deleteDependent(employee.controls.dependents, j)"></i>
                         </div>
                       </div>
                       <!-- ends dependents row -->
@@ -753,24 +617,14 @@
         ><!-- Template for upload roster  -->
         <div class="modal-header">
           <h4 class="modal-title" id="modal-basic-title">Upload File</h4>
-          <button
-            type="button"
-            class="close"
-            aria-label="Close"
-            (click)="d('Cross click')"
-          >
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <div class="card">
             <div class="card-body">
-              <input
-                type="file"
-                id="file"
-                #file
-                (change)="checkFilePresence(file)"
-              />
+              <input type="file" id="file" #file (change)="checkFilePresence(file)" />
             </div>
           </div>
         </div>
@@ -791,21 +645,24 @@
           <button
             type="button"
             class="float-left btn btn-primary upload-employee-roster"
-            (click)="open(content)" *ngIf="!showEmployeeRoster"
+            (click)="open(content)"
+            *ngIf="!showEmployeeRoster"
           >
             <i class="fas fa-upload"></i> Upload Employee Roster
           </button>
           <button
             type="button"
             (click)="addEmployee()"
-            class="btn btn-primary add-new-employee" *ngIf="!showEmployeeRoster"
+            class="btn btn-primary add-new-employee"
+            *ngIf="!showEmployeeRoster"
           >
             <i class="fas fa-user-plus"></i> Add Employee
           </button>
           <button
             type="button"
             (click)="addNewEmployee()"
-            class="btn btn-primary add-new-employee" *ngIf="showEmployeeRoster"
+            class="btn btn-primary add-new-employee"
+            *ngIf="showEmployeeRoster"
           >
             <i class="fas fa-user-plus"></i> Add Employee
           </button>

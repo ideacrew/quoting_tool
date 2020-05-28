@@ -1,9 +1,7 @@
 # Ignore everything:
-/*
 
 
 # Except clients/html:
-!/**/clients/html
 
 package.json
 
