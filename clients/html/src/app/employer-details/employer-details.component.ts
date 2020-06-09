@@ -14,6 +14,13 @@ import { SelectedSicService } from '../services/selected-sic.service';
 
 type AOA = any[][];
 
+interface Alert {
+  type: string;
+  feature: string;
+  enabled: boolean;
+  message: string;
+}
+
 @Component({
   selector: 'app-employer-details',
   templateUrl: './employer-details.component.html',
@@ -33,6 +40,7 @@ type AOA = any[][];
 })
 export class EmployerDetailsComponent implements OnInit {
   rows = [];
+  alerts: Alert[];
   model: NgbDateStruct;
   date: { months: number; day: number; year: number };
   sicKeyword = 'standardIndustryCodeCode';
@@ -61,6 +69,7 @@ export class EmployerDetailsComponent implements OnInit {
   public months: any;
   public todaysDate = new Date();
   public employeeRosterDetails: any;
+  public isLateRates: Promise<boolean>;
   public show: boolean;
   showNewEmployee = false;
   excelArray: any;
@@ -89,6 +98,9 @@ export class EmployerDetailsComponent implements OnInit {
     private dpConfig: NgbDatepickerConfig,
     private selectedSicService: SelectedSicService
   ) {
+
+    this.setAlerts();
+
     this.quoteForm = this.fb.group({
       effectiveDate: ['', Validators.required],
       sic: ['', Validators.required],
@@ -160,10 +172,26 @@ export class EmployerDetailsComponent implements OnInit {
     }
 
     let dates = [];
-    this.employerDetailsService.getStartOnDates().subscribe(function(response) {
+    let is_late_rate = false;
+    this.employerDetailsService.getStartOnDates().subscribe((response) => {
       dates = response['dates'].map((date) => dates.push(date));
+      is_late_rate = !response['has_rates?'];
+      this.isLateRates = Promise.resolve(is_late_rate);
     });
     this.effectiveDateOptions = dates;
+  }
+
+  close(alert: Alert) {
+    this.alerts.splice(this.alerts.indexOf(alert), 1);
+  }
+
+  setAlerts() {
+    this.alerts = Array.from([{
+      type: 'warning',
+      feature: "Late rates",
+      enabled: true,
+      message: "Due to a delay, premiums for some coverage effective dates are not available yet. Please check again soon to see if this information has been updated. You can also contact Customer Service or your broker if you need help."
+    }])
   }
 
   getZipCodes() {

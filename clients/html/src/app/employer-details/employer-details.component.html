@@ -1,3 +1,8 @@
+<div *ngIf="isLateRates | async">
+  <p *ngFor="let alert of alerts">
+    <ngb-alert [type]="alert.type" *ngIf="alert.enabled" (close)="close(alert)">{{ alert.message }}</ngb-alert>
+  </p>
+</div>
 <div class="container mb-5 mt-3">
   <app-nav [validForm]="showEmployeeRoster" myPath="Employer Details"></app-nav>
   <div class="row pl-3 mt-4">
