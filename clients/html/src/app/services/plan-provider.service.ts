@@ -58,7 +58,7 @@ export class PlanProviderService {
       kind: kind
     };
     this.api_request.authedGet('products/plans.json', attrs).subscribe(function(data: Array<ProductData>) {
-      consumer.onProductsLoaded(transformer.castData(data['plans']));
+      consumer.onProductsLoaded(transformer.castData(data['plans'].filter((plan) => plan['rates'])));
       component.isLoading = false;
     });
   }
