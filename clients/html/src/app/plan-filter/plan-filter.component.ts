@@ -345,6 +345,7 @@ export class PlanFilterComponent implements OnInit {
     const icArray = [];
     const hsaArray = [];
     let selected;
+    let filtered;
 
     if (this.selectedMetalLevels.length > 0) {
       this.selectedMetalLevels.map(ml => {
@@ -375,39 +376,45 @@ export class PlanFilterComponent implements OnInit {
     }
 
     if (this.selectedInsuranceCompanies.length > 0 && this.selectedProductTypes.length > 0) {
-      this.selectedProductTypes.map(pt => {
-        selected = this.combineArray(icArray).filter(plan => plan['product_information'][pt.key] === pt.value);
-      });
+      selected = this.selectedProductTypes.reduce((currentValue, pt) => {
+        filtered = this.combineArray(icArray).filter(plan => plan['product_information'][pt.key] === pt.value);
+        return [...currentValue, ...filtered];
+      }, []);
     }
 
     if (this.selectedInsuranceCompanies.length > 0 && this.selectedHSAs.length > 0) {
-      this.selectedHSAs.map(hsa => {
-        selected = this.combineArray(icArray).filter(plan => plan['product_information'][hsa.key] === hsa.value);
-      });
+      selected = this.selectedHSAs.reduce((currentValue, hsa) => {
+        filtered = this.combineArray(icArray).filter(plan => plan['product_information'][hsa.key] === hsa.value);
+        return [...currentValue, ...filtered];
+      }, []);
     }
 
     if (this.selectedMetalLevels.length > 0 && this.selectedInsuranceCompanies.length > 0) {
-      this.selectedInsuranceCompanies.map(ic => {
-        selected = this.combineArray(mlArray).filter(plan => plan['product_information'][ic.key] === ic.value);
-      });
+      selected = this.selectedInsuranceCompanies.reduce((currentValue, ic) => {
+        filtered = this.combineArray(mlArray).filter(plan => plan['product_information'][ic.key] === ic.value);
+        return [...currentValue, ...filtered];
+      }, []);
     }
 
     if (this.selectedMetalLevels.length > 0 && this.selectedProductTypes.length > 0) {
-      this.selectedProductTypes.map(pt => {
-        selected = this.combineArray(mlArray).filter(plan => plan['product_information'][pt.key] === pt.value);
-      });
+      selected = this.selectedProductTypes.reduce((currentValue, pt) => {
+        filtered = this.combineArray(mlArray).filter(plan => plan['product_information'][pt.key] === pt.value);
+        return [...currentValue, ...filtered];
+      }, []);
     }
 
     if (this.selectedMetalLevels.length > 0 && this.selectedHSAs.length > 0) {
-      this.selectedHSAs.map(hsa => {
-        selected = this.combineArray(mlArray).filter(plan => plan['product_information'][hsa.key] === hsa.value);
-      });
+      selected = this.selectedHSAs.reduce((currentValue, hsa) => {
+        filtered = this.combineArray(mlArray).filter(plan => plan['product_information'][hsa.key] === hsa.value);
+        return [...currentValue, ...filtered];
+      }, []);
     }
 
     if (this.selectedMetalLevels.length > 0 && this.selectedProductTypes.length > 0 && this.selectedInsuranceCompanies.length > 0) {
-      this.selectedInsuranceCompanies.map(ic => {
-        selected = selected.filter(plan => plan['product_information'][ic.key] === ic.value);
-      });
+      selected = this.selectedInsuranceCompanies.reduce((currentValue, ic) => {
+        filtered = selected.filter(plan => plan['product_information'][ic.key] === ic.value);
+        return [...currentValue, ...filtered];
+      }, []);
     }
 
     if (selected === undefined) {
