@@ -55,6 +55,7 @@ export class EmployerDetailsComponent implements OnInit {
   employerDetails: any;
   showEditHousehold: any;
   sicCodes = sicCodes;
+  isLateRates: Promise<boolean>;
 
   public counties: any;
   public quoteForm: FormGroup;
@@ -69,7 +70,6 @@ export class EmployerDetailsComponent implements OnInit {
   public months: any;
   public todaysDate = new Date();
   public employeeRosterDetails: any;
-  public isLateRates: Promise<boolean>;
   public show: boolean;
   showNewEmployee = false;
   excelArray: any;
@@ -175,7 +175,7 @@ export class EmployerDetailsComponent implements OnInit {
     let is_late_rate = false;
     this.employerDetailsService.getStartOnDates().subscribe((response) => {
       dates = response['dates'].map((date) => dates.push(date));
-      is_late_rate = !response['has_rates?'];
+      is_late_rate = response['is_late_rate'];
       this.isLateRates = Promise.resolve(is_late_rate);
     });
     this.effectiveDateOptions = dates;
@@ -186,12 +186,12 @@ export class EmployerDetailsComponent implements OnInit {
   }
 
   setAlerts() {
-    this.alerts = Array.from([{
+    this.alerts = [{
       type: 'warning',
       feature: "Late rates",
       enabled: true,
       message: "Due to a delay, premiums for some coverage effective dates are not available yet. Please check again soon to see if this information has been updated. You can also contact Customer Service or your broker if you need help."
-    }])
+    }];
   }
 
   getZipCodes() {

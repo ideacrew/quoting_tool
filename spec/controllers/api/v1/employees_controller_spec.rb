@@ -45,7 +45,7 @@ RSpec.describe Api::V1::EmployeesController do
       it 'should return empty set for dates' do
         parsed_response = JSON.parse(response.body)
         expect(parsed_response['dates']).to eq []
-        expect(parsed_response['has_rates?']).to eq false
+        expect(parsed_response['is_late_rate']).to eq true
       end
     end
 
@@ -70,7 +70,7 @@ RSpec.describe Api::V1::EmployeesController do
       it 'should return set for dates' do
         parsed_response = JSON.parse(response.body)
         expect(parsed_response['dates'].empty?).to eq false
-        expect(parsed_response['has_rates?']).to eq true
+        expect(parsed_response['is_late_rate']).to eq false
       end
     end
   end
