@@ -1,4 +1,4 @@
-<ng-container *ngIf="isLateRates | async">
+<ng-container *ngIf="isLateRates">
   <ng-container *ngFor="let alert of alerts">
     <ngb-alert [type]="alert.type" *ngIf="alert.enabled" (close)="close(alert)">{{ alert.message }}</ngb-alert>
   </ng-container>

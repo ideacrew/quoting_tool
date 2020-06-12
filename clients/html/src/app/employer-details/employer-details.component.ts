@@ -55,7 +55,7 @@ export class EmployerDetailsComponent implements OnInit {
   employerDetails: any;
   showEditHousehold: any;
   sicCodes = sicCodes;
-  isLateRates: Promise<boolean>;
+  isLateRates: boolean;
 
   public counties: any;
   public quoteForm: FormGroup;
@@ -176,7 +176,7 @@ export class EmployerDetailsComponent implements OnInit {
     this.employerDetailsService.getStartOnDates().subscribe((response) => {
       dates = response['dates'].map((date) => dates.push(date));
       is_late_rate = response['is_late_rate'];
-      this.isLateRates = Promise.resolve(is_late_rate);
+      this.isLateRates = is_late_rate;
     });
     this.effectiveDateOptions = dates;
   }
