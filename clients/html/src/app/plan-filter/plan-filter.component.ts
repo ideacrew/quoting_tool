@@ -335,7 +335,7 @@ export class PlanFilterComponent implements OnInit {
   }
 
   filterCarriers() {
-    const plans = this.filteredCarriers;
+    const plans = this.defaultCarriers;
     const mlArray = [];
     const ptArray = [];
     const icArray = [];
