@@ -282,9 +282,8 @@ export class PlanFilterComponent implements OnInit {
           this.selectedMetalLevels.push({key: 'metal_level', value: value});
           this.filterKeysSelected.push(type);
         } else {
-          const index = this.selectedMetalLevels.indexOf(value);
+          this.selectedMetalLevels = this.selectedMetalLevels.filter((ml) => ml.value != value);
           const keyIndex = this.filterKeysSelected.indexOf(type);
-          this.selectedMetalLevels.splice(index, 1);
           this.filterKeysSelected.splice(keyIndex, 1);
           this.filteredCarriers = this.defaultCarriers;
           this.filterLength = this.filteredCarriers.length;
@@ -295,9 +294,8 @@ export class PlanFilterComponent implements OnInit {
           this.selectedProductTypes.push({key: 'product_type', value: value});
           this.filterKeysSelected.push(type);
         } else {
-          const index = this.selectedProductTypes.indexOf(value);
+          this.selectedProductTypes = this.selectedProductTypes.filter((ml) => ml.value != value);
           const keyIndex = this.filterKeysSelected.indexOf(type);
-          this.selectedProductTypes.splice(index, 1);
           this.filterKeysSelected.splice(keyIndex, 1);
           this.filteredCarriers = this.defaultCarriers;
           this.filterLength = this.filteredCarriers.length;
@@ -308,9 +306,8 @@ export class PlanFilterComponent implements OnInit {
           this.selectedInsuranceCompanies.push({key: 'provider_name', value: value});
           this.filterKeysSelected.push(type);
         } else {
-          const index = this.selectedInsuranceCompanies.indexOf(value);
+          this.selectedInsuranceCompanies = this.selectedInsuranceCompanies.filter((ml) => ml.value != value);
           const keyIndex = this.filterKeysSelected.indexOf(type);
-          this.selectedInsuranceCompanies.splice(index, 1);
           this.filterKeysSelected.splice(keyIndex, 1);
           this.filteredCarriers = this.defaultCarriers;
           this.filterLength = this.filteredCarriers.length;
@@ -321,9 +318,8 @@ export class PlanFilterComponent implements OnInit {
           this.selectedHSAs.push({key: 'hsa_eligible', value: value});
           this.filterKeysSelected.push(type);
         } else {
-          const index = this.selectedHSAs.indexOf(value);
+          this.selectedHSAs = this.selectedHSAs.filter((ml) => ml.value != value);
           const keyIndex = this.filterKeysSelected.indexOf(type);
-          this.selectedHSAs.splice(index, 1);
           this.filterKeysSelected.splice(keyIndex, 1);
           this.filteredCarriers = this.defaultCarriers;
           this.filterLength = this.filteredCarriers.length;
