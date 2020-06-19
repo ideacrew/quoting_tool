@@ -285,8 +285,6 @@ export class PlanFilterComponent implements OnInit {
           this.selectedMetalLevels = this.selectedMetalLevels.filter((ml) => ml.value != value);
           const keyIndex = this.filterKeysSelected.indexOf(type);
           this.filterKeysSelected.splice(keyIndex, 1);
-          this.filteredCarriers = this.defaultCarriers;
-          this.filterLength = this.filteredCarriers.length;
         }
         break;
       case 'productType':
@@ -297,8 +295,6 @@ export class PlanFilterComponent implements OnInit {
           this.selectedProductTypes = this.selectedProductTypes.filter((ml) => ml.value != value);
           const keyIndex = this.filterKeysSelected.indexOf(type);
           this.filterKeysSelected.splice(keyIndex, 1);
-          this.filteredCarriers = this.defaultCarriers;
-          this.filterLength = this.filteredCarriers.length;
         }
         break;
       case 'insuranceCompany':
@@ -309,8 +305,6 @@ export class PlanFilterComponent implements OnInit {
           this.selectedInsuranceCompanies = this.selectedInsuranceCompanies.filter((ml) => ml.value != value);
           const keyIndex = this.filterKeysSelected.indexOf(type);
           this.filterKeysSelected.splice(keyIndex, 1);
-          this.filteredCarriers = this.defaultCarriers;
-          this.filterLength = this.filteredCarriers.length;
         }
         break;
       case 'hsa':
@@ -321,8 +315,6 @@ export class PlanFilterComponent implements OnInit {
           this.selectedHSAs = this.selectedHSAs.filter((ml) => ml.value != value);
           const keyIndex = this.filterKeysSelected.indexOf(type);
           this.filterKeysSelected.splice(keyIndex, 1);
-          this.filteredCarriers = this.defaultCarriers;
-          this.filterLength = this.filteredCarriers.length;
         }
         break;
     }
@@ -448,6 +440,8 @@ export class PlanFilterComponent implements OnInit {
     }
 
     this.filterCarriersResults = selected;
+    this.filteredCarriers = selected;
+    this.filterLength = this.filteredCarriers.length;
   }
 
   displayResults() {
