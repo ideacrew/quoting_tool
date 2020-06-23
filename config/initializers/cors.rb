@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
    allow do
-     origins 'https://health-connector.github.io', 'localhost:4200'
+     origins 'https://health-connector.github.io', 'localhost:4200', 'https://pvt.aeqt.mhc.hbxshop.org', 'localhost'
 
     resource '*',
       headers: :any,

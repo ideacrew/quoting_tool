@@ -52,3 +52,11 @@ COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 
 RUN bundle install && yarn install --check-files
+
+# Setup fake time for time travel
+WORKDIR /
+RUN git clone https://github.com/wolfcw/libfaketime.git
+WORKDIR /libfaketime/src
+RUN make install
+
+WORKDIR /app
