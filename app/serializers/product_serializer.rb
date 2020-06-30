@@ -44,7 +44,7 @@ class ProductSerializer
   end
 
   attribute :major_dental_services do |object|
-    object.dental? ? object.major_dental_services : nil
+    object.dental? ? (object.major_dental_services || 'Not Applicable') : nil
   end
 
   attribute :preventive_dental_services do |object|

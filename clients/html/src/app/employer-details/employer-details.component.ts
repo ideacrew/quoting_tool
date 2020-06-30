@@ -1,17 +1,25 @@
 import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EmployerDetailsService } from './../services/employer-details.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateStruct, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import * as XLSX from 'xlsx';
+import Swal from 'sweetalert2';
+
+import { EmployerDetailsService } from './../services/employer-details.service';
 import zipcodes from '../../data/zipCode.json';
 import sics from '../../data/sic.json';
 import sicCodes from '../../data/sicCodes.json';
 import { SelectedSicService } from '../services/selected-sic.service';
-import * as XLSX from 'xlsx';
-type AOA = any[][];
-import Swal from 'sweetalert2';
 
+type AOA = any[][];
+
+interface Alert {
+  type: string;
+  feature: string;
+  enabled: boolean;
+  message: string;
+}
 
 @Component({
   selector: 'app-employer-details',
@@ -32,6 +40,7 @@ import Swal from 'sweetalert2';
 })
 export class EmployerDetailsComponent implements OnInit {
   rows = [];
+  alerts: Alert[];
   model: NgbDateStruct;
   date: { months: number; day: number; year: number };
   sicKeyword = 'standardIndustryCodeCode';
@@ -46,6 +55,7 @@ export class EmployerDetailsComponent implements OnInit {
   employerDetails: any;
   showEditHousehold: any;
   sicCodes = sicCodes;
+  isLateRates: boolean;
 
   public counties: any;
   public quoteForm: FormGroup;
@@ -68,7 +78,6 @@ export class EmployerDetailsComponent implements OnInit {
     { key: 'Spouse', value: 'Spouse' },
     { key: 'Domestic Partner', value: 'Domestic Partner' },
     { key: 'Child', value: 'Child' },
-    { key: 'Child', value: 'Disabled Child' }
   ];
 
   config = {
@@ -89,6 +98,9 @@ export class EmployerDetailsComponent implements OnInit {
     private dpConfig: NgbDatepickerConfig,
     private selectedSicService: SelectedSicService
   ) {
+
+    this.setAlerts();
+
     this.quoteForm = this.fb.group({
       effectiveDate: ['', Validators.required],
       sic: ['', Validators.required],
@@ -159,16 +171,32 @@ export class EmployerDetailsComponent implements OnInit {
       this.loadEmployeesFromStorage();
     }
 
-    var dates = [] ;
-    this.employerDetailsService.getStartOnDates().subscribe(function(response) {
-      dates = response["dates"].map(date => dates.push(date));
+    let dates = [];
+    let is_late_rate = false;
+    this.employerDetailsService.getStartOnDates().subscribe((response) => {
+      dates = response['dates'].map((date) => dates.push(date));
+      is_late_rate = response['is_late_rate'];
+      this.isLateRates = is_late_rate;
     });
     this.effectiveDateOptions = dates;
   }
 
+  close(alert: Alert) {
+    this.alerts.splice(this.alerts.indexOf(alert), 1);
+  }
+
+  setAlerts() {
+    this.alerts = [{
+      type: 'warning',
+      feature: "Late rates",
+      enabled: true,
+      message: "Due to a delay, premiums for some coverage effective dates are not available yet. Please check again soon to see if this information has been updated. You can also contact Customer Service or your broker if you need help."
+    }];
+  }
+
   getZipCodes() {
     const zipCodes = [];
-    zipcodes.map(zipcode => zipCodes.push(zipcode.zipCode));
+    zipcodes.map((zipcode) => zipCodes.push(zipcode.zipCode));
     this.zipcodes = zipCodes.reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
   }
 
@@ -264,25 +292,25 @@ export class EmployerDetailsComponent implements OnInit {
     // Below is used to display in the UI
     const reader: FileReader = new FileReader();
     reader.onload = (e: any) => {
-     /* read workbook */
-     const bstr: string = e.target.result;
-     const wb: XLSX.WorkBook = XLSX.read(bstr, {type: 'binary'});
+      /* read workbook */
+      const bstr: string = e.target.result;
+      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
 
-     /* grab first sheet */
-     const wsname: string = wb.SheetNames[0];
-     const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+      /* grab first sheet */
+      const wsname: string = wb.SheetNames[0];
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
 
-     /* save data */
-     const data = <AOA>(XLSX.utils.sheet_to_json(ws, {header: 1}));
-     const dataFromArray = [];
-     data.map((d, i) => {
-       if (i > 2 && d.length > 0) {
-         dataFromArray.push({relation: d[1], lastName: d[2], firstName: d[3], dob: this.getJsDateFromExcel(d[8])});
-       }
-     });
-     this.excelArray = dataFromArray;
-   };
-   reader.readAsBinaryString(fileInfo.files[0]);
+      /* save data */
+      const data = <AOA>XLSX.utils.sheet_to_json(ws, { header: 1 });
+      const dataFromArray = [];
+      data.map((d, i) => {
+        if (i > 2 && d.length > 0) {
+          dataFromArray.push({ relation: d[1], lastName: d[2], firstName: d[3], dob: this.getJsDateFromExcel(d[8]) });
+        }
+      });
+      this.excelArray = dataFromArray;
+    };
+    reader.readAsBinaryString(fileInfo.files[0]);
     setTimeout(() => {
       this.parseResults(this.excelArray);
     }, 500);
@@ -323,7 +351,7 @@ export class EmployerDetailsComponent implements OnInit {
   updateChangedSic(event) {
     let selectedSic;
     if (event.length === 4) {
-      selectedSic = this.sics.find(sic => sic.standardIndustryCodeCode === event);
+      selectedSic = this.sics.find((sic) => sic.standardIndustryCodeCode === event);
     }
     if (selectedSic && this.showEmployeeRoster) {
       this.updateFormValue(selectedSic, 'sic');
@@ -370,7 +398,9 @@ export class EmployerDetailsComponent implements OnInit {
   updateCounty(event) {
     if (this.showEmployeeRoster) {
       const form = JSON.parse(localStorage.getItem('employerDetails'));
-      const selectedCounty = this.availableCounties.filter((c) => c.county === event.target.value && c.zipCode === form.zip);
+      const selectedCounty = this.availableCounties.filter(
+        (c) => c.county === event.target.value && c.zipCode === form.zip
+      );
       form.county = selectedCounty[0].county;
       localStorage.setItem('employerDetails', JSON.stringify(form));
     }
@@ -403,7 +433,7 @@ export class EmployerDetailsComponent implements OnInit {
   }
 
   getJsDateFromExcel(excelDate) {
-    return new Date((excelDate - (25567 + 1)) *  86400 * 1000);
+    return new Date((excelDate - (25567 + 1)) * 86400 * 1000);
   }
 
   parseResults(excelArray) {
@@ -512,7 +542,9 @@ export class EmployerDetailsComponent implements OnInit {
     this.rows[this.editEmployeeIndex] = this.editEmployeeForm.value;
     this.employerDetails.employees[this.editEmployeeIndex] = this.editEmployeeForm.value;
     if (this.editEmployeeForm.controls.dependents.value) {
-      this.employerDetails.employees[this.editEmployeeIndex].dependents = this.editEmployeeForm.controls.dependents.value;
+      this.employerDetails.employees[
+        this.editEmployeeIndex
+      ].dependents = this.editEmployeeForm.controls.dependents.value;
     }
     localStorage.setItem('employerDetails', JSON.stringify(this.employerDetails));
     this.editEmployeeIndex = null;
@@ -536,7 +568,7 @@ export class EmployerDetailsComponent implements OnInit {
       input = input.substr(0, input.length - 3);
     }
 
-    const values = input.split('/').map(function (v) {
+    const values = input.split('/').map(function(v) {
       return v.replace(/\D/g, '');
     });
     if (values[0]) {
@@ -545,7 +577,7 @@ export class EmployerDetailsComponent implements OnInit {
     if (values[1]) {
       values[1] = this.validateMonthDate(values[1], 31);
     }
-    const output = values.map(function (v, i) {
+    const output = values.map(function(v, i) {
       return v.length === 2 && i < 2 ? v + ' / ' : v;
     });
     e.target.value = output.join('').substr(0, 14);

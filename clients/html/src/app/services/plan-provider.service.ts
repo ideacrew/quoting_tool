@@ -18,7 +18,7 @@ export class PlanProviderService {
     this.dataLoader = new ProductDataLoader();
   }
 
-  private b64toBlob = (b64Data, contentType= '', sliceSize= 512) => {
+  private b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
     const byteCharacters = atob(b64Data);
     const byteArrays = [];
 
@@ -34,7 +34,7 @@ export class PlanProviderService {
       byteArrays.push(byteArray);
     }
 
-    const blob = new Blob(byteArrays, {type: contentType});
+    const blob = new Blob(byteArrays, { type: contentType });
     return blob;
   }
 
@@ -58,19 +58,19 @@ export class PlanProviderService {
       kind: kind
     };
     this.api_request.authedGet('products/plans.json', attrs).subscribe(function(data: Array<ProductData>) {
-      consumer.onProductsLoaded(transformer.castData(data['plans']));
+      consumer.onProductsLoaded(transformer.castData(data['plans'].filter((plan) => plan['rates'])));
       component.isLoading = false;
     });
   }
 
   public getSbcDocumentFor(key, win) {
-    this.api_request.authedGet('products/sbc_document.json', {key: key}).subscribe(response => {
+    this.api_request.authedGet('products/sbc_document.json', { key: key }).subscribe((response) => {
       if (response['status'] === 'success') {
         const contentType = 'application/pdf';
         const b64Data = response['metadata'][1];
         const blob = this.b64toBlob(b64Data, contentType);
         const blobUrl = URL.createObjectURL(blob);
-        win.location.href = blobUrl
+        win.location.href = blobUrl;
       }
     });
   }

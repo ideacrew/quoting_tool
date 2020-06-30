@@ -282,12 +282,9 @@ export class PlanFilterComponent implements OnInit {
           this.selectedMetalLevels.push({key: 'metal_level', value: value});
           this.filterKeysSelected.push(type);
         } else {
-          const index = this.selectedMetalLevels.indexOf(value);
+          this.selectedMetalLevels = this.selectedMetalLevels.filter((ml) => ml.value != value);
           const keyIndex = this.filterKeysSelected.indexOf(type);
-          this.selectedMetalLevels.splice(index, 1);
           this.filterKeysSelected.splice(keyIndex, 1);
-          this.filteredCarriers = this.defaultCarriers;
-          this.filterLength = this.filteredCarriers.length;
         }
         break;
       case 'productType':
@@ -295,12 +292,9 @@ export class PlanFilterComponent implements OnInit {
           this.selectedProductTypes.push({key: 'product_type', value: value});
           this.filterKeysSelected.push(type);
         } else {
-          const index = this.selectedProductTypes.indexOf(value);
+          this.selectedProductTypes = this.selectedProductTypes.filter((ml) => ml.value != value);
           const keyIndex = this.filterKeysSelected.indexOf(type);
-          this.selectedProductTypes.splice(index, 1);
           this.filterKeysSelected.splice(keyIndex, 1);
-          this.filteredCarriers = this.defaultCarriers;
-          this.filterLength = this.filteredCarriers.length;
         }
         break;
       case 'insuranceCompany':
@@ -308,12 +302,9 @@ export class PlanFilterComponent implements OnInit {
           this.selectedInsuranceCompanies.push({key: 'provider_name', value: value});
           this.filterKeysSelected.push(type);
         } else {
-          const index = this.selectedInsuranceCompanies.indexOf(value);
+          this.selectedInsuranceCompanies = this.selectedInsuranceCompanies.filter((ml) => ml.value != value);
           const keyIndex = this.filterKeysSelected.indexOf(type);
-          this.selectedInsuranceCompanies.splice(index, 1);
           this.filterKeysSelected.splice(keyIndex, 1);
-          this.filteredCarriers = this.defaultCarriers;
-          this.filterLength = this.filteredCarriers.length;
         }
         break;
       case 'hsa':
@@ -321,12 +312,9 @@ export class PlanFilterComponent implements OnInit {
           this.selectedHSAs.push({key: 'hsa_eligible', value: value});
           this.filterKeysSelected.push(type);
         } else {
-          const index = this.selectedHSAs.indexOf(value);
+          this.selectedHSAs = this.selectedHSAs.filter((ml) => ml.value != value);
           const keyIndex = this.filterKeysSelected.indexOf(type);
-          this.selectedHSAs.splice(index, 1);
           this.filterKeysSelected.splice(keyIndex, 1);
-          this.filteredCarriers = this.defaultCarriers;
-          this.filterLength = this.filteredCarriers.length;
         }
         break;
     }
@@ -339,12 +327,13 @@ export class PlanFilterComponent implements OnInit {
   }
 
   filterCarriers() {
-    const plans = this.filteredCarriers;
+    const plans = this.defaultCarriers;
     const mlArray = [];
     const ptArray = [];
     const icArray = [];
     const hsaArray = [];
     let selected;
+    let filtered;
 
     if (this.selectedMetalLevels.length > 0) {
       this.selectedMetalLevels.map(ml => {
@@ -375,39 +364,45 @@ export class PlanFilterComponent implements OnInit {
     }
 
     if (this.selectedInsuranceCompanies.length > 0 && this.selectedProductTypes.length > 0) {
-      this.selectedProductTypes.map(pt => {
-        selected = this.combineArray(icArray).filter(plan => plan['product_information'][pt.key] === pt.value);
-      });
+      selected = this.selectedProductTypes.reduce((currentValue, pt) => {
+        filtered = this.combineArray(icArray).filter(plan => plan['product_information'][pt.key] === pt.value);
+        return [...currentValue, ...filtered];
+      }, []);
     }
 
     if (this.selectedInsuranceCompanies.length > 0 && this.selectedHSAs.length > 0) {
-      this.selectedHSAs.map(hsa => {
-        selected = this.combineArray(icArray).filter(plan => plan['product_information'][hsa.key] === hsa.value);
-      });
+      selected = this.selectedHSAs.reduce((currentValue, hsa) => {
+        filtered = this.combineArray(icArray).filter(plan => plan['product_information'][hsa.key] === hsa.value);
+        return [...currentValue, ...filtered];
+      }, []);
     }
 
     if (this.selectedMetalLevels.length > 0 && this.selectedInsuranceCompanies.length > 0) {
-      this.selectedInsuranceCompanies.map(ic => {
-        selected = this.combineArray(mlArray).filter(plan => plan['product_information'][ic.key] === ic.value);
-      });
+      selected = this.selectedInsuranceCompanies.reduce((currentValue, ic) => {
+        filtered = this.combineArray(mlArray).filter(plan => plan['product_information'][ic.key] === ic.value);
+        return [...currentValue, ...filtered];
+      }, []);
     }
 
     if (this.selectedMetalLevels.length > 0 && this.selectedProductTypes.length > 0) {
-      this.selectedProductTypes.map(pt => {
-        selected = this.combineArray(mlArray).filter(plan => plan['product_information'][pt.key] === pt.value);
-      });
+      selected = this.selectedProductTypes.reduce((currentValue, pt) => {
+        filtered = this.combineArray(mlArray).filter(plan => plan['product_information'][pt.key] === pt.value);
+        return [...currentValue, ...filtered];
+      }, []);
     }
 
     if (this.selectedMetalLevels.length > 0 && this.selectedHSAs.length > 0) {
-      this.selectedHSAs.map(hsa => {
-        selected = this.combineArray(mlArray).filter(plan => plan['product_information'][hsa.key] === hsa.value);
-      });
+      selected = this.selectedHSAs.reduce((currentValue, hsa) => {
+        filtered = this.combineArray(mlArray).filter(plan => plan['product_information'][hsa.key] === hsa.value);
+        return [...currentValue, ...filtered];
+      }, []);
     }
 
     if (this.selectedMetalLevels.length > 0 && this.selectedProductTypes.length > 0 && this.selectedInsuranceCompanies.length > 0) {
-      this.selectedInsuranceCompanies.map(ic => {
-        selected = selected.filter(plan => plan['product_information'][ic.key] === ic.value);
-      });
+      selected = this.selectedInsuranceCompanies.reduce((currentValue, ic) => {
+        filtered = selected.filter(plan => plan['product_information'][ic.key] === ic.value);
+        return [...currentValue, ...filtered];
+      }, []);
     }
 
     if (selected === undefined) {
@@ -445,6 +440,8 @@ export class PlanFilterComponent implements OnInit {
     }
 
     this.filterCarriersResults = selected;
+    this.filteredCarriers = selected;
+    this.filterLength = this.filteredCarriers.length;
   }
 
   displayResults() {

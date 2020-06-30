@@ -27,8 +27,25 @@ class Api::V1::EmployeesController < ApplicationController
                 end
 
     end_on = current_date - (Registry.resolve("aca_shop_market.initial_application.earliest_start_prior_to_effective_on_months").months)
-    dates = (start_on..end_on).select {|t| t == t.beginning_of_month}.map {|a| a.to_s}.map{ |a| a.gsub!("-","/")}
-    render json: { dates: dates }
+    dates_rates_hash = has_rates_for(start_on..end_on)
+    dates = dates_rates_hash.collect {|k, v| k.to_date.to_s.gsub!("-", "/") if v}.compact
+
+    render json: {dates: dates, is_late_rate: !dates_rates_hash.values.all?}
+  end
+
+  private
+
+  def has_rates_for(dates)
+    dates.inject({}) do |result, key|
+      result[key.to_s] = rates_available?(key) if key == key.beginning_of_month
+      result
+    end
+  end
+
+  def rates_available?(date)
+    Rails.cache.fetch(date.to_s, expires_in: 1.days) do
+      Products::Product.health_products.effective_with_premiums_on(date).present?
+    end
   end
 end
 
