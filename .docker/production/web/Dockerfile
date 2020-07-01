@@ -16,8 +16,8 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
 COPY ./clients/html/package.json /app/package.json
-RUN npm install
-RUN npm install -g @angular/cli
+COPY ./clients/html/package-lock.json /app/package-lock.json
+RUN npm ci
 
 # add app
 COPY ./clients/html/ /app
@@ -30,7 +30,7 @@ ARG API_URL
 RUN sed -i -r "s/API_URL/$API_URL/g" /app/src/environments/environment.prod.ts
 
 # generate build
-RUN ng build --prod --output-path=dist --base-href /get-a-quote/
+RUN npm run build:prod
 
 ############
 ### prod ###
