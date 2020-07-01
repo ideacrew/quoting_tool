@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "format": "pretty-quick"
+    "format": "pretty-quick",
+    "build:prod": "ng build --prod --output-path=dist --base-href /get-a-quote/"
   },
   "private": true,
   "dependencies": {
