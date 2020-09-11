@@ -15,7 +15,7 @@ columns = sheet.row(1)
 
 output = (2..sheet.last_row).inject([]) do |result, id|
   row = Hash[[columns, sheet.row(id)].transpose]
-  
+
   result << {
     hios_id: parse_text(row["hios_id"]),
     year: parse_text(row["year"]).to_i,

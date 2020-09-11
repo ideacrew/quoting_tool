@@ -29,7 +29,7 @@ module Transactions
       issuer_hios_id = sheet.cell(6,2).to_i.to_s
 
       output = (13..sheet.last_row).inject([]) do |result, i|
-        
+
         result << {
           active_year: year,
           issuer_provided_code: sheet.cell(i,1),

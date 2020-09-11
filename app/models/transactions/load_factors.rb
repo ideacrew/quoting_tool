@@ -55,7 +55,7 @@ module Transactions
           if issuer_hios_id > 0 # Making sure it's hios-id
 
             factors = (ROW_DATA_BEGINS_ON..sheet.last_row).inject([]) do |result, i|
-              factor_key = get_factory_key(sheet.cell(i,1), rating_factor_class)              
+              factor_key = get_factory_key(sheet.cell(i,1), rating_factor_class)
 
               factor_value = sheet.cell(i,carrier_column) || 1.0
 

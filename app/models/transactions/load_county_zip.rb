@@ -27,7 +27,7 @@ module Transactions
       columns = sheet.row(1).map(&:parameterize).map(&:underscore)
       output = (2..sheet.last_row).inject([]) do |result, id|
         row = Hash[[columns, sheet.row(id)].transpose]
-        
+
         result << {
           county_name: parse_text(row["county"]),
           zip: parse_text(row["zip"]),
