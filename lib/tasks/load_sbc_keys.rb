@@ -15,8 +15,9 @@ columns = sheet.row(1)
 
 output = (2..sheet.last_row).inject([]) do |result, id|
   row = Hash[[columns, sheet.row(id)].transpose]
-  
+
   result << {
+    product_name: parse_text(row["product_name"]),
     hios_id: parse_text(row["hios_id"]),
     year: parse_text(row["year"]).to_i,
     identifier: parse_text(row["identifier"]),
@@ -26,6 +27,7 @@ output = (2..sheet.last_row).inject([]) do |result, id|
   result
 end
 
+count = 0
 output.each do |info|
   product = ::Products::Product.where(
     :"hios_id" => info[:hios_id],
@@ -36,11 +38,14 @@ output.each do |info|
     puts "No product for #{info[:hios_id]} #{info[:year]}"
     next
   end
+  product.title = info[:product_name]
 
-  if product.sbc_document.blank?
-    product.sbc_document = Documents::Document.new({title: info[:title], subject: "SBC", format: 'application/pdf', identifier: info[:identifier]})
-    product.save
-  end
+  product.sbc_document = Documents::Document.new({title: info[:title], subject: "SBC", format: 'application/pdf', identifier: info[:identifier]})
+  product.save
+  count+=1
+
+  puts "Product #{product.title} #{product.hios_id} updated, Document uri #{product.sbc_document.identifier}" unless Rails.env.test?
 end
+puts "Total #{count} plans/products updated." unless Rails.env.test?
 
 puts ":: Created SBC documents ::"

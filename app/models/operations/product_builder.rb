@@ -160,7 +160,7 @@ module Operations
 
     def hospital_stay_in_network_copay(variance)
       val = variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:hospital_stay]).first.copay_in_network_tier_1
-      parse_value(val)
+      parse_value(val).nil? ? nil : ('%.2f' % parse_value(val))
     end
 
     def emergency_in_network_copay(variance)
@@ -203,7 +203,7 @@ module Operations
     end
 
     def parse_value(val)
-      val == "Not Applicable" ? nil : val.split(" ")[0].gsub("$","")
+      val == "Not Applicable" ? nil : val.split(" ")[0].gsub("$","").gsub(",","")
     end
 
     def service_visit_co_insurance(variance, type)

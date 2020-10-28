@@ -61,7 +61,7 @@ module Transactions
       files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls", input[:state], "plans", "**", "*.xml"))
       parsed_files = parse_files(files)
       additional_files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/master_xml", "**", "*.xlsx"))
-      
+
       parsed_files = parse_files(files)
       parsed_additional_files = parse_files(additional_files)
 
