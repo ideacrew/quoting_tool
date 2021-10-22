@@ -36,11 +36,12 @@ module Operations
       rate_groups.each do |rate_group|
         rate_group[:items].each do |rate|
           year = rate[:effective_date].to_date.year
-          rating_area = rate[:rate_area_id].gsub("Rating Area ", "R-MA00")
-          rating_area_id = rating_area_map[[year, rating_area]]
-
-          @premium_table_map[[rate[:plan_id], rating_area_id, rate[:effective_date].to_date..rate[:expiration_date].to_date]][assign_age(rate)] = rate[:primary_enrollee]
-          @products_map << "#{rate[:plan_id]},#{year}"
+          rate[:rate_area_id].split(",").each do |rating_area_name|
+            rating_area = rating_area_name.squish.gsub("Rating Area ", "R-MA00")
+            rating_area_id = rating_area_map[[year, rating_area]]
+            @premium_table_map[[rate[:plan_id], rating_area_id, rate[:effective_date].to_date..rate[:expiration_date].to_date]][assign_age(rate)] = rate[:primary_enrollee]
+            @products_map << "#{rate[:plan_id]},#{year}"
+          end
         end
       end
     end
