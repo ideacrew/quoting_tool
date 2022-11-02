@@ -1,0 +1,93 @@
+version: '3.4'
+
+services:
+  app: &app
+    build:
+      context: .
+      dockerfile: ./.dockerdev/Dockerfile
+      args:
+        RUBY_VERSION: '2.6.3'
+        BUNDLER_VERSION: '2.0.2'
+        NODE_MAJOR: '11'
+        YARN_VERSION: '1.17.3'
+    image: quoting_tool-dev:0.1.0
+    tmpfs:
+      - /tmp
+
+  backend: &backend
+    <<: *app
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/app:cached
+      - rails_cache:/app/tmp/cache
+      - bundle:/bundle
+      - node_modules:/app/node_modules
+      - packs:/app/public/packs
+
+    environment:
+      - NODE_ENV=development
+      - RAILS_ENV=${RAILS_ENV:-development}
+      - REDIS_URL=redis://redis:6379/
+      - BOOTSNAP_CACHE_DIR=/bundle/bootsnap
+      - WEBPACKER_DEV_SERVER_HOST=webpacker
+      - WEB_CONCURRENCY=1
+      - HISTFILE=/app/log/.bash_history
+      - EDITOR=vi
+
+    depends_on:
+      - mongo
+      - redis
+
+  runner:
+    <<: *backend
+    command: /bin/bash
+    ports:
+      - '3002:3002'
+
+  angular:
+    <<: *backend
+    command: bash -c "cd clients/html && rm -rf node_modules && NG_CLI_ANALYTICS=false npm install -g @angular/cli && NG_CLI_ANALYTICS=false npm install  && ng serve --host 0.0.0.0 --port 4200"
+    ports:
+      - '4200:4200'
+
+
+  rails:
+    <<: *backend
+    command: bash -c "rm -f tmp/pids/server.pid && bundle &&  bundle exec rails server -p 3000 -b '0.0.0.0'"
+    ports:
+      - '3000:3000'
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+
+  redis:
+    image: redis:3.2-alpine
+    volumes:
+      - redis:/data
+    ports:
+      - 6379
+
+  webpacker:
+    <<: *app
+    command: ./bin/webpack-dev-server
+    ports:
+      - '3035:3035'
+    volumes:
+      - .:/app:cached
+      - bundle:/bundle
+      - node_modules:/app/node_modules
+      - packs:/app/public/packs
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+      - RAILS_ENV=${RAILS_ENV:-development}
+      - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
+
+volumes:
+  redis:
+  bundle:
+  node_modules:
+  rails_cache:
+  packs:

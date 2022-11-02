@@ -1,0 +1,14 @@
+# Ignore everything:
+
+
+# Except clients/html:
+
+package.json
+
+package-lock.json
+
+dist
+
+docs
+
+.angulardoc.json

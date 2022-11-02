@@ -1,0 +1,34 @@
+[
+  {
+    "health": [
+      {
+        "maximumMonthlyEmployerCost": "This is the most the plan will cost each month for the employer, based on 100% employer contribution to plan premiums and all employees from your roster enrolling in the plan. For One Carrier and One Level, employees may select a different plan than this one, which could change the overall monthly cost shown here. ",
+        "maximumOutOfPocket": "This is the most you pay in one year for health care services. Once you have paid this amount, your plan pays for all of your covered services for the rest for the year.",
+        "annualDeductibleFamilyIndividual": "A deductible is the total cost you must pay in a plan year before your plan will pay for part or all of your services. There may be a deductible amount for each person enrolled in the plan, as well as a deductible amount for the whole family.",
+        "network": "A provider network is a group of doctors, hospitals and other providers that works with the health plan to give you care.",
+        "hsaEligible": "You may be able to set up an HSA if you are enrolled in an HSA eligible plan. An HSA is a way to set aside money before taxes, to use it for certain medical costs.",
+        "planPremiums": "This is the cost you pay each month to the Health Connector, whether or not you use health care services.",
+        "prescriptionDrugDeductible": "This is the total cost you must pay in a plan year towards your prescription medicines before your plan will pay for part or all of your prescriptions.",
+        "planType": "With an HMO plan, your employees will need to use in-network providers in order to get services covered. An HMO also requires that employees choose a primary care provider (PCP). They may need to get a referral from their PCP when they need to see a specialist. \n \n With a PPO plan, employees will pay less if they use providers that belong to the plan’s network. Out-of-network providers will only be covered for part of the cost services. In a PPO, employees may be able to see specialists without a referral from a primary care physician (PCP).",
+        "metalLevel": "Metal levels make it easier for you to compare different plans that have similar levels of benefits. Platinum plans have the highest premiums but the lowest costs when you get health care services. \n Gold and Silver plans have lower premiums but higher costs when you get health care services. \n Bronze plans have the lowest premiums but the highest costs when you get health care services.",
+        "yearlyMedicalDeductible": "The amount you must pay in a plan year before your plan will pay for part or all of your services.",
+        "benefitCost": "The deductible applies to some services listed below.  Rx co-pay amounts display each plan’s cost for a generic prescription drug. More information about benefits shown here is available in this plan’s Summary of Benefit Coverage.",
+        "monthlyCost": "The monthly cost of the plan, based on whether an employee is enrolled as an individual, with a spouse, with a child, or as a family. Rates assume 100% employer contribution and enrollment by all employees on your roster."
+      }
+    ],
+    "dental": [
+      {
+        "maximumMonthlyEmployerCost": "This is your maximum monthly cost based on 100% employer contribution to plan premiums, and all employees listed in your roster indicated as enrolling in a dental plan.",
+        "maximumOutOfPocket": "This is the most you pay in one year for health care services. Once you have paid this amount, your plan pays for all of your covered services for the rest for the year.",
+        "annualDeductibleFamilyIndividual": "The amount you must pay in a plan year before your plan will pay for part or all of your services.",
+        "network": "",
+        "hsaEligible": "You may be able to set up an HSA if you are enrolled in an HSA eligible plan. An HSA is a way to set aside money before taxes, to use it for certain medical costs.",
+        "planPremiums": "This is the cost you pay each month to the Health Connector, whether or not you use health care services.",
+        "prescriptionDrugDeductible": "This is the total cost you must pay in a plan year towards your prescription medicines before your plan will pay for part or all of your prescriptions.",
+        "planType": "A plan available on a dental EPO network offers members the best value for their care through a highly selective dentist network. A plan available on a dental PPO network offers members a wider choice of dentists both in and out-of-network. Please confirm your dentist and any other providers are covered in the network before selecting a plan.",
+        "metalLevel": "Metal levels make it easier for you to compare different plans that have similar levels of benefits. Platinum plans have the highest premiums but the lowest costs when you get health care services. \n Gold and Silver plans have lower premiums but higher costs when you get health care services. \n Bronze plans have the lowest premiums but the highest costs when you get health care services.",
+        "yearlyMedicalDeductible": "The amount you must pay in a plan year before your plan will pay for part or all of your services."
+      }
+    ]
+  }
+]
