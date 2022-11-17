@@ -1,0 +1,67 @@
+---
+registry:
+  - namespace:
+      - :features
+    features:
+      - key: :quoting_tool_app
+        is_enabled: true
+        meta:
+          label: Quoting Tool Application
+          content_type: :boolean
+          default: true
+          description: The Quoting Tool Application enables empployers to estimate their costs
+          is_required: true
+          is_visible: true
+        settings:
+          - key: :application_name
+            item: 'quoting_tool_me'
+          - key: :site_key
+            item: :me
+          - key: :state_abbreviation
+            item: 'ME'
+          - key: :subdomain
+            item: 'cme'
+          - key: :domain_name
+            item: 'cme.enroll.openhbx.org'
+          - key: :site_title
+            item: 'CoverME.gov'
+          - key: :home_url
+            item: 'https://cme.enroll.openhbx.org/'
+          - key: :home_business_url
+            item: 'https://www.coverme.gov'
+          - key: :help_url
+            item: 'https://www.coverme.gov/help/'
+          - key: :main_web_address_url
+            item: 'https://www.coverme.gov'
+          - key: :state_name
+            item: 'Maine'
+          - key: :short_name
+            item: 'CoverME.gov'
+          - key: :byline
+            item: "Maine's Official Health Insurance Marketplace"
+          - key: :long_name
+            item: 'CoverME.gov'
+          - key: :header_message
+            item: "Maine's Official Health Insurance Marketplace"
+          - key: :byline
+            item: "Welcome to Maine's Health Insurance Marketplace"
+          - key: :logo_file_name
+            item: 'logo_me.svg'
+          - key: :tab_icon
+            item: 'favicon.ico'
+          - key: :s3_prefix
+            item: 'cme'
+          - key: :late_rates_message
+            item: 'Due to a delay, premiums for some coverage effective dates are not available yet. Please check again soon to see if this information has been updated. You can also contact Customer Service or your broker if you need help.'
+          - key: :exchange_name
+            item: 'CoverME.gov Health Benefit Exchange'
+          - key: :state_long_title
+            item: 'the state of Maine'
+          - key: :oe_minimum_length_days
+            item: 5
+          - key: :oe_monthly_end_on
+            item: 20
+          - key: :oe_maximum_length_months
+            item: 2
+          - key: :earliest_start_prior_to_effective_on_months
+            item: -2

@@ -30,7 +30,9 @@ ARG API_URL
 RUN sed -i -r "s/API_URL/$API_URL/g" /app/src/environments/environment.prod.ts
 
 # generate build
-RUN npm run build:prod
+# CLIENT value is lowercase client shortname - me, dc
+ARG CLIENT
+RUN npm run "build:prod:$CLIENT"
 
 ############
 ### prod ###
