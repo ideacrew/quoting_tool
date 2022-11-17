@@ -45,7 +45,6 @@ services:
       dockerfile: ./.docker/development/web/Dockerfile
     image: ideacrew/quoting_tool_web:dev-0.1.0
     volumes:
-    volumes:
       - ./clients/html:/app
       - node_modules_web:/app/node_modules
     tmpfs:
@@ -89,7 +88,7 @@ volumes:
   mongodb:
   mongodb_config:
 
-secrets: 
+secrets:
   master_key:
     file: ./config/master.key
   credentials:
@@ -98,4 +97,3 @@ secrets:
     file: ../certs/fullchain.pem
   ssl_key:
     file: ../certs/privkey.pem
-
