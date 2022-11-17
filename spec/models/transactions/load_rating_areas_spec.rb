@@ -10,7 +10,7 @@ RSpec.describe Transactions::LoadRatingAreas, type: :transaction do
     let(:file) {File.join(Rails.root, "spec/test_data/rating_areas.xlsx")}
 
     it "should be success" do
-      expect(subject.success?).to eq true
+      expect(subject).to be_a(Dry::Monads::Result::Success)
     end
 
     it "should create new rating area" do
@@ -27,7 +27,7 @@ RSpec.describe Transactions::LoadRatingAreas, type: :transaction do
     let(:file) {File.join(Rails.root, "spec/test_data/invalid_rating_areas.xlsx")}
 
     it "should be failure" do
-      expect(subject.failure?).to eq true
+      expect(subject).to be_a(Dry::Monads::Result::Failure)
     end
 
     it "should not create new county zip" do
