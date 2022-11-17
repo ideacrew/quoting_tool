@@ -13,6 +13,12 @@
     }
   },
 
+  "containerEnv": {
+    "RAILS_ENV": "development",
+    "NODE_ENV": "development",
+    "MONGODB_URL": "localhost"
+  },
+
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
 
