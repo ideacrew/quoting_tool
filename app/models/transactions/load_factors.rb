@@ -1,6 +1,8 @@
+require 'dry/monads'
+require 'dry/monads/do'
 module Transactions
   class LoadFactors
-    include Dry::Transaction
+    include Dry::Monads[:result, :do]
 
     ROW_DATA_BEGINS_ON ||= 3
 
@@ -19,11 +21,14 @@ module Transactions
       'Family': 'family'
     }.with_indifferent_access
 
-    step :load_file_info
-    step :validate_file_info
-    step :load_file_data
-    step :validate_records
-    step :create_records
+    def call(input)
+      file          =  yield load_file_info(input)
+      file_info     =  yield validate_file_info(file)
+      file_data     =  yield load_file_data(file_info)
+      file_records  =  yield validate_records(file_data)
+      records       =  yield create_records(file_records)
+      Success(records)
+    end
 
     private
 
