@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module Forms
   class RosterUploadForm
     include ActiveModel::Validations
     include Virtus.model
 
     TEMPLATE_DATE = Date.new(2016, 10, 26)
-    TEMPLATE_VERSION = "1.1"
+    TEMPLATE_VERSION = '1.1'
 
     attribute :template_version
     attribute :template_date
@@ -35,9 +37,7 @@ module Forms
     end
 
     def persist!
-      if valid?
-        service.save(self)
-      end
+      service.save(self) if valid?
     end
 
     def service
@@ -46,15 +46,15 @@ module Forms
 
     def roster_template
       template_date = parse_date(self.template_date)
-      unless (template_date == TEMPLATE_DATE && template_version == TEMPLATE_VERSION && header_valid?(sheet.row(2)))
-        self.errors.add(:base, "Unrecognized Employee Census spreadsheet format. Contact Admin for current template.")
+      unless template_date == TEMPLATE_DATE && template_version == TEMPLATE_VERSION && header_valid?(sheet.row(2))
+        errors.add(:base, 'Unrecognized Employee Census spreadsheet format. Contact Admin for current template.')
       end
     end
 
     def roster_records
-      self.census_records.each_with_index do |census_record, i|
+      census_records.each_with_index do |census_record, i|
         unless census_record.valid?
-          self.errors.add(:base, "Row #{i + 4}: #{census_record.errors.full_messages}")
+          errors.add(:base, "Row #{i + 4}: #{census_record.errors.full_messages}")
         end
       end
     end
@@ -68,7 +68,7 @@ module Forms
       if date.is_a? Date
         date
       else
-        Date.strptime(date, "%m/%d/%y")
+        Date.strptime(date, '%m/%d/%y')
       end
     end
 

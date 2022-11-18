@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 ResourceRegistry.configure do
   {
     application: {
       config: {
-        name: "Quoting Tool",
-        default_namespace: "options",
+        name: 'Quoting Tool',
+        default_namespace: 'options',
         root: Rails.root,
-        system_dir: "system",
+        system_dir: 'system',
         auto_register: []
       },
       load_paths: ['system']

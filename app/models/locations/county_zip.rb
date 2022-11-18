@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Locations
   class CountyZip
     include Mongoid::Document
@@ -7,6 +9,6 @@ module Locations
     field :zip, type: String
     field :state, type: String
 
-    index({state: 1, county_name: 1, zip: 1})
+    index(state: 1, county_name: 1, zip: 1)
   end
 end

@@ -1,14 +1,14 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Api::V1::EmployeesController do
-
   describe '#start_on_dates' do
-    let!(:health_product) {FactoryBot.create(:health_product, service_area_id: service_area.id)}
-    let!(:dental_product) {FactoryBot.create(:dental_product, service_area_id: service_area.id)}
-    let!(:rating_area) {FactoryBot.create(:rating_area, county_zip_ids: [county_zip.id])}
-    let(:service_area) {FactoryBot.create(:service_area, county_zip_ids: [county_zip.id])}
-    let(:county_zip) {FactoryBot.create(:county_zip)}
+    let!(:health_product) { FactoryBot.create(:health_product, service_area_id: service_area.id) }
+    let!(:dental_product) { FactoryBot.create(:dental_product, service_area_id: service_area.id) }
+    let!(:rating_area) { FactoryBot.create(:rating_area, county_zip_ids: [county_zip.id]) }
+    let(:service_area) { FactoryBot.create(:service_area, county_zip_ids: [county_zip.id]) }
+    let(:county_zip) { FactoryBot.create(:county_zip) }
 
     let!(:premium_tuples) do
       tuples = []
