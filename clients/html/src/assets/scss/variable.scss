@@ -2,7 +2,6 @@
 // Custom Variables
 /*******************************/
 @import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900');
-@import 'client-styles';
 /*Theme Colors*/
 
 $themecolor: #2962ff;
@@ -10,6 +9,8 @@ $themecolor-dark: #028ee1;
 $themecolor-alt: #26c6da;
 $theme-light: #fff;
 $theme-dark: #212529;
+$ma-dark-blue: #0f5e82;
+$ma-primary-orange: #c56724;
 
 $skin1: linear-gradient(to right, #0178bc 0%, #00bdda 100%);
 $skin2: linear-gradient(to right, #318f94 0%, #5ec58c 100%);

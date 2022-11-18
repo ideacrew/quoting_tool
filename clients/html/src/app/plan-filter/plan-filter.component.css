@@ -60,7 +60,7 @@
 
 /* When the radio button is checked, add a blue background */
 .radio-container input:checked ~ .checkmark {
-  background-color: $client-bg-color-lighten;
+  background-color: #c56c24;
 }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
@@ -99,7 +99,7 @@
 
 .heading-label {
   font-weight: 600;
-  color: $client-bg-color-lighten;
+  color: #c56c24;
   text-decoration: underline;
 }
 

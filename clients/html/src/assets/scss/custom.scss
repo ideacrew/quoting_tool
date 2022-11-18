@@ -13,7 +13,7 @@ a {
 }
 
 a:active {
-  color: $client-bg-color-lighten;
+  color: #c56c24;
 }
 
 .btn {
@@ -22,7 +22,7 @@ a:active {
 }
 
 .btn-link {
-  color: $client-bg-color-lighten;
+  color: #c56c24;
 }
 
 .btn-outline-info {
@@ -31,24 +31,24 @@ a:active {
 }
 
 .btn-primary {
-  background-color: $client-bg-color;
-  border-color: $client-bg-color;
+  background-color: $ma-dark-blue;
+  border-color: $ma-dark-blue;
 }
 
 .btn-primary:hover {
-  background-color: $client-bg-color-lighten;
-  border-color: $client-bg-color-lighten;
+  background-color: #c56c24;
+  border-color: #c56c24;
 }
 
 .btn-success, .btn-success:disabled {
-  background-color: $client-bg-color-lighten;
-  border-color: $client-bg-color-lighten;
+  background-color: #c56c24;
+  border-color: #c56c24;
   color: #fff;
 }
 
 .btn-success:hover {
-  background-color: lighten($client-primary, 10%);
-  border-color: lighten($client-primary, 10%);
+  background-color: lighten($ma-primary-orange, 10%);
+  border-color: lighten($ma-primary-orange, 10%);
 }
 
 .btn-primary.disabled,
@@ -64,7 +64,7 @@ a:active {
 .footer {
   font-size: 14px;
   color: #ffffff;
-  background-color: $client-bg-color;
+  background-color: $ma-dark-blue;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -84,7 +84,7 @@ a:active {
 
 .ngb-dp-day {
   .bg-primary {
-    background-color: $client-bg-color-lighten !important;
+    background-color: #c56c24 !important;
   }
 }
 

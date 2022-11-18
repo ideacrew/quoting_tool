@@ -5,16 +5,16 @@
 }
 
 .btn-outline-primary {
-  color: $client-bg-color-lighten;
-  border-color: $client-bg-color-lighten;
+  color: #c56c24;
+  border-color: #c56c24;
 }
 
 .btn-outline-primary:hover {
-  background-color: $client-bg-color-lighten;
+  background-color: #c56c24;
 }
 
 .fa-question {
-  color: $client-bg-color;
+  color: $ma-dark-blue;
 }
 
 .fa-question:hover {
@@ -50,7 +50,7 @@ fieldset.dependent {
 }
 
 fieldset.dependent > legend {
-  color: $client-bg-color-lighten;
+  color: #c56c24;
 }
 
 .fa-trash {
@@ -63,7 +63,7 @@ fieldset.dependent > legend {
 
 .heading-text {
   font-weight: 700;
-  color: $client-primary;
+  color: $ma-primary-orange;
 }
 
 ::-webkit-inner-spin-button,

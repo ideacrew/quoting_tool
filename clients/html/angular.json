@@ -32,48 +32,7 @@
             "scripts": []
           },
           "configurations": {
-            "me": {
-              "stylePreprocessorOptions": {
-                "includePaths": [
-                  "src/assets/scss/branding/me"
-                ]
-              }
-            },
-            "dc": {
-              "stylePreprocessorOptions": {
-                "includePaths": [
-                  "src/assets/scss/branding/dc"
-                ]
-              }
-            },
-            "me-production": {
-              "stylePreprocessorOptions": {
-                "includePaths": [
-                  "src/assets/scss/branding/me"
-                ]
-              },
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": true,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": true,
-              "buildOptimizer": true
-            },
-            "dc-production": {
-              "stylePreprocessorOptions": {
-                "includePaths": [
-                  "src/assets/scss/branding/dc"
-                ]
-              },
+            "production": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -98,17 +57,8 @@
             "browserTarget": "quoting-tool:build"
           },
           "configurations": {
-            "me-production": {
-              "browserTarget": "quoting-tool:build:me-production"
-            },
-            "dc-production": {
-              "browserTarget": "quoting-tool:build:dc-production"
-            },
-            "me": {
-              "browserTarget": "quoting-tool:build:me"
-            },
-            "dc": {
-              "browserTarget": "quoting-tool:build:dc"
+            "production": {
+              "browserTarget": "quoting-tool:build:production"
             }
           }
         },
