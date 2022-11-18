@@ -6,7 +6,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  MONGODB_URL: mongodb
+  MONGODB_URL: 127.0.0.1
 
 jobs:
   rubocop:
