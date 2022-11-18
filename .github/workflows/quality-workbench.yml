@@ -5,6 +5,9 @@ concurrency:
   group: qb-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  MONGODB_URL: mongodb
+
 jobs:
   rubocop:
     runs-on: ubuntu-latest
@@ -33,12 +36,12 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: '16'
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
           rubygems: latest
-     
+
       # Need this step in order to access the mongodb server
       # - name: set etc host
       #   run: sudo bash -c "echo '127.0.0.1 rabbitmq mongodb' >> /etc/hosts"
