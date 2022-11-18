@@ -129,7 +129,7 @@ test:
     default:
       database: quoting_tool_test
       hosts:
-        - localhost:27017
+        - <%= ENV['MONGODB_URL'] %>:27017
       options:
         read:
           mode: :primary
@@ -139,7 +139,7 @@ production:
     default:
       database: quoting_tool_prod
       hosts:
-        - mongo:27017
+        - <%= ENV['MONGODB_URL'] %>:27017
       options:
         read:
           mode: :primary
