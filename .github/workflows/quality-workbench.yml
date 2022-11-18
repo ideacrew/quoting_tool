@@ -22,12 +22,12 @@ jobs:
   rspec:
     runs-on: ubuntu-latest
     services:
-      mongo:
+      mongodb:
         image: mongo:4.2
         ports:
           - 27017:27017
         options: >-
-          --name "mongo"
+          --name "mongodb"
           --health-cmd mongo
           --health-interval 10s
           --health-timeout 5s
