@@ -4,9 +4,9 @@ module Operations
   class LoadCountyZip
     include Dry::Monads[:result, :do]
 
-    def call(input_data, input_file)
+    def call(input_file)
       sheet_data = yield validate_and_load_sheet(input_file)
-      sheet_data = yield load_sheet_data(input_data, sheet_data)
+      sheet_data = yield load_sheet_data(sheet_data)
       created_records = yield create_records(sheet_data)
       Success(created_records)
     end
@@ -24,7 +24,7 @@ module Operations
       Success(sheet: sheet)
     end
 
-    def load_sheet_data(input_data, sheet_data)
+    def load_sheet_data(sheet_data)
       sheet = sheet_data[:sheet]
       columns = sheet.row(1).map(&:parameterize).map(&:underscore)
       output = (2..sheet.last_row).inject([]) do |result, id|
@@ -33,7 +33,7 @@ module Operations
         result << {
           county_name: parse_text(row['county']),
           zip: parse_text(row['zip']),
-          state: input_data[:state].upcase
+          state: "MA" # update later
         }
 
         result

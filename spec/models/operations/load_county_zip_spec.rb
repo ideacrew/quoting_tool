@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Operations::LoadCountyZip, type: :transaction do
 
-  let!(:subject) {Operations::LoadCountyZip.new.call({state: 'MA'}, file)}
+  let!(:subject) {Operations::LoadCountyZip.new.call(file)}
 
   context "succesful" do
 
