@@ -17,7 +17,7 @@ module Transactions
       files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/counties", "**", "*.xlsx"))
       parsed_files = parse_files(files)
       parsed_files.each do |file|
-        Operations::LoadCountyZip.new.call(file)
+        Operations::LoadCountyZip.new.call(input, file)
       end
       puts ":: Finished Loading County Zip records ::"
       Success(input)
