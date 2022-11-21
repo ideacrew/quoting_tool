@@ -5,7 +5,7 @@ module Operations
     include Dry::Monads[:result, :do]
 
     def call(input_data, input_file)
-      sheet_data = yield validate_file_info(input_file)
+      sheet_data = yield validate_and_load(input_file)
       file_data = yield load_file_data(input_data, sheet_data)
       created_records = yield create_records(file_data)
       Success(created_records)
@@ -13,7 +13,7 @@ module Operations
 
     private
 
-    def validate_file_info(input_file)
+    def validate_and_load(input_file)
       roo_file = Roo::Spreadsheet.open(input_file)
       required_sheet_name = 'Master Zip Code List'
       return Failure(message: "Sheet - #{required_sheet_name} not found when loading County Zip records") unless roo_file.sheets.include?(required_sheet_name)
