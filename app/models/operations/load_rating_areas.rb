@@ -1,6 +1,6 @@
 require 'dry/monads'
 require 'dry/monads/do'
-module Transactions
+module Operations
   class LoadRatingAreas
     include Dry::Monads[:result, :do]
 
