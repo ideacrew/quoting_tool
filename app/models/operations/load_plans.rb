@@ -1,23 +1,36 @@
-module Transactions
+require 'dry/monads'
+require 'dry/monads/do'
+module Operations
   class LoadPlans
-    include Dry::Transaction
+    include Dry::Monads[:result, :do]
 
-    step :load_file_info
-    step :validate_file_info
-    step :load_file_data
-    step :validate_records
-    step :create_records
+    def call(input_files)
+      input = yield validate_files(input_files)
+      file_date = yield load_file_data(input)
+      created_records = yield create_records(file_date)
+      Success(created_records)
+    end
 
     private
 
+    def validate_files(input_files)
+      if input_files[:package_xml_files].present?
+        input_files[:package_xml_files].each do |file|
+          doc = Nokogiri::XML(File.open(file))
+          return Failure(message: "Invalid XML file upon loading plans - #{file}") if doc.errors.present?
+        end
+      end
 
-    def load_file_info(input, additional_files)
-      Success({files: input, additional_files: additional_files})
-    end
-
-    def validate_file_info(input)
-      # validate here by adding new Validator
-      Success(input)
+      if input_files[:plan_xlsx_files].present?
+        input_files[:plan_xlsx_files].each do |file|
+          year = file.split("/")[-2].to_i
+          xlsx = Roo::Spreadsheet.open(file)
+          unless xlsx.sheets.include?("#{year}_QHP") && xlsx.sheets.include?("#{year}_QDP")
+            return Failure(message: "Invalid XLSX file upon loading plans - #{file}")
+          end
+        end
+      end
+      Success({ files: input_files[:package_xml_files], additional_files: input_files[:plan_xlsx_files] })
     end
 
     def load_file_data(input)
@@ -94,11 +107,6 @@ module Transactions
       end
 
       Success({result: output, data: data})
-    end
-
-    def validate_records(input)
-      # validate records here by adding new Validator
-      Success(input)
     end
 
     def create_records(input)

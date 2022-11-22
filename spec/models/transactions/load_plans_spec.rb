@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Transactions::LoadPlans, type: :transaction do
+RSpec.describe Operations::LoadPlans do
 
   let(:county_zip) { FactoryBot.create(:county_zip, zip: "12345", county_name: "County 1")}
 
@@ -11,9 +11,8 @@ RSpec.describe Transactions::LoadPlans, type: :transaction do
 
     let!(:service_area) { FactoryBot.create(:service_area, county_zip_ids: [county_zip.id], active_year: 2020)}
     let!(:subject) {
-      Transactions::LoadPlans.new.with_step_args(
-        load_file_info: [additional_files]
-      ).call(files)
+      input_files = {package_xml_files: files, plan_xlsx_files: additional_files}
+      Operations::LoadPlans.new.call(input_files)
     }
 
     it "should be success" do
@@ -36,9 +35,8 @@ RSpec.describe Transactions::LoadPlans, type: :transaction do
   context "failure" do
 
     let(:subject) {
-      Transactions::LoadPlans.new.with_step_args(
-        load_file_info: [additional_files]
-      ).call(files)
+      input_files = {package_xml_files: files, plan_xlsx_files: additional_files}
+      Operations::LoadPlans.new.call(input_files)
     } # No Service Area mapped
 
     it "should not create product" do

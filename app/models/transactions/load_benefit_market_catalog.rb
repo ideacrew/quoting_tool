@@ -65,10 +65,8 @@ module Transactions
       parsed_files = parse_files(files)
       parsed_additional_files = parse_files(additional_files)
 
-      transaction = Transactions::LoadPlans.new
-      transaction.with_step_args(
-        load_file_info: [parsed_additional_files]
-      ).call(parsed_files)
+      input_files = {package_xml_files: parsed_files, plan_xlsx_files: parsed_additional_files}
+      Operations::LoadPlans.new.call(input_files)
       puts ":: Finished Loading Plans ::"
       Success(input)
     end
