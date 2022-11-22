@@ -5,9 +5,9 @@ module Operations
     include Dry::Monads[:result, :do]
 
     def call(input_files)
-      input = yield validate_files(input_files)
-      file_date = yield load_file_data(input)
-      created_records = yield create_records(file_date)
+      validated_input_files = yield validate_files(input_files)
+      files_data = yield load_file_data(validated_input_files)
+      created_records = yield create_records(files_data)
       Success(created_records)
     end
 
