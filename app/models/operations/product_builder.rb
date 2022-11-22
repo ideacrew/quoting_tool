@@ -40,7 +40,7 @@ module Operations
 
         shared_attrs = {
           benefit_market_kind: "aca_#{parse_market}",
-          title: cost_share_variance.plan_marketing_name.squish!,
+          title: cost_share_variance.plan_marketing_name.dup.squish!,
           hios_id: is_health_product? ? cost_share_variance.hios_plan_and_variant_id : hios_base_id,
           hios_base_id: hios_base_id,
           csr_variant_id: csr_variant_id,
@@ -72,7 +72,7 @@ module Operations
                     drug_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :rx),
                     is_standard_plan: info[:is_standard_plan],
                     network_information: info[:network_information],
-                    title: (info[:title] || cost_share_variance.plan_marketing_name.squish!),
+                    title: (info[:title] || cost_share_variance.plan_marketing_name.dup.squish!),
                     product_package_kinds: info[:product_package_kinds],
                     rx_formulary_url: info[:rx_formulary_url],
                     provider_directory_url: info[:provider_directory_url]
@@ -85,7 +85,7 @@ module Operations
                     product_package_kinds: ::Products::DentalProduct::PRODUCT_PACKAGE_KINDS,
                     is_standard_plan: info[:is_standard_plan],
                     network_information: info[:network_information],
-                    title: (info[:title] || cost_share_variance.plan_marketing_name.squish!),
+                    title: (info[:title] || cost_share_variance.plan_marketing_name.dup.squish!),
                     provider_directory_url: info[:provider_directory_url],
                     basic_dental_services: basic_dental_services(cost_share_variance),
                     major_dental_services: major_dental_services(cost_share_variance),
