@@ -63,9 +63,7 @@ module Transactions
 
         if rating_area.present?
           rating_area.county_zip_ids = location_ids
-          unless rating_area.save
-            Failure(message: "Failed to Save Rating Area record for #{rating_area.id}")
-          end
+          Failure(message: "Failed to Save Rating Area record for #{rating_area.id}") unless rating_area.save
         else
           rating_area = Locations::RatingArea.new(
             active_year: year,
@@ -73,9 +71,7 @@ module Transactions
             county_zip_ids: location_ids
           )
 
-          unless rating_area.save
-            return Failure(message: "Failed to Create Rating Area record for #{rating_area_id}")
-          end
+          return Failure(message: "Failed to Create Rating Area record for #{rating_area_id}") unless rating_area.save
         end
       end
       Success(message: "Successfully created/updated #{input[:result].keys.size} Rating Area records")

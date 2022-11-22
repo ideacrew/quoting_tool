@@ -147,9 +147,7 @@ module Transactions
     end
 
     def get_factory_key(input, klass)
-      if is_composite_rating_tier?(klass)
-        return COMPOSITE_TIER_TRANSLATIONS[input.to_s]
-      end
+      return COMPOSITE_TIER_TRANSLATIONS[input.to_s] if is_composite_rating_tier?(klass)
 
       return input.to_i if is_group_size_rating_tier?(klass)
 

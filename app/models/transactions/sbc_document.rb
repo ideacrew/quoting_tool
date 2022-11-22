@@ -20,9 +20,7 @@ module Transactions
 
       product = Products::Product.where(id: input[:key]).first
 
-      if product.blank? || product.sbc_document.blank?
-        return Failure(message: 'Product/Sbc Document not found')
-      end
+      return Failure(message: 'Product/Sbc Document not found') if product.blank? || product.sbc_document.blank?
 
       Success(identifier: product.sbc_document.identifier)
     end

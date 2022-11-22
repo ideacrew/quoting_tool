@@ -45,9 +45,7 @@ module Transactions
 
     def create_records(input)
       input[:result].each_with_index do |json, i|
-        unless Locations::CountyZip.find_or_create_by(json)
-          return Failure(message: "Failed to create County Zip record for index #{i}")
-        end
+        return Failure(message: "Failed to create County Zip record for index #{i}") unless Locations::CountyZip.find_or_create_by(json)
       end
       Success(message: "Successfully created #{input[:result].size} County Zip records")
     end

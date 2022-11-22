@@ -26,9 +26,7 @@ module Locations
     index(covered_state_codes: 1)
 
     def location_specified
-      if county_zip_ids.blank? && covered_states.blank?
-        errors.add(:base, 'a location covered by the service area must be specified')
-      end
+      errors.add(:base, 'a location covered by the service area must be specified') if county_zip_ids.blank? && covered_states.blank?
       true
     end
 

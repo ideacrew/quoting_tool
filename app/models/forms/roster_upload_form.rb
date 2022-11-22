@@ -53,9 +53,7 @@ module Forms
 
     def roster_records
       census_records.each_with_index do |census_record, i|
-        unless census_record.valid?
-          errors.add(:base, "Row #{i + 4}: #{census_record.errors.full_messages}")
-        end
+        errors.add(:base, "Row #{i + 4}: #{census_record.errors.full_messages}") unless census_record.valid?
       end
     end
 

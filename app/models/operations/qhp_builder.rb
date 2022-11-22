@@ -51,9 +51,7 @@ module Operations
         @csvp = csvp
         next if hios_plan_and_variant_id.split('-').last == '00'
 
-        if hios_plan_and_variant_id.split('-').last == '01' && qhp.active_year > 2015
-          qhp.hsa_eligibility = hsa_params[:hsa_eligibility]
-        end
+        qhp.hsa_eligibility = hsa_params[:hsa_eligibility] if hios_plan_and_variant_id.split('-').last == '01' && qhp.active_year > 2015
 
         qcsv = qhp.qhp_cost_share_variances.build(cost_share_variance_attributes)
         maximum_out_of_pockets_params.each do |moop|
