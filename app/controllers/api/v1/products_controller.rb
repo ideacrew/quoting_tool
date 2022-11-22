@@ -23,7 +23,7 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def sbc_document
-    result = Transactions::SbcDocument.new.call(key: params[:key])
+    result = ::Operations::SbcDocument.new.call(key: params[:key])
 
     if result.success?
       render json: { status: 'success', metadata: result.value!.values }
