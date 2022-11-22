@@ -50,7 +50,7 @@ module Transactions
       files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/service_areas", "**", "*.xlsx"))
       parsed_files = parse_files(files)
       parsed_files.each do |file|
-        Transactions::LoadServiceAreas.new.call(file)
+        Operations::LoadServiceAreas.new.call(file)
       end
       puts ":: Finished Loading Service Areas ::"
       Success(input)

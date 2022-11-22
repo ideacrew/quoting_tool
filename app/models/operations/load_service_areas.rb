@@ -1,12 +1,17 @@
-module Transactions
+require 'dry/monads'
+require 'dry/monads/do'
+module Operations
   class LoadServiceAreas
-    include Dry::Transaction
+    include Dry::Monads[:result, :do]
 
-    step :load_file_info
-    step :validate_file_info
-    step :load_file_data
-    step :validate_records
-    step :create_records
+    def call(input)
+      file          =  yield load_file_info(input)
+      file_info     =  yield validate_file_info(file)
+      file_data     =  yield load_file_data(file_info)
+      file_records  =  yield validate_records(file_data)
+      records       =  yield create_records(file_records)
+      Success(records)
+    end
 
     private
 
@@ -43,6 +48,7 @@ module Transactions
 
         result
       end
+
 
       Success({result: output, year: year})
     end
