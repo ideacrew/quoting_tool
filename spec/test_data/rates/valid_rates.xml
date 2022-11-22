@@ -1,0 +1,492 @@
+<?xml version="1.0"?>
+<qhpApplicationRateGroupListVO xmlns="http://vo.ffe.cms.hhs.gov">
+  <qhpApplicationRateGroupVO>
+    <header>
+      <templateVersion>v11.0</templateVersion>
+      <issuerId cellLocation="Rate_Table-B.6">
+        <cellValue>50165</cellValue>
+      </issuerId>
+    </header>
+    <ratingMethod cellLocation="Rate_Table-B.9">
+      <cellValue>Family-Tier Rates</cellValue>
+    </ratingMethod>
+    <items>
+      <effectiveDate cellLocation="Rate_Table-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table-A.14">
+        <cellValue>50165ME0160001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table-B.14">
+        <cellValue>Rating Area 1</cellValue>
+      </rateAreaId>
+      <primaryEnrollee cellLocation="Rate_Table-E.14">
+        <cellValue>54.50</cellValue>
+      </primaryEnrollee>
+      <coupleEnrollee cellLocation="Rate_Table-G.14">
+        <cellValue>101.00</cellValue>
+      </coupleEnrollee>
+      <primaryEnrolleeOneDependent cellLocation="Rate_Table-H.14">
+        <cellValue>102.00</cellValue>
+      </primaryEnrolleeOneDependent>
+      <primaryEnrolleeTwoDependent cellLocation="Rate_Table-I.14">
+        <cellValue>148.50</cellValue>
+      </primaryEnrolleeTwoDependent>
+      <primaryEnrolleeManyDependent cellLocation="Rate_Table-J.14">
+        <cellValue>195.50</cellValue>
+      </primaryEnrolleeManyDependent>
+      <coupleEnrolleeOneDependent cellLocation="Rate_Table-K.14">
+        <cellValue>143.00</cellValue>
+      </coupleEnrolleeOneDependent>
+      <coupleEnrolleeTwoDependent cellLocation="Rate_Table-L.14">
+        <cellValue>185.00</cellValue>
+      </coupleEnrolleeTwoDependent>
+      <coupleEnrolleeManyDependent cellLocation="Rate_Table-M.14">
+        <cellValue>227.50</cellValue>
+      </coupleEnrolleeManyDependent>
+    </items>
+    <items>
+      <effectiveDate cellLocation="Rate_Table-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table-A.15">
+        <cellValue>50165ME0170001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table-B.15">
+        <cellValue>Rating Area 1</cellValue>
+      </rateAreaId>
+      <primaryEnrollee cellLocation="Rate_Table-E.15">
+        <cellValue>39.00</cellValue>
+      </primaryEnrollee>
+      <coupleEnrollee cellLocation="Rate_Table-G.15">
+        <cellValue>72.50</cellValue>
+      </coupleEnrollee>
+      <primaryEnrolleeOneDependent cellLocation="Rate_Table-H.15">
+        <cellValue>77.50</cellValue>
+      </primaryEnrolleeOneDependent>
+      <primaryEnrolleeTwoDependent cellLocation="Rate_Table-I.15">
+        <cellValue>115.50</cellValue>
+      </primaryEnrolleeTwoDependent>
+      <primaryEnrolleeManyDependent cellLocation="Rate_Table-J.15">
+        <cellValue>153.00</cellValue>
+      </primaryEnrolleeManyDependent>
+      <coupleEnrolleeOneDependent cellLocation="Rate_Table-K.15">
+        <cellValue>105.50</cellValue>
+      </coupleEnrolleeOneDependent>
+      <coupleEnrolleeTwoDependent cellLocation="Rate_Table-L.15">
+        <cellValue>138.50</cellValue>
+      </coupleEnrolleeTwoDependent>
+      <coupleEnrolleeManyDependent cellLocation="Rate_Table-M.15">
+        <cellValue>171.00</cellValue>
+      </coupleEnrolleeManyDependent>
+    </items>
+  </qhpApplicationRateGroupVO>
+  <qhpApplicationRateGroupVO>
+    <header>
+      <templateVersion>v11.0</templateVersion>
+      <issuerId cellLocation="Rate_Table_(2)-B.6">
+        <cellValue>50165</cellValue>
+      </issuerId>
+    </header>
+    <ratingMethod cellLocation="Rate_Table_(2)-B.9">
+      <cellValue>Age-Based Rates</cellValue>
+    </ratingMethod>
+    <items>
+      <effectiveDate cellLocation="Rate_Table_(2)-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table_(2)-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table_(2)-A.14">
+        <cellValue>50165ME0180001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table_(2)-B.14">
+        <cellValue>Rating Area 1</cellValue>
+      </rateAreaId>
+      <tobacco cellLocation="Rate_Table_(2)-C.14">
+        <cellValue>No Preference</cellValue>
+      </tobacco>
+      <ageNumber cellLocation="Rate_Table_(2)-D.14">
+        <cellValue>0-14</cellValue>
+      </ageNumber>
+      <primaryEnrollee cellLocation="Rate_Table_(2)-E.14">
+        <cellValue>49.00</cellValue>
+      </primaryEnrollee>
+    </items>
+    <items>
+      <effectiveDate cellLocation="Rate_Table_(2)-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table_(2)-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table_(2)-A.81">
+        <cellValue>50165ME0180001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table_(2)-B.81">
+        <cellValue>Rating Area 2</cellValue>
+      </rateAreaId>
+      <tobacco cellLocation="Rate_Table_(2)-C.81">
+        <cellValue>No Preference</cellValue>
+      </tobacco>
+      <ageNumber cellLocation="Rate_Table_(2)-D.81">
+        <cellValue>30</cellValue>
+      </ageNumber>
+      <primaryEnrollee cellLocation="Rate_Table_(2)-E.81">
+        <cellValue>0.00</cellValue>
+      </primaryEnrollee>
+    </items>
+    <items>
+      <effectiveDate cellLocation="Rate_Table_(2)-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table_(2)-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table_(2)-A.82">
+        <cellValue>50165ME0180001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table_(2)-B.82">
+        <cellValue>Rating Area 2</cellValue>
+      </rateAreaId>
+      <tobacco cellLocation="Rate_Table_(2)-C.82">
+        <cellValue>No Preference</cellValue>
+      </tobacco>
+      <ageNumber cellLocation="Rate_Table_(2)-D.82">
+        <cellValue>31</cellValue>
+      </ageNumber>
+      <primaryEnrollee cellLocation="Rate_Table_(2)-E.82">
+        <cellValue>0.00</cellValue>
+      </primaryEnrollee>
+    </items>
+    <items>
+      <effectiveDate cellLocation="Rate_Table_(2)-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table_(2)-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table_(2)-A.83">
+        <cellValue>50165ME0180001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table_(2)-B.83">
+        <cellValue>Rating Area 2</cellValue>
+      </rateAreaId>
+      <tobacco cellLocation="Rate_Table_(2)-C.83">
+        <cellValue>No Preference</cellValue>
+      </tobacco>
+      <ageNumber cellLocation="Rate_Table_(2)-D.83">
+        <cellValue>32</cellValue>
+      </ageNumber>
+      <primaryEnrollee cellLocation="Rate_Table_(2)-E.83">
+        <cellValue>0.00</cellValue>
+      </primaryEnrollee>
+    </items>
+    <items>
+      <effectiveDate cellLocation="Rate_Table_(2)-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table_(2)-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table_(2)-A.84">
+        <cellValue>50165ME0180001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table_(2)-B.84">
+        <cellValue>Rating Area 2</cellValue>
+      </rateAreaId>
+      <tobacco cellLocation="Rate_Table_(2)-C.84">
+        <cellValue>No Preference</cellValue>
+      </tobacco>
+      <ageNumber cellLocation="Rate_Table_(2)-D.84">
+        <cellValue>33</cellValue>
+      </ageNumber>
+      <primaryEnrollee cellLocation="Rate_Table_(2)-E.84">
+        <cellValue>0.00</cellValue>
+      </primaryEnrollee>
+    </items>
+    <items>
+      <effectiveDate cellLocation="Rate_Table_(2)-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table_(2)-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table_(2)-A.85">
+        <cellValue>50165ME0180001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table_(2)-B.85">
+        <cellValue>Rating Area 2</cellValue>
+      </rateAreaId>
+      <tobacco cellLocation="Rate_Table_(2)-C.85">
+        <cellValue>No Preference</cellValue>
+      </tobacco>
+      <ageNumber cellLocation="Rate_Table_(2)-D.85">
+        <cellValue>34</cellValue>
+      </ageNumber>
+      <primaryEnrollee cellLocation="Rate_Table_(2)-E.85">
+        <cellValue>0.00</cellValue>
+      </primaryEnrollee>
+    </items>
+    <items>
+      <effectiveDate cellLocation="Rate_Table_(2)-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table_(2)-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table_(2)-A.86">
+        <cellValue>50165ME0180001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table_(2)-B.86">
+        <cellValue>Rating Area 2</cellValue>
+      </rateAreaId>
+      <tobacco cellLocation="Rate_Table_(2)-C.86">
+        <cellValue>No Preference</cellValue>
+      </tobacco>
+      <ageNumber cellLocation="Rate_Table_(2)-D.86">
+        <cellValue>35</cellValue>
+      </ageNumber>
+      <primaryEnrollee cellLocation="Rate_Table_(2)-E.86">
+        <cellValue>0.00</cellValue>
+      </primaryEnrollee>
+    </items>
+    <items>
+      <effectiveDate cellLocation="Rate_Table_(2)-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table_(2)-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table_(2)-A.87">
+        <cellValue>50165ME0180001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table_(2)-B.87">
+        <cellValue>Rating Area 2</cellValue>
+      </rateAreaId>
+      <tobacco cellLocation="Rate_Table_(2)-C.87">
+        <cellValue>No Preference</cellValue>
+      </tobacco>
+      <ageNumber cellLocation="Rate_Table_(2)-D.87">
+        <cellValue>36</cellValue>
+      </ageNumber>
+      <primaryEnrollee cellLocation="Rate_Table_(2)-E.87">
+        <cellValue>0.00</cellValue>
+      </primaryEnrollee>
+    </items>
+    <items>
+      <effectiveDate cellLocation="Rate_Table_(2)-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table_(2)-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table_(2)-A.88">
+        <cellValue>50165ME0180001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table_(2)-B.88">
+        <cellValue>Rating Area 2</cellValue>
+      </rateAreaId>
+      <tobacco cellLocation="Rate_Table_(2)-C.88">
+        <cellValue>No Preference</cellValue>
+      </tobacco>
+      <ageNumber cellLocation="Rate_Table_(2)-D.88">
+        <cellValue>37</cellValue>
+      </ageNumber>
+      <primaryEnrollee cellLocation="Rate_Table_(2)-E.88">
+        <cellValue>0.00</cellValue>
+      </primaryEnrollee>
+    </items>
+    <items>
+      <effectiveDate cellLocation="Rate_Table_(2)-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table_(2)-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table_(2)-A.89">
+        <cellValue>50165ME0180001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table_(2)-B.89">
+        <cellValue>Rating Area 2</cellValue>
+      </rateAreaId>
+      <tobacco cellLocation="Rate_Table_(2)-C.89">
+        <cellValue>No Preference</cellValue>
+      </tobacco>
+      <ageNumber cellLocation="Rate_Table_(2)-D.89">
+        <cellValue>38</cellValue>
+      </ageNumber>
+      <primaryEnrollee cellLocation="Rate_Table_(2)-E.89">
+        <cellValue>0.00</cellValue>
+      </primaryEnrollee>
+    </items>
+    <items>
+      <effectiveDate cellLocation="Rate_Table_(2)-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table_(2)-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table_(2)-A.90">
+        <cellValue>50165ME0180001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table_(2)-B.90">
+        <cellValue>Rating Area 2</cellValue>
+      </rateAreaId>
+      <tobacco cellLocation="Rate_Table_(2)-C.90">
+        <cellValue>No Preference</cellValue>
+      </tobacco>
+      <ageNumber cellLocation="Rate_Table_(2)-D.90">
+        <cellValue>39</cellValue>
+      </ageNumber>
+      <primaryEnrollee cellLocation="Rate_Table_(2)-E.90">
+        <cellValue>0.00</cellValue>
+      </primaryEnrollee>
+    </items>
+    <items>
+      <effectiveDate cellLocation="Rate_Table_(2)-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table_(2)-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table_(2)-A.91">
+        <cellValue>50165ME0180001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table_(2)-B.91">
+        <cellValue>Rating Area 2</cellValue>
+      </rateAreaId>
+      <tobacco cellLocation="Rate_Table_(2)-C.91">
+        <cellValue>No Preference</cellValue>
+      </tobacco>
+      <ageNumber cellLocation="Rate_Table_(2)-D.91">
+        <cellValue>40</cellValue>
+      </ageNumber>
+      <primaryEnrollee cellLocation="Rate_Table_(2)-E.91">
+        <cellValue>0.00</cellValue>
+      </primaryEnrollee>
+    </items>
+    <items>
+      <effectiveDate cellLocation="Rate_Table_(2)-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table_(2)-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table_(2)-A.92">
+        <cellValue>50165ME0180001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table_(2)-B.92">
+        <cellValue>Rating Area 2</cellValue>
+      </rateAreaId>
+      <tobacco cellLocation="Rate_Table_(2)-C.92">
+        <cellValue>No Preference</cellValue>
+      </tobacco>
+      <ageNumber cellLocation="Rate_Table_(2)-D.92">
+        <cellValue>41</cellValue>
+      </ageNumber>
+      <primaryEnrollee cellLocation="Rate_Table_(2)-E.92">
+        <cellValue>0.00</cellValue>
+      </primaryEnrollee>
+    </items>
+    <items>
+      <effectiveDate cellLocation="Rate_Table_(2)-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table_(2)-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table_(2)-A.93">
+        <cellValue>50165ME0180001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table_(2)-B.93">
+        <cellValue>Rating Area 2</cellValue>
+      </rateAreaId>
+      <tobacco cellLocation="Rate_Table_(2)-C.93">
+        <cellValue>No Preference</cellValue>
+      </tobacco>
+      <ageNumber cellLocation="Rate_Table_(2)-D.93">
+        <cellValue>42</cellValue>
+      </ageNumber>
+      <primaryEnrollee cellLocation="Rate_Table_(2)-E.93">
+        <cellValue>0.00</cellValue>
+      </primaryEnrollee>
+    </items>
+    <items>
+      <effectiveDate cellLocation="Rate_Table_(2)-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table_(2)-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table_(2)-A.94">
+        <cellValue>50165ME0180001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table_(2)-B.94">
+        <cellValue>Rating Area 2</cellValue>
+      </rateAreaId>
+      <tobacco cellLocation="Rate_Table_(2)-C.94">
+        <cellValue>No Preference</cellValue>
+      </tobacco>
+      <ageNumber cellLocation="Rate_Table_(2)-D.94">
+        <cellValue>43</cellValue>
+      </ageNumber>
+      <primaryEnrollee cellLocation="Rate_Table_(2)-E.94">
+        <cellValue>0.00</cellValue>
+      </primaryEnrollee>
+    </items>
+    <items>
+      <effectiveDate cellLocation="Rate_Table_(2)-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table_(2)-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table_(2)-A.95">
+        <cellValue>50165ME0180001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table_(2)-B.95">
+        <cellValue>Rating Area 2</cellValue>
+      </rateAreaId>
+      <tobacco cellLocation="Rate_Table_(2)-C.95">
+        <cellValue>No Preference</cellValue>
+      </tobacco>
+      <ageNumber cellLocation="Rate_Table_(2)-D.95">
+        <cellValue>44</cellValue>
+      </ageNumber>
+      <primaryEnrollee cellLocation="Rate_Table_(2)-E.95">
+        <cellValue>0.00</cellValue>
+      </primaryEnrollee>
+    </items>
+    <items>
+      <effectiveDate cellLocation="Rate_Table_(2)-B.7">
+        <cellValue>2022-01-01</cellValue>
+      </effectiveDate>
+      <expirationDate cellLocation="Rate_Table_(2)-B.8">
+        <cellValue>2022-12-31</cellValue>
+      </expirationDate>
+      <planId cellLocation="Rate_Table_(2)-A.96">
+        <cellValue>50165ME0180001</cellValue>
+      </planId>
+      <rateAreaId cellLocation="Rate_Table_(2)-B.96">
+        <cellValue>Rating Area 2</cellValue>
+      </rateAreaId>
+      <tobacco cellLocation="Rate_Table_(2)-C.96">
+        <cellValue>No Preference</cellValue>
+      </tobacco>
+      <ageNumber cellLocation="Rate_Table_(2)-D.96">
+        <cellValue>45</cellValue>
+      </ageNumber>
+      <primaryEnrollee cellLocation="Rate_Table_(2)-E.96">
+        <cellValue>0.00</cellValue>
+      </primaryEnrollee>
+    </items>
+  </qhpApplicationRateGroupVO>
+</qhpApplicationRateGroupListVO>

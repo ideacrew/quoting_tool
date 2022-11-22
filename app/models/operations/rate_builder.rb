@@ -1,6 +1,6 @@
 module Operations
   class RateBuilder
-    include Dry::Transaction::Operation
+
     INVALID_PLAN_IDS = ["78079DC0320003","78079DC0320004","78079DC0340002","78079DC0330002"]
     METLIFE_HIOS_IDS = ["43849DC0090001", "43849DC0080001"]
 
