@@ -1,10 +1,15 @@
-module Transactions
+require 'dry/monads'
+require 'dry/monads/do'
+module Operations
   class SbcDocument
-    include Dry::Transaction
+    include Dry::Monads[:result, :do]
 
-    step :load
-    step :validate
-    step :serve
+    def call(input)
+      file               =  yield load(input)
+      validated_file     =  yield validate(file)
+      document           =  yield serve(validated_file)
+      Success(document)
+    end
 
     private
 
