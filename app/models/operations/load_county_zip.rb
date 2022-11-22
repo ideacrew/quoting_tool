@@ -5,9 +5,9 @@ module Operations
     include Dry::Monads[:result, :do]
 
     def call(input_file)
-      sheet_data = yield validate_and_load_sheet(input_file)
-      sheet_data = yield load_sheet_data(sheet_data)
-      created_records = yield create_records(sheet_data)
+      sheet = yield validate_and_load_sheet(input_file)
+      loaded_sheet_data = yield load_sheet_data(sheet)
+      created_records = yield create_records(loaded_sheet_data)
       Success(created_records)
     end
 
