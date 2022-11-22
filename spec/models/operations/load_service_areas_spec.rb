@@ -19,20 +19,4 @@ RSpec.describe Operations::LoadServiceAreas, type: :transaction do
       expect(subject.success[:message]).to eq 'Successfully created/updated 18 Service Area records'
     end
   end
-
-  context 'failure' do
-    let(:file) { File.join(Rails.root, 'spec/test_data/invalid_service_areas.xlsx') }
-
-    it 'should be failure' do
-      expect(subject.failure?).to eq true
-    end
-
-    it 'should not create new service area zip' do
-      expect(Locations::ServiceArea.all.size).to eq 0
-    end
-
-    it 'should return failure message' do
-      expect(subject.failure[:message]).to match 'Failed to Create Service Area record'
-    end
-  end
 end

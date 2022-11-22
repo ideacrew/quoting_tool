@@ -109,11 +109,7 @@ module Operations
           Failure({message: "#{e}"})
         end
       end
-      if input[:result].size > 0
-        Success({message: "Successfully created/updated #{input[:result].size} Service Area records"})
-      else
-        Failure({message: "Failed to Create Service Area record"})
-      end
+      Success({message: "Successfully created/updated #{input[:result].size} Service Area records"})
     end
 
     def parse_text(input)
