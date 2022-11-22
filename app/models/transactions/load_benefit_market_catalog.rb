@@ -77,7 +77,7 @@ module Transactions
       puts ":: Loading Rates ::"
       files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls", input[:state], "rates", "**", "*.xml"))
       parsed_files = parse_files(files)
-      Transactions::LoadRates.new.call(parsed_files)
+      Operations::LoadRates.new.call(parsed_files)
       puts ":: Finished Loading Rates ::"
       Success(input)
     end

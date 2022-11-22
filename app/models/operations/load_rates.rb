@@ -4,8 +4,8 @@ module Operations
   class LoadRates
     include Dry::Monads[:result, :do]
 
-    def call(input)
-      validated_result = yield validate_and_load_xml_files(input)
+    def call(input_xml_files)
+      validated_result = yield validate_and_load_xml_files(input_xml_files)
       file_data = yield load_file_data(validated_result)
       created_records = yield create_records(file_data)
       Success(created_records)
@@ -13,9 +13,9 @@ module Operations
 
     private
 
-    def validate_and_load_xml_files(input)
+    def validate_and_load_xml_files(input_xml_files)
       loaded_xml_files = []
-      input[:xml_files].each do |file|
+      input_xml_files.each do |file|
         loaded_xml_file = Nokogiri::XML(File.open(file))
         return Failure(message: "Invalid XML file upon loading rates - #{file}") if loaded_xml_file.errors.present?
 
