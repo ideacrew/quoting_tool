@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Parsers
   module Products
     class BenefitsListParser
@@ -5,7 +7,7 @@ module Parsers
 
       tag 'benefitsList'
 
-      has_many :benefits, Parsers::Products::BenefitsParser, tag: "benefits"
+      has_many :benefits, Parsers::Products::BenefitsParser, tag: 'benefits'
 
       def to_hash
         {

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Operations::LoadRatingAreas, type: :transaction do
@@ -7,35 +9,32 @@ RSpec.describe Operations::LoadRatingAreas, type: :transaction do
 
   context "succesful" do
 
-    let(:file) {File.join(Rails.root, "spec/test_data/rating_areas.xlsx")}
-
-    it "should be success" do
+    it 'should be success' do
       expect(subject.success?).to eq true
     end
 
-    it "should create new rating area" do
+    it 'should create new rating area' do
       expect(Locations::RatingArea.all.size).not_to eq 0
     end
 
-    it "should return success message" do
-      expect(subject.success[:message]).to eq "Successfully created/updated 1 Rating Area records"
+    it 'should return success message' do
+      expect(subject.success[:message]).to eq 'Successfully created/updated 1 Rating Area records'
     end
   end
 
-  context "failure" do
+  context 'failure' do
+    let(:file) { File.join(Rails.root, 'spec/test_data/invalid_rating_areas.xlsx') }
 
-    let(:file) {File.join(Rails.root, "spec/test_data/invalid_rating_areas.xlsx")}
-
-    it "should be failure" do
+    it 'should be failure' do
       expect(subject.failure?).to eq true
     end
 
-    it "should not create new county zip" do
+    it 'should not create new county zip' do
       expect(Locations::RatingArea.all.size).to eq 0
     end
 
-    it "should return failure message" do
-      expect(subject.failure[:message]).to match "Failed to Create Rating Area record"
+    it 'should return failure message' do
+      expect(subject.failure[:message]).to match 'Failed to Create Rating Area record'
     end
   end
 end
