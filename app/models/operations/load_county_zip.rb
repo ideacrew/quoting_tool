@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'dry/monads'
 require 'dry/monads/do'
 
@@ -28,25 +30,21 @@ module Operations
     def load_sheet_data(sheet_data)
       sheet = sheet_data[:sheet]
       columns = sheet.row(1).map(&:parameterize).map(&:underscore)
-      output = (2..sheet.last_row).inject([]) do |result, id|
+      output = (2..sheet.last_row).each_with_object([]) do |id, result|
         row = Hash[[columns, sheet.row(id)].transpose]
 
         result << {
           county_name: parse_text(row['county']),
           zip: parse_text(row['zip']),
-          state: "MA" # update later
+          state: 'MA' # update later
         }
-
-        result
       end
       Success(result: output)
     end
 
     def create_records(file_data)
       file_data[:result].each_with_index do |json, i|
-        unless Locations::CountyZip.find_or_create_by(json)
-          return Failure(message: "Failed to create County Zip record for index #{i}")
-        end
+        return Failure(message: "Failed to create County Zip record for index #{i}") unless Locations::CountyZip.find_or_create_by(json)
       end
       Success(message: "Successfully created #{file_data[:result].size} County Zip records")
     end

@@ -3,12 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Operations::LoadRatingAreas, type: :transaction do
+  let!(:county_zip) { FactoryBot.create(:county_zip, zip: '12345', county_name: 'County 1') }
+  let!(:subject) { Operations::LoadRatingAreas.new.call(file) }
 
-  let!(:county_zip) { FactoryBot.create(:county_zip, zip: "12345", county_name: "County 1")}
-  let!(:subject) {Operations::LoadRatingAreas.new.call(file)}
-
-  context "succesful" do
-
+  context 'succesful' do
     it 'should be success' do
       expect(subject.success?).to eq true
     end

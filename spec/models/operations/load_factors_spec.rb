@@ -3,14 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe Operations::LoadFactors, type: :transaction do
+  let!(:county_zip) { FactoryBot.create(:county_zip, zip: '12345', county_name: 'County 1') }
+  let!(:subject) { Operations::LoadFactors.new.call(file) }
 
-  let!(:county_zip) { FactoryBot.create(:county_zip, zip: "12345", county_name: "County 1")}
-  let!(:subject) {Operations::LoadFactors.new.call(file)}
-
-  describe "sic factors" do
-    context "succesful" do
-
-      let(:file) {File.join(Rails.root, "spec/test_data/rating_factors.xlsx")}
+  describe 'sic factors' do
+    context 'succesful' do
+      let(:file) { File.join(Rails.root, 'spec/test_data/rating_factors.xlsx') }
 
       it 'should be success' do
         expect(subject.success?).to eq true

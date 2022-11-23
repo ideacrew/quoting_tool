@@ -2,7 +2,6 @@
 
 module Operations
   class RateBuilder
-
     include Dry::Monads[:result, :do]
 
     INVALID_PLAN_IDS = %w[78079DC0320003 78079DC0320004 78079DC0340002 78079DC0330002].freeze

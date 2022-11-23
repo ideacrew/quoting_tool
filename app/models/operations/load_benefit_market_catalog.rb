@@ -83,7 +83,7 @@ module Operations
       files = Dir.glob(File.join(Rails.root, 'db/seedfiles/plan_xmls', input[:state], 'rates', '**', '*.xml'))
       parsed_files = parse_files(files)
       ::Operations::LoadRates.new.call(parsed_files)
-      puts ":: Finished Loading Rates ::"
+      puts ':: Finished Loading Rates ::'
       Success(input)
     end
 

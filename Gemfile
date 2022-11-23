@@ -30,11 +30,11 @@ gem 'responders'
 gem 'mongoid', git: 'https://github.com/mongodb/mongoid.git', branch: 'master'
 
 # Settings, validation and dependency injection
-gem 'resource_registry',  git:  'https://github.com/ideacrew/resource_registry.git', branch: 'trunk'
 gem 'fast_jsonapi'
 gem 'money-rails', '~> 1.13'
 gem 'nokogiri', '~> 1.10'
 gem 'nokogiri-happymapper', '~> 0.8.0', require: 'happymapper'
+gem 'resource_registry', git: 'https://github.com/ideacrew/resource_registry.git', branch: 'trunk'
 gem 'roo', '~> 2.1'
 gem 'virtus', '~> 1.0'
 
