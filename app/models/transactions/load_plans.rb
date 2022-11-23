@@ -2,7 +2,7 @@
 
 module Transactions
   class LoadPlans
-    include Dry::Transaction
+    include Dry::Transactions
 
     step :load_file_info
     step :validate_file_info
