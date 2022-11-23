@@ -148,5 +148,5 @@ module Transactions
 #       value = value.to_s.split('.')[0] if value.is_a? Float
 #       value.gsub(/[[:cntrl:]]|^[\p{Space}]+|[\p{Space}]+$/, '')
 #     end
-#   end
+  end
 end
