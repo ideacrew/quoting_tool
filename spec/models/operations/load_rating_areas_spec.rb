@@ -7,6 +7,8 @@ RSpec.describe Operations::LoadRatingAreas, type: :transaction do
   let!(:subject) { Operations::LoadRatingAreas.new.call(file) }
 
   context 'succesful' do
+    let(:file) { File.join(Rails.root, 'spec/test_data/rating_areas.xlsx') }
+
     it 'should be success' do
       expect(subject.success?).to eq true
     end

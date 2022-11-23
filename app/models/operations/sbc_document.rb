@@ -56,7 +56,7 @@ module Operations
     def parse_text(val)
       return nil if val.nil?
 
-      val.to_s.squish!
+      val.to_s.dup.squish!
     end
 
     def parse_bucket(_val)
