@@ -33,7 +33,7 @@ module Operations
       files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/rating_areas", '**', '*.xlsx'))
       parsed_files = parse_files(files)
       parsed_files.each do |file|
-        Operations::LoadRatingAreas.new.call(file)
+        ::Operations::LoadRatingAreas.new.call(file)
       end
       puts ':: Finished Loading Rating Area records ::'
       Success(input)
@@ -44,7 +44,7 @@ module Operations
       files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/rating_factors", '**', '*.xlsx'))
       parsed_files = parse_files(files)
       parsed_files.each do |file|
-        Operations::LoadFactors.new.call(file)
+        ::Operations::LoadFactors.new.call(file)
       end
       puts ':: Finished Loading Rating Factor records ::'
       Success(input)
@@ -55,7 +55,7 @@ module Operations
       files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/service_areas", '**', '*.xlsx'))
       parsed_files = parse_files(files)
       parsed_files.each do |file|
-        Operations::LoadServiceAreas.new.call(file)
+        ::Operations::LoadServiceAreas.new.call(file)
       end
       puts ':: Finished Loading Service Areas ::'
       Success(input)
