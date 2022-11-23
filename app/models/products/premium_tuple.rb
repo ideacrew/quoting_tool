@@ -1,21 +1,22 @@
+# frozen_string_literal: true
+
 module Products
   class PremiumTuple
     include Mongoid::Document
     include Mongoid::Timestamps
 
     embedded_in :premium_table,
-                class_name: "::Products::PremiumTable"
+                class_name: '::Products::PremiumTable'
 
     field :age,   type: Integer
     field :cost,  type: Float
 
     validates_presence_of :age, :cost
 
-    default_scope   ->{ order(:"age".asc) }
-
+    default_scope -> { order(:age.asc) }
 
     def comparable_attrs
-      [:age, :cost]
+      %i[age cost]
     end
 
     # Define Comparable operator

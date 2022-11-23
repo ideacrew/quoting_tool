@@ -6,15 +6,15 @@ RSpec.describe Operations::LoadPlans do
   let(:county_zip) { FactoryBot.create(:county_zip, zip: '12345', county_name: 'County 1') }
 
   let(:files) { Dir.glob(File.join(Rails.root, 'spec/test_data/plans', '*.xml')) }
-  let(:additional_files) {
+  let(:additional_files) do
     Dir.glob(File.join(Rails.root, 'spec/test_data/plans/2020/master_xml.xlsx'))
-  }
+  end
 
   context 'succesful' do
-    let!(:service_area) {
+    let!(:service_area) do
       FactoryBot.create(:service_area, county_zip_ids: [county_zip.id],
-                        active_year: 2020)
-    }
+                                       active_year: 2020)
+    end
     let!(:subject) do
       input_files = { package_xml_files: files,
                       plan_xlsx_files: additional_files }
@@ -43,7 +43,7 @@ RSpec.describe Operations::LoadPlans do
       input_files = { package_xml_files: files,
                       plan_xlsx_files: additional_files }
       Operations::LoadPlans.new.call(input_files)
-    end # No Service Area mapped
+    end
 
     it 'should not create product' do
       expect(Products::Product.all.size).to eq 0

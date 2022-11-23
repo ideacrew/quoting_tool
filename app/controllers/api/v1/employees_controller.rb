@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::EmployeesController < ApplicationController
   respond_to :json
 
@@ -6,9 +8,9 @@ class Api::V1::EmployeesController < ApplicationController
     @roster_upload_form = ::Transactions::LoadCensusRecords.new.call(file)
 
     if @roster_upload_form.success?
-      render :json => {status: "success", census_records: @roster_upload_form.value!.values}
+      render json: { status: 'success', census_records: @roster_upload_form.value!.values }
     else
-      render :json => {status: "failure", census_records: [], errors: @roster_upload_form.failure}
+      render json: { status: 'failure', census_records: [], errors: @roster_upload_form.failure }
     end
   end
 
@@ -27,18 +29,18 @@ class Api::V1::EmployeesController < ApplicationController
                 end
 
     end_on = current_date - (QuotingToolRegistry[:quoting_tool_app].setting(:earliest_start_prior_to_effective_on_months).item.months)
-    dates_rates_hash = has_rates_for(start_on..end_on)
-    dates = dates_rates_hash.collect {|k, v| k.to_date.to_s.gsub!("-", "/") if v}.compact
 
-    render json: {dates: dates, is_late_rate: !dates_rates_hash.values.all?}
+    dates_rates_hash = has_rates_for(start_on..end_on)
+    dates = dates_rates_hash.collect { |k, v| k.to_date.to_s.gsub!('-', '/') if v }.compact
+
+    render json: { dates: dates, is_late_rate: !dates_rates_hash.values.all? }
   end
 
   private
 
   def has_rates_for(dates)
-    dates.inject({}) do |result, key|
+    dates.each_with_object({}) do |key, result|
       result[key.to_s] = rates_available?(key) if key == key.beginning_of_month
-      result
     end
   end
 
@@ -48,4 +50,3 @@ class Api::V1::EmployeesController < ApplicationController
     end
   end
 end
-
