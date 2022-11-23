@@ -47,4 +47,19 @@ RSpec.describe Operations::SbcDocument, type: :transaction do
     end
   end
 
+  context "retrieve documents" do
+    it "mock sbc_document" do
+      filename = 'sbc_document.txt'
+      content = "this would be the content of the file"
+      
+      expect(File).to receive(:open).with(filename, 'r').and_yield( StringIO.new(content) )
+      
+      expect(StringIO.new(content).read).to eq(content)
+
+      result = ""
+      File.open('sbc_document.txt', 'r') { |f| result = f.read }
+      expect(result).to eq(content)
+    end
+  end
+
 end
