@@ -47,8 +47,8 @@ RSpec.describe Api::V1::EmployeesController do
 
     context 'when rates are available for projected month' do
       let(:next_year) { Date.today.next_year }
-      let!(:health_product) { FactoryBot.create(:health_product, application_period: (next_year.beginning_of_year..next_year.end_of_year)) }
-      let!(:dental_product) { FactoryBot.create(:dental_product, application_period: (next_year.beginning_of_year..next_year.end_of_year)) }
+      let!(:next_health_product) { FactoryBot.create(:health_product, application_period: (next_year.beginning_of_year..next_year.end_of_year)) }
+      let!(:next_dental_product) { FactoryBot.create(:dental_product, application_period: (next_year.beginning_of_year..next_year.end_of_year)) }
       before :each do
         ::Products::Product.all.health_products.each do |product|
           year = product.active_year == current_date.year ? current_date.year : next_year.year
