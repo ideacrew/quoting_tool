@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Transactions::LoadRatingAreas, type: :transaction do
+RSpec.describe Operations::LoadRatingAreas, type: :transaction do
   let!(:county_zip) { FactoryBot.create(:county_zip, zip: '12345', county_name: 'County 1') }
-  let!(:subject) { Transactions::LoadRatingAreas.new.call(file) }
+  let!(:subject) { Operations::LoadRatingAreas.new.call(file) }
 
   context 'succesful' do
     let(:file) { File.join(Rails.root, 'spec/test_data/rating_areas.xlsx') }

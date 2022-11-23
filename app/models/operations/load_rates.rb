@@ -1,42 +1,42 @@
 # frozen_string_literal: true
 
-module Transactions
-  class LoadRates
-    include Dry::Transaction
+require 'dry/monads'
+require 'dry/monads/do'
 
-    step :load_file_info
-    step :validate_file_info
-    step :load_file_data
-    step :validate_records
-    step :create_records
+module Operations
+  class LoadRates
+    include Dry::Monads[:result, :do]
+
+    def call(input_xml_files)
+      validated_result = yield validate_and_load_xml_files(input_xml_files)
+      file_data = yield load_file_data(validated_result)
+      created_records = yield create_records(file_data)
+      Success(created_records)
+    end
 
     private
 
-    def load_file_info(input)
-      Success(files: input)
+    def validate_and_load_xml_files(input_xml_files)
+      loaded_xml_files = []
+      input_xml_files.each do |file|
+        loaded_xml_file = Nokogiri::XML(File.open(file))
+        return Failure(message: "Invalid XML file upon loading rates - #{file}") if loaded_xml_file.errors.present?
+
+        loaded_xml_files << loaded_xml_file
+      end
+      Success(loaded_xml_files: loaded_xml_files)
     end
 
-    def validate_file_info(input)
-      # validate here by adding new Validator
-      Success(input)
-    end
-
-    def load_file_data(input)
-      output = input[:files].inject([]) do |result, file|
-        xml = Nokogiri::XML(File.open(file))
+    def load_file_data(validated_result)
+      output = validated_result[:loaded_xml_files].inject([]) do |result, xml|
         product_hash = Parsers::Products::PlanRateGroupListParser.parse(xml.root.canonicalize, single: true).to_hash
         result += product_hash[:plan_rate_group_attributes]
       end
       Success(result: output)
     end
 
-    def validate_records(input)
-      # validate records here by adding new Validator
-      Success(input)
-    end
-
     def create_records(input)
-      builder = Operations::RateBuilder.new.call(rate_groups: input[:result], rating_area_map: rating_area_map)
+      Operations::RateBuilder.new.call(rate_groups: input[:result], rating_area_map: rating_area_map)
       Success(message: 'Rates Succesfully Loaded')
     end
 

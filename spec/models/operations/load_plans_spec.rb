@@ -2,18 +2,23 @@
 
 require 'rails_helper'
 
-RSpec.describe Transactions::LoadPlans, type: :transaction do
+RSpec.describe Operations::LoadPlans do
   let(:county_zip) { FactoryBot.create(:county_zip, zip: '12345', county_name: 'County 1') }
 
   let(:files) { Dir.glob(File.join(Rails.root, 'spec/test_data/plans', '*.xml')) }
-  let(:additional_files) { Dir.glob(File.join(Rails.root, 'spec/test_data/plans/2020/master_xml.xlsx')) }
+  let(:additional_files) do
+    Dir.glob(File.join(Rails.root, 'spec/test_data/plans/2020/master_xml.xlsx'))
+  end
 
   context 'succesful' do
-    let!(:service_area) { FactoryBot.create(:service_area, county_zip_ids: [county_zip.id], active_year: 2020) }
+    let!(:service_area) do
+      FactoryBot.create(:service_area, county_zip_ids: [county_zip.id],
+                                       active_year: 2020)
+    end
     let!(:subject) do
-      Transactions::LoadPlans.new.with_step_args(
-        load_file_info: [additional_files]
-      ).call(files)
+      input_files = { package_xml_files: files,
+                      plan_xlsx_files: additional_files }
+      Operations::LoadPlans.new.call(input_files)
     end
 
     it 'should be success' do
@@ -35,10 +40,10 @@ RSpec.describe Transactions::LoadPlans, type: :transaction do
 
   context 'failure' do
     let(:subject) do
-      Transactions::LoadPlans.new.with_step_args(
-        load_file_info: [additional_files]
-      ).call(files)
-    end # No Service Area mapped
+      input_files = { package_xml_files: files,
+                      plan_xlsx_files: additional_files }
+      Operations::LoadPlans.new.call(input_files)
+    end
 
     it 'should not create product' do
       expect(Products::Product.all.size).to eq 0

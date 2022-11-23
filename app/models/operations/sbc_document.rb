@@ -1,12 +1,17 @@
 # frozen_string_literal: true
 
-module Transactions
+require 'dry/monads'
+require 'dry/monads/do'
+module Operations
   class SbcDocument
-    include Dry::Transaction
+    include Dry::Monads[:result, :do]
 
-    step :load
-    step :validate
-    step :serve
+    def call(input)
+      file               =  yield load(input)
+      validated_file     =  yield validate(file)
+      document           =  yield serve(validated_file)
+      Success(document)
+    end
 
     private
 
@@ -51,7 +56,7 @@ module Transactions
     def parse_text(val)
       return nil if val.nil?
 
-      val.to_s.squish!
+      val.to_s.dup.squish!
     end
 
     def parse_bucket(_val)

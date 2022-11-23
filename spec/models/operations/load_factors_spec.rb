@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Transactions::LoadFactors, type: :transaction do
+RSpec.describe Operations::LoadFactors, type: :transaction do
   let!(:county_zip) { FactoryBot.create(:county_zip, zip: '12345', county_name: 'County 1') }
-  let!(:subject) { Transactions::LoadFactors.new.call(file) }
+  let!(:subject) { Operations::LoadFactors.new.call(file) }
 
   describe 'sic factors' do
     context 'succesful' do
