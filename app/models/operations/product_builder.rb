@@ -2,7 +2,7 @@
 
 module Operations
   class ProductBuilder
-    include Dry::Transaction::Operation
+    include Dry::Monads[:result, :do]
 
     VISIT_TYPES = {
       pcp: 'Primary Care Visit to Treat an Injury or Illness',
