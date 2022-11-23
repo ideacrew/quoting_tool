@@ -1,0 +1,24 @@
+# This yaml describes our current checks.
+AllCops:
+  TargetRubyVersion: 2.7
+  Exclude:
+    - "./bin/**/*"
+    - "vendor/**/*"
+    - "./node_modules/**/*"
+    - "./db/seedfiles/**/*"
+    - "./clients/**/*"
+
+Metrics/LineLength:
+  Max: 200
+Metrics/AbcSize:
+  Max: 50
+Metrics/ClassLength:
+  Max: 300
+Metrics/CyclomaticComplexity:
+  Max: 10
+Metrics/BlockLength:
+  Enabled: false
+Metrics/MethodLength:
+  Max: 50
+Metrics/PerceivedComplexity:
+  Max: 15

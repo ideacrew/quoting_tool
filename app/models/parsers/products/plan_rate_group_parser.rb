@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Parsers
   module Products
     class PlanRateGroupParser
@@ -5,8 +7,8 @@ module Parsers
 
       tag 'qhpApplicationRateGroupVO'
 
-      has_one :header, Parsers::Products::PlanRateHeaderParser, tag: "header"
-      has_many :items, Parsers::Products::PlanRateItemsParser, tag: "items"
+      has_one :header, Parsers::Products::PlanRateHeaderParser, tag: 'header'
+      has_many :items, Parsers::Products::PlanRateItemsParser, tag: 'items'
 
       def to_hash
         {

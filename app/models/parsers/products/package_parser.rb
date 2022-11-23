@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Parsers
   module Products
     class PackageParser
@@ -5,7 +7,7 @@ module Parsers
 
       tag 'packages'
 
-      has_one :plans_list, Parsers::Products::PlanListParser, tag: "plansList"
+      has_one :plans_list, Parsers::Products::PlanListParser, tag: 'plansList'
 
       has_one :benefits_list, Parsers::Products::BenefitsListParser, tag: 'benefitsList'
 
