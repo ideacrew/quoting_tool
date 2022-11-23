@@ -1,7 +1,7 @@
-# # frozen_string_literal: true
+# frozen_string_literal: true
 
-# module Transactions
-#   class LoadCensusRecords
+module Transactions
+  class LoadCensusRecords
 #     include Dry::Transaction
 
 #     TEMPLATE_DATE_CELL = 7
@@ -149,4 +149,4 @@
 #       value.gsub(/[[:cntrl:]]|^[\p{Space}]+|[\p{Space}]+$/, '')
 #     end
 #   end
-# end
+end
