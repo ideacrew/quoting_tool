@@ -1,15 +1,19 @@
 # frozen_string_literal: true
 
-module Transactions
+require 'dry/monads'
+require 'dry/monads/do'
+module Operations
   class LoadBenefitMarketCatalog
-    include Dry::Transaction
+    include Dry::Monads[:result, :do]
 
-    step :load_county_zips
-    step :load_rating_areas
-    step :load_rating_factors
-    step :load_service_areas
-    step :load_plans
-    step :load_rates
+    def call(input)
+      country_zips   = yield load_county_zips(input)
+      rating_areas   = yield load_rating_areas(input)
+      rating_factors = yield load_rating_factors(input)
+      service_areas  = yield load_service_areas(input)
+      plans          = yield load_plans(input)
+      rates          = yield load_rates(input)
+    end
 
     private
 
