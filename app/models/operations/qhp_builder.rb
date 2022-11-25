@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Operations
+  # This class is to build the qhp
   class QhpBuilder
     include Dry::Monads[:result, :do]
 
@@ -66,10 +67,10 @@ module Operations
     end
 
     def validate_and_persist_qhp
-      unless INVALID_PLAN_IDS.include?(qhp.standard_component_id.strip)
-        result = ProductBuilder.new.call(qhp: qhp, health_data_map: health_data_map, dental_data_map: dental_data_map, service_area_map: service_area_map)
-        Success(message: ['Succesfully created QHP']) if qhp.save!
-      end
+      return if INVALID_PLAN_IDS.include?(qhp.standard_component_id.strip)
+
+      ProductBuilder.new.call(qhp: qhp, health_data_map: health_data_map, dental_data_map: dental_data_map, service_area_map: service_area_map)
+      Success(message: ['Succesfully created QHP']) if qhp.save!
     end
 
     def hios_plan_and_variant_id

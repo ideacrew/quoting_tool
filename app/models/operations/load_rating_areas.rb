@@ -4,6 +4,7 @@ require 'dry/monads'
 require 'dry/monads/do'
 
 module Operations
+  # This class is to load rating areas
   class LoadRatingAreas
     include Dry::Monads[:result, :do]
 
@@ -33,7 +34,7 @@ module Operations
     def load_file_data(input)
       sheet = input[:sheet]
       year = input[:year]
-      columns = input[:sheet].row(1).map(&:parameterize).map(&:underscore)
+      input[:sheet].row(1).map(&:parameterize).map(&:underscore)
       output = Hash.new { |results, k| results[k] = [] }
 
       (2..sheet.last_row).each do |i|
