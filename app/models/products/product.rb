@@ -54,7 +54,7 @@ module Products
 
     validates :benefit_market_kind,
               presence: true,
-              inclusion: { in: BENEFIT_MARKET_KINDS, message: '%{value} is not a valid benefit market kind' }
+              inclusion: { in: BENEFIT_MARKET_KINDS, message: '%<value>s is not a valid benefit market kind' }
 
     index({ hbx_id: 1 }, name: 'products_hbx_id_index')
     index({ service_area_id: 1 }, name: 'products_service_area_index')
@@ -156,7 +156,7 @@ module Products
 
     def ehb
       percent = read_attribute(:ehb)
-      percent && percent > 0 ? percent : 1
+      percent&.positive? ? percent : 1
     end
 
     def service_area
@@ -171,29 +171,29 @@ module Products
 
     def min_cost_for_application_period(effective_date)
       p_tables = premium_tables.effective_period_cover(effective_date)
-      if premium_tables.any?
-        p_tables.flat_map(&:premium_tuples).select do |pt|
-          pt.age == premium_ages.min
-        end.min_by(&:cost).cost
-      end
+      return unless premium_tables.any?
+
+      p_tables.flat_map(&:premium_tuples).select do |pt|
+        pt.age == premium_ages.min
+      end.min_by(&:cost).cost
     end
 
     def max_cost_for_application_period(effective_date)
       p_tables = premium_tables.effective_period_cover(effective_date)
-      if premium_tables.any?
-        p_tables.flat_map(&:premium_tuples).select do |pt|
-          pt.age == premium_ages.min
-        end.max_by(&:cost).cost
-      end
+      return unless premium_tables.any?
+
+      p_tables.flat_map(&:premium_tuples).select do |pt|
+        pt.age == premium_ages.min
+      end.max_by(&:cost).cost
     end
 
     def cost_for_application_period(application_period)
       p_tables = premium_tables.effective_period_cover(application_period.min)
-      if premium_tables.any?
-        p_tables.flat_map(&:premium_tuples).select do |pt|
-          pt.age == premium_ages.min
-        end.min_by(&:cost).cost
-      end
+      return unless premium_tables.any?
+
+      p_tables.flat_map(&:premium_tuples).select do |pt|
+        pt.age == premium_ages.min
+      end.min_by(&:cost).cost
     end
 
     def deductible_value

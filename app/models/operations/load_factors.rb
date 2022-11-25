@@ -59,7 +59,7 @@ module Operations
         result << (2..carrier_end_column).each_with_object([]) do |carrier_column, result|
           issuer_hios_id = sheet.cell(2, carrier_column).to_i
 
-          next unless issuer_hios_id > 0 # Making sure it's hios-id
+          next unless issuer_hios_id.positive? # Making sure it's hios-id
 
           factors = (ROW_DATA_BEGINS_ON..sheet.last_row).each_with_object([]) do |i, result|
             factor_key = get_factory_key(sheet.cell(i, 1), rating_factor_class)
@@ -105,7 +105,7 @@ module Operations
                          ::Products::ActuarialFactors::ParticipationRateActuarialFactor
                        when :CompositeRatingTierFactorSet
                          ::Products::ActuarialFactors::CompositeRatingTierActuarialFactor
-              end
+                       end
 
         result_ary.each do |json|
           record = object_class.where(

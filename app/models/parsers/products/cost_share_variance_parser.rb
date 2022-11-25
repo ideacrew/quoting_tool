@@ -40,15 +40,15 @@ module Parsers
             metal_level: metal_level.gsub(/\n/, '').strip.downcase == 'expanded bronze' ? 'bronze' : metal_level.gsub(/\n/, '').strip,
             csr_variation_type: csr_variation_type.gsub(/\n/, '').strip,
             issuer_actuarial_value: (begin
-                                       issuer_actuarial_value.gsub(/\n/, '').strip
-                                     rescue StandardError
-                                       ''
-                                     end),
+              issuer_actuarial_value.gsub(/\n/, '').strip
+            rescue StandardError
+              ''
+            end),
             av_calculator_output_number: (begin
-                                            av_calculator_output_number.gsub(/\n/, '').strip
-                                          rescue StandardError
-                                            ''
-                                          end),
+              av_calculator_output_number.gsub(/\n/, '').strip
+            rescue StandardError
+              ''
+            end),
             medical_and_drug_deductibles_integrated: medical_and_drug_deductibles_integrated.gsub(/\n/, '').strip,
             medical_and_drug_max_out_of_pocket_integrated: medical_and_drug_max_out_of_pocket_integrated.gsub(/\n/, '').strip,
             multiple_provider_tiers: multiple_provider_tiers.gsub(/\n/, '').strip,
@@ -66,7 +66,10 @@ module Parsers
         }
         response[:sbc_attributes] = sbc_attributes.to_hash if sbc_attributes
         response[:cost_share_variance_attributes].merge!(is_specialist_referral_required: is_specialist_referral_required.gsub(/\n/, '').strip) if is_specialist_referral_required.present?
-        response[:cost_share_variance_attributes].merge!(health_care_specialist_referral_type: health_care_specialist_referral_type.gsub(/\n/, '').strip) if health_care_specialist_referral_type.present?
+        if health_care_specialist_referral_type.present?
+          response[:cost_share_variance_attributes].merge!(health_care_specialist_referral_type: health_care_specialist_referral_type.gsub(/\n/,
+                                                                                                                                           '').strip)
+        end
         response
       end
     end

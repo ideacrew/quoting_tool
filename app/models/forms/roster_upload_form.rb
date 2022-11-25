@@ -46,9 +46,9 @@ module Forms
 
     def roster_template
       template_date = parse_date(self.template_date)
-      unless template_date == TEMPLATE_DATE && template_version == TEMPLATE_VERSION && header_valid?(sheet.row(2))
-        errors.add(:base, 'Unrecognized Employee Census spreadsheet format. Contact Admin for current template.')
-      end
+      return if template_date == TEMPLATE_DATE && template_version == TEMPLATE_VERSION && header_valid?(sheet.row(2))
+
+      errors.add(:base, 'Unrecognized Employee Census spreadsheet format. Contact Admin for current template.')
     end
 
     def roster_records
@@ -72,7 +72,7 @@ module Forms
 
     def sanitize_value(value)
       value = value.to_s.split('.')[0] if value.is_a? Float
-      value.gsub(/[[:cntrl:]]|^[\p{Space}]+|[\p{Space}]+$/, '')
+      value.gsub(/[[:cntrl:]]|^\p{Space}+|\p{Space}+$/, '')
     end
   end
 end

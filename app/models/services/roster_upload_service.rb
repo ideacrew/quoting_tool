@@ -123,7 +123,7 @@ module Services
         'child_under_26'
       when 'disabled child'
         'disabled_child_26_and_over'
-        end
+      end
     end
 
     def parse_text(cell)
@@ -133,7 +133,7 @@ module Services
     def parse_date(cell)
       return nil if cell.blank?
 
-      if cell.class == String
+      if cell.instance_of?(String)
         begin
           Date.strptime(sanitize_value(cell), '%m/%d/%y')
         rescue StandardError
@@ -150,7 +150,7 @@ module Services
 
     def sanitize_value(value)
       value = value.to_s.split('.')[0] if value.is_a? Float
-      value.gsub(/[[:cntrl:]]|^[\p{Space}]+|[\p{Space}]+$/, '')
+      value.gsub(/[[:cntrl:]]|^\p{Space}+|\p{Space}+$/, '')
     end
   end
 end

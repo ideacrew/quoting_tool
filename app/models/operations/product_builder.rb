@@ -91,7 +91,7 @@ module Operations
                     major_dental_services: major_dental_services(cost_share_variance),
                     preventive_dental_services: preventive_dental_services(cost_share_variance)
                   }
-        end.merge(shared_attrs)
+                end.merge(shared_attrs)
 
         if product.present?
           product.issuer_hios_ids += [qhp.issuer_id]
@@ -104,7 +104,7 @@ module Operations
                           ::Products::HealthProduct.new(attrs)
                         else
                           ::Products::DentalProduct.new(attrs)
-          end
+                        end
 
           cost_share_variance.product_id = new_product.id if new_product.save!
         end

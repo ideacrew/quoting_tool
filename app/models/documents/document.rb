@@ -62,6 +62,6 @@ module Documents
 
     validates :rights,
               allow_blank: true,
-              inclusion: { in: ACCESS_RIGHTS, message: '%{value} is not a valid access right' }
+              inclusion: { in: ACCESS_RIGHTS, message: '%<value>s is not a valid access right' }
   end
 end

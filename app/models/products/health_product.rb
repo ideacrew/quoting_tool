@@ -69,11 +69,11 @@ module Products
 
     validates :health_plan_kind,
               presence: true,
-              inclusion: { in: HEALTH_PLAN_MAP.keys, message: '%{value} is not a valid health product kind' }
+              inclusion: { in: HEALTH_PLAN_MAP.keys, message: '%<value>s is not a valid health product kind' }
 
     validates :metal_level_kind,
               presence: true,
-              inclusion: { in: METAL_LEVEL_KINDS, message: '%{value} is not a valid metal level kind' }
+              inclusion: { in: METAL_LEVEL_KINDS, message: '%<value>s is not a valid metal level kind' }
 
     alias is_standard_plan? is_standard_plan
     alias is_reference_plan_eligible? is_reference_plan_eligible
