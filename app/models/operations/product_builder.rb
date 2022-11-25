@@ -61,7 +61,7 @@ module Operations
                   info = health_data_map[[hios_base_id, qhp.active_year]] || {}
                   {
                     health_plan_kind: qhp.plan_type.downcase,
-                    ehb: qhp.ehb_percent_premium.present? ? qhp.ehb_percent_premium : 1.0,
+                    ehb: (qhp.ehb_percent_premium.presence || 1.0),
                     pcp_in_network_copay: pcp_in_network_copay(cost_share_variance),
                     hospital_stay_in_network_copay: hospital_stay_in_network_copay(cost_share_variance),
                     emergency_in_network_copay: emergency_in_network_copay(cost_share_variance),
@@ -96,7 +96,7 @@ module Operations
         if product.present?
           product.issuer_hios_ids += [qhp.issuer_id]
           product.issuer_hios_ids = product.issuer_hios_ids.uniq
-          product.update_attributes!(attrs)
+          product.update!(attrs)
           cost_share_variance.product_id = product.id if cost_share_variance.product_id.blank?
         else
           attrs.merge!(issuer_hios_ids: [qhp.issuer_id])

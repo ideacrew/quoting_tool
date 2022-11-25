@@ -124,8 +124,8 @@ module Operations
       county_name, state_and_county_code = county_field.split(' - ')
       [county_name, state_and_county_code[0..1], state_and_county_code[2..state_and_county_code.length]]
     rescue StandardError => e
-      puts county_field
-      puts e.inspect
+      Rails.logger.debug county_field
+      Rails.logger.debug e.inspect
       ['undefined', nil, nil]
     end
 

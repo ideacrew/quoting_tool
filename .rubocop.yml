@@ -1,4 +1,6 @@
-require: rubocop-rspec
+require:
+  - rubocop-rspec
+  - rubocop-rails
 
 # This yaml describes our current checks.
 AllCops:

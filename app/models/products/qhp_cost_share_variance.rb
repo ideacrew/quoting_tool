@@ -58,7 +58,7 @@ module Products
     accepts_nested_attributes_for :qhp_maximum_out_of_pockets, :qhp_service_visits
 
     def self.find_qhp(ids, year)
-      Products::Qhp.by_hios_ids_and_active_year(ids.map { |str| str[0..13] }, year)
+      Products::Qhp.by_hios_ids_and_active_year(ids.pluck(0..13), year)
     end
 
     def self.find_qhp_cost_share_variances(ids, year, coverage_kind)

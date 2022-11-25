@@ -8,7 +8,7 @@ RSpec.describe Operations::LoadFactors, type: :transaction do
 
   describe 'sic factors' do
     context 'succesful' do
-      let(:file) { File.join(Rails.root, 'spec/test_data/rating_factors.xlsx') }
+      let(:file) { Rails.root.join('spec/test_data/rating_factors.xlsx') }
 
       it 'is success' do
         expect(subject.success?).to be true
@@ -26,7 +26,7 @@ RSpec.describe Operations::LoadFactors, type: :transaction do
 
   describe 'group size rating factors' do
     context 'succesful' do
-      let(:file) { File.join(Rails.root, 'spec/test_data/rating_factors.xlsx') }
+      let(:file) { Rails.root.join('spec/test_data/rating_factors.xlsx') }
 
       it 'is success' do
         expect(subject.success?).to be true
@@ -44,7 +44,7 @@ RSpec.describe Operations::LoadFactors, type: :transaction do
 
   describe 'participation rating factors' do
     context 'succesful' do
-      let(:file) { File.join(Rails.root, 'spec/test_data/rating_factors.xlsx') }
+      let(:file) { Rails.root.join('spec/test_data/rating_factors.xlsx') }
 
       it 'is success' do
         expect(subject.success?).to be true
@@ -62,7 +62,7 @@ RSpec.describe Operations::LoadFactors, type: :transaction do
 
   describe 'compositr rating tier factors' do
     context 'succesful' do
-      let(:file) { File.join(Rails.root, 'spec/test_data/rating_factors.xlsx') }
+      let(:file) { Rails.root.join('spec/test_data/rating_factors.xlsx') }
 
       it 'is success' do
         expect(subject.success?).to be true

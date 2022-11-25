@@ -18,54 +18,54 @@ module Operations
     private
 
     def load_county_zips(input)
-      puts ':: Loading County Zip records ::'
-      files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/counties", '**', '*.xlsx'))
+      Rails.logger.debug ':: Loading County Zip records ::'
+      files = Rails.root.glob("db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/counties/**/*.xlsx")
       parsed_files = parse_files(files)
       parsed_files.each do |file|
         ::Operations::LoadCountyZip.new.call(file)
       end
-      puts ':: Finished Loading County Zip records ::'
+      Rails.logger.debug ':: Finished Loading County Zip records ::'
       Success(input)
     end
 
     def load_rating_areas(input)
-      puts ':: Loading Rating Area records ::'
-      files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/rating_areas", '**', '*.xlsx'))
+      Rails.logger.debug ':: Loading Rating Area records ::'
+      files = Rails.root.glob("db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/rating_areas/**/*.xlsx")
       parsed_files = parse_files(files)
       parsed_files.each do |file|
         ::Operations::LoadRatingAreas.new.call(file)
       end
-      puts ':: Finished Loading Rating Area records ::'
+      Rails.logger.debug ':: Finished Loading Rating Area records ::'
       Success(input)
     end
 
     def load_rating_factors(input)
-      puts ':: Loading County Rating Factor ::'
-      files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/rating_factors", '**', '*.xlsx'))
+      Rails.logger.debug ':: Loading County Rating Factor ::'
+      files = Rails.root.glob("db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/rating_factors/**/*.xlsx")
       parsed_files = parse_files(files)
       parsed_files.each do |file|
         ::Operations::LoadFactors.new.call(file)
       end
-      puts ':: Finished Loading Rating Factor records ::'
+      Rails.logger.debug ':: Finished Loading Rating Factor records ::'
       Success(input)
     end
 
     def load_service_areas(input)
-      puts ':: Loading Service Areas ::'
-      files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/service_areas", '**', '*.xlsx'))
+      Rails.logger.debug ':: Loading Service Areas ::'
+      files = Rails.root.glob("db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/service_areas/**/*.xlsx")
       parsed_files = parse_files(files)
       parsed_files.each do |file|
         ::Operations::LoadServiceAreas.new.call(file)
       end
-      puts ':: Finished Loading Service Areas ::'
+      Rails.logger.debug ':: Finished Loading Service Areas ::'
       Success(input)
     end
 
     def load_plans(input)
-      puts ':: Loading Plans ::'
-      files = Dir.glob(File.join(Rails.root, 'db/seedfiles/plan_xmls', input[:state], 'plans', '**', '*.xml'))
+      Rails.logger.debug ':: Loading Plans ::'
+      files = Dir.glob(Rails.root.join('db/seedfiles/plan_xmls', input[:state], 'plans', '**', '*.xml'))
       parsed_files = parse_files(files)
-      additional_files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/master_xml", '**', '*.xlsx'))
+      additional_files = Rails.root.glob("db/seedfiles/plan_xmls/#{input[:state]}/master_xml/**/*.xlsx")
 
       parsed_files = parse_files(files)
       parsed_additional_files = parse_files(additional_files)
@@ -74,16 +74,16 @@ module Operations
       transaction.with_step_args(
         load_file_info: [parsed_additional_files]
       ).call(parsed_files)
-      puts ':: Finished Loading Plans ::'
+      Rails.logger.debug ':: Finished Loading Plans ::'
       Success(input)
     end
 
     def load_rates(input)
-      puts ':: Loading Rates ::'
-      files = Dir.glob(File.join(Rails.root, 'db/seedfiles/plan_xmls', input[:state], 'rates', '**', '*.xml'))
+      Rails.logger.debug ':: Loading Rates ::'
+      files = Dir.glob(Rails.root.join('db/seedfiles/plan_xmls', input[:state], 'rates', '**', '*.xml'))
       parsed_files = parse_files(files)
       ::Operations::LoadRates.new.call(parsed_files)
-      puts ':: Finished Loading Rates ::'
+      Rails.logger.debug ':: Finished Loading Rates ::'
       Success(input)
     end
 

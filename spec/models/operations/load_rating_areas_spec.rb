@@ -7,7 +7,7 @@ RSpec.describe Operations::LoadRatingAreas, type: :transaction do
   let!(:subject) { described_class.new.call(file) }
 
   context 'succesful' do
-    let(:file) { File.join(Rails.root, 'spec/test_data/rating_areas.xlsx') }
+    let(:file) { Rails.root.join('spec/test_data/rating_areas.xlsx') }
 
     it 'is success' do
       expect(subject.success?).to be true
@@ -23,7 +23,7 @@ RSpec.describe Operations::LoadRatingAreas, type: :transaction do
   end
 
   context 'failure' do
-    let(:file) { File.join(Rails.root, 'spec/test_data/invalid_rating_areas.xlsx') }
+    let(:file) { Rails.root.join('spec/test_data/invalid_rating_areas.xlsx') }
 
     it 'is failure' do
       expect(subject.failure?).to be true

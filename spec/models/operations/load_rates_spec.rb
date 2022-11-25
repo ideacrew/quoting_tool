@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 RSpec.describe Operations::LoadRates do
-  let(:xml_files) { Dir.glob(File.join(Rails.root, 'spec/test_data/rates', '*.xml')) }
+  let(:xml_files) { Rails.root.glob('spec/test_data/rates/*.xml') }
 
   context 'succesful' do
     let!(:subject) do

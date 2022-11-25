@@ -6,7 +6,7 @@ RSpec.describe Operations::LoadCountyZip, type: :transaction do
   let!(:subject) { described_class.new.call(file) }
 
   context 'succesful' do
-    let(:file) { File.join(Rails.root, 'spec/test_data/zip_counties.xlsx') }
+    let(:file) { Rails.root.join('spec/test_data/zip_counties.xlsx') }
 
     it 'is success' do
       expect(subject.success?).to be true
@@ -22,7 +22,7 @@ RSpec.describe Operations::LoadCountyZip, type: :transaction do
   end
 
   context 'failures' do
-    let(:file) { File.join(Rails.root, 'spec/test_data/zip_counties_invalid.xlsx') }
+    let(:file) { Rails.root.join('spec/test_data/zip_counties_invalid.xlsx') }
 
     it 'returns failure message' do
       expect(subject.failure[:message]).to eq 'Zip/County headers not found when loading County Zip'

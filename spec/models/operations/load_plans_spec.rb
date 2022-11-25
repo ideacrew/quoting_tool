@@ -5,9 +5,9 @@ require 'rails_helper'
 RSpec.describe Operations::LoadPlans do
   let(:county_zip) { create(:county_zip, zip: '12345', county_name: 'County 1') }
 
-  let(:files) { Dir.glob(File.join(Rails.root, 'spec/test_data/plans', '*.xml')) }
+  let(:files) { Rails.root.glob('spec/test_data/plans/*.xml') }
   let(:additional_files) do
-    Dir.glob(File.join(Rails.root, 'spec/test_data/plans/2020/master_xml.xlsx'))
+    Rails.root.glob('spec/test_data/plans/2020/master_xml.xlsx')
   end
 
   context 'succesful' do

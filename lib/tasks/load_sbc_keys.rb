@@ -9,7 +9,7 @@ def sanitize_value(value)
   value.gsub(/[[:cntrl:]]|^\p{Space}+|\p{Space}+$/, '')
 end
 
-puts ':: Started Creating SBC documents ::'
+Rails.logger.debug ':: Started Creating SBC documents ::'
 
 roster = Roo::Spreadsheet.open(ENV.fetch('sbc_path', nil))
 sheet = roster.sheet(0)
@@ -35,7 +35,7 @@ output.each do |info|
   ).first
 
   if product.blank?
-    puts "No product for #{info[:hios_id]} #{info[:year]}"
+    Rails.logger.debug { "No product for #{info[:hios_id]} #{info[:year]}" }
     next
   end
   product.title = info[:product_name]
@@ -44,8 +44,8 @@ output.each do |info|
   product.save
   count += 1
 
-  puts "Product #{product.title} #{product.hios_id} updated, Document uri #{product.sbc_document.identifier}" unless Rails.env.test?
+  Rails.logger.debug { "Product #{product.title} #{product.hios_id} updated, Document uri #{product.sbc_document.identifier}" } unless Rails.env.test?
 end
-puts "Total #{count} plans/products updated." unless Rails.env.test?
+Rails.logger.debug { "Total #{count} plans/products updated." } unless Rails.env.test?
 
-puts ':: Created SBC documents ::'
+Rails.logger.debug ':: Created SBC documents ::'

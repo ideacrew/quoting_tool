@@ -7,7 +7,7 @@ RSpec.describe Operations::LoadServiceAreas, type: :transaction do
   let!(:subject) { described_class.new.call(file) }
 
   context 'succesful' do
-    let(:file) { File.join(Rails.root, 'spec/test_data/service_areas.xlsx') }
+    let(:file) { Rails.root.join('spec/test_data/service_areas.xlsx') }
 
     it 'is success' do
       expect(subject.success?).to be true

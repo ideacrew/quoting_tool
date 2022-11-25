@@ -47,8 +47,8 @@ RSpec.describe Api::V1::EmployeesController do
 
     context 'when rates are available for projected month' do
       let(:next_year) { Date.today.next_year }
-      let!(:next_health_product) { create(:health_product, application_period: (next_year.beginning_of_year..next_year.end_of_year)) }
-      let!(:next_dental_product) { create(:dental_product, application_period: (next_year.beginning_of_year..next_year.end_of_year)) }
+      let!(:next_health_product) { create(:health_product, application_period: next_year.all_year) }
+      let!(:next_dental_product) { create(:dental_product, application_period: next_year.all_year) }
 
       before do
         ::Products::Product.all.health_products.each do |product|

@@ -98,7 +98,7 @@ module Operations
 
     def load_packages_list(input)
       input[:files].inject([]) do |result, file|
-        puts "processing file: #{file}"
+        Rails.logger.debug { "processing file: #{file}" }
         xml = Nokogiri::XML(File.open(file))
         product_hash = Parsers::Products::PlanBenefitTemplateParser.parse(xml.root.canonicalize, single: true).to_hash
         result += product_hash[:packages_list][:packages]

@@ -59,6 +59,7 @@ group :development do
 
   gem 'rubocop',                require: false
   gem 'rubocop-git'
+  gem 'rubocop-rails', require: false
   gem 'rubocop-rspec'
 end
 
