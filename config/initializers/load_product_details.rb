@@ -11,7 +11,7 @@ def quarter(val)
 end
 
 ::Products::Product.where(
-  :"application_period.min".gte => Date.new(start_year, 1, 1), :"application_period.max".lte => Date.new(end_year, 1, 1).end_of_year
+  :'application_period.min'.gte => Date.new(start_year, 1, 1), :'application_period.max'.lte => Date.new(end_year, 1, 1).end_of_year
 ).each do |product|
   product.premium_tables.each do |pt|
     output = pt.premium_tuples.each_with_object({}) do |tuple, result|

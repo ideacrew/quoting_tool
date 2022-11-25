@@ -27,8 +27,8 @@ module Products
 
     scope :effective_period_cover, lambda { |compare_date = TimeKeeper.date_of_record|
                                      where(
-                                       :"effective_period.min".lte => compare_date,
-                                       :"effective_period.max".gte => compare_date
+                                       :'effective_period.min'.lte => compare_date,
+                                       :'effective_period.max'.gte => compare_date
                                      )
                                    }
     def comparable_attrs

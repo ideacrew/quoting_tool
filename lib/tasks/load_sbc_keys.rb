@@ -11,12 +11,12 @@ end
 
 puts ':: Started Creating SBC documents ::'
 
-roster = Roo::Spreadsheet.open(ENV['sbc_path'])
+roster = Roo::Spreadsheet.open(ENV.fetch('sbc_path', nil))
 sheet = roster.sheet(0)
 columns = sheet.row(1)
 
 output = (2..sheet.last_row).each_with_object([]) do |id, result|
-  row = Hash[[columns, sheet.row(id)].transpose]
+  row = [columns, sheet.row(id)].transpose.to_h
 
   result << {
     product_name: parse_text(row['product_name']),
@@ -31,7 +31,7 @@ count = 0
 output.each do |info|
   product = ::Products::Product.where(
     :hios_id => info[:hios_id],
-    :"application_period.min".gte => Date.new(info[:year], 1, 1), :"application_period.max".lte => Date.new(info[:year], 1, 1).end_of_year
+    :'application_period.min'.gte => Date.new(info[:year], 1, 1), :'application_period.max'.lte => Date.new(info[:year], 1, 1).end_of_year
   ).first
 
   if product.blank?

@@ -31,11 +31,11 @@ module Operations
         hios_base_id, csr_variant_id = cost_share_variance.hios_plan_and_variant_id.split('-')
         next if csr_variant_id == '00'
 
-        csr_variant_id = retrieve_metal_level == 'dental' ? '' : csr_variant_id
+        csr_variant_id = '' if retrieve_metal_level == 'dental'
         product = ::Products::Product.where(
           :hios_base_id => hios_base_id,
           :csr_variant_id => csr_variant_id,
-          :"application_period.min".gte => Date.new(qhp.active_year, 1, 1), :"application_period.max".lte => Date.new(qhp.active_year, 1, 1).end_of_year
+          :'application_period.min'.gte => Date.new(qhp.active_year, 1, 1), :'application_period.max'.lte => Date.new(qhp.active_year, 1, 1).end_of_year
         ).first
 
         shared_attrs = {
@@ -114,7 +114,7 @@ module Operations
 
     def group_size_factors(year, hios_id)
       Rails.cache.fetch("group_size_factors_#{hios_id}_#{year}", expires_in: 15.minutes) do
-        factor = Products::ActuarialFactors::GroupSizeActuarialFactor.where("active_year": year, "issuer_hios_id": hios_id).first
+        factor = Products::ActuarialFactors::GroupSizeActuarialFactor.where(active_year: year, issuer_hios_id: hios_id).first
         if factor.nil?
           output = (1..50).each_with_object({}) { |key, result| result[key.to_s] = 1.0; }
           max_group_size = 1
@@ -132,7 +132,7 @@ module Operations
 
     def group_tier_factors(year, hios_id)
       Rails.cache.fetch("group_tier_factors_#{hios_id}_#{year}", expires_in: 15.minutes) do
-        factor = Products::ActuarialFactors::CompositeRatingTierActuarialFactor.where("active_year": year, "issuer_hios_id": hios_id).first
+        factor = Products::ActuarialFactors::CompositeRatingTierActuarialFactor.where(active_year: year, issuer_hios_id: hios_id).first
         return [] if factor.nil?
 
         factor.actuarial_factor_entries.each_with_object([]) do |afe, result|
@@ -144,7 +144,7 @@ module Operations
 
     def participation_factors(year, hios_id)
       Rails.cache.fetch("participation_factors_#{hios_id}_#{year}", expires_in: 15.minutes) do
-        factor = Products::ActuarialFactors::ParticipationRateActuarialFactor.where("active_year": year, "issuer_hios_id": hios_id).first
+        factor = Products::ActuarialFactors::ParticipationRateActuarialFactor.where(active_year: year, issuer_hios_id: hios_id).first
         return (1..100).each_with_object({}) { |key, result| result[key.to_s] = 1.0; } if factor.nil?
 
         factor.actuarial_factor_entries.each_with_object({}) do |afe, result|
@@ -203,7 +203,7 @@ module Operations
     end
 
     def parse_value(val)
-      val == 'Not Applicable' ? nil : val.split(' ')[0].gsub('$', '').gsub(',', '')
+      val == 'Not Applicable' ? nil : val.split[0].gsub('$', '').gsub(',', '')
     end
 
     def service_visit_co_insurance(variance, type)

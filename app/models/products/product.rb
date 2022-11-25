@@ -101,8 +101,8 @@ module Products
     scope :by_metal_level_kind,         ->(metal_level) { where(metal_level_kind: /#{metal_level}/i) }
 
     scope :effective_with_premiums_on,  lambda  { |effective_date|
-                                          where(:"premium_tables.effective_period.min".lte => effective_date,
-                                                :"premium_tables.effective_period.max".gte => effective_date)
+                                          where(:'premium_tables.effective_period.min'.lte => effective_date,
+                                                :'premium_tables.effective_period.max'.gte => effective_date)
                                         }
 
     # input: application_period type: :Date
@@ -120,8 +120,8 @@ module Products
     }
 
     # Products retrieval by type
-    scope :health_products,            -> { where("_type": /.*HealthProduct$/) }
-    scope :dental_products,            -> { where("_type": /.*DentalProduct$/) }
+    scope :health_products,            -> { where(_type: /.*HealthProduct$/) }
+    scope :dental_products,            -> { where(_type: /.*DentalProduct$/) }
 
     # Highly nested scopes don't behave in a way I entirely understand with
     # respect to the $elemMatch operator.  Since we are only invoking this
@@ -224,10 +224,10 @@ module Products
     # If instance attributes are the same, compare PremiumTables
     def <=>(other)
       if comparable_attrs.all? { |attr| send(attr) == other.send(attr) }
-        if premium_tables.count != other.premium_tables.count
-          premium_tables.count <=> other.premium_tables.count
-        else
+        if premium_tables.count == other.premium_tables.count
           premium_tables.to_a <=> other.premium_tables.to_a
+        else
+          premium_tables.count <=> other.premium_tables.count
         end
       else
         other.updated_at.blank? || (updated_at < other.updated_at) ? -1 : 1
@@ -271,12 +271,8 @@ module Products
     def is_valid_premium_table_effective_period?(compare_premium_table)
       return false unless application_period.present? && compare_premium_table.effective_period.present?
 
-      if application_period.cover?(compare_premium_table.effective_period.min) &&
-         application_period.cover?(compare_premium_table.effective_period.max)
-        true
-      else
-        false
-      end
+      application_period.cover?(compare_premium_table.effective_period.min) &&
+        application_period.cover?(compare_premium_table.effective_period.max)
     end
 
     def add_product_package(new_product_package)

@@ -31,7 +31,7 @@ module Operations
       sheet = sheet_data[:sheet]
       columns = sheet.row(1).map(&:parameterize).map(&:underscore)
       output = (2..sheet.last_row).each_with_object([]) do |id, result|
-        row = Hash[[columns, sheet.row(id)].transpose]
+        row = [columns, sheet.row(id)].transpose.to_h
 
         result << {
           county_name: parse_text(row['county']),

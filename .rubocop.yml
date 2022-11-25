@@ -2,11 +2,12 @@
 AllCops:
   TargetRubyVersion: 2.7
   Exclude:
-    - "./bin/**/*"
-    - "vendor/**/*"
-    - "./node_modules/**/*"
-    - "./db/seedfiles/**/*"
-    - "./clients/**/*"
+    - './bin/**/*'
+    - 'vendor/**/*'
+    - './node_modules/**/*'
+    - './db/seedfiles/**/*'
+    - './clients/**/*'
+  NewCops: enable
 
 Metrics/LineLength:
   Max: 200

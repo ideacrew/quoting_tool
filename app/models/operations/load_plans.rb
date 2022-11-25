@@ -58,7 +58,7 @@ module Operations
       health_sheet = xlsx_file.sheet("#{year}_QHP")
       health_columns = health_sheet.row(1).map(&:parameterize).map(&:underscore)
       (2..health_sheet.last_row).each_with_object([]) do |id, res|
-        row = Hash[[health_columns, health_sheet.row(id)].transpose]
+        row = [health_columns, health_sheet.row(id)].transpose.to_h
 
         product_package_kinds = []
         product_package_kinds << :single_product if parse_boolean(row['sole_source_offering'])
@@ -83,7 +83,7 @@ module Operations
       dental_columns = dental_sheet.row(1).map(&:parameterize).map(&:underscore)
 
       (2..dental_sheet.last_row).each_with_object([]) do |id, res|
-        row = Hash[[dental_columns, dental_sheet.row(id)].transpose]
+        row = [dental_columns, dental_sheet.row(id)].transpose.to_h
 
         res << {
           hios_id: parse_text(row['hios_standard_component_id']),

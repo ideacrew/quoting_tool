@@ -55,7 +55,7 @@ module Operations
         year = year.to_i
         ::Products::Product.where(
           :hios_base_id => /#{hios_id}/,
-          :"application_period.min".gte => Date.new(year, 1, 1), :"application_period.max".lte => Date.new(year, 1, 1).end_of_year
+          :'application_period.min'.gte => Date.new(year, 1, 1), :'application_period.max'.lte => Date.new(year, 1, 1).end_of_year
         ).each do |product|
           product.premium_tables = []
           product.save
@@ -78,7 +78,7 @@ module Operations
 
         ::Products::Product.where(
           :hios_base_id => /#{product_hios_id}/,
-          :"application_period.min".gte => Date.new(year, 1, 1), :"application_period.max".lte => Date.new(year, 1, 1).end_of_year
+          :'application_period.min'.gte => Date.new(year, 1, 1), :'application_period.max'.lte => Date.new(year, 1, 1).end_of_year
         ).each do |product|
           product.premium_tables << ::Products::PremiumTable.new(
             effective_period: applicable_range,

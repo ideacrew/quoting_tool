@@ -7,21 +7,21 @@ module Operations
   class LoadFactors
     include Dry::Monads[:result, :do]
 
-    ROW_DATA_BEGINS_ON ||= 3
+    ROW_DATA_BEGINS_ON = 3
 
-    NEW_RATING_FACTOR_PAGES ||= {
-      'SicCodeRatingFactorSet': { page: 0, max_integer_factor_key: nil },
-      'EmployerGroupSizeRatingFactorSet': { page: 1, max_integer_factor_key: 50 },
-      'EmployerParticipationRateRatingFactorSet': { page: 2, max_integer_factor_key: nil },
-      'CompositeRatingTierFactorSet': { page: 3, max_integer_factor_key: nil }
+    NEW_RATING_FACTOR_PAGES = {
+      SicCodeRatingFactorSet: { page: 0, max_integer_factor_key: nil },
+      EmployerGroupSizeRatingFactorSet: { page: 1, max_integer_factor_key: 50 },
+      EmployerParticipationRateRatingFactorSet: { page: 2, max_integer_factor_key: nil },
+      CompositeRatingTierFactorSet: { page: 3, max_integer_factor_key: nil }
     }.freeze
-    RATING_FACTOR_DEFAULT ||= 1.0
+    RATING_FACTOR_DEFAULT = 1.0
 
-    COMPOSITE_TIER_TRANSLATIONS ||= {
-      'Employee': 'employee_only',
+    COMPOSITE_TIER_TRANSLATIONS = {
+      Employee: 'employee_only',
       'Employee + Spouse': 'employee_and_spouse',
       'Employee + Dependent(s)': 'employee_and_one_or_more_dependents',
-      'Family': 'family'
+      Family: 'family'
     }.with_indifferent_access
 
     def call(input)

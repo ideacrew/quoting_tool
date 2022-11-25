@@ -58,7 +58,7 @@ module Services
       census_records = []
       columns = sheet.row(2)
       (4..sheet.last_row).each_with_object([]) do |id, result|
-        row = Hash[[columns, sheet.row(id)].transpose]
+        row = [columns, sheet.row(id)].transpose.to_h
         result << Forms::CensusRecordForm.new(
           employer_assigned_family_id: parse_text(row['employer_assigned_family_id']),
           employee_relationship: parse_relationship(row['employee_relationship']),
