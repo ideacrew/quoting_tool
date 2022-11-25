@@ -1,3 +1,5 @@
+require: rubocop-rspec
+
 # This yaml describes our current checks.
 AllCops:
   TargetRubyVersion: 2.7
@@ -9,7 +11,7 @@ AllCops:
     - './clients/**/*'
   NewCops: enable
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 200
 Metrics/AbcSize:
   Max: 50

@@ -3,21 +3,21 @@
 require 'rails_helper'
 
 RSpec.describe Operations::ProductBuilder, type: :operation do
-  let(:subject) { Operations::ProductBuilder.new.call(attrs) }
-  let(:qhp) { FactoryBot.build(:qhp, qhp_cost_share_variances: [variance]) }
-  let(:variance) { FactoryBot.build(:qhp_cost_share_variance, qhp_service_visits: visits, qhp_deductable: deductable, qhp_maximum_out_of_pockets: [qhp_maximum_out_of_pocket]) }
+  let(:subject) { described_class.new.call(attrs) }
+  let(:qhp) { build(:qhp, qhp_cost_share_variances: [variance]) }
+  let(:variance) { build(:qhp_cost_share_variance, qhp_service_visits: visits, qhp_deductable: deductable, qhp_maximum_out_of_pockets: [qhp_maximum_out_of_pocket]) }
   let(:visits) do
     [
-      FactoryBot.build(:qhp_service_visit, copay_in_network_tier_1: '$25 In Network', visit_type: 'Primary Care Visit to Treat an Injury or Illness'),
-      FactoryBot.build(:qhp_service_visit, copay_in_network_tier_1: '$25 In Network', visit_type: 'Emergency Room Services'),
-      FactoryBot.build(:qhp_service_visit, copay_in_network_tier_1: '$25 In Network', visit_type: 'Inpatient Hospital Services (e.g., Hospital Stay)'),
-      FactoryBot.build(:qhp_service_visit, copay_in_network_tier_1: '$25 In Network', visit_type: 'Generic Drugs')
+      build(:qhp_service_visit, copay_in_network_tier_1: '$25 In Network', visit_type: 'Primary Care Visit to Treat an Injury or Illness'),
+      build(:qhp_service_visit, copay_in_network_tier_1: '$25 In Network', visit_type: 'Emergency Room Services'),
+      build(:qhp_service_visit, copay_in_network_tier_1: '$25 In Network', visit_type: 'Inpatient Hospital Services (e.g., Hospital Stay)'),
+      build(:qhp_service_visit, copay_in_network_tier_1: '$25 In Network', visit_type: 'Generic Drugs')
     ]
   end
 
-  let(:deductable) { FactoryBot.build(:qhp_deductable) }
-  let(:qhp_maximum_out_of_pocket) { FactoryBot.build(:qhp_maximum_out_of_pocket) }
-  let(:service_area) { FactoryBot.create(:service_area, issuer_provided_code: '11111') }
+  let(:deductable) { build(:qhp_deductable) }
+  let(:qhp_maximum_out_of_pocket) { build(:qhp_maximum_out_of_pocket) }
+  let(:service_area) { create(:service_area, issuer_provided_code: '11111') }
 
   let(:health_data_map) do
     { ['123', Date.today.year] => {
@@ -57,21 +57,21 @@ RSpec.describe Operations::ProductBuilder, type: :operation do
       }
     end
 
-    it 'should be success' do
-      expect(subject.success?).to eq true
+    it 'is success' do
+      expect(subject.success?).to be true
     end
 
-    it 'should create new product' do
+    it 'creates new product' do
       subject
       expect(Products::Product.all.size).not_to eq 0
     end
 
-    it 'should have a new product with pcp_in_network_copay as 25$' do
+    it 'has a new product with pcp_in_network_copay as 25$' do
       subject
       expect(Products::Product.where(kind: :health).first.pcp_in_network_copay).to eq '25'
     end
 
-    it 'should return success message' do
+    it 'returns success message' do
       expect(subject.success[:message]).to eq 'Successfully created/updated Plan records'
     end
   end
@@ -87,7 +87,7 @@ RSpec.describe Operations::ProductBuilder, type: :operation do
     end
 
     context 'without service area' do
-      it 'should raise an error' do
+      it 'raises an error' do
         expect { subject }.to raise_error(Mongoid::Errors::Validations)
       end
     end

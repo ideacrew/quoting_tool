@@ -40,7 +40,7 @@ RSpec.describe Operations::QhpBuilder, type: :operation do
   end
 
   context 'succesful' do
-    let!(:subject) { Operations::QhpBuilder.new.call(attrs) }
+    let!(:subject) { described_class.new.call(attrs) }
 
     let(:attrs) do
       {
@@ -48,15 +48,15 @@ RSpec.describe Operations::QhpBuilder, type: :operation do
       }
     end
 
-    it 'should be success' do
-      expect(subject.success?).to eq true
+    it 'is success' do
+      expect(subject.success?).to be true
     end
 
-    it 'should create new qhp' do
+    it 'creates new qhp' do
       expect(Products::Qhp.all.size).not_to eq 0
     end
 
-    it 'should return success message' do
+    it 'returns success message' do
       expect(subject.success[:message]).to eq 'Successfully created/updated QHP records'
     end
   end
@@ -73,9 +73,9 @@ RSpec.describe Operations::QhpBuilder, type: :operation do
       }
     end
 
-    let(:subject) { Operations::QhpBuilder.new.call(attrs) }
+    let(:subject) { described_class.new.call(attrs) }
 
-    it 'should raise an error' do
+    it 'raises an error' do
       expect { subject }.to raise_error(Mongoid::Errors::Validations)
     end
   end
