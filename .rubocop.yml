@@ -27,3 +27,7 @@ Metrics/MethodLength:
   Max: 50
 Metrics/PerceivedComplexity:
   Max: 15
+Style/Documentation:
+  Enabled: false
+Naming/VariableNumber:
+  Enabled: false
