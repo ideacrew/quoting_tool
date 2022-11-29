@@ -35,44 +35,48 @@ module Operations
         csr_variant_id = retrieve_metal_level == 'dental' ? '' : csr_variant_id
         product = find_product(hios_base_id, csr_variant_id, qhp)
         shared_attrs = shared_attributes(cost_share_variance, qhp, hios_base_id, csr_variant_id, params)
-        attrs = if health_product?
-                  info = health_data_map[[hios_base_id, qhp.active_year]] || {}
-                  {
-                    health_plan_kind: qhp.plan_type.downcase,
-                    ehb: qhp.ehb_percent_premium.present? ? qhp.ehb_percent_premium : 1.0,
-                    pcp_in_network_copay: pcp_in_network_copay(cost_share_variance),
-                    hospital_stay_in_network_copay: hospital_stay_in_network_copay(cost_share_variance),
-                    emergency_in_network_copay: emergency_in_network_copay(cost_share_variance),
-                    drug_in_network_copay: drug_in_network_copay(cost_share_variance),
-                    pcp_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :pcp),
-                    hospital_stay_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :hospital_stay),
-                    emergency_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :emergency_stay),
-                    drug_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :rx),
-                    is_standard_plan: info[:is_standard_plan],
-                    network_information: info[:network_information],
-                    title: (info[:title] || cost_share_variance.plan_marketing_name.dup.squish!),
-                    product_package_kinds: info[:product_package_kinds],
-                    rx_formulary_url: info[:rx_formulary_url],
-                    provider_directory_url: info[:provider_directory_url]
-                  }
-                else
-                  info = dental_data_map[[hios_base_id, qhp.active_year]] || {}
-                  {
-                    dental_plan_kind: qhp.plan_type.downcase,
-                    dental_level: qhp.metal_level.downcase,
-                    product_package_kinds: ::Products::DentalProduct::PRODUCT_PACKAGE_KINDS,
-                    is_standard_plan: info[:is_standard_plan],
-                    network_information: info[:network_information],
-                    title: (info[:title] || cost_share_variance.plan_marketing_name.dup.squish!),
-                    provider_directory_url: info[:provider_directory_url],
-                    basic_dental_services: basic_dental_services(cost_share_variance),
-                    major_dental_services: major_dental_services(cost_share_variance),
-                    preventive_dental_services: preventive_dental_services(cost_share_variance)
-                  }
-                end.merge(shared_attrs)
+        attrs = get_attrs(hios_base_id, qhp, cost_share_variance, shared_attrs)
         validate_product(product, qhp, attrs, cost_share_variance)
       end
       Success(message: 'Successfully created/updated Plan records')
+    end
+
+    def get_attrs(hios_base_id, qhp, cost_share_variance, shared_attrs)
+      if health_product?
+        info = health_data_map[[hios_base_id, qhp.active_year]] || {}
+        {
+          health_plan_kind: qhp.plan_type.downcase,
+          ehb: qhp.ehb_percent_premium.present? ? qhp.ehb_percent_premium : 1.0,
+          pcp_in_network_copay: pcp_in_network_copay(cost_share_variance),
+          hospital_stay_in_network_copay: hospital_stay_in_network_copay(cost_share_variance),
+          emergency_in_network_copay: emergency_in_network_copay(cost_share_variance),
+          drug_in_network_copay: drug_in_network_copay(cost_share_variance),
+          pcp_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :pcp),
+          hospital_stay_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :hospital_stay),
+          emergency_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :emergency_stay),
+          drug_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :rx),
+          is_standard_plan: info[:is_standard_plan],
+          network_information: info[:network_information],
+          title: (info[:title] || cost_share_variance.plan_marketing_name.dup.squish!),
+          product_package_kinds: info[:product_package_kinds],
+          rx_formulary_url: info[:rx_formulary_url],
+          provider_directory_url: info[:provider_directory_url]
+        }
+      else
+        info = dental_data_map[[hios_base_id, qhp.active_year]] || {}
+        {
+          dental_plan_kind: qhp.plan_type.downcase,
+          dental_level: qhp.metal_level.downcase,
+          product_package_kinds: ::Products::DentalProduct::PRODUCT_PACKAGE_KINDS,
+          is_standard_plan: info[:is_standard_plan],
+          network_information: info[:network_information],
+          title: (info[:title] || cost_share_variance.plan_marketing_name.dup.squish!),
+          provider_directory_url: info[:provider_directory_url],
+          basic_dental_services: basic_dental_services(cost_share_variance),
+          major_dental_services: major_dental_services(cost_share_variance),
+          preventive_dental_services: preventive_dental_services(cost_share_variance)
+        }
+      end.merge(shared_attrs)
     end
 
     def find_product(hios_base_id, csr_variant_id, qhp)
