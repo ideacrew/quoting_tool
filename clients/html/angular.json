@@ -37,14 +37,26 @@
                 "includePaths": [
                   "src/assets/scss/branding/me"
                 ]
-              }
+              },
+              "fileReplacements": [
+                {
+                  "replace": "src/data/zipCode.json",
+                  "with": "src/data/zipCodeME.json"
+                }
+              ]
             },
             "dc": {
               "stylePreprocessorOptions": {
                 "includePaths": [
                   "src/assets/scss/branding/dc"
                 ]
-              }
+              },
+              "fileReplacements": [
+                {
+                  "replace": "src/data/zipCode.json",
+                  "with": "src/data/zipCodeDC.json"
+                }
+              ]
             },
             "me-production": {
               "stylePreprocessorOptions": {
