@@ -37,7 +37,13 @@
                 "includePaths": [
                   "src/assets/scss/branding/me"
                 ]
-              }
+              },
+              "fileReplacements": [
+                {
+                  "replace": "src/assets/images/mhc_logo.svg",
+                  "with": "src/assets/images/logo_me.svg",
+                }
+              ]
             },
             "dc": {
               "stylePreprocessorOptions": {
