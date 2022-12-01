@@ -1,17 +1,23 @@
 # frozen_string_literal: true
 
-module Transactions
+require 'dry/monads'
+require 'dry/monads/do'
+module Operations
+  # This class is to load census records for the state
   class LoadCensusRecords
-    include Dry::Transaction
+    include Dry::Monads[:result, :do]
 
     TEMPLATE_DATE_CELL = 7
     TEMPLATE_VERSION_CELL = 13
 
-    step :load_file_info
-    step :validate_file_info
-    step :load_file_data
-    step :validate_census_records
-    step :parse_json_output
+    def call(input)
+      file            =  yield load_file_info(input)
+      file_info       =  yield validate_file_info(file)
+      file_data       =  yield load_file_data(file_info)
+      census_records  =  yield validate_census_records(file_data)
+      records         =  yield parse_json_output(census_records)
+      Success(records)
+    end
 
     private
 
@@ -119,7 +125,7 @@ module Transactions
         'child_under_26'
       when 'disabled child'
         'disabled_child_26_and_over'
-        end
+      end
     end
 
     def parse_text(cell)

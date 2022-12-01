@@ -4,6 +4,7 @@ require 'dry/monads'
 require 'dry/monads/do'
 
 module Operations
+  # This class is to load service areas
   class LoadServiceAreas
     include Dry::Monads[:result, :do]
 
@@ -77,7 +78,7 @@ module Operations
             issuer_hios_id: params[:issuer_hios_id]
           ).first
 
-          county_name, state_code, county_code = extract_county_name_state_and_county_codes(params[:info_str])
+          county_name, _state_code, _county_code = extract_county_name_state_and_county_codes(params[:info_str])
           records = Locations::CountyZip.where(county_name: county_name)
 
           if params[:additional_zip].present?
@@ -101,7 +102,7 @@ module Operations
             )
           end
         end
-      rescue Exception => e
+      rescue StandardError => e
         Failure(message: e.to_s)
       end
       Success(message: "Successfully created/updated #{input[:result].size} Service Area records")

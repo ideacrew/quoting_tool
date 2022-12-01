@@ -5,7 +5,7 @@ class Api::V1::EmployeesController < ApplicationController
 
   def upload
     file = params.require(:file)
-    @roster_upload_form = ::Transactions::LoadCensusRecords.new.call(file)
+    @roster_upload_form = ::Operations::LoadCensusRecords.new.call(file)
 
     if @roster_upload_form.success?
       render json: { status: 'success', census_records: @roster_upload_form.value!.values }
