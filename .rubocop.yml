@@ -22,3 +22,7 @@ Metrics/MethodLength:
   Max: 50
 Metrics/PerceivedComplexity:
   Max: 15
+GlobalVars:
+  AllowedVariables:
+    - $rates
+    - $sic_factors

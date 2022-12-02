@@ -77,13 +77,13 @@ class ProductSerializer
     if object.dental?
       1.0
     else
-      @sic_factors[[params[:key], object.active_year, object.issuer_hios_ids.first]] || 1.0
+      $sic_factors[[params[:key], object.active_year, object.issuer_hios_ids.first]] || 1.0
     end
   end
 
   attribute :rates do |object, params|
     Rails.cache.fetch("rates_#{object.id}_#{params[:rating_area_id]}_#{params[:quarter]}", expires_in: 45.minutes) do
-      @rates[[object.id, params[:rating_area_id], params[:quarter]]]
+      $rates[[object.id, params[:rating_area_id], params[:quarter]]]
     end
   end
 end
