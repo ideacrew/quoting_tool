@@ -51,7 +51,7 @@ COPY Gemfile.lock Gemfile.lock
 RUN bundle install --jobs 20 --retry 5 --without development test 
 
 COPY . .
-
 RUN yarn install #&& bundle exec rake assets:precompile
 
+COPY ./.docker/config/mongoid.yml /app/config/
 RUN rm -f /app/config/master.key && rm -f /app/config/credentials.yml.enc
