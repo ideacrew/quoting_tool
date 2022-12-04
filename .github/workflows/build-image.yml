@@ -1,0 +1,109 @@
+name: Build Docker Image
+
+concurrency:
+  group: docker-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - trunk
+
+jobs:
+  prep:
+    runs-on: ubuntu-latest
+    outputs:
+      taggedImage: ${{ steps.prep.outputs.tagged_image }}
+      shortSha: ${{ steps.prep.outputs.short_sha}}
+      branchName: ${{ steps.prep.outputs.branch_name }}
+      latestTag: ${{ steps.prep.outputs.latest_tag }}
+      repositoryName: ${{ steps.prep.outputs.repository_name }}
+      registry: ${{ steps.prep.outputs.registry }}
+    steps:
+      - name: Git branch name
+        id: git-branch-name
+        uses: EthanSK/git-branch-name-action@v1
+      - name: Prepare info
+        id: prep
+        run: |
+          SHORT_SHA=$(echo $GITHUB_SHA | head -c7)
+          REPO=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')
+          TAG=${{ env.GIT_BRANCH_NAME }}-$(echo $GITHUB_SHA | head -c7)
+          IMAGE=ideacrew/$REPO
+          echo "tagged_image=${IMAGE}:${TAG}" >> $GITHUB_OUTPUT
+          echo "short_sha=$SHORT_SHA" >> $GITHUB_OUTPUT
+          echo "branch_name=${{ env.GIT_BRANCH_NAME }}" >> $GITHUB_OUTPUT
+          echo "repository_name=$REPO" >> $GITHUB_OUTPUT
+          echo "latest_tag=${IMAGE}:latest" >> $GITHUB_OUTPUT
+          echo "registry=ghcr.io" >> $GITHUB_OUTPUT
+  
+  build-and-upload-image:
+    needs: [prep]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Add git HEAD info to docker image
+        run: git show --quiet HEAD > release.txt
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          install: true
+
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          # Key is named differently to avoid collision
+          key: ${{ runner.os }}-multi-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-multi-buildx
+
+      - name: Login to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ needs.prep.outputs.registry }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build Image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          builder: ${{ steps.buildx.outputs.name }}
+          file: .docker/production/Dockerfile.gha
+          # Set the desired build target here
+          target: deploy
+          # send to public registry if not a pull request
+          push: ${{ github.event_name != 'pull_request' }}
+          # create local image (for scanning) if it is a pull request
+          load: ${{ github.event_name == 'pull_request' }}
+          tags: |
+            ghcr.io/${{ needs.prep.outputs.taggedImage }}
+            ghcr.io/${{ needs.prep.outputs.latestTag }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          # Note the mode=max here
+          # More: https://github.com/moby/buildkit#--export-cache-options
+          # And: https://github.com/docker/buildx#--cache-tonametypetypekeyvalue
+          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+  notify-slack:
+    if: github.event_name != 'pull_request'
+    needs: [prep, build-and-upload-image]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post to a Slack channel
+        id: slack
+        uses: slackapi/slack-github-action@v1.16.0
+        with:
+          channel-id: "docker-images-${{ needs.prep.outputs.repositoryName }}"
+          slack-message: "New image pushed: ghcr.io/${{ needs.prep.outputs.taggedImage }} built from <https://github.com/ideacrew/${{ needs.prep.outputs.repositoryName }}/commit/${{ needs.prep.outputs.shortSha }}|${{ needs.prep.outputs.shortSha }}> on `${{ needs.prep.outputs.branchName }}`"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.YELLR_BOT_TOKEN }}
+      
