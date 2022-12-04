@@ -2,6 +2,7 @@
 
 module Parsers
   module Products
+    # PlanRateHeaderParser
     class PlanRateHeaderParser
       include HappyMapper
 
@@ -29,7 +30,12 @@ module Parsers
           last_modified_by: last_modified_by.present? ? last_modified_by.gsub(/\n/, '').strip : '',
           statements: statements.present? ? statements.gsub(/\n/, '').strip : '',
           status: status.present? ? status.gsub(/\n/, '').strip : '',
-          attestation_indicator: attestation_indicator.present? ? attestation_indicator.gsub(/\n/, '').strip : '',
+          attestation_indicator: attestation_indicator.present? ? attestation_indicator.gsub(/\n/, '').strip : ''
+        }.merge(additional_hash_data)
+      end
+
+      def additional_hash_data
+        {
           tin: tin.present? ? tin.gsub(/\n/, '').strip : '',
           issuer_id: issuer_id.present? ? issuer_id.gsub(/\n/, '').strip : '',
           submission_type: submission_type.present? ? submission_type.gsub(/\n/, '').strip : '',

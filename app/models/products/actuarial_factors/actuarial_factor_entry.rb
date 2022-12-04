@@ -2,6 +2,7 @@
 
 module Products
   module ActuarialFactors
+    # ActuarialFactorEntry
     class ActuarialFactorEntry
       include Mongoid::Document
 

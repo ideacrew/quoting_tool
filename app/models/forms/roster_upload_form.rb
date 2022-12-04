@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Forms
+  # Upload for for Roster records
   class RosterUploadForm
     include ActiveModel::Validations
     include Virtus.model
@@ -46,9 +47,9 @@ module Forms
 
     def roster_template
       template_date = parse_date(self.template_date)
-      unless template_date == TEMPLATE_DATE && template_version == TEMPLATE_VERSION && header_valid?(sheet.row(2))
-        errors.add(:base, 'Unrecognized Employee Census spreadsheet format. Contact Admin for current template.')
-      end
+      return if template_date == TEMPLATE_DATE && template_version == TEMPLATE_VERSION && header_valid?(sheet.row(2))
+
+      errors.add(:base, 'Unrecognized Employee Census spreadsheet format. Contact Admin for current template.')
     end
 
     def roster_records
@@ -59,7 +60,7 @@ module Forms
 
     def header_valid?(row)
       clean_header = row.reduce([]) { |memo, header_text| memo << sanitize_value(header_text) }
-      clean_header == census_titles || clean_header == census_titles[0..-2]
+      [census_titles, census_titles[0..-2]].include?(clean_header)
     end
 
     def parse_date(date)
