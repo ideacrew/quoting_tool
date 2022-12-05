@@ -41,7 +41,19 @@
               "fileReplacements": [
                 {
                   "replace": "src/assets/images/mhc_logo.svg",
-                  "with": "src/assets/images/logo_me.svg",
+                  "with": "src/assets/images/logo_me.svg"
+                }
+                {
+                  "replace": "src/data/zipCode.json",
+                  "with": "src/data/zipCodeME.json"
+                }
+              ]
+            },
+            "ma": {
+              "fileReplacements": [
+                {
+                  "replace": "src/data/zipCode.json",
+                  "with": "src/data/zipCodeMA.json"
                 }
               ]
             },
@@ -62,6 +74,10 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "src/data/zipCode.json",
+                  "with": "src/data/zipCodeME.json"
                 }
               ],
               "optimization": true,
