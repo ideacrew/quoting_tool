@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Documents
+  # Mongo related Document
   class Document
     include Mongoid::Document
     include Mongoid::Timestamps

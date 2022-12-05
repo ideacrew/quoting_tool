@@ -2,6 +2,7 @@
 
 module Parsers
   module Products
+    # Parser for Plan Lists
     class PlanListParser
       include HappyMapper
 

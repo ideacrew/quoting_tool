@@ -9,6 +9,7 @@
 ## Medicare         - annual product & semiannual rate changes
 
 module Products
+  # Product
   class Product
     include Mongoid::Document
     include Mongoid::Timestamps
@@ -156,7 +157,7 @@ module Products
 
     def ehb
       percent = read_attribute(:ehb)
-      percent && percent > 0 ? percent : 1
+      percent&.positive? ? percent : 1
     end
 
     def service_area
@@ -171,29 +172,29 @@ module Products
 
     def min_cost_for_application_period(effective_date)
       p_tables = premium_tables.effective_period_cover(effective_date)
-      if premium_tables.any?
-        p_tables.flat_map(&:premium_tuples).select do |pt|
-          pt.age == premium_ages.min
-        end.min_by(&:cost).cost
-      end
+      return unless premium_tables.any?
+
+      p_tables.flat_map(&:premium_tuples).select do |pt|
+        pt.age == premium_ages.min
+      end.min_by(&:cost).cost
     end
 
     def max_cost_for_application_period(effective_date)
       p_tables = premium_tables.effective_period_cover(effective_date)
-      if premium_tables.any?
-        p_tables.flat_map(&:premium_tuples).select do |pt|
-          pt.age == premium_ages.min
-        end.max_by(&:cost).cost
-      end
+      return unless premium_tables.any?
+
+      p_tables.flat_map(&:premium_tuples).select do |pt|
+        pt.age == premium_ages.min
+      end.max_by(&:cost).cost
     end
 
     def cost_for_application_period(application_period)
       p_tables = premium_tables.effective_period_cover(application_period.min)
-      if premium_tables.any?
-        p_tables.flat_map(&:premium_tuples).select do |pt|
-          pt.age == premium_ages.min
-        end.min_by(&:cost).cost
-      end
+      return unless premium_tables.any?
+
+      p_tables.flat_map(&:premium_tuples).select do |pt|
+        pt.age == premium_ages.min
+      end.min_by(&:cost).cost
     end
 
     def deductible_value
@@ -245,7 +246,7 @@ module Products
     # Add premium table, covering extended time period, to existing product.  Used for products that
     # have periodic rate changes, such as ACA SHOP products that are updated quarterly.
     def add_premium_table(new_premium_table)
-      raise InvalidEffectivePeriodError unless is_valid_premium_table_effective_period?(new_premium_table)
+      raise InvalidEffectivePeriodError unless valid_premium_table_effective_period?(new_premium_table)
 
       if premium_table_effective_on(new_premium_table.effective_period.min).present? ||
          premium_table_effective_on(new_premium_table.effective_period.max).present?
@@ -258,7 +259,7 @@ module Products
     end
 
     def update_premium_table(updated_premium_table)
-      raise InvalidEffectivePeriodError unless is_valid_premium_table_effective_period?(updated_premium_table)
+      raise InvalidEffectivePeriodError unless valid_premium_table_effective_period?(updated_premium_table)
 
       drop_premium_table(premium_table_effective_on(updated_premium_table.effective_period.min))
       add_premium_table(updated_premium_table)
@@ -268,7 +269,7 @@ module Products
       premium_tables.delete(premium_table) unless premium_table.blank?
     end
 
-    def is_valid_premium_table_effective_period?(compare_premium_table)
+    def valid_premium_table_effective_period?(compare_premium_table)
       return false unless application_period.present? && compare_premium_table.effective_period.present?
 
       if application_period.cover?(compare_premium_table.effective_period.min) &&

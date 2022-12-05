@@ -2,6 +2,7 @@
 
 module Parsers
   module Products
+    # Parser for Deductibles
     class DeductibleParser
       include HappyMapper
 

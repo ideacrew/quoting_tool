@@ -2,6 +2,7 @@
 
 module Parsers
   module Products
+    # ServiceVisitsParser
     class ServiceVisitsParser
       include HappyMapper
 

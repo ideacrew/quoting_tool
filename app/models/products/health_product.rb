@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Products
+  # HealthProduct
   class HealthProduct < Product
     PRODUCT_PACKAGE_KINDS = %i[single_issuer metal_level single_product].freeze
     METAL_LEVEL_KINDS     = %i[bronze silver gold platinum catastrophic].freeze
@@ -8,7 +9,7 @@ module Products
     HEALTH_PLAN_MAP = {
       hmo: 'Health Maintenance Organization', # designated primary care physician (PCP) who's
       #   referral is required for specialists who are in-network
-      ppo: 'Preferred provider Organization', # health plan with a “preferred” network of providers
+      ppo: 'Preferred provider Organization', # health plan with a 'preferred' network of providers
       #   in an area
       pos: 'Point of Service', # hmo/ppo hybrid. PCP referral for specialist required.
       #   In-network providers are lower cost, may access out-of-network
