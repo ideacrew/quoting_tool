@@ -3,6 +3,7 @@
 require 'dry/monads'
 require 'dry/monads/do'
 module Operations
+  # This class is to find & retrieve sbc document
   class SbcDocument
     include Dry::Monads[:result, :do]
 
@@ -37,7 +38,7 @@ module Operations
       object = resource.bucket(bucket).object(key)
       encoded_result = Base64.encode64(object.get.body.read)
       Success(message: 'Successfully retrieved documents.', result: encoded_result)
-    rescue Exception => e
+    rescue StandardError => e
       Failure(message: e.message)
     end
 

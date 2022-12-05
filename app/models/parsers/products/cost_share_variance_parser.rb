@@ -2,6 +2,7 @@
 
 module Parsers
   module Products
+    # Parser for CostShareVariance
     class CostShareVarianceParser
       include HappyMapper
 
@@ -34,40 +35,59 @@ module Parsers
 
       def to_hash
         response = {
-          cost_share_variance_attributes: {
-            hios_plan_and_variant_id: hios_plan_and_variant_id.gsub(/\n/, '').strip,
-            plan_marketing_name: plan_marketing_name.present? ? plan_marketing_name.gsub(/\n/, '').strip : plan_variant_marketing_name.gsub(/\n/, '').strip,
-            metal_level: metal_level.gsub(/\n/, '').strip.downcase == 'expanded bronze' ? 'bronze' : metal_level.gsub(/\n/, '').strip,
-            csr_variation_type: csr_variation_type.gsub(/\n/, '').strip,
-            issuer_actuarial_value: (begin
-                                       issuer_actuarial_value.gsub(/\n/, '').strip
-                                     rescue StandardError
-                                       ''
-                                     end),
-            av_calculator_output_number: (begin
-                                            av_calculator_output_number.gsub(/\n/, '').strip
-                                          rescue StandardError
-                                            ''
-                                          end),
-            medical_and_drug_deductibles_integrated: medical_and_drug_deductibles_integrated.gsub(/\n/, '').strip,
-            medical_and_drug_max_out_of_pocket_integrated: medical_and_drug_max_out_of_pocket_integrated.gsub(/\n/, '').strip,
-            multiple_provider_tiers: multiple_provider_tiers.gsub(/\n/, '').strip,
-            first_tier_utilization: first_tier_utilization.gsub(/\n/, '').strip,
-            second_tier_utilization: second_tier_utilization.gsub(/\n/, '').strip,
-            default_copay_in_network: default_copay_in_network.present? ? default_copay_in_network.gsub(/\n/, '').strip : '',
-            default_copay_out_of_network: default_copay_out_of_network.present? ? default_copay_out_of_network.gsub(/\n/, '').strip : '',
-            default_co_insurance_in_network: default_co_insurance_in_network.present? ? default_co_insurance_in_network.gsub(/\n/, '').strip : '',
-            default_co_insurance_out_of_network: default_co_insurance_out_of_network.present? ? default_co_insurance_out_of_network.gsub(/\n/, '').strip : ''
-          },
+          cost_share_variance_attributes: build_cost_share_variance_attributes,
           maximum_out_of_pockets_attributes: maximum_out_of_pockets_attributes.map(&:to_hash),
           deductible_attributes: deductible_attributes.to_hash,
           hsa_attributes: hsa_attributes.present? ? hsa_attributes.to_hash : {},
           service_visits_attributes: service_visits_attributes.map(&:to_hash)
         }
         response[:sbc_attributes] = sbc_attributes.to_hash if sbc_attributes
-        response[:cost_share_variance_attributes].merge!(is_specialist_referral_required: is_specialist_referral_required.gsub(/\n/, '').strip) if is_specialist_referral_required.present?
-        response[:cost_share_variance_attributes].merge!(health_care_specialist_referral_type: health_care_specialist_referral_type.gsub(/\n/, '').strip) if health_care_specialist_referral_type.present?
+        if is_specialist_referral_required.present?
+          stripped_referreal_required = is_specialist_referral_required.gsub(/\n/, '').strip
+          response[:cost_share_variance_attributes].merge!(is_specialist_referral_required: stripped_referreal_required)
+        end
+        if health_care_specialist_referral_type.present?
+          stripped_hcs_type = health_care_specialist_referral_type.gsub(/\n/, '').strip
+          response[:cost_share_variance_attributes].merge!(health_care_specialist_referral_type: stripped_hcs_type)
+        end
         response
+      end
+
+      def build_issuer_actuarial_value
+        issuer_actuarial_value.gsub(/\n/, '').strip
+      rescue StandardError
+        ''
+      end
+
+      def build_av_calculator_output_number
+        av_calculator_output_number.gsub(/\n/, '').strip
+      rescue StandardError
+        ''
+      end
+
+      def build_cost_share_variance_attributes
+        {
+          hios_plan_and_variant_id: hios_plan_and_variant_id.gsub(/\n/, '').strip,
+          plan_marketing_name: plan_marketing_name.present? ? plan_marketing_name.gsub(/\n/, '').strip : plan_variant_marketing_name.gsub(/\n/, '').strip,
+          metal_level: metal_level.gsub(/\n/, '').strip.downcase == 'expanded bronze' ? 'bronze' : metal_level.gsub(/\n/, '').strip,
+          csr_variation_type: csr_variation_type.gsub(/\n/, '').strip,
+          issuer_actuarial_value: build_issuer_actuarial_value,
+          av_calculator_output_number: build_av_calculator_output_number,
+          medical_and_drug_deductibles_integrated: medical_and_drug_deductibles_integrated.gsub(/\n/, '').strip,
+          medical_and_drug_max_out_of_pocket_integrated: medical_and_drug_max_out_of_pocket_integrated.gsub(/\n/, '').strip,
+          multiple_provider_tiers: multiple_provider_tiers.gsub(/\n/, '').strip,
+          first_tier_utilization: first_tier_utilization.gsub(/\n/, '').strip,
+          second_tier_utilization: second_tier_utilization.gsub(/\n/, '').strip
+        }.merge(build_default_cost_share_attributes)
+      end
+
+      def build_default_cost_share_attributes
+        {
+          default_copay_in_network: default_copay_in_network.present? ? default_copay_in_network.gsub(/\n/, '').strip : '',
+          default_copay_out_of_network: default_copay_out_of_network.present? ? default_copay_out_of_network.gsub(/\n/, '').strip : '',
+          default_co_insurance_in_network: default_co_insurance_in_network.present? ? default_co_insurance_in_network.gsub(/\n/, '').strip : '',
+          default_co_insurance_out_of_network: default_co_insurance_out_of_network.present? ? default_co_insurance_out_of_network.gsub(/\n/, '').strip : ''
+        }
       end
     end
   end

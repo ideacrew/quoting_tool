@@ -2,6 +2,7 @@
 
 module Parsers
   module Products
+    # Parser for Plan Benefits Template
     class PlanBenefitTemplateParser
       include HappyMapper
 

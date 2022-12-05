@@ -2,6 +2,7 @@
 
 module Parsers
   module Products
+    # Parser for HSA
     class HsaParser
       include HappyMapper
 

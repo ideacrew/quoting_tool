@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Locations
+  # Fields to load County Zips
   class CountyZip
     include Mongoid::Document
     include Mongoid::Timestamps

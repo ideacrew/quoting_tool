@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Operations
+  # This class is to build the products
   class ProductBuilder
     include Dry::Monads[:result, :do]
 
@@ -32,84 +33,97 @@ module Operations
         next if csr_variant_id == '00'
 
         csr_variant_id = retrieve_metal_level == 'dental' ? '' : csr_variant_id
-        product = ::Products::Product.where(
-          :hios_base_id => hios_base_id,
-          :csr_variant_id => csr_variant_id,
-          :"application_period.min".gte => Date.new(qhp.active_year, 1, 1), :"application_period.max".lte => Date.new(qhp.active_year, 1, 1).end_of_year
-        ).first
-
-        shared_attrs = {
-          benefit_market_kind: "aca_#{parse_market}",
-          title: cost_share_variance.plan_marketing_name.dup.squish!,
-          hios_id: is_health_product? ? cost_share_variance.hios_plan_and_variant_id : hios_base_id,
-          hios_base_id: hios_base_id,
-          csr_variant_id: csr_variant_id,
-          application_period: (Date.new(qhp.active_year, 1, 1)..Date.new(qhp.active_year, 12, 31)),
-          service_area_id: params[:service_area_map][[qhp.issuer_id, qhp.service_area_id, qhp.active_year]],
-          deductible: cost_share_variance.qhp_deductable.in_network_tier_1_individual,
-          family_deductible: cost_share_variance.qhp_deductable.in_network_tier_1_family,
-          is_reference_plan_eligible: true,
-          metal_level_kind: retrieve_metal_level.to_sym,
-          group_size_factors: group_size_factors(qhp.active_year, qhp.issuer_id),
-          group_tier_factors: group_tier_factors(qhp.active_year, qhp.issuer_id),
-          participation_factors: participation_factors(qhp.active_year, qhp.issuer_id),
-          hsa_eligible: qhp.hsa_eligibility,
-          out_of_pocket_in_network: out_of_pocket_in_network(cost_share_variance)
-        }
-
-        attrs = if is_health_product?
-                  info = health_data_map[[hios_base_id, qhp.active_year]] || {}
-                  {
-                    health_plan_kind: qhp.plan_type.downcase,
-                    ehb: qhp.ehb_percent_premium.present? ? qhp.ehb_percent_premium : 1.0,
-                    pcp_in_network_copay: pcp_in_network_copay(cost_share_variance),
-                    hospital_stay_in_network_copay: hospital_stay_in_network_copay(cost_share_variance),
-                    emergency_in_network_copay: emergency_in_network_copay(cost_share_variance),
-                    drug_in_network_copay: drug_in_network_copay(cost_share_variance),
-                    pcp_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :pcp),
-                    hospital_stay_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :hospital_stay),
-                    emergency_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :emergency_stay),
-                    drug_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :rx),
-                    is_standard_plan: info[:is_standard_plan],
-                    network_information: info[:network_information],
-                    title: (info[:title] || cost_share_variance.plan_marketing_name.dup.squish!),
-                    product_package_kinds: info[:product_package_kinds],
-                    rx_formulary_url: info[:rx_formulary_url],
-                    provider_directory_url: info[:provider_directory_url]
-                  }
-                else
-                  info = dental_data_map[[hios_base_id, qhp.active_year]] || {}
-                  {
-                    dental_plan_kind: qhp.plan_type.downcase,
-                    dental_level: qhp.metal_level.downcase,
-                    product_package_kinds: ::Products::DentalProduct::PRODUCT_PACKAGE_KINDS,
-                    is_standard_plan: info[:is_standard_plan],
-                    network_information: info[:network_information],
-                    title: (info[:title] || cost_share_variance.plan_marketing_name.dup.squish!),
-                    provider_directory_url: info[:provider_directory_url],
-                    basic_dental_services: basic_dental_services(cost_share_variance),
-                    major_dental_services: major_dental_services(cost_share_variance),
-                    preventive_dental_services: preventive_dental_services(cost_share_variance)
-                  }
-        end.merge(shared_attrs)
-
-        if product.present?
-          product.issuer_hios_ids += [qhp.issuer_id]
-          product.issuer_hios_ids = product.issuer_hios_ids.uniq
-          product.update_attributes!(attrs)
-          cost_share_variance.product_id = product.id if cost_share_variance.product_id.blank?
-        else
-          attrs.merge!(issuer_hios_ids: [qhp.issuer_id])
-          new_product = if is_health_product?
-                          ::Products::HealthProduct.new(attrs)
-                        else
-                          ::Products::DentalProduct.new(attrs)
-          end
-
-          cost_share_variance.product_id = new_product.id if new_product.save!
-        end
+        product = find_product(hios_base_id, csr_variant_id, qhp)
+        shared_attrs = shared_attributes(cost_share_variance, qhp, hios_base_id, csr_variant_id, params)
+        attrs = get_attrs(hios_base_id, qhp, cost_share_variance, shared_attrs)
+        validate_product(product, qhp, attrs, cost_share_variance)
       end
       Success(message: 'Successfully created/updated Plan records')
+    end
+
+    def get_attrs(hios_base_id, qhp, cost_share_variance, shared_attrs)
+      if health_product?
+        info = health_data_map[[hios_base_id, qhp.active_year]] || {}
+        {
+          health_plan_kind: qhp.plan_type.downcase,
+          ehb: qhp.ehb_percent_premium.present? ? qhp.ehb_percent_premium : 1.0,
+          pcp_in_network_copay: pcp_in_network_copay(cost_share_variance),
+          hospital_stay_in_network_copay: hospital_stay_in_network_copay(cost_share_variance),
+          emergency_in_network_copay: emergency_in_network_copay(cost_share_variance),
+          drug_in_network_copay: drug_in_network_copay(cost_share_variance),
+          pcp_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :pcp),
+          hospital_stay_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :hospital_stay),
+          emergency_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :emergency_stay),
+          drug_in_network_co_insurance: service_visit_co_insurance(cost_share_variance, :rx),
+          is_standard_plan: info[:is_standard_plan],
+          network_information: info[:network_information],
+          title: (info[:title] || cost_share_variance.plan_marketing_name.dup.squish!),
+          product_package_kinds: info[:product_package_kinds],
+          rx_formulary_url: info[:rx_formulary_url],
+          provider_directory_url: info[:provider_directory_url]
+        }
+      else
+        info = dental_data_map[[hios_base_id, qhp.active_year]] || {}
+        {
+          dental_plan_kind: qhp.plan_type.downcase,
+          dental_level: qhp.metal_level.downcase,
+          product_package_kinds: ::Products::DentalProduct::PRODUCT_PACKAGE_KINDS,
+          is_standard_plan: info[:is_standard_plan],
+          network_information: info[:network_information],
+          title: (info[:title] || cost_share_variance.plan_marketing_name.dup.squish!),
+          provider_directory_url: info[:provider_directory_url],
+          basic_dental_services: basic_dental_services(cost_share_variance),
+          major_dental_services: major_dental_services(cost_share_variance),
+          preventive_dental_services: preventive_dental_services(cost_share_variance)
+        }
+      end.merge(shared_attrs)
+    end
+
+    def find_product(hios_base_id, csr_variant_id, qhp)
+      ::Products::Product.where(
+        :hios_base_id => hios_base_id,
+        :csr_variant_id => csr_variant_id,
+        :"application_period.min".gte => Date.new(qhp.active_year, 1, 1), :"application_period.max".lte => Date.new(qhp.active_year, 1, 1).end_of_year
+      ).first
+    end
+
+    def validate_product(product, qhp, attrs, cost_share_variance)
+      if product.present?
+        product.issuer_hios_ids += [qhp.issuer_id]
+        product.issuer_hios_ids = product.issuer_hios_ids.uniq
+        product.update_attributes!(attrs)
+        cost_share_variance.product_id = product.id if cost_share_variance.product_id.blank?
+      else
+        attrs.merge!(issuer_hios_ids: [qhp.issuer_id])
+        new_product = if health_product?
+                        ::Products::HealthProduct.new(attrs)
+                      else
+                        ::Products::DentalProduct.new(attrs)
+                      end
+
+        cost_share_variance.product_id = new_product.id if new_product.save!
+      end
+    end
+
+    def shared_attributes(cost_share_variance, qhp, hios_base_id, csr_variant_id, params)
+      {
+        benefit_market_kind: "aca_#{parse_market}",
+        title: cost_share_variance.plan_marketing_name.dup.squish!,
+        hios_id: health_product? ? cost_share_variance.hios_plan_and_variant_id : hios_base_id,
+        hios_base_id: hios_base_id,
+        csr_variant_id: csr_variant_id,
+        application_period: (Date.new(qhp.active_year, 1, 1)..Date.new(qhp.active_year, 12, 31)),
+        service_area_id: params[:service_area_map][[qhp.issuer_id, qhp.service_area_id, qhp.active_year]],
+        deductible: cost_share_variance.qhp_deductable.in_network_tier_1_individual,
+        family_deductible: cost_share_variance.qhp_deductable.in_network_tier_1_family,
+        is_reference_plan_eligible: true,
+        metal_level_kind: retrieve_metal_level.to_sym,
+        group_size_factors: group_size_factors(qhp.active_year, qhp.issuer_id),
+        group_tier_factors: group_tier_factors(qhp.active_year, qhp.issuer_id),
+        participation_factors: participation_factors(qhp.active_year, qhp.issuer_id),
+        hsa_eligible: qhp.hsa_eligibility,
+        out_of_pocket_in_network: out_of_pocket_in_network(cost_share_variance)
+      }
     end
 
     def group_size_factors(year, hios_id)
@@ -160,7 +174,7 @@ module Operations
 
     def hospital_stay_in_network_copay(variance)
       val = variance.qhp_service_visits.where(visit_type: VISIT_TYPES[:hospital_stay]).first.copay_in_network_tier_1
-      parse_value(val).nil? ? nil : ('%.2f' % parse_value(val))
+      parse_value(val).nil? ? nil : format('%.2f', parse_value(val))
     end
 
     def emergency_in_network_copay(variance)
@@ -191,10 +205,10 @@ module Operations
     end
 
     def retrieve_metal_level
-      is_health_product? ? qhp.metal_level.downcase : 'dental'
+      health_product? ? qhp.metal_level.downcase : 'dental'
     end
 
-    def is_health_product?
+    def health_product?
       qhp.dental_plan_only_ind.downcase == 'no'
     end
 
