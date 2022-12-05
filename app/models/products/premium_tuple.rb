@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Products
+  # PremiumTuple
   class PremiumTuple
     include Mongoid::Document
     include Mongoid::Timestamps

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Services
+  # RosterUploadService
   class RosterUploadService
     include ActiveModel::Validations
 
@@ -55,7 +56,6 @@ module Services
     end
 
     def load_census_records_form
-      census_records = []
       columns = sheet.row(2)
       (4..sheet.last_row).each_with_object([]) do |id, result|
         row = Hash[[columns, sheet.row(id)].transpose]
@@ -123,7 +123,7 @@ module Services
         'child_under_26'
       when 'disabled child'
         'disabled_child_26_and_over'
-        end
+      end
     end
 
     def parse_text(cell)

@@ -22,6 +22,7 @@ require 'action_view/railtie'
 Bundler.require(*Rails.groups)
 
 module App
+  # config application
   class Application < Rails::Application
     # Use the responders controller from the responders gem
     config.app_generators.scaffold_controller :responders_controller

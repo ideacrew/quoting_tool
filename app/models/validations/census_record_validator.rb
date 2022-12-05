@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Validations
+  # CensusRecordValidator
   class CensusRecordValidator < Dry::Validation::Contract
     params do
       required(:dob)
