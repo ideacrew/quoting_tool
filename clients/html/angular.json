@@ -57,7 +57,7 @@
                 },
                 {
                   "replace": "src/assets/images/mhc_logo.svg",
-                  "with": "src/assets/images/logo_me.svg",
+                  "with": "src/assets/images/logo_me.svg"
                 }
               ]
             },
