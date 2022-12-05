@@ -2,6 +2,7 @@
 
 module Parsers
   module Products
+    # PlanRateGroupParser
     class PlanRateGroupParser
       include HappyMapper
 

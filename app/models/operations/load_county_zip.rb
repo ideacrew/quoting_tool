@@ -4,6 +4,7 @@ require 'dry/monads'
 require 'dry/monads/do'
 
 module Operations
+  # This class is to load county zips
   class LoadCountyZip
     include Dry::Monads[:result, :do]
 

@@ -4,6 +4,7 @@ require 'dry/monads'
 require 'dry/monads/do'
 
 module Operations
+  # This class is to load rates
   class LoadRates
     include Dry::Monads[:result, :do]
 
@@ -30,7 +31,7 @@ module Operations
     def load_file_data(validated_result)
       output = validated_result[:loaded_xml_files].inject([]) do |result, xml|
         product_hash = Parsers::Products::PlanRateGroupListParser.parse(xml.root.canonicalize, single: true).to_hash
-        result += product_hash[:plan_rate_group_attributes]
+        result + product_hash[:plan_rate_group_attributes]
       end
       Success(result: output)
     end

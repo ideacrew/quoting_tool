@@ -2,6 +2,7 @@
 
 module Parsers
   module Products
+    # Parser for Header
     class HeaderParser
       include HappyMapper
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Locations
+  # Fields to load Locations Service Area
   class ServiceArea
     include Mongoid::Document
     include Mongoid::Timestamps

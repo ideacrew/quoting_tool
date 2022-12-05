@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Products
+  # DentalProduct
   class DentalProduct < Product
     PRODUCT_PACKAGE_KINDS = %i[single_product multi_product].freeze
     METAL_LEVEL_KINDS     = [:dental].freeze

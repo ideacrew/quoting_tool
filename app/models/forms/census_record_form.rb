@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Forms
+  # Form object for census employee/employer record
   class CensusRecordForm
     include ActiveModel::Validations
     include Virtus.model

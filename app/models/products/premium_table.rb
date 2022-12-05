@@ -8,6 +8,7 @@
 #   DC & MA IVL: annual
 
 module Products
+  # PremiumTable
   class PremiumTable
     include Mongoid::Document
     include Mongoid::Timestamps

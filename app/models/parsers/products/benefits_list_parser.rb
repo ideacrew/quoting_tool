@@ -2,6 +2,7 @@
 
 module Parsers
   module Products
+    # Convert benefits to hash parser
     class BenefitsListParser
       include HappyMapper
 
