@@ -2,6 +2,7 @@
 
 module Products
   module ActuarialFactors
+    # GroupSizeActuarialFactor
     class GroupSizeActuarialFactor < ActuarialFactor
       validates_numericality_of :max_integer_factor_key, allow_blank: false
 

@@ -2,6 +2,7 @@
 
 module Parsers
   module Products
+    # Parser for MaximumOutOfPockets
     class MaximumOutOfPocketsParser
       include HappyMapper
 

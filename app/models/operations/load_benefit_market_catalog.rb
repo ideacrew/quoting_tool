@@ -3,16 +3,17 @@
 require 'dry/monads'
 require 'dry/monads/do'
 module Operations
+  # This class is to load benefit market catalog
   class LoadBenefitMarketCatalog
     include Dry::Monads[:result, :do]
 
     def call(input)
-      country_zips   = yield load_county_zips(input)
-      rating_areas   = yield load_rating_areas(input)
-      rating_factors = yield load_rating_factors(input)
-      service_areas  = yield load_service_areas(input)
-      plans          = yield load_plans(input)
-      rates          = yield load_rates(input)
+      yield load_county_zips(input)
+      yield load_rating_areas(input)
+      yield load_rating_factors(input)
+      yield load_service_areas(input)
+      yield load_plans(input)
+      yield load_rates(input)
     end
 
     private
@@ -64,7 +65,7 @@ module Operations
     def load_plans(input)
       puts ':: Loading Plans ::'
       files = Dir.glob(File.join(Rails.root, 'db/seedfiles/plan_xmls', input[:state], 'plans', '**', '*.xml'))
-      parsed_files = parse_files(files)
+      parse_files(files)
       additional_files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/master_xml", '**', '*.xlsx'))
 
       parsed_files = parse_files(files)

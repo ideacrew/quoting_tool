@@ -4,6 +4,7 @@ require 'dry/monads'
 require 'dry/monads/do'
 
 module Operations
+  # This class is to load factors
   class LoadFactors
     include Dry::Monads[:result, :do]
 
@@ -50,16 +51,16 @@ module Operations
       file = input[:file]
       year = input[:year]
 
-      output = NEW_RATING_FACTOR_PAGES.each_with_object([]) do |info, result|
+      output = NEW_RATING_FACTOR_PAGES.each_with_object([]) do |info, output_result|
         rating_factor_class = info[0]
         sheet_info = info[1]
         sheet = file.sheet(sheet_info[:page])
         max_integer_factor_key = sheet_info[:max_integer_factor_key]
 
-        result << (2..carrier_end_column).each_with_object([]) do |carrier_column, result|
+        output_result << (2..carrier_end_column).each_with_object([]) do |carrier_column, inner_result|
           issuer_hios_id = sheet.cell(2, carrier_column).to_i
 
-          next unless issuer_hios_id > 0 # Making sure it's hios-id
+          next unless issuer_hios_id.positive? # Making sure it's hios-id
 
           factors = (ROW_DATA_BEGINS_ON..sheet.last_row).each_with_object([]) do |i, result|
             factor_key = get_factory_key(sheet.cell(i, 1), rating_factor_class)
@@ -72,7 +73,7 @@ module Operations
             }
           end
 
-          result << {
+          inner_result << {
             active_year: year,
             default_factor_value: RATING_FACTOR_DEFAULT,
             issuer_hios_id: issuer_hios_id.to_s,
@@ -91,7 +92,7 @@ module Operations
     end
 
     def create_records(input)
-      year = input[:year]
+      input[:year]
 
       NEW_RATING_FACTOR_PAGES.each do |rating_factor_class, sheet_info|
         result_ary = input[:result][sheet_info[:page]]
@@ -105,7 +106,7 @@ module Operations
                          ::Products::ActuarialFactors::ParticipationRateActuarialFactor
                        when :CompositeRatingTierFactorSet
                          ::Products::ActuarialFactors::CompositeRatingTierActuarialFactor
-              end
+                       end
 
         result_ary.each do |json|
           record = object_class.where(
@@ -134,15 +135,15 @@ module Operations
       13
     end
 
-    def is_group_size_rating_tier?(klass)
+    def group_size_rating_tier?(klass)
       'EmployerGroupSizeRatingFactorSet'.eql? klass.to_s
     end
 
-    def is_composite_rating_tier?(klass)
+    def composite_rating_tier?(klass)
       'CompositeRatingTierFactorSet'.eql? klass.to_s
     end
 
-    def is_participation_rate_rating_tier?(klass)
+    def participation_rate_rating_tier?(klass)
       'EmployerParticipationRateRatingFactorSet'.eql? klass.to_s
     end
 
@@ -153,11 +154,11 @@ module Operations
     end
 
     def get_factory_key(input, klass)
-      return COMPOSITE_TIER_TRANSLATIONS[input.to_s] if is_composite_rating_tier?(klass)
+      return COMPOSITE_TIER_TRANSLATIONS[input.to_s] if composite_rating_tier?(klass)
 
-      return input.to_i if is_group_size_rating_tier?(klass)
+      return input.to_i if group_size_rating_tier?(klass)
 
-      return (input * 100).to_i if is_participation_rate_rating_tier?(klass)
+      return (input * 100).to_i if participation_rate_rating_tier?(klass)
 
       input
     end

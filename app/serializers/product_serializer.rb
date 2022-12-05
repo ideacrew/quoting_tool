@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
+# ProductSerializer
 class ProductSerializer
   include FastJsonapi::ObjectSerializer
 
-  ProviderMap = {
+  PROVIDER_MAP = {
     '36046' => 'Harvard Pilgrim Health Care',
     '80538' => 'Delta Dental',
     '11821' => 'Delta Dental',
@@ -69,7 +70,7 @@ class ProductSerializer
   end
 
   attribute :provider_name do |object|
-    ProviderMap[object.issuer_hios_ids.first]
+    PROVIDER_MAP[object.issuer_hios_ids.first]
   end
 
   attribute :sic_code_factor do |object, params|

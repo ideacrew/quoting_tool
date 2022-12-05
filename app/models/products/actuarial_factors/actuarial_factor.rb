@@ -2,6 +2,7 @@
 
 module Products
   module ActuarialFactors
+    # ActuarialFactor
     class ActuarialFactor
       include Mongoid::Document
       include Mongoid::Timestamps

@@ -2,6 +2,7 @@
 
 module Products
   module ActuarialFactors
+    # ParticipationRateActuarialFactor
     class ParticipationRateActuarialFactor < ActuarialFactor
       def self.value_for(issuer_hios_id, year, val)
         record = where(issuer_hios_id: issuer_hios_id, active_year: year).first

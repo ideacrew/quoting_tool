@@ -2,6 +2,7 @@
 
 module Parsers
   module Products
+    # PlanRateItemsParser
     class PlanRateItemsParser
       include HappyMapper
 
@@ -49,9 +50,12 @@ module Parsers
           tobacco_value: tobacco_value.present? ? tobacco_value.gsub(/\n/, '').strip : '',
           primary_enrollee_value: primary_enrollee_value.present? ? primary_enrollee_value.gsub(/\n/, '').strip : '',
           couple_enrollee_value: couple_enrollee_value.present? ? couple_enrollee_value.gsub(/\n/, '').strip : '',
-          couple_enrollee_one_dependent_value: couple_enrollee_one_dependent_value.present? ? couple_enrollee_one_dependent_value.gsub(/\n/, '').strip : '',
-          couple_enrollee_two_dependent_value: couple_enrollee_two_dependent_value.present? ? couple_enrollee_two_dependent_value.gsub(/\n/, '').strip : '',
-          couple_enrollee_many_dependent_value: couple_enrollee_many_dependent_value.present? ? couple_enrollee_many_dependent_value.gsub(/\n/, '').strip : '',
+          couple_enrollee_one_dependent_value: couple_enrollee_one_dependent_value.present? ? couple_enrollee_one_dependent_value.gsub(/\n/, '').strip : ''
+        }.merge(additional_hash_data_1, additional_hash_data_2, additional_hash_data_3)
+      end
+
+      def additional_hash_data_1
+        {
           primary_enrollee_one_dependent_value: primary_enrollee_one_dependent_value.present? ? primary_enrollee_one_dependent_value.gsub(/\n/, '').strip : '',
           primary_enrollee_two_dependent_value: primary_enrollee_two_dependent_value.present? ? primary_enrollee_two_dependent_value.gsub(/\n/, '').strip : '',
           primary_enrollee_many_dependent_value: primary_enrollee_many_dependent_value.present? ? primary_enrollee_many_dependent_value.gsub(/\n/, '').strip : '',
@@ -60,12 +64,24 @@ module Parsers
           plan_id: plan_id.present? ? plan_id.gsub(/\n/, '').strip : '',
           rate_area_id: rate_area_id.present? ? rate_area_id.gsub(/\n/, '').strip : '',
           age_number: age_number.present? ? age_number.gsub(/\n/, '').strip : '',
-          tobacco: tobacco.present? ? tobacco.gsub(/\n/, '').strip : '',
+          tobacco: tobacco.present? ? tobacco.gsub(/\n/, '').strip : ''
+        }
+      end
+
+      def additional_hash_data_2
+        {
+          couple_enrollee_two_dependent_value: couple_enrollee_two_dependent_value.present? ? couple_enrollee_two_dependent_value.gsub(/\n/, '').strip : '',
+          couple_enrollee_many_dependent_value: couple_enrollee_many_dependent_value.present? ? couple_enrollee_many_dependent_value.gsub(/\n/, '').strip : '',
           primary_enrollee: primary_enrollee.present? ? primary_enrollee.gsub(/\n/, '').gsub('$', '').strip : '',
           couple_enrollee: couple_enrollee.present? ? couple_enrollee.gsub(/\n/, '').strip : '',
           couple_enrollee_one_dependent: couple_enrollee_one_dependent.present? ? couple_enrollee_one_dependent.gsub(/\n/, '').strip : '',
           couple_enrollee_two_dependent: couple_enrollee_two_dependent.present? ? couple_enrollee_two_dependent.gsub(/\n/, '').strip : '',
-          couple_enrollee_many_dependent: couple_enrollee_many_dependent.present? ? couple_enrollee_many_dependent.gsub(/\n/, '').strip : '',
+          couple_enrollee_many_dependent: couple_enrollee_many_dependent.present? ? couple_enrollee_many_dependent.gsub(/\n/, '').strip : ''
+        }
+      end
+
+      def additional_hash_data_3
+        {
           primary_enrollee_one_dependent: primary_enrollee_one_dependent.present? ? primary_enrollee_one_dependent.gsub('$', '').strip : '',
           primary_enrollee_two_dependent: primary_enrollee_two_dependent.present? ? primary_enrollee_two_dependent.gsub(/\n/, '').strip : '',
           primary_enrollee_many_dependent: primary_enrollee_many_dependent.present? ? primary_enrollee_many_dependent.gsub(/\n/, '').strip : '',

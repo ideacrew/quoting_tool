@@ -2,6 +2,7 @@
 
 module Parsers
   module Products
+    # SbcParser
     class SbcParser
       include HappyMapper
 

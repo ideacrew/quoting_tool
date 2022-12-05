@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Operations
+  # This class is to build the rate
   class RateBuilder
     include Dry::Monads[:result, :do]
 
