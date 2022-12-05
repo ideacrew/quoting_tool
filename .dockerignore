@@ -84,7 +84,6 @@ pickle-email-*.html
 ci
 hugo
 jenkins
-.docker
 docs
 
 
