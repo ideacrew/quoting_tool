@@ -104,7 +104,9 @@ ENV QUOTING_TOOL_DB_HOST=${HOSTNAME}
 ENV QUOTING_TOOL_DB_PORT=27017
 ENV QUOTING_TOOL_DB_NAME=quoting_tool_prod
 
-COPY --chown=nonroot:nonroot --from=prod_gems_and_assets $BUNDLE_PATH $BUNDLE_PATH
-COPY --chown=nonroot:nonroot . $HOME
+COPY --chown=$USERNAME:$USERNAME --from=prod_gems_and_assets $BUNDLE_PATH $BUNDLE_PATH
+COPY --chown=$USERNAME:$USERNAME . $HOME
+COPY --chown=$USERNAME:$USERNAME ./.docker/config/credentials.yml.enc $HOME/config
+COPY --chown=$USERNAME:$USERNAME ./.docker/config/master.key $HOME/config
 
 USER $USERNAME
