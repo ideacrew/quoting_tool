@@ -37,7 +37,21 @@
                 "includePaths": [
                   "src/assets/scss/branding/me"
                 ]
-              }
+              },
+              "fileReplacements": [
+                {
+                  "replace": "src/data/zipCode.json",
+                  "with": "src/data/zipCodeME.json"
+                }
+              ]
+            },
+            "ma": {
+              "fileReplacements": [
+                {
+                  "replace": "src/data/zipCode.json",
+                  "with": "src/data/zipCodeMA.json"
+                }
+              ]
             },
             "dc": {
               "stylePreprocessorOptions": {
@@ -56,6 +70,10 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "src/data/zipCode.json",
+                  "with": "src/data/zipCodeME.json"
                 }
               ],
               "optimization": true,
