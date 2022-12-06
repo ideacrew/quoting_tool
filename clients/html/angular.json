@@ -42,6 +42,10 @@
                 {
                   "replace": "src/data/zipCode.json",
                   "with": "src/data/zipCodeME.json"
+                },
+                {
+                  "replace": "src/assets/images/mhc_logo.svg",
+                  "with": "src/assets/images/logo_me.svg"
                 }
               ]
             },
