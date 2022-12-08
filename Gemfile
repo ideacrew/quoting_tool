@@ -36,6 +36,7 @@ gem 'nokogiri', '~> 1.10'
 gem 'nokogiri-happymapper', '~> 0.8.0', require: 'happymapper'
 gem 'resource_registry', git: 'https://github.com/ideacrew/resource_registry.git', branch: 'trunk'
 gem 'roo', '~> 2.1'
+gem 'roo-xls'
 gem 'virtus', '~> 1.0'
 
 group :development, :test do
