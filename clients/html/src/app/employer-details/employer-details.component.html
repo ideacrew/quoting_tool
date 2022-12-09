@@ -36,9 +36,10 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-3">
-          <div class="form-group">
-            <label for="sicInput">SIC Code: <span class="required-field">*</span></label>
+        <!-- TODO: ME do not support SIC Codes. Add a flag and ignore this div later. -->
+        <!-- <div class="col-3">
+          <div class="form-group"> -->
+            <!-- <label for="sicInput">SIC Code: <span class="required-field">*</span></label>
             <ng-autocomplete
               id="sicInput"
               formControlName="sic"
@@ -59,12 +60,12 @@
 
             <ng-template #sicNotFoundTemplate let-notFound>
               <div [innerHTML]="notFound"></div>
-            </ng-template>
-          </div>
+            </ng-template> -->
+          <!-- </div>
         </div>
         <div class="sic-col-1 pr-2">
           <i class="fas fa-question mt-4 fa-lg pt-3" (click)="show = !show"></i>
-        </div>
+        </div> -->
         <div class="col-3">
           <div class="form-group">
             <label for="zip">Business ZIP Code: <span class="required-field">*</span></label>

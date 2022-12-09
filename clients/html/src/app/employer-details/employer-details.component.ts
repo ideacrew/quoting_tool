@@ -8,8 +8,8 @@ import Swal from 'sweetalert2';
 
 import { EmployerDetailsService } from './../services/employer-details.service';
 import zipcodes from '../../data/zipCode.json';
-import sics from '../../data/sic.json';
-import sicCodes from '../../data/sicCodes.json';
+import sics from '../../data/sicMA.json';
+import sicCodes from '../../data/sicCodesMA.json';
 import { SelectedSicService } from '../services/selected-sic.service';
 
 type AOA = any[][];
