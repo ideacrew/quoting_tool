@@ -8,8 +8,8 @@ import Swal from 'sweetalert2';
 
 import { EmployerDetailsService } from './../services/employer-details.service';
 import zipcodes from '../../data/zipCode.json';
-import sics from '../../data/sicMA.json';
-import sicCodes from '../../data/sicCodesMA.json';
+import sics from '../../data/sic.json';
+import sicCodes from '../../data/sicCodes.json';
 import { SelectedSicService } from '../services/selected-sic.service';
 
 type AOA = any[][];
@@ -56,6 +56,7 @@ export class EmployerDetailsComponent implements OnInit {
   showEditHousehold: any;
   sicCodes = sicCodes;
   isLateRates: boolean;
+  isDisplaySicCodesEnabled: boolean;
 
   public counties: any;
   public quoteForm: FormGroup;
@@ -177,6 +178,7 @@ export class EmployerDetailsComponent implements OnInit {
       dates = response['dates'].map((date) => dates.push(date));
       is_late_rate = response['is_late_rate'];
       this.isLateRates = is_late_rate;
+      this.isDisplaySicCodesEnabled = response['is_display_sic_codes_enabled'];
     });
     this.effectiveDateOptions = dates;
   }
