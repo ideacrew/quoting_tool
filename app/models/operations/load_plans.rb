@@ -41,8 +41,8 @@ module Operations
 
     def load_file_data(input)
       output = load_packages_list(input)
+      data = []
 
-      data = [] unless input[:additional_files].present?
       if input[:additional_files].present?
         data = input[:additional_files].inject([]) do |result, file|
           year = file.split('/')[-2].to_i
@@ -113,14 +113,15 @@ module Operations
       health_data_map = {}
       dental_data_map = {}
 
-      return Failure(message: "Didn't find any plans to create") unless input[:data].present?
+      if input[:data].present?
 
-      input[:data][0].map do |data|
-        health_data_map[[data[:hios_id], data[:year]]] = data
-      end
+        input[:data][0].map do |data|
+          health_data_map[[data[:hios_id], data[:year]]] = data
+        end
 
-      input[:data][1].map do |data|
-        dental_data_map[[data[:hios_id], data[:year]]] = data
+        input[:data][1].map do |data|
+          dental_data_map[[data[:hios_id], data[:year]]] = data
+        end
       end
 
       Operations::QhpBuilder.new.call(packages: input[:result], health_data_map: health_data_map, dental_data_map: dental_data_map, service_area_map: service_area_map)

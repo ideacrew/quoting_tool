@@ -22,7 +22,11 @@ module Operations
     def load_file_info(input)
       year = input.split('/')[-2].to_i
       file = Roo::Spreadsheet.open(input)
-      sheet = file.sheet(0)
+      begin
+        sheet = file.sheet('Service Areas')
+      rescue StandardError
+        sheet = file.sheet(0)
+      end
       Success(sheet: sheet, year: year)
     end
 
@@ -37,10 +41,12 @@ module Operations
       issuer_hios_id = sheet.cell(6, 2).to_i.to_s
 
       output = (13..sheet.last_row).each_with_object([]) do |i, result|
+        next unless parse_boolean(sheet.cell(i, 3)).present?
+
         result << {
           active_year: year,
           issuer_provided_code: sheet.cell(i, 1),
-          covered_states: ['MA'], # get this from Settings
+          covered_states: ['ME'], # get this from Settings
           issuer_hios_id: issuer_hios_id,
           issuer_provided_title: sheet.cell(i, 2),
           is_all_state: parse_boolean(sheet.cell(i, 3)),
@@ -115,14 +121,14 @@ module Operations
     end
 
     def parse_boolean(value)
-      return true   if value == true   || value =~ /(true|t|yes|y|1)$/i
-      return false  if value == false  || value =~ /(false|f|no|n|0)$/i
+      return true   if value == true   || value =~ /(true|t|yes|Yes|y|1)$/i
+      return false  if value == false  || value =~ /(false|f|no|No|n|0)$/i
 
       nil
     end
 
     def extract_county_name_state_and_county_codes(county_field)
-      county_name, state_and_county_code = county_field.split(' - ')
+      county_name, state_and_county_code = county_field&.split(' - ')
       [county_name, state_and_county_code[0..1], state_and_county_code[2..state_and_county_code.length]]
     rescue StandardError => e
       puts county_field

@@ -100,7 +100,6 @@ module Operations
                       else
                         ::Products::DentalProduct.new(attrs)
                       end
-
         cost_share_variance.product_id = new_product.id if new_product.save!
       end
     end

@@ -37,7 +37,7 @@ module Operations
         result << {
           county_name: parse_text(row['county']),
           zip: parse_text(row['zip']),
-          state: 'MA' # update later
+          state: 'ME' # update later
         }
       end
       Success(result: output)

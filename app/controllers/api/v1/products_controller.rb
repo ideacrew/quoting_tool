@@ -60,7 +60,7 @@ module Api
             'active_year' => year,
             '$or' => [
               { 'county_zip_ids' => { '$in' => county_zips(county, zip) } },
-              { 'covered_states' => 'MA' } # get this from settings
+              { 'covered_states' => 'ME' } # get this from settings
             ]
           ).map(&:id)
         end
