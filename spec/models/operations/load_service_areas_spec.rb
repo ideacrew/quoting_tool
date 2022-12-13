@@ -18,7 +18,7 @@ RSpec.describe Operations::LoadServiceAreas, type: :transaction do
     end
 
     it 'should return success message' do
-      expect(subject.success[:message]).to eq 'Successfully created/updated 18 Service Area records'
+      expect(subject.success[:message]).to eq 'Successfully created/updated 2 Service Area records'
     end
   end
 end
