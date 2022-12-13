@@ -56,7 +56,7 @@ export class EmployerDetailsComponent implements OnInit {
   showEditHousehold: any;
   sicCodes = sicCodes;
   isLateRates: boolean;
-  isDisplaySicCodesEnabled: boolean;
+  isSicCodesEnabled: boolean;
 
   public counties: any;
   public quoteForm: FormGroup;
@@ -178,7 +178,7 @@ export class EmployerDetailsComponent implements OnInit {
       dates = response['dates'].map((date) => dates.push(date));
       is_late_rate = response['is_late_rate'];
       this.isLateRates = is_late_rate;
-      this.isDisplaySicCodesEnabled = response['is_display_sic_codes_enabled'];
+      this.isSicCodesEnabled = response['is_sic_codes_enabled'];
     });
     this.effectiveDateOptions = dates;
   }
