@@ -75,12 +75,12 @@ RSpec.describe Api::V1::EmployeesController do
       end
     end
 
-    describe "#fetch_feature_flags" do
-      it "gets feature flags and response should present" do
+    describe '#fetch_feature_flags' do
+      it 'gets feature flags and response should present' do
         get :fetch_feature_flags
 
         expect(response.code.to_i).to eq(200)
-        expect(JSON.parse(response.body).keys).to include("display_footer_email")
+        expect(JSON.parse(response.body).keys).to include('display_footer_email')
       end
     end
   end
