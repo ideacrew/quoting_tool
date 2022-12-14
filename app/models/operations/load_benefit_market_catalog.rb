@@ -71,9 +71,9 @@ module Operations
       parsed_files = { package_xml_files: parse_files(files) }
       parsed_additional_files = { plan_xlsx_files: parse_files(additional_files) }
 
-      transaction = Operations::LoadPlans.new
-      transaction.call(parsed_files)
-      transaction.call(parsed_additional_files)
+      operation = Operations::LoadPlans.new
+      operation.call(parsed_files)
+      operation.call(parsed_additional_files)
       puts ':: Finished Loading Plans ::'
       Success(input)
     end
