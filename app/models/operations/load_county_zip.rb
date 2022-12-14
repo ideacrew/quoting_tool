@@ -37,7 +37,7 @@ module Operations
         result << {
           county_name: parse_text(row['county']),
           zip: parse_text(row['zip']),
-          state: 'ME' # update later
+          state: QuotingToolRegistry[:quoting_tool_app].setting(:state_abbreviation).item # update later
         }
       end
       Success(result: output)

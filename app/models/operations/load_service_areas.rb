@@ -46,7 +46,7 @@ module Operations
         result << {
           active_year: year,
           issuer_provided_code: sheet.cell(i, 1),
-          covered_states: ['ME'], # get this from Settings
+          covered_states: QuotingToolRegistry[:quoting_tool_app].setting(:state_abbreviation).item, # get this from Settings
           issuer_hios_id: issuer_hios_id,
           issuer_provided_title: sheet.cell(i, 2),
           is_all_state: parse_boolean(sheet.cell(i, 3)),
@@ -128,7 +128,7 @@ module Operations
     end
 
     def extract_county_name_state_and_county_codes(county_field)
-      county_name, state_and_county_code = county_field&.split(' - ')
+      county_name, state_and_county_code = county_field.split(' - ')
       [county_name, state_and_county_code[0..1], state_and_county_code[2..state_and_county_code.length]]
     rescue StandardError => e
       puts county_field

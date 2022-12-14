@@ -42,7 +42,6 @@ export class PlanProviderService {
     consumer: ProductListUser,
     sic_code: string,
     startDate: Date,
-    state: string,
     county_name: string,
     zip: string,
     kind: string,
@@ -54,7 +53,6 @@ export class PlanProviderService {
       start_date: startDate,
       county_name: county_name,
       zip_code: zip,
-      state: state,
       kind: kind
     };
     this.api_request.authedGet('products/plans.json', attrs).subscribe(function(data: Array<ProductData>) {

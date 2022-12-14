@@ -53,7 +53,7 @@ module Operations
 
     def load_service_areas(input)
       puts ':: Loading Service Areas ::'
-      files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/service_areas", '**', '*.xls'))
+      files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/service_areas", '**', '*.xls*'))
       parsed_files = parse_files(files)
       parsed_files.each do |file|
         ::Operations::LoadServiceAreas.new.call(file)
