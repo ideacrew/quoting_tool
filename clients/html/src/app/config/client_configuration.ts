@@ -91,7 +91,6 @@ export const CLIENT_PREFERENCES: ClientPreferences = {
   tiered_package_types: [PackageTypes.SINGLE_PRODUCT],
   relationship_quote_calculator: RelationshipCoverageCostCalculatorService,
   tiered_quote_calculator: TieredCoverageCostCalculatorService,
-  default_state: 'MA',
   minimum_start_date: new Date(2017, 0, 1),
   maximum_start_date: new Date(2019, 11, 1),
   county_zip_required: true,

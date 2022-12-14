@@ -41,7 +41,7 @@ module Operations
         rate_group[:items].each do |rate|
           year = rate[:effective_date].to_date.year
           rate[:rate_area_id].split(',').each do |rating_area_name|
-            rating_area = rating_area_name.squish.gsub('Rating Area ', 'R-MA00')
+            rating_area = rating_area_name.squish.gsub('Rating Area ', "R-#{QuotingToolRegistry[:quoting_tool_app].setting(:state_abbreviation).item}00")
             rating_area_id = rating_area_map[[year, rating_area]]
             @premium_table_map[[rate[:plan_id], rating_area_id, rate[:effective_date].to_date..rate[:expiration_date].to_date]][assign_age(rate)] = rate[:primary_enrollee]
             @products_map << "#{rate[:plan_id]},#{year}"

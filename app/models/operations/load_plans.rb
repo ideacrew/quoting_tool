@@ -41,14 +41,17 @@ module Operations
 
     def load_file_data(input)
       output = load_packages_list(input)
+      data = []
 
-      data = input[:additional_files].inject([]) do |result, file|
-        year = file.split('/')[-2].to_i
-        xlsx_file = Roo::Spreadsheet.open(file)
-        health_data = load_health_sheet_data(xlsx_file, year)
-        dental_data = load_dental_sheet_data(xlsx_file, year)
-        result += [health_data, dental_data]
-        result
+      if input[:additional_files].present?
+        data = input[:additional_files].inject([]) do |result, file|
+          year = file.split('/')[-2].to_i
+          xlsx_file = Roo::Spreadsheet.open(file)
+          health_data = load_health_sheet_data(xlsx_file, year)
+          dental_data = load_dental_sheet_data(xlsx_file, year)
+          result += [health_data, dental_data]
+          result
+        end
       end
 
       Success(result: output, data: data)
@@ -110,12 +113,15 @@ module Operations
       health_data_map = {}
       dental_data_map = {}
 
-      input[:data][0].map do |data|
-        health_data_map[[data[:hios_id], data[:year]]] = data
-      end
+      if input[:data].present?
 
-      input[:data][1].map do |data|
-        dental_data_map[[data[:hios_id], data[:year]]] = data
+        input[:data][0].map do |data|
+          health_data_map[[data[:hios_id], data[:year]]] = data
+        end
+
+        input[:data][1].map do |data|
+          dental_data_map[[data[:hios_id], data[:year]]] = data
+        end
       end
 
       Operations::QhpBuilder.new.call(packages: input[:result], health_data_map: health_data_map, dental_data_map: dental_data_map, service_area_map: service_area_map)
