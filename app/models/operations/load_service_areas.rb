@@ -121,8 +121,8 @@ module Operations
     end
 
     def parse_boolean(value)
-      return true   if value == true   || value =~ /(true|t|yes|Yes|y|1)$/i
-      return false  if value == false  || value =~ /(false|f|no|No|n|0)$/i
+      return true   if value == true   || value =~ /(true|t|yes|y|1)$/i
+      return false  if value == false  || value =~ /(false|f|no|n|0)$/i
 
       nil
     end
