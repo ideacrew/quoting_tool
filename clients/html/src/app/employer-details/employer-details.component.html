@@ -29,14 +29,14 @@
                 [selected]="isSelected(date)"
                 [disabled]="date.disabled"
                 [attr.value]="date"
-                >{{ date | date: 'MMMM, y' }}</option
+              >{{ date | date: 'MMMM, y' }}</option
               >
             </select>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-3">
+        <div class="col-3" *ngIf="isSicCodesEnabled">
           <div class="form-group">
             <label for="sicInput">SIC Code: <span class="required-field">*</span></label>
             <ng-autocomplete
@@ -62,7 +62,7 @@
             </ng-template>
           </div>
         </div>
-        <div class="sic-col-1 pr-2">
+        <div class="sic-col-1 pr-2" *ngIf="isSicCodesEnabled">
           <i class="fas fa-question mt-4 fa-lg pt-3" (click)="show = !show"></i>
         </div>
         <div class="col-3">
@@ -127,8 +127,8 @@
           <h2 class="heading-text">Employee Roster</h2>
           <p>
             Select '<strong>Add Employee</strong>' to manually enter information about employees. Or, choose '<strong
-              >Upload Employee Roster</strong
-            >' to upload the employee roster template. To use this option, you will need to download the template first,
+          >Upload Employee Roster</strong
+          >' to upload the employee roster template. To use this option, you will need to download the template first,
             then upload the completed version. <br />For each employee you add, you will need their:
           </p>
           <ul>
@@ -139,7 +139,7 @@
           </p>
           <button type="button" class="btn btn-link">
             <a href="/get-a-quote/assets/roster_upload_template.xlsx" download
-              ><i class="fas fa-download"></i> Download Roster Template</a
+            ><i class="fas fa-download"></i> Download Roster Template</a
             >
           </button>
         </div>
@@ -296,7 +296,7 @@
                             <select type="text" class="form-control" formControlName="relationship">
                               <option *ngFor="let relation of relationOptions" [value]="relation.key">{{
                                 relation.value
-                              }}</option>
+                                }}</option>
                             </select>
                           </div>
                         </div>
@@ -435,7 +435,7 @@
                             <select type="text" class="form-control" formControlName="relationship">
                               <option *ngFor="let relation of relationOptions" [value]="relation.key">{{
                                 relation.value
-                              }}</option>
+                                }}</option>
                             </select>
                           </div>
                         </div>
@@ -587,7 +587,7 @@
                             <select type="text" class="form-control" formControlName="relationship">
                               <option *ngFor="let relation of relationOptions" [value]="relation.key">{{
                                 relation.value
-                              }}</option>
+                                }}</option>
                             </select>
                           </div>
                         </div>
@@ -619,7 +619,7 @@
       </div>
       <!-- End row for households  -->
       <ng-template #content let-c="close" let-d="dismiss"
-        ><!-- Template for upload roster  -->
+      ><!-- Template for upload roster  -->
         <div class="modal-header">
           <h4 class="modal-title" id="modal-basic-title">Upload File</h4>
           <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
@@ -684,7 +684,7 @@
             class="float-right btn btn-success view-plans-button"
             routerLink="/employer-details/health"
             *ngIf="showEmployeeRoster"
-            ><i class="fas fa-check"></i> View Plans</a
+          ><i class="fas fa-check"></i> View Plans</a
           >
         </div>
       </div>

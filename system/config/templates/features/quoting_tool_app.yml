@@ -65,3 +65,5 @@ registry:
             item: 2
           - key: :earliest_start_prior_to_effective_on_months
             item: -2
+      - key: :sic_codes
+        is_enabled: false

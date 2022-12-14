@@ -71,6 +71,7 @@ RSpec.describe Api::V1::EmployeesController do
         parsed_response = JSON.parse(response.body)
         expect(parsed_response['dates'].empty?).to eq false
         expect(parsed_response['is_late_rate']).to eq false
+        expect(parsed_response['is_sic_codes_enabled']).to_not eq nil
       end
     end
   end
