@@ -60,7 +60,7 @@ module Api
             'active_year' => year,
             '$or' => [
               { 'county_zip_ids' => { '$in' => county_zips(county, zip) } },
-              { 'covered_states' => QuotingToolRegistry[:quoting_tool_app].setting(:state_abbreviation).item } # get this from settings
+              { 'covered_states' => QuotingToolRegistry[:quoting_tool_app].setting(:state_abbreviation).item }
             ]
           ).map(&:id)
         end
