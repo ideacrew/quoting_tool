@@ -12,6 +12,7 @@ Rails.application.routes.draw do
           post :upload
           get :get_plans
           get :start_on_dates
+          get :fetch_feature_flags
         end
       end
 

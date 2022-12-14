@@ -16,4 +16,7 @@ export class EmployerDetailsService {
     return this.api_request.authedGet('employees/start_on_dates.json');
   }
 
+  getFeatureFlags() {
+    return this.api_request.authedGet('employees/fetch_feature_flags.json');
+  }
 }

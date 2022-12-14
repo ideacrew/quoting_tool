@@ -74,5 +74,14 @@ RSpec.describe Api::V1::EmployeesController do
         expect(parsed_response['is_sic_codes_enabled']).to_not eq nil
       end
     end
+
+    describe "#fetch_feature_flags" do
+      it "gets feature flags and response should present" do
+        get :fetch_feature_flags
+
+        expect(response.code.to_i).to eq(200)
+        expect(JSON.parse(response.body).keys).to include("display_footer_email")
+      end
+    end
   end
 end

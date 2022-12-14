@@ -40,6 +40,11 @@ module Api
         render json: { dates: dates, is_late_rate: !dates_rates_hash.values.all?, is_sic_codes_enabled: is_sic_codes_enabled }
       end
 
+      def fetch_feature_flags
+        display_footer_email = QuotingToolRegistry.feature_enabled?(:display_footer_email)
+        render json: { display_footer_email: display_footer_email }
+      end
+
       private
 
       def rates_for?(dates)

@@ -67,3 +67,5 @@ registry:
             item: -2
       - key: :sic_codes
         is_enabled: false
+      - key: :display_footer_email
+        is_enabled: false
