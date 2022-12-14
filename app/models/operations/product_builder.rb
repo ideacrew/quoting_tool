@@ -58,7 +58,7 @@ module Operations
           is_standard_plan: info[:is_standard_plan],
           network_information: info[:network_information],
           title: (info[:title] || cost_share_variance.plan_marketing_name.dup.squish!),
-          product_package_kinds: info[:product_package_kinds],
+          product_package_kinds: info[:product_package_kinds] || ::Products::HealthProduct::PRODUCT_PACKAGE_KINDS,
           rx_formulary_url: info[:rx_formulary_url],
           provider_directory_url: info[:provider_directory_url]
         }
@@ -100,7 +100,6 @@ module Operations
                       else
                         ::Products::DentalProduct.new(attrs)
                       end
-
         cost_share_variance.product_id = new_product.id if new_product.save!
       end
     end

@@ -22,7 +22,11 @@ module Operations
     def load_file_info(input)
       year = input.split('/')[-2].to_i
       file = Roo::Spreadsheet.open(input)
-      sheet = file.sheet(0)
+      begin
+        sheet = file.sheet('Service Areas')
+      rescue StandardError
+        sheet = file.sheet(0)
+      end
       Success(sheet: sheet, year: year)
     end
 
@@ -37,10 +41,12 @@ module Operations
       issuer_hios_id = sheet.cell(6, 2).to_i.to_s
 
       output = (13..sheet.last_row).each_with_object([]) do |i, result|
+        next unless parse_boolean(sheet.cell(i, 1)).present?
+
         result << {
           active_year: year,
           issuer_provided_code: sheet.cell(i, 1),
-          covered_states: ['MA'], # get this from Settings
+          covered_states: QuotingToolRegistry[:quoting_tool_app].setting(:state_abbreviation).item,
           issuer_hios_id: issuer_hios_id,
           issuer_provided_title: sheet.cell(i, 2),
           is_all_state: parse_boolean(sheet.cell(i, 3)),

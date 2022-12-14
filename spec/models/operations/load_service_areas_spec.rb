@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Operations::LoadServiceAreas, type: :transaction do
-  let!(:county_zip) { FactoryBot.create(:county_zip, zip: '12345', county_name: 'County 1') }
+  let!(:county_zip) { FactoryBot.create(:county_zip, zip: '12345', county_name: 'tesing') }
   let!(:subject) { Operations::LoadServiceAreas.new.call(file) }
 
   context 'succesful' do
@@ -18,7 +18,7 @@ RSpec.describe Operations::LoadServiceAreas, type: :transaction do
     end
 
     it 'should return success message' do
-      expect(subject.success[:message]).to eq 'Successfully created/updated 18 Service Area records'
+      expect(subject.success[:message]).to eq 'Successfully created/updated 10 Service Area records'
     end
   end
 end

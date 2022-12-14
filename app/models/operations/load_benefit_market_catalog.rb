@@ -53,7 +53,7 @@ module Operations
 
     def load_service_areas(input)
       puts ':: Loading Service Areas ::'
-      files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/service_areas", '**', '*.xlsx'))
+      files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/xls_templates/service_areas", '**', '*.xls*'))
       parsed_files = parse_files(files)
       parsed_files.each do |file|
         ::Operations::LoadServiceAreas.new.call(file)
@@ -68,13 +68,12 @@ module Operations
       parse_files(files)
       additional_files = Dir.glob(File.join(Rails.root, "db/seedfiles/plan_xmls/#{input[:state]}/master_xml", '**', '*.xlsx'))
 
-      parsed_files = parse_files(files)
-      parsed_additional_files = parse_files(additional_files)
+      parsed_files = { package_xml_files: parse_files(files) }
+      parsed_additional_files = { plan_xlsx_files: parse_files(additional_files) }
 
-      transaction = Transactions::LoadPlans.new
-      transaction.with_step_args(
-        load_file_info: [parsed_additional_files]
-      ).call(parsed_files)
+      operation = Operations::LoadPlans.new
+      operation.call(parsed_files)
+      operation.call(parsed_additional_files)
       puts ':: Finished Loading Plans ::'
       Success(input)
     end
