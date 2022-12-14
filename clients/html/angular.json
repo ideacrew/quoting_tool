@@ -46,6 +46,10 @@
                 {
                   "replace": "src/assets/images/mhc_logo.svg",
                   "with": "src/assets/images/logo_me.svg"
+                },
+                {
+                  "replace": "src/assets/favicon.png",
+                  "with": "src/assets/favicon_me.png"
                 }
               ]
             },
