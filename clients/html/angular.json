@@ -50,6 +50,10 @@
                 {
                   "replace": "src/assets/favicon.png",
                   "with": "src/assets/favicon_me.png"
+                },
+                {
+                  "replace": "src/assets/roster_upload_template.xlsx",
+                  "with": "src/assets/roster_upload_template_me.xlsx"
                 }
               ]
             },

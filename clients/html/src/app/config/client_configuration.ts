@@ -26,7 +26,6 @@ export interface ClientPreferences {
   tiered_package_types: Array<PackageTypes>;
   relationship_quote_calculator: QuoteCalculatorConstructor<RelationshipContributionModel>;
   tiered_quote_calculator: QuoteCalculatorConstructor<TieredContributionModel>;
-  default_state: string;
   minimum_start_date: Date;
   maximum_start_date: Date;
   county_zip_required: boolean;
