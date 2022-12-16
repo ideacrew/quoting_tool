@@ -46,7 +46,7 @@ module Operations
         result << {
           active_year: year,
           issuer_provided_code: sheet.cell(i, 1),
-          covered_states: QuotingToolRegistry[:quoting_tool_app].setting(:state_abbreviation).item,
+          covered_states: [QuotingToolRegistry[:quoting_tool_app].setting(:state_abbreviation).item],
           issuer_hios_id: issuer_hios_id,
           issuer_provided_title: sheet.cell(i, 2),
           is_all_state: parse_boolean(sheet.cell(i, 3)),
