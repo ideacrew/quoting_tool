@@ -70,7 +70,7 @@ module Operations
           Locations::ServiceArea.find_or_create_by!(
             active_year: year,
             issuer_provided_code: params[:issuer_provided_code],
-            covered_states: params[:covered_states],
+            covered_states: [params[:covered_states]],
             issuer_provided_title: params[:issuer_provided_title],
             issuer_hios_id: params[:issuer_hios_id]
           )
