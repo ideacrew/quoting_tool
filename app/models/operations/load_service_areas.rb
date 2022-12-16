@@ -41,7 +41,7 @@ module Operations
       issuer_hios_id = sheet.cell(6, 2).to_i.to_s
 
       output = (13..sheet.last_row).each_with_object([]) do |i, result|
-        next unless parse_boolean(sheet.cell(i, 1)).present?
+        next if sheet.cell(i, 1).blank?
 
         result << {
           active_year: year,
