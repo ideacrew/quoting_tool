@@ -102,9 +102,10 @@ export class EmployerDetailsComponent implements OnInit {
 
     this.setAlerts();
 
+    const sicValidator = this.isSicCodesEnabled ? Validators.required : null;
     this.quoteForm = this.fb.group({
       effectiveDate: ['', Validators.required],
-      sic: ['', Validators.required],
+      sic: ['', sicValidator],
       zip: ['', Validators.required],
       county: [''],
       employees: this.fb.array([], Validators.required)
