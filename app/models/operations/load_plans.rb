@@ -40,8 +40,9 @@ module Operations
     end
 
     def load_file_data(input)
-      output = load_packages_list(input)
+      output = []
       data = []
+      output = load_packages_list(input) if input[:files].present?
 
       if input[:additional_files].present?
         data = input[:additional_files].inject([]) do |result, file|
