@@ -308,7 +308,7 @@ export class EmployerDetailsComponent implements OnInit {
       const dataFromArray = [];
       data.map((d, i) => {
         if (i > 2 && d.length > 0) {
-          dataFromArray.push({ relation: d[1], lastName: d[2], firstName: d[3], dob: this.getJsDateFromExcel(d[8]) });
+          dataFromArray.push({ relation: d[1], lastName: d[2], firstName: d[3], dob: this.getJsDateFromExcel(d[4]) });
         }
       });
       this.excelArray = dataFromArray;
