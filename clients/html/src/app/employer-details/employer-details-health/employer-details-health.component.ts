@@ -14,11 +14,14 @@ export class EmployerDetailsHealthComponent implements OnInit {
   public costShownText: any;
   public carriers = carriers;
 
+  isMAState: boolean;
+
   constructor(private router: Router) {}
 
   ngOnInit() {
     const erDetails = localStorage.getItem('employerDetails');
     this.employerDetails = JSON.parse(erDetails);
+    this.isMAState = localStorage.getItem('state') == "MA";
 
     if (this.employerDetails) {
       this.erEmployees = this.employerDetails.employees;

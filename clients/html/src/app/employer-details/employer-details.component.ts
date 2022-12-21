@@ -180,6 +180,7 @@ export class EmployerDetailsComponent implements OnInit {
       is_late_rate = response['is_late_rate'];
       this.isLateRates = is_late_rate;
       this.isSicCodesEnabled = response['is_sic_codes_enabled'];
+      localStorage.setItem('state', response['state']);
     });
     this.effectiveDateOptions = dates;
   }

@@ -1,6 +1,6 @@
 <div class="container mt-3">
   <app-nav [validForm]="true" myPath="Health"></app-nav>
-  <div class="row">
+  <div class="row" *ngIf="isMAState">
     <div class="col-12 mt-2">
       <p class="main-text">
         Select a benefit model to view the plans available to you.

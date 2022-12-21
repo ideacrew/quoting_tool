@@ -36,8 +36,9 @@ module Api
         dates_rates_hash = rates_for?(start_on..end_on)
         dates = dates_rates_hash.collect { |k, v| k.to_date.to_s.gsub!('-', '/') if v }.compact
         is_sic_codes_enabled = QuotingToolRegistry.feature_enabled?(:sic_codes)
+        state = QuotingToolRegistry[:quoting_tool_app].setting(:state_abbreviation).item
 
-        render json: { dates: dates, is_late_rate: !dates_rates_hash.values.all?, is_sic_codes_enabled: is_sic_codes_enabled }
+        render json: { dates: dates, is_late_rate: !dates_rates_hash.values.all?, is_sic_codes_enabled: is_sic_codes_enabled, state: state }
       end
 
       private

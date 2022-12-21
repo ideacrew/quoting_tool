@@ -1,6 +1,6 @@
 <div class="container mt-3">
   <app-nav [validForm]="true" myPath="Dental"></app-nav>
-  <div class="row">
+  <div class="row" *ngIf="isMAState">
     <div class="col-12 mt-2">
       <p class="main-text">
         Choose any dental plan from a single dental insurance carrier to offer for all employees. All available plans are displayed below.<br /><br />
