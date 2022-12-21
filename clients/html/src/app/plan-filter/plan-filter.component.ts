@@ -21,7 +21,7 @@ import { PackageTypes } from '../config/package_types';
 @Component({
   selector: 'app-plan-filter',
   templateUrl: './plan-filter.component.html',
-  styleUrls: ['./plan-filter.component.css'],
+  styleUrls: ['./plan-filter.component.scss'],
   providers: [PlanProviderService],
   animations: [
     trigger('fadeInOut', [
