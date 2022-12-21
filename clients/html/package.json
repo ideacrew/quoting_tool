@@ -11,8 +11,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "format": "pretty-quick",
-    "build:prod:me": "ng build --configuration=me --prod --output-path=dist --base-href /get-a-quote/",
-    "build:prod:dc": "ng build --configuration=dc --prod --output-path=dist --base-href /get-a-quote/"
+    "build:prod:me": "ng build --configuration=me-production --prod --output-path=dist --base-href /get-a-quote/",
+    "build:prod:dc": "ng build --configuration=dc-production --prod --output-path=dist --base-href /get-a-quote/"
   },
   "private": true,
   "dependencies": {
