@@ -14,11 +14,17 @@ export class EmployerDetailsHealthComponent implements OnInit {
   public costShownText: any;
   public carriers = carriers;
 
+  isBenefitModelEnabled: boolean;
+  isFindMyDoctorEnabled: boolean;
+
+
   constructor(private router: Router) {}
 
   ngOnInit() {
     const erDetails = localStorage.getItem('employerDetails');
     this.employerDetails = JSON.parse(erDetails);
+    this.isBenefitModelEnabled = JSON.parse(localStorage.getItem('is_benefit_model_enabled'));
+    this.isFindMyDoctorEnabled = JSON.parse(localStorage.getItem('is_find_my_doctor_enabled'));
 
     if (this.employerDetails) {
       this.erEmployees = this.employerDetails.employees;

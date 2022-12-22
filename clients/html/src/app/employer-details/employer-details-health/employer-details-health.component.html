@@ -2,7 +2,7 @@
   <app-nav [validForm]="true" myPath="Health"></app-nav>
   <div class="row">
     <div class="col-12 mt-2">
-      <p class="main-text">
+      <p class="main-text" *ngIf="isBenefitModelEnabled">
         Select a benefit model to view the plans available to you.
         <span
           class="plan-tooltip"
@@ -34,7 +34,7 @@
           to contribute less when you apply.
         </strong>
       </p>
-      <strong
+      <strong *ngIf="isFindMyDoctorEnabled"
         ><i class="fas fa-stethoscope mr-2"></i
         ><a href="https://ma.checkbookhealth.org/mashop/index.cfm" target="_blank">Find My Doctor</a></strong
       >
