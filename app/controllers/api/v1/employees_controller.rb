@@ -36,8 +36,22 @@ module Api
         dates_rates_hash = rates_for?(start_on..end_on)
         dates = dates_rates_hash.collect { |k, v| k.to_date.to_s.gsub!('-', '/') if v }.compact
         is_sic_codes_enabled = QuotingToolRegistry.feature_enabled?(:sic_codes)
+<<<<<<< Updated upstream
 
         render json: { dates: dates, is_late_rate: !dates_rates_hash.values.all?, is_sic_codes_enabled: is_sic_codes_enabled }
+=======
+        is_benefit_model_enabled = QuotingToolRegistry.feature_enabled?(:benefit_model)
+        is_find_my_doctor_enabled = QuotingToolRegistry.feature_enabled?(:find_my_doctor)
+
+        result = {
+          dates: dates,
+          is_late_rate: !dates_rates_hash.values.all?,
+          is_sic_codes_enabled: is_sic_codes_enabled,
+          is_benefit_model_enabled: is_benefit_model_enabled,
+          is_find_my_doctor_enabled: is_find_my_doctor_enabled
+        }
+        render json: result
+>>>>>>> Stashed changes
       end
 
       private
