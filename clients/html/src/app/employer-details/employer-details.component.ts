@@ -180,6 +180,11 @@ export class EmployerDetailsComponent implements OnInit {
       is_late_rate = response['is_late_rate'];
       this.isLateRates = is_late_rate;
       this.isSicCodesEnabled = response['is_sic_codes_enabled'];
+<<<<<<< Updated upstream
+=======
+      localStorage.setItem('is_benefit_model_enabled', JSON.stringify(response['is_benefit_model_enabled']));
+      localStorage.setItem('is_find_my_doctor_enabled', JSON.stringify(response['is_find_my_doctor_enabled']));
+>>>>>>> Stashed changes
     });
     this.effectiveDateOptions = dates;
   }

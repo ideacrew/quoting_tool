@@ -14,12 +14,23 @@ export class EmployerDetailsHealthComponent implements OnInit {
   public costShownText: any;
   public carriers = carriers;
 
+<<<<<<< Updated upstream
+=======
+  isBenefitModelEnabled: boolean;
+  isFindMyDoctorEnabled: boolean;
+
+>>>>>>> Stashed changes
   constructor(private router: Router) {}
 
   ngOnInit() {
     const erDetails = localStorage.getItem('employerDetails');
     this.employerDetails = JSON.parse(erDetails);
+<<<<<<< Updated upstream
 
+=======
+    this.isBenefitModelEnabled = JSON.parse(localStorage.getItem('is_benefit_model_enabled'));
+    this.isFindMyDoctorEnabled = JSON.parse(localStorage.getItem('is_find_my_doctor_enabled'));
+>>>>>>> Stashed changes
     if (this.employerDetails) {
       this.erEmployees = this.employerDetails.employees;
 
