@@ -67,3 +67,7 @@ registry:
             item: -2
       - key: :sic_codes
         is_enabled: false
+      - key: :find_my_doctor
+        is_enabled: false
+      - key: :benefit_model
+        is_enabled: false
