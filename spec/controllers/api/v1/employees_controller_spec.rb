@@ -72,6 +72,8 @@ RSpec.describe Api::V1::EmployeesController do
         expect(parsed_response['dates'].empty?).to eq false
         expect(parsed_response['is_late_rate']).to eq false
         expect(parsed_response['is_sic_codes_enabled']).to_not eq nil
+        expect(parsed_response['is_benefit_model_enabled']).to_not eq nil
+        expect(parsed_response['is_find_my_doctor_enabled']).to_not eq nil
       end
     end
   end
