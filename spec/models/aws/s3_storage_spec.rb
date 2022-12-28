@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 describe Aws::S3Storage do
-  # allow(:storage_double) {double}
-  # allow(Aws::S3Strorage).to receive(:new).and_respond_with(storage_double)
   let(:subject) { Aws::S3Storage.new }
   let(:aws_env) { ENV['AWS_ENV'] || 'qa' }
   let(:object) { double }

@@ -44,11 +44,11 @@ class SbcProcessor
         end
 
         uri = if Rails.env.test?
-                'urn:openhbx:terms:v1:file_storage:s3:bucket:mhc-enroll-sbc-test#11111111-1111-1111-1111-111111111111'
+                "urn:openhbx:terms:v1:file_storage:s3:bucket:#{QuotingToolRegistry[:quoting_tool_app].setting(:s3_prefix).item}-quoting_tool-sbc-test#11111111-1111-1111-1111-111111111111"
               else
                 Aws::S3Storage.save(pdf_path(file_name), S3_BUCKET)
               end
-        product.sbc_document = Document.new(title: file_name, subject: 'SBC', format: 'application/pdf', identifier: uri)
+        product.sbc_document = ::Documents::Document.new(title: file_name, subject: 'SBC', format: 'application/pdf', identifier: uri)
         product.sbc_document.save!
         product.save!
 
