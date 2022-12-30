@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 year = ENV['sbc_year']
 csv_path = "db/seedfiles/plan_xmls/me/sbcs/#{year}/#{year}_sbcs.csv"
 dir_path = "db/seedfiles/plan_xmls/me/sbcs/#{year}/"

@@ -31,10 +31,10 @@ module Services
         hios_id = row[0].gsub(/\A\p{Space}*|\p{Space}*\z/, '')
 
         products = if hios_id.include? '-'
-                    ::Products::Product.where(hios_id: hios_id)
-                  else
-                    ::Products::Product.where(hios_id: /#{hios_id}/)
-                  end.select { |a| a.active_year.to_i == row[2].strip.to_i }
+                     ::Products::Product.where(hios_id: hios_id)
+                   else
+                     ::Products::Product.where(hios_id: /#{hios_id}/)
+                   end.select { |a| a.active_year.to_i == row[2].strip.to_i }
 
         products.each do |product|
           file_name = row[1].strip
