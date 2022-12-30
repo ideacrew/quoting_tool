@@ -33,9 +33,8 @@ module Operations
 
     def serve(input)
       bucket_name, key = input[:identifier].split(':').last.split('#')
-      bucket = parse_bucket(bucket_name)
 
-      object = resource.bucket(bucket).object(key)
+      object = resource.bucket(bucket_name).object(key)
       encoded_result = Base64.encode64(object.get.body.read)
       Success(message: 'Successfully retrieved documents.', result: encoded_result)
     rescue StandardError => e
@@ -58,10 +57,6 @@ module Operations
       return nil if val.nil?
 
       val.to_s.dup.squish!
-    end
-
-    def parse_bucket(_val)
-      "mhc-enroll-sbc-#{env}" # get this from settings
     end
 
     def env
