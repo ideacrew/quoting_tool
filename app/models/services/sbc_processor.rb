@@ -3,8 +3,6 @@
 module Services
   # process sbc documents
   class SbcProcessor
-    S3_BUCKET = 'sbc'
-
     def initialize(csv_path, sbc_dir_path)
       @csv_path = csv_path
       @sbc_dir_path = sbc_dir_path
@@ -47,7 +45,7 @@ module Services
           uri = if Rails.env.test?
                   "urn:openhbx:terms:v1:file_storage:s3:bucket:#{QuotingToolRegistry[:quoting_tool_app].setting(:s3_prefix).item}-quoting_tool-sbc-test#11111111-1111-1111-1111-111111111111"
                 else
-                  Aws::S3Storage.save(pdf_path(file_name), S3_BUCKET)
+                  Aws::S3Storage.save(pdf_path(file_name))
                 end
           product.sbc_document = ::Documents::Document.new(title: file_name, subject: 'SBC', format: 'application/pdf', identifier: uri)
           product.sbc_document.save!
