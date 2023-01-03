@@ -76,7 +76,7 @@ module Aws
     end
 
     def env_bucket_name(bucket_name)
-      "#{QuotingToolRegistry[:quoting_tool_app].setting(:s3_prefix).item}-enroll-#{bucket_name}-#{aws_env}"
+      "#{QuotingToolRegistry[:quoting_tool_app].setting(:s3_prefix).item}-aeqt-#{bucket_name}-#{aws_env}"
     end
 
     def setup

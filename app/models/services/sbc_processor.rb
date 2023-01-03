@@ -3,7 +3,7 @@
 module Services
   # process sbc documents
   class SbcProcessor
-    S3_BUCKET = 'aeqt-sbc'
+    S3_BUCKET = 'sbc'
 
     def initialize(csv_path, sbc_dir_path)
       @csv_path = csv_path
