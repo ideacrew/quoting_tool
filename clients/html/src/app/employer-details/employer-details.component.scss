@@ -1,7 +1,7 @@
 @import '../../../src/assets/scss/variable';
 
 .btn-link a {
-  color: #0036cb;
+  color: #3c5e6e;
 }
 
 .btn-outline-primary {
@@ -35,7 +35,7 @@ fieldset.household:hover {
 }
 
 fieldset.household > legend {
-  background: #005e81;
+  background: #3c5e6e;
   color: #fff;
   padding: 0px 8px 3px 8px;
   -webkit-border-radius: 5px 5px 0px 0px;
@@ -74,7 +74,7 @@ fieldset.dependent > legend {
 
 .modal-header {
   color: #fff;
-  background: #005e81;
+  background: #3c5e6e;
 }
 
 .required-field {

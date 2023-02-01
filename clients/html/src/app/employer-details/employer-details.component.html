@@ -4,6 +4,7 @@
   </ng-container>
 </ng-container>
 <div class="container mb-5 mt-3">
+  <h1 class="heading-text">Employer Quick Quote Tool</h1>
   <app-nav [validForm]="showEmployeeRoster" myPath="Employer Details"></app-nav>
   <div class="row pl-3 mt-4">
     <form [formGroup]="quoteForm">
@@ -34,8 +35,6 @@
             </select>
           </div>
         </div>
-      </div>
-      <div class="row">
         <div class="col-3" *ngIf="isSicCodesEnabled">
           <div class="form-group">
             <label for="sicInput">SIC Code: <span class="required-field">*</span></label>
