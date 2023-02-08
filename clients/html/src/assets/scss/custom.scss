@@ -2,14 +2,14 @@
 
 body {
   background-color: #f2efef;
-  font-family: 'Barlow', sans-serif;
+  font-family: 'Barlow',"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
 }
 
 a {
-  color: #381be7;
+  color: #3c5e6e;
 }
 
 a:active {
@@ -26,8 +26,8 @@ a:active {
 }
 
 .btn-outline-info {
-  color: #00507e;
-  border-color: #00507e;
+  color: #3c5e6e;
+  border-color: #3c5e6e;
 }
 
 .btn-primary {
@@ -53,8 +53,8 @@ a:active {
 
 .btn-primary.disabled,
 .btn-primary:disabled {
-  background-color: #005e81;
-  border-color: #005e81;
+  background-color: #3c5e6e;
+  border-color: #3c5e6e;
 }
 
 .btn-success {
@@ -79,7 +79,7 @@ a:active {
 }
 
 .ngx-datatable .datatable-header {
-  background-color: #005e81;
+  background-color: #3c5e6e;
 }
 
 .ngb-dp-day {
@@ -89,7 +89,7 @@ a:active {
 }
 
 .ngb-dp-weekday {
-  color: #005e81 !important;
+  color: #3c5e6e !important;
 }
 
 .ngx-datatable.material .datatable-header .datatable-header-cell {

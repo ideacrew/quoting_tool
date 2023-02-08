@@ -4,6 +4,7 @@
   </ng-container>
 </ng-container>
 <div class="container mb-5 mt-3">
+  <h1 class="heading-text">Employer Quick Quote Tool</h1>
   <app-nav [validForm]="showEmployeeRoster" myPath="Employer Details"></app-nav>
   <div class="row pl-3 mt-4">
     <form [formGroup]="quoteForm">
@@ -34,15 +35,13 @@
             </select>
           </div>
         </div>
-      </div>
-      <div class="row">
         <div class="col-3" *ngIf="isSicCodesEnabled">
           <div class="form-group">
             <label for="sicInput">SIC Code: <span class="required-field">*</span></label>
             <ng-autocomplete
               id="sicInput"
-              formControlName="sic"
-              name="sic"
+              formControlName="sicInput"
+              name="sicInput"
               [data]="sics"
               [searchKeyword]="sicKeyword"
               [itemTemplate]="sicTemplate"
@@ -138,7 +137,7 @@
             Note: You may use this complete roster download when you apply.
           </p>
           <button type="button" class="btn btn-link">
-            <a href="/get-a-quote/assets/roster_upload_template.xlsx" download
+            <a href="/assets/roster_upload_template.xlsx" download
             ><i class="fas fa-download"></i> Download Roster Template</a
             >
           </button>
@@ -491,6 +490,10 @@
             <!-- starts employee fields -->
             <fieldset class="household mb-3">
               <legend>
+                <h1 class="wave_hidden">Employee</h1>
+                <h2 class="wave_hidden">Employee</h2>
+                <h3 class="wave_hidden">Employee</h3>
+                <h4 class="wave_hidden">Employee</h4>
                 <h5 class="pt-2">Employee {{ i + 1 }}</h5>
               </legend>
               <div class="row" [formGroupName]="i">
@@ -498,13 +501,13 @@
                 <div class="col-3">
                   <div class="form-group">
                     <label for="firstName">First Name</label>
-                    <input type="text" class="form-control" formControlName="firstName" placeholder="First Name" />
+                    <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="First Name" />
                   </div>
                 </div>
                 <div class="col-3">
                   <div class="form-group">
                     <label for="lastName">Last Name</label>
-                    <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name" />
+                    <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Last Name" />
                   </div>
                 </div>
                 <div class="col-3">
@@ -514,6 +517,7 @@
                       placeholder="mm/dd/yyyy"
                       (input)="formatInputDate($event)"
                       class="form-control"
+                      id="dob"
                       formControlName="dob"
                       ngbDatepicker
                       #d="ngbDatepicker"
@@ -525,7 +529,7 @@
                 <div class="col-2">
                   <div class="form-group">
                     <label for="coverageKind">Coverage Type <span class="required-field">*</span></label>
-                    <select type="text" class="form-control" formControlName="coverageKind">
+                    <select type="text" class="form-control" formControlName="coverageKind" id="coverageKind">
                       <option value="both" selected>Both</option>
                       <option value="healthOnly">Health Only</option>
                       <option value="dentalOnly">Dental Only</option>
@@ -546,34 +550,37 @@
                         <!-- starts dependents row -->
                         <div class="col-3">
                           <div class="form-group">
-                            <label for="firstName">First Name</label>
+                            <label for="dependentFirstName">First Name</label>
                             <input
                               type="text"
                               class="form-control"
-                              formControlName="firstName"
+                              id="dependentFirstName"
+                              formControlName="dependentFirstName"
                               placeholder="First Name"
                             />
                           </div>
                         </div>
                         <div class="col-3">
                           <div class="form-group">
-                            <label for="lastName">Last Name</label>
+                            <label for="dependentLastName">Last Name</label>
                             <input
                               type="text"
                               class="form-control"
-                              formControlName="lastName"
+                              id="dependentLastName"
+                              formControlName="dependentLastName"
                               placeholder="Last Name"
                             />
                           </div>
                         </div>
                         <div class="col-3">
                           <div class="form-group">
-                            <label for="dob">DOB <span class="required-field">*</span></label>
+                            <label for="dependentDob">DOB <span class="required-field">*</span></label>
                             <input
                               placeholder="mm/dd/yyyy"
                               (input)="formatInputDate($event)"
                               class="form-control"
-                              formControlName="dob"
+                              id="dependentDob"
+                              formControlName="dependentDob"
                               ngbDatepicker
                               #d="ngbDatepicker"
                               (click)="d.toggle()"
@@ -583,8 +590,8 @@
                         </div>
                         <div class="col-2">
                           <div class="form-group">
-                            <label for="relationship">Relationship <span class="required-field">*</span></label>
-                            <select type="text" class="form-control" formControlName="relationship">
+                            <label for="dependentRelationship">Relationship <span class="required-field">*</span></label>
+                            <select type="text" class="form-control" formControlName="dependentRelationship" id="dependentRelationship">
                               <option *ngFor="let relation of relationOptions" [value]="relation.key">{{
                                 relation.value
                                 }}</option>
@@ -691,3 +698,12 @@
     </form>
   </div>
 </div>
+
+<style type="text/css">
+  .form-group label{
+    color: black !important;
+  }
+  .wave_hidden{
+    display: none;
+  }
+</style>
