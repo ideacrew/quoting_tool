@@ -260,10 +260,10 @@ export class EmployerDetailsComponent implements OnInit {
   addDependent(control) {
     control.push(
       this.fb.group({
-        firstName: [''],
-        lastName: [''],
-        dob: ['', Validators.required],
-        relationship: ['', Validators.required]
+        dependentFirstName: [''],
+        dependentLastName: [''],
+        dependentDob: ['', Validators.required],
+        dependentRelationship: ['', Validators.required]
       })
     );
   }
