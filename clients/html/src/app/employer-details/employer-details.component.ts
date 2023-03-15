@@ -260,10 +260,10 @@ export class EmployerDetailsComponent implements OnInit {
   addDependent(control) {
     control.push(
       this.fb.group({
-        firstName: [''],
-        lastName: [''],
-        dob: ['', Validators.required],
-        relationship: ['', Validators.required]
+        dependentFirstName: [''],
+        dependentLastName: [''],
+        dependentDob: ['', Validators.required],
+        dependentRelationship: ['', Validators.required]
       })
     );
   }
@@ -464,10 +464,10 @@ export class EmployerDetailsComponent implements OnInit {
         // Add dependents to employee if dependents
         control['controls'][count - 1]['controls']['dependents'].push(
           this.fb.group({
-            firstName: data.firstName,
-            lastName: data.lastName,
-            dob: new Date(data.dob.getFullYear(), data.dob.getMonth(), data.dob.getDate()),
-            relationship: data.relation
+            dependentFirstName: data.firstName,
+            dependentLastName: data.lastName,
+            dependentDob: new Date(data.dob.getFullYear(), data.dob.getMonth(), data.dob.getDate()),
+            dependentRelationship: data.relation
           })
         );
       }
