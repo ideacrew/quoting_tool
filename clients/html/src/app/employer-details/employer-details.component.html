@@ -254,34 +254,34 @@
                       <div class="row" [formGroupName]="j">
                         <div class="col-3">
                           <div class="form-group">
-                            <label for="firstName">First Name</label>
+                            <label for="dependentFirstName">First Name</label>
                             <input
                               type="text"
                               class="form-control"
-                              formControlName="firstName"
+                              formControlName="dependentFirstName"
                               placeholder="First Name"
                             />
                           </div>
                         </div>
                         <div class="col-3">
                           <div class="form-group">
-                            <label for="lastName">Last Name</label>
+                            <label for="dependentLastName">Last Name</label>
                             <input
                               type="text"
                               class="form-control"
-                              formControlName="lastName"
+                              formControlName="dependentLastName"
                               placeholder="Last Name"
                             />
                           </div>
                         </div>
                         <div class="col-3">
                           <div class="form-group">
-                            <label for="dob">DOB <span class="required-field">*</span></label>
+                            <label for="dependentDob">DOB <span class="required-field">*</span></label>
                             <input
                               placeholder="mm/dd/yyyy"
                               (input)="formatInputDate($event)"
                               class="form-control"
-                              formControlName="dob"
+                              formControlName="dependentDob"
                               ngbDatepicker
                               #d="ngbDatepicker"
                               (click)="d.toggle()"
@@ -292,7 +292,7 @@
                         <div class="col-2">
                           <div class="form-group">
                             <label for="relationship">Relationship <span class="required-field">*</span></label>
-                            <select type="text" class="form-control" formControlName="relationship">
+                            <select type="text" class="form-control" formControlName="dependentRelationship">
                               <option *ngFor="let relation of relationOptions" [value]="relation.key">{{
                                 relation.value
                                 }}</option>

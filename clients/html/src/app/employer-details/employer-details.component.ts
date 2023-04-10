@@ -530,10 +530,10 @@ export class EmployerDetailsComponent implements OnInit {
     employee.dependents.forEach(function(dependent) {
       (<FormArray>employeeForm.controls.dependents).push(
         currentContext.fb.group({
-          firstName: [dependent.firstName],
-          lastName: [dependent.lastName],
-          dob: [new Date(Date.parse(dependent.dob)), Validators.required],
-          relationship: [dependent.relationship, Validators.required]
+          dependentFirstName: [dependent.dependentFirstName],
+          dependentLastName: [dependent.dependentLastName],
+          dependentDob: [new Date(Date.parse(dependent.dependentDob)), Validators.required],
+          dependentRelationship: [dependent.dependentRelationship, Validators.required]
         })
       );
     });
