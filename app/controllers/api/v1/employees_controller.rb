@@ -40,7 +40,7 @@ module Api
         is_find_my_doctor_enabled = QuotingToolRegistry.feature_enabled?(:find_my_doctor)
 
         result = {
-          dates: dates,
+          dates: ["2023/11/01", "2023/12/01", "2024/01/01"],
           is_late_rate: !dates_rates_hash.values.all?,
           is_sic_codes_enabled: is_sic_codes_enabled,
           is_benefit_model_enabled: is_benefit_model_enabled,
