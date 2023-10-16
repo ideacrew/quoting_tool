@@ -1,16 +1,17 @@
 name: Build Docker Image
 
-concurrency:
-  group: docker-${{ github.ref }}
-  cancel-in-progress: true
-
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'trunk'
   pull_request:
     branches:
       - 'trunk'
+
+concurrency:
+  group: docker-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   prep:
