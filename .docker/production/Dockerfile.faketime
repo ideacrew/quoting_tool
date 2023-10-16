@@ -28,6 +28,7 @@ RUN apt-get update \
       openssl \
       ruby-dalli \
       sshpass \
+      git \
       unzip \
       zip \
       zlibc \
