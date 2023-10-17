@@ -30,6 +30,7 @@ RUN apt-get update \
       sshpass \
       git \
       make \
+      build-essential\
       unzip \
       zip \
       zlibc \
