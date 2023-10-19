@@ -44,7 +44,8 @@ module Api
           is_late_rate: !dates_rates_hash.values.all?,
           is_sic_codes_enabled: is_sic_codes_enabled,
           is_benefit_model_enabled: is_benefit_model_enabled,
-          is_find_my_doctor_enabled: is_find_my_doctor_enabled
+          is_find_my_doctor_enabled: is_find_my_doctor_enabled,
+          test_only: true
         }
         render json: result
       end
