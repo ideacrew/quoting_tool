@@ -120,4 +120,5 @@ RUN make install
 ENV LD_PRELOAD=/usr/local/lib/faketime/libfaketime.so.1
 ENV FAKETIME_NO_CACHE=1
 
+WORKDIR $HOME
 USER $USERNAME
