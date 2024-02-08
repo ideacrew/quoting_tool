@@ -107,7 +107,7 @@ jobs:
         id: scan
         uses: anchore/scan-action@main
         with:
-          image: ${{ needs.prep.outputs.taggedImage }}
+          image: ghcr.io/${{ needs.prep.outputs.taggedImage }}
           acs-report-enable: true
           fail-build: false
           severity-cutoff: critical
@@ -127,7 +127,7 @@ jobs:
           fi
           ${GITHUB_WORKSPACE}/cache/sysdig-cli-scanner \
             --apiurl "${SYSDIG_SECURE_ENDPOINT}" \
-            ${{ needs.prep.outputs.taggedImage }} \
+            ghcr.io/${{ needs.prep.outputs.taggedImage }} \
             --console-log \
             --dbpath="${GITHUB_WORKSPACE}/cache/db/" \
             --cachepath="${GITHUB_WORKSPACE}/cache/scanner-cache/"
