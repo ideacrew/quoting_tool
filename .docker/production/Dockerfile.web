@@ -42,13 +42,16 @@ RUN npm run "build:prod:$CLIENT"
 ############
 
 # base image
-FROM nginx:1.25.3-alpine
+FROM nginx:1.22
+
+RUN apt-get update && apt-get install nginx-extras -y
 
 # copy artifact build from the 'build environment'
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # copy nginx configuration
 ARG API_URL
+
 COPY ./.docker/config/nginx.conf /etc/nginx/conf.d/$API_URL.conf
 RUN sed -i -r "s/API_URL/$API_URL/g" /etc/nginx/conf.d/$API_URL.conf 
 
