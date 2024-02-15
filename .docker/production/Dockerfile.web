@@ -5,6 +5,9 @@
 # base image
 FROM node:12.10.0 as build
 
+RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list
+RUN echo "deb http://archive.debian.org/debian-security stretch/updates main" >> /etc/apt/sources.list
+
 # install chrome for protractor tests
 RUN apt-get update && apt-get install
 
@@ -39,7 +42,7 @@ RUN npm run "build:prod:$CLIENT"
 ############
 
 # base image
-FROM nginx:1.16.0-alpine
+FROM nginx:1.25.3-alpine
 
 # copy artifact build from the 'build environment'
 COPY --from=build /app/dist /usr/share/nginx/html
